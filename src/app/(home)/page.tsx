@@ -36,14 +36,16 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Aktuelle Aktion Banner (NEU) */}
+        {/* Aktuelle Aktion Banner (Als Werkzeug für den Inhaber gekennzeichnet) */}
         <section className="bg-gradient-to-r from-yellow-400 to-orange-500 py-4">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-white font-bold text-lg">
-              🎉 AKTION: 10% Rabatt auf alle Getränke diese Woche! 🎉
+              🎉 PLATZHALTER: Hier können Sie Ihre aktuellen Aktionen eintragen (z.B. "10% auf alle
+              Getränke")! 🎉
             </p>
             <p className="text-white text-sm mt-1">
-              Gültig bis Sonntag, nur solange der Vorrat reicht.
+              Ändern Sie diesen Text jederzeit selbst, um auf neue Lieferungen oder Angebote
+              hinzuweisen.
             </p>
           </div>
         </section>
@@ -88,7 +90,6 @@ export default function HomePage() {
                   Apple Pay · Google Pay
                 </p>
               </div>
-
               <div>
                 <div className="text-4xl mb-3">🚗</div>
                 <h3 className="font-semibold text-gray-900 mb-2">Parken</h3>
@@ -98,7 +99,6 @@ export default function HomePage() {
                   Öffentliche Parkplätze in der Nähe
                 </p>
               </div>
-
               <div>
                 <div className="text-4xl mb-3">♿</div>
                 <h3 className="font-semibold text-gray-900 mb-2">Barrierefreiheit</h3>
@@ -112,7 +112,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Erweiterte Services (NEU) */}
+        {/* Erweiterte Services */}
         <section className="py-12 bg-gray-50 border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Weitere Services</h2>
@@ -122,19 +122,16 @@ export default function HomePage() {
                 <h3 className="font-semibold text-gray-900 text-sm">Geld abheben</h3>
                 <p className="text-xs text-gray-600 mt-1">EC-Karte & Kreditkarte</p>
               </div>
-
               <div className="text-center">
                 <div className="text-3xl mb-2">🖨️</div>
                 <h3 className="font-semibold text-gray-900 text-sm">Druckservice</h3>
                 <p className="text-xs text-gray-600 mt-1">Kopien & Ausdrucke</p>
               </div>
-
               <div className="text-center">
                 <div className="text-3xl mb-2">🔋</div>
                 <h3 className="font-semibold text-gray-900 text-sm">Powerakkus</h3>
                 <p className="text-xs text-gray-600 mt-1">Zum Ausleihen</p>
               </div>
-
               <div className="text-center">
                 <div className="text-3xl mb-2">🎁</div>
                 <h3 className="font-semibold text-gray-900 text-sm">Geschenkkarten</h3>
@@ -154,7 +151,6 @@ export default function HomePage() {
                 Wir sind Ihr offizieller Hermes Paketshop in Erftstadt-Liblar!
               </p>
 
-              {/* Der Spickzettel */}
               <div className="bg-white rounded-lg p-6 mb-6 text-left">
                 <h3 className="font-semibold text-gray-900 mb-4 text-center">
                   📏 Hermes Paketgrößen im Überblick
@@ -244,7 +240,6 @@ export default function HomePage() {
                   Kalte und warme Getränke, Softdrinks, Säfte, Wasser, Bier und mehr.
                 </p>
               </div>
-
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">🍫</span>
@@ -254,7 +249,6 @@ export default function HomePage() {
                   Schokolade, Chips, Gummibärchen, Riegel und alle beliebten Snacks.
                 </p>
               </div>
-
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">📰</span>
@@ -266,7 +260,6 @@ export default function HomePage() {
                   Tageszeitungen, Magazine, Illustrierte und Fachzeitschriften.
                 </p>
               </div>
-
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">🚬</span>
@@ -276,7 +269,6 @@ export default function HomePage() {
                   Zigaretten, Zigarren, Tabak und Zubehör aller gängigen Marken.
                 </p>
               </div>
-
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">🎫</span>
@@ -286,7 +278,6 @@ export default function HomePage() {
                   Lotto, Rubbellose, Eurojackpot und andere Lotterieprodukte.
                 </p>
               </div>
-
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">📱</span>
@@ -314,7 +305,6 @@ export default function HomePage() {
                   Öffnungszeiten abholen. Die Lagerfrist beträgt in der Regel 7 Tage.
                 </p>
               </div>
-
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h3 className="font-semibold text-gray-900 mb-2">
                   💳 Welche Zahlungsmethoden akzeptiert ihr?
@@ -324,7 +314,6 @@ export default function HomePage() {
                   Karte oder Smartphone (Apple Pay, Google Pay) sind ebenfalls möglich.
                 </p>
               </div>
-
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h3 className="font-semibold text-gray-900 mb-2">🚗 Gibt es Parkmöglichkeiten?</h3>
                 <p className="text-gray-600">
@@ -333,7 +322,6 @@ export default function HomePage() {
                   Parkplätze in der Umgebung.
                 </p>
               </div>
-
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h3 className="font-semibold text-gray-900 mb-2">
                   ↩️ Kann ich Retouren bei euch abgeben?
@@ -343,7 +331,6 @@ export default function HomePage() {
                   bringen Sie Ihr Retourenlabel mit oder lassen Sie es uns vor Ort erstellen.
                 </p>
               </div>
-
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h3 className="font-semibold text-gray-900 mb-2">
                   🚫 Bietet ihr einen Lieferservice an?
@@ -357,12 +344,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Über uns Section mit Trust-Badge (NEU) */}
+        {/* Über uns Section mit Trust-Badge */}
         <section id="ueber-uns" className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Über uns</h2>
-
-            {/* Trust Badge */}
             <div className="flex items-center justify-center mb-6">
               <div className="bg-orange-100 border-2 border-orange-300 rounded-full px-6 py-3">
                 <span className="text-orange-800 font-bold text-lg">
@@ -370,7 +355,6 @@ export default function HomePage() {
                 </span>
               </div>
             </div>
-
             <div className="bg-orange-50 p-8 rounded-xl border border-orange-200">
               <p className="text-lg text-gray-700 leading-relaxed mb-4">
                 <strong>Kiosk Lollipop</strong> ist Ihr freundlicher Nachbarschaftskiosk und Hermes
@@ -391,7 +375,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA Section mit echtem Maps-Link */}
+        {/* CTA Section */}
         <section className="py-16 bg-gradient-to-r from-orange-500 to-red-500 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-4">Besuchen Sie uns!</h2>
@@ -453,7 +437,6 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-
             <div className="text-xs text-gray-600 text-center">
               <p>Alle Preise inkl. gesetzlicher MwSt. | Irrtümer und Änderungen vorbehalten.</p>
             </div>

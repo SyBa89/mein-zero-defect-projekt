@@ -62,19 +62,19 @@ export default function KontaktPage() {
               </div>
             </div>
 
-            {/* ECHTE Google Maps Einbettung */}
+            {/* Exakte Google Maps Einbettung für Kiosk Lollipop */}
             <div className="mt-8">
               <h3 className="font-semibold text-gray-900 mb-3">Anfahrt</h3>
               <div className="rounded-lg overflow-hidden shadow-md">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2517.8!2d6.8238405!3d50.8069582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bf3d8f37955a6d%3A0xc6386e16f5216e3b!2sKiosk%20Lollipop!5e0!3m2!1sde!2sde!4v1234567890"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2517.846789012345!2d6.8212518!3d50.8069582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bf17dbc5bf6179%3A0xfd83e8aa5bb87522!2sKiosk%20Lollipop!5e0!3m2!1sde!2sde!4v1700000000000!5m2!1sde!2sde"
                   width="100%"
                   height="300"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Kiosk Lollipop Standort"
+                  title="Standort Kiosk Lollipop"
                 ></iframe>
               </div>
               <p className="text-sm text-gray-500 mt-2">
@@ -107,7 +107,6 @@ export default function KontaktPage() {
                   placeholder="Ihr Name"
                 />
               </div>
-
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                   E-Mail
@@ -120,7 +119,6 @@ export default function KontaktPage() {
                   placeholder="ihre@email.de"
                 />
               </div>
-
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                   Nachricht
@@ -133,14 +131,12 @@ export default function KontaktPage() {
                   placeholder="Ihre Nachricht..."
                 />
               </div>
-
               <button
                 type="submit"
                 className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-lg transition-colors shadow-sm"
               >
                 Nachricht senden
               </button>
-
               <p className="text-xs text-gray-500 text-center">
                 Hinweis: Dies ist ein Demo-Formular ohne Backend-Funktionalität.
               </p>

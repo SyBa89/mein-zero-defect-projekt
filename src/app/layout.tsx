@@ -5,9 +5,15 @@ import MobileActionBar from '@/components/MobileActionBar';
 export const metadata: Metadata = {
   title: 'Kiosk Lollipop | Erftstadt-Liblar - Hermes Paketshop & Kiosk',
   description:
-    'Kiosk Lollipop in Erftstadt-Liblar - Ihr Hermes Paketshop mit Kioskwaren, Lotto, Tabak und mehr. Theodor-Heuss-Straße 35, 50374 Erftstadt. Täglich geöffnet.',
+    'Ihr lokaler Kiosk und Hermes Paketshop in Erftstadt-Liblar. Getränke, Snacks, Lotto & mehr. Täglich geöffnet!',
   keywords:
-    'Kiosk Erftstadt, Hermes Paketshop Liblar, Späti 50374, Kiosk Nähe Bahnhof Liblar, Lotto Erftstadt, Paketshop Erftstadt',
+    'Kiosk Erftstadt, Hermes Paketshop Liblar, Späti 50374, Kiosk Nähe Bahnhof Liblar, Lotto Erftstadt',
+  openGraph: {
+    title: 'Kiosk Lollipop | Erftstadt-Liblar',
+    description: 'Ihr freundlicher Nachbarschaftskiosk und Hermes Paketshop. Jetzt besuchen!',
+    type: 'website',
+    locale: 'de_DE',
+  },
 };
 
 export default function RootLayout({
@@ -31,7 +37,6 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'ConvenienceStore',
               name: 'Kiosk Lollipop',
-              image: 'https://mein-zero-defect-projekt.vercel.app/kiosk-lollipop.jpg',
               address: {
                 '@type': 'PostalAddress',
                 streetAddress: 'Theodor-Heuss-Straße 35',
@@ -67,27 +72,6 @@ export default function RootLayout({
                 },
               ],
               priceRange: '€',
-              servesCuisine: 'Snacks',
-              hasOfferCatalog: {
-                '@type': 'OfferCatalog',
-                name: 'Kioskwaren & Paketdienstleistungen',
-                itemListElement: [
-                  {
-                    '@type': 'Offer',
-                    itemOffered: {
-                      '@type': 'Service',
-                      name: 'Hermes Paketshop',
-                    },
-                  },
-                  {
-                    '@type': 'Offer',
-                    itemOffered: {
-                      '@type': 'Product',
-                      name: 'Getränke & Snacks',
-                    },
-                  },
-                ],
-              },
             }),
           }}
         />
