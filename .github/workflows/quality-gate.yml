@@ -1,0 +1,33 @@
+name: Zero-Defect Quality Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Code herunterladen
+        uses: actions/checkout@v4
+      
+      - name: Node.js installieren
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Abhängigkeiten installieren
+        run: npm ci
+      
+      - name: TypeScript-Check
+        run: npx tsc --noEmit
+      
+      - name: ESLint-Check
+        run: npx eslint . --ext .ts,.tsx,.js,.jsx --max-warnings 0
+      
+      - name: Build-Test
+        run: npm run build --if-present
