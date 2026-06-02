@@ -5,15 +5,15 @@ import MobileActionBar from '@/components/MobileActionBar';
 export const metadata: Metadata = {
   title: 'Kiosk Lollipop | Erftstadt-Liblar - Hermes Paketshop & Kiosk',
   description:
-    'Ihr lokaler Kiosk und Hermes Paketshop in Erftstadt-Liblar. Getränke, Snacks, Lotto & mehr. Täglich geöffnet!',
+    'Ihr lokaler Kiosk und Hermes Paketshop in Erftstadt-Liblar am Bürgerplatz. Getränke, Snacks, Lotto, Eis & mehr. Täglich geöffnet!',
   keywords:
-    'Kiosk Erftstadt, Hermes Paketshop Liblar, Späti 50374, Kiosk Nähe Bahnhof Liblar, Lotto Erftstadt',
+    'Kiosk Erftstadt, Hermes Paketshop Liblar, Kiosk Bürgerplatz, Späti 50374, Lotto Erftstadt',
   icons: {
     icon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍭</text></svg>',
   },
   openGraph: {
     title: 'Kiosk Lollipop | Erftstadt-Liblar',
-    description: 'Ihr freundlicher Nachbarschaftskiosk und Hermes Paketshop. Jetzt besuchen!',
+    description: 'Ihr freundlicher Nachbarschaftskiosk am Bürgerplatz. Jetzt besuchen!',
     type: 'website',
     locale: 'de_DE',
   },
@@ -27,10 +27,6 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className="antialiased bg-gray-50 text-gray-900 pb-20 md:pb-0">
-        <div className="bg-yellow-100 border-b border-yellow-200 text-yellow-800 text-center text-sm py-2 px-4 font-medium">
-          ⚠️ Konzept-Präsentation - Noch nicht live geschaltet
-        </div>
-
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

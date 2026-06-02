@@ -9,26 +9,26 @@ export default function HomePage() {
 
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-orange-500 to-red-500 text-white py-20">
+        <section className="bg-gradient-to-br from-pink-500 via-pink-600 to-purple-600 text-white py-20">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
               Willkommen bei <br />
               <span className="text-yellow-300">Kiosk Lollipop</span>
             </h1>
-            <p className="mt-4 max-w-2xl mx-auto text-xl text-orange-50 mb-4">
-              Ihr Kiosk und Hermes Paketshop in Erftstadt-Liblar
+            <p className="mt-4 max-w-2xl mx-auto text-xl text-pink-50 mb-4">
+              Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar
             </p>
-            <p className="max-w-2xl mx-auto text-lg text-orange-100 mb-10">
+            <p className="max-w-2xl mx-auto text-lg text-pink-100 mb-10">
               Theodor-Heuss-Straße 35, 50374 Erftstadt
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/kontakt">
-                <button className="bg-white hover:bg-gray-100 text-orange-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
+                <button className="bg-white hover:bg-gray-100 text-pink-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
                   Jetzt besuchen
                 </button>
               </Link>
               <Link href="/#produkte">
-                <button className="bg-orange-600 hover:bg-orange-700 text-white border-2 border-white px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
+                <button className="bg-pink-700 hover:bg-pink-800 text-white border-2 border-white px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
                   Unser Sortiment
                 </button>
               </Link>
@@ -37,11 +37,10 @@ export default function HomePage() {
         </section>
 
         {/* Aktuelle Aktion Banner */}
-        <section className="bg-gradient-to-r from-yellow-400 to-orange-500 py-4">
+        <section className="bg-gradient-to-r from-yellow-400 to-orange-400 py-4">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-white font-bold text-lg">
-              🎉 PLATZHALTER: Hier können Sie Ihre aktuellen Aktionen eintragen (z.B. "10% auf alle
-              Getränke")! 🎉
+              🎉 PLATZHALTER: Hier können Sie Ihre aktuellen Aktionen eintragen! 🎉
             </p>
             <p className="text-white text-sm mt-1">
               Ändern Sie diesen Text jederzeit selbst, um auf neue Lieferungen oder Angebote
@@ -54,19 +53,19 @@ export default function HomePage() {
         <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-gray-900 mb-8">Öffnungszeiten</h2>
-            <div className="bg-orange-50 p-8 rounded-xl border-2 border-orange-200">
+            <div className="bg-pink-50 p-8 rounded-xl border-2 border-pink-200">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">Montag, Dienstag, Freitag</h3>
-                  <p className="text-2xl text-orange-600 font-bold">07:30 - 19:00 Uhr</p>
+                  <p className="text-2xl text-pink-600 font-bold">07:30 - 19:00 Uhr</p>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">Mittwoch, Donnerstag</h3>
-                  <p className="text-2xl text-orange-600 font-bold">14:00 - 19:00 Uhr</p>
+                  <p className="text-2xl text-pink-600 font-bold">14:00 - 19:00 Uhr</p>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">Samstag</h3>
-                  <p className="text-2xl text-orange-600 font-bold">07:30 - 13:30 Uhr</p>
+                  <p className="text-2xl text-pink-600 font-bold">07:30 - 13:30 Uhr</p>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">Sonntag</h3>
@@ -157,21 +156,21 @@ export default function HomePage() {
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                   <div className="border border-gray-200 rounded-lg p-4 text-center">
-                    <span className="block font-bold text-orange-600 text-lg mb-1">S-Paket</span>
+                    <span className="block font-bold text-pink-600 text-lg mb-1">S-Paket</span>
                     <span className="text-gray-600">bis 31,5 x 23,5 x 3,5 cm</span>
                     <span className="block text-gray-500 text-xs mt-1">
                       (z.B. Briefe, kleine Artikel)
                     </span>
                   </div>
-                  <div className="border border-gray-200 rounded-lg p-4 text-center bg-orange-50">
-                    <span className="block font-bold text-orange-600 text-lg mb-1">M-Paket</span>
+                  <div className="border border-gray-200 rounded-lg p-4 text-center bg-pink-50">
+                    <span className="block font-bold text-pink-600 text-lg mb-1">M-Paket</span>
                     <span className="text-gray-600">bis 50 x 30 x 10 cm</span>
                     <span className="block text-gray-500 text-xs mt-1">
                       (z.B. Schuhe, kleine Kartons)
                     </span>
                   </div>
                   <div className="border border-gray-200 rounded-lg p-4 text-center">
-                    <span className="block font-bold text-orange-600 text-lg mb-1">L-Paket</span>
+                    <span className="block font-bold text-pink-600 text-lg mb-1">L-Paket</span>
                     <span className="text-gray-600">bis 120 x 60 x 60 cm</span>
                     <span className="block text-gray-500 text-xs mt-1">(z.B. große Kartons)</span>
                   </div>
@@ -204,22 +203,22 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Beliebte Marken bei uns</h2>
             <div className="flex flex-wrap justify-center gap-4 md:gap-8">
-              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+              <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
                 🥤 Coca-Cola
               </span>
-              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+              <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
                 🍫 Milka & Ritter Sport
               </span>
-              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+              <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
                 🚬 Marlboro & Camel
               </span>
-              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+              <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
                 🎫 Lotto 6aus49
               </span>
-              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+              <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
                 📰 Express & KStA
               </span>
-              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+              <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
                 📱 Vodafone & Telekom
               </span>
             </div>
@@ -232,7 +231,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Unser Sortiment</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">🥤</span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Getränke</h3>
@@ -349,16 +348,16 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Über uns</h2>
             <div className="flex items-center justify-center mb-6">
-              <div className="bg-orange-100 border-2 border-orange-300 rounded-full px-6 py-3">
-                <span className="text-orange-800 font-bold text-lg">
+              <div className="bg-pink-100 border-2 border-pink-300 rounded-full px-6 py-3">
+                <span className="text-pink-800 font-bold text-lg">
                   🏆 Seit über 10 Jahren in Liblar
                 </span>
               </div>
             </div>
-            <div className="bg-orange-50 p-8 rounded-xl border border-orange-200">
+            <div className="bg-pink-50 p-8 rounded-xl border border-pink-200">
               <p className="text-lg text-gray-700 leading-relaxed mb-4">
                 <strong>Kiosk Lollipop</strong> ist Ihr freundlicher Nachbarschaftskiosk und Hermes
-                Paketshop im Herzen von Erftstadt-Liblar. Wir befinden uns in der
+                Paketshop am Bürgerplatz im Herzen von Erftstadt-Liblar. Wir befinden uns in der
                 Theodor-Heuss-Straße 35, in der Nähe des Bahnhofs und weiterer lokaler Geschäfte.
               </p>
               <p className="text-lg text-gray-700 leading-relaxed mb-4">
@@ -376,20 +375,20 @@ export default function HomePage() {
         </section>
 
         {/* CTA Section mit GPS-Koordinaten */}
-        <section className="py-16 bg-gradient-to-r from-orange-500 to-red-500 text-white">
+        <section className="py-16 bg-gradient-to-r from-pink-500 to-purple-600 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-4">Besuchen Sie uns!</h2>
-            <p className="text-xl text-orange-50 mb-4">
+            <p className="text-xl text-pink-50 mb-4">
               Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar
             </p>
-            <p className="text-lg text-orange-100 mb-8">Wir freuen uns auf Ihren Besuch!</p>
+            <p className="text-lg text-pink-100 mb-8">Wir freuen uns auf Ihren Besuch!</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
                 href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <button className="bg-white hover:bg-gray-100 text-orange-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center mx-auto">
+                <button className="bg-white hover:bg-gray-100 text-pink-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center mx-auto">
                   <svg
                     className="w-5 h-5 mr-2"
                     fill="none"
@@ -413,7 +412,7 @@ export default function HomePage() {
                 </button>
               </a>
               <Link href="/kontakt">
-                <button className="bg-orange-600 hover:bg-orange-700 text-white border-2 border-white px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
+                <button className="bg-pink-700 hover:bg-pink-800 text-white border-2 border-white px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
                   Kontaktformular
                 </button>
               </Link>
