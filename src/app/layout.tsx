@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import MobileActionBar from '@/components/MobileActionBar';
 
 export const metadata: Metadata = {
   title: 'Kiosk Lollipop | Erftstadt-Liblar - Hermes Paketshop & Kiosk',
@@ -16,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
-      <body className="antialiased bg-gray-50 text-gray-900">
+      <body className="antialiased bg-gray-50 text-gray-900 pb-20 md:pb-0">
         {/* Demo Banner */}
         <div className="bg-yellow-100 border-b border-yellow-200 text-yellow-800 text-center text-sm py-2 px-4 font-medium">
           ⚠️ Konzept-Präsentation - Noch nicht live geschaltet
@@ -92,6 +93,7 @@ export default function RootLayout({
         />
 
         {children}
+        <MobileActionBar />
       </body>
     </html>
   );

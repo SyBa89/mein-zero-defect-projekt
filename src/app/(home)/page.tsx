@@ -63,7 +63,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Service & Zahlung (NEU) */}
+        {/* Service & Zahlung */}
         <section className="py-12 bg-white border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
@@ -100,7 +100,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Hermes Paketshop Highlight */}
+        {/* Hermes Paketshop Highlight + Größen-Guide (NEU) */}
         <section className="py-16 bg-yellow-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-yellow-100 p-8 rounded-xl border-2 border-yellow-300">
@@ -109,28 +109,79 @@ export default function HomePage() {
               <p className="text-lg text-gray-700 mb-6">
                 Wir sind Ihr offizieller Hermes Paketshop in Erftstadt-Liblar!
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                <div className="bg-white p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-900 mb-2">📮 Pakete abholen</h3>
-                  <p className="text-sm text-gray-600">
-                    Holen Sie Ihre Hermes-Pakete bequem bei uns ab
-                  </p>
-                </div>
-                <div className="bg-white p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-900 mb-2">📤 Pakete versenden</h3>
-                  <p className="text-sm text-gray-600">Versenden Sie Ihre Pakete direkt bei uns</p>
-                </div>
-                <div className="bg-white p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-900 mb-2">↩️ Retouren</h3>
-                  <p className="text-sm text-gray-600">
-                    Geben Sie Ihre Retouren einfach bei uns ab
-                  </p>
-                </div>
-                <div className="bg-white p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-900 mb-2">🏷️ Etiketten</h3>
-                  <p className="text-sm text-gray-600">Drucken Sie Ihre Versandetiketten bei uns</p>
+
+              {/* Der Spickzettel */}
+              <div className="bg-white rounded-lg p-6 mb-6 text-left">
+                <h3 className="font-semibold text-gray-900 mb-4 text-center">
+                  📏 Hermes Paketgrößen im Überblick
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                  <div className="border border-gray-200 rounded-lg p-4 text-center">
+                    <span className="block font-bold text-orange-600 text-lg mb-1">S-Paket</span>
+                    <span className="text-gray-600">bis 31,5 x 23,5 x 3,5 cm</span>
+                    <span className="block text-gray-500 text-xs mt-1">
+                      (z.B. Briefe, kleine Artikel)
+                    </span>
+                  </div>
+                  <div className="border border-gray-200 rounded-lg p-4 text-center bg-orange-50">
+                    <span className="block font-bold text-orange-600 text-lg mb-1">M-Paket</span>
+                    <span className="text-gray-600">bis 50 x 30 x 10 cm</span>
+                    <span className="block text-gray-500 text-xs mt-1">
+                      (z.B. Schuhe, kleine Kartons)
+                    </span>
+                  </div>
+                  <div className="border border-gray-200 rounded-lg p-4 text-center">
+                    <span className="block font-bold text-orange-600 text-lg mb-1">L-Paket</span>
+                    <span className="text-gray-600">bis 120 x 60 x 60 cm</span>
+                    <span className="block text-gray-500 text-xs mt-1">(z.B. große Kartons)</span>
+                  </div>
                 </div>
               </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                <div className="bg-white p-4 rounded-lg">
+                  <h3 className="font-semibold text-gray-900 mb-2">
+                    📮 Pakete abholen & 📤 versenden
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Holen Sie Ihre Pakete bequem ab oder versenden Sie diese direkt bei uns.
+                  </p>
+                </div>
+                <div className="bg-white p-4 rounded-lg">
+                  <h3 className="font-semibold text-gray-900 mb-2">↩️ Retouren & 🏷️ Etiketten</h3>
+                  <p className="text-sm text-gray-600">
+                    Geben Sie Retouren einfach ab oder lassen Sie sich vor Ort ein Etikett
+                    erstellen.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Beliebte Marken (NEU) */}
+        <section className="py-12 bg-white border-b border-gray-200">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">Beliebte Marken bei uns</h2>
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+                🥤 Coca-Cola
+              </span>
+              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+                🍫 Milka & Ritter Sport
+              </span>
+              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+                🚬 Marlboro & Camel
+              </span>
+              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+                🎫 Lotto 6aus49
+              </span>
+              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+                📰 Express & KStA
+              </span>
+              <span className="px-4 py-2 bg-gray-100 rounded-full text-gray-700 font-medium">
+                📱 Vodafone & Telekom
+              </span>
             </div>
           </div>
         </section>
@@ -205,7 +256,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* FAQ Section (NEU) */}
+        {/* FAQ Section */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Häufige Fragen</h2>
@@ -258,16 +309,6 @@ export default function HomePage() {
                   verfügbar - ohne Wartezeit und ohne Mindestbestellwert.
                 </p>
               </div>
-
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  🎫 Welche Lotterie-Produkte gibt es?
-                </h3>
-                <p className="text-gray-600">
-                  Wir sind offizielle Lotto-Annahmestelle und bieten Lotto 6aus49, Eurojackpot,
-                  Rubbellose und weitere Lotterieprodukte an.
-                </p>
-              </div>
             </div>
           </div>
         </section>
@@ -296,7 +337,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section mit echtem Maps-Link (NEU) */}
         <section className="py-16 bg-gradient-to-r from-orange-500 to-red-500 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-4">Besuchen Sie uns!</h2>
@@ -304,15 +345,45 @@ export default function HomePage() {
               Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar
             </p>
             <p className="text-lg text-orange-100 mb-8">Wir freuen uns auf Ihren Besuch!</p>
-            <Link href="/kontakt">
-              <button className="bg-white hover:bg-gray-100 text-orange-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
-                Kontakt & Anfahrt
-              </button>
-            </Link>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=Theodor-Heuss-Straße+35,+50374+Erftstadt"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="bg-white hover:bg-gray-100 text-orange-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center mx-auto">
+                  <svg
+                    className="w-5 h-5 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  Route planen
+                </button>
+              </a>
+              <Link href="/kontakt">
+                <button className="bg-orange-600 hover:bg-orange-700 text-white border-2 border-white px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
+                  Kontaktformular
+                </button>
+              </Link>
+            </div>
           </div>
         </section>
 
-        {/* Rechtliche Hinweise (NEU) */}
+        {/* Rechtliche Hinweise */}
         <section className="py-8 bg-gray-100 border-t border-gray-200">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
