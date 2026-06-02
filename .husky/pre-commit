@@ -1,0 +1,2 @@
+echo "🛡️ Zero-Defect Guardrails werden geprüft..."
+npx lint-staged

@@ -1,0 +1,46 @@
+# Dependencies (werden bei Bedarf neu installiert)
+node_modules/
+.pnp
+.pnp.js
+
+# Build-Output (wird automatisch generiert)
+dist/
+build/
+.next/
+out/
+
+# Environment Variables (GEHEIM - niemals hochladen!)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs (werden bei Bedarf neu erstellt)
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
