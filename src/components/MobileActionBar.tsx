@@ -19,7 +19,7 @@ export default function MobileActionBar() {
           Anrufen
         </a>
         <a
-          href="https://www.google.com/maps/dir/?api=1&destination=Theodor-Heuss-Straße+35,+50374+Erftstadt"
+          href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center py-4 bg-orange-600 text-white font-semibold hover:bg-orange-700 transition-colors"

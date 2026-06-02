@@ -36,7 +36,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Aktuelle Aktion Banner (Als Werkzeug für den Inhaber gekennzeichnet) */}
+        {/* Aktuelle Aktion Banner */}
         <section className="bg-gradient-to-r from-yellow-400 to-orange-500 py-4">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-white font-bold text-lg">
@@ -375,7 +375,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA Section mit GPS-Koordinaten */}
         <section className="py-16 bg-gradient-to-r from-orange-500 to-red-500 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-4">Besuchen Sie uns!</h2>
@@ -385,7 +385,7 @@ export default function HomePage() {
             <p className="text-lg text-orange-100 mb-8">Wir freuen uns auf Ihren Besuch!</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=Theodor-Heuss-Straße+35,+50374+Erftstadt"
+                href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -409,7 +409,7 @@ export default function HomePage() {
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  Route planen
+                  Exakte Route planen
                 </button>
               </a>
               <Link href="/kontakt">

@@ -22,6 +22,9 @@ export default function KontaktPage() {
                     <br />
                     50374 Erftstadt-Liblar
                   </span>
+                  <span className="block text-xs text-gray-500 mt-1">
+                    (Haupteingang direkt am Leipziger Ring)
+                  </span>
                 </div>
               </div>
 
@@ -62,12 +65,12 @@ export default function KontaktPage() {
               </div>
             </div>
 
-            {/* Exakte Google Maps Einbettung für Kiosk Lollipop */}
+            {/* Exakte Google Maps Einbettung per GPS-Koordinaten */}
             <div className="mt-8">
               <h3 className="font-semibold text-gray-900 mb-3">Anfahrt</h3>
               <div className="rounded-lg overflow-hidden shadow-md">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2517.846789012345!2d6.8212518!3d50.8069582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bf17dbc5bf6179%3A0xfd83e8aa5bb87522!2sKiosk%20Lollipop!5e0!3m2!1sde!2sde!4v1700000000000!5m2!1sde!2sde"
+                  src="https://maps.google.com/maps?q=50.806945,6.823683&hl=de&z=19&output=embed"
                   width="100%"
                   height="300"
                   style={{ border: 0 }}
@@ -77,17 +80,16 @@ export default function KontaktPage() {
                   title="Standort Kiosk Lollipop"
                 ></iframe>
               </div>
-              <p className="text-sm text-gray-500 mt-2">
-                💡 Tipp: Klicken Sie auf die Karte für eine größere Ansicht.
-              </p>
-            </div>
 
-            {/* Lage-Hinweis */}
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <p className="text-sm text-blue-800">
-                <strong>📍 Lage:</strong> Wir befinden uns im Zentrum von Liblar, in der Nähe des
-                Bahnhofs und weiterer lokaler Geschäfte. Gute Parkmöglichkeiten in der Umgebung.
-              </p>
+              {/* Der geniale Navigationstipp */}
+              <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                <p className="text-sm text-green-800">
+                  <strong>💡 Profi-Navigationstipp:</strong> Damit Ihr Navi Sie nicht am Geschäft
+                  vorbeiführt, nutzen Sie für die Anreise am besten direkt die Koordinaten oder die
+                  Angabe "Leipziger Ring". Der Haupteingang und die Parkmöglichkeiten befinden sich
+                  dort.
+                </p>
+              </div>
             </div>
           </div>
 
