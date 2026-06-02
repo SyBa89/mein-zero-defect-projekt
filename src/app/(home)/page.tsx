@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -18,16 +19,24 @@ export default function HomePage() {
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
-            Dokumentation lesen
-          </button>
-          <button className="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-sm">
-            GitHub Repository
-          </button>
+          <Link href="/about">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
+              Mehr erfahren
+            </button>
+          </Link>
+          <a
+            href="https://github.com/SyBa89/mein-zero-defect-projekt"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-sm">
+              GitHub Repository
+            </button>
+          </a>
         </div>
 
-        {/* Feature Grid als Vorschau */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+        {/* Feature Grid */}
+        <div id="features" className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
               <span className="text-blue-600 text-xl">🛡️</span>

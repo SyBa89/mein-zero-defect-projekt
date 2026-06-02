@@ -29,25 +29,27 @@ export default function Header() {
             >
               Über uns
             </Link>
-            <a
-              href="#features"
+            <Link
+              href="/#features"
               className="text-gray-600 hover:text-blue-600 transition-colors font-medium"
             >
               Features
-            </a>
-            <a
-              href="#kontakt"
+            </Link>
+            <Link
+              href="/kontakt"
               className="text-gray-600 hover:text-blue-600 transition-colors font-medium"
             >
               Kontakt
-            </a>
+            </Link>
           </nav>
 
           {/* Call to Action Button */}
           <div className="hidden md:flex">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
-              Loslegen
-            </button>
+            <Link href="/kontakt">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
+                Loslegen
+              </button>
+            </Link>
           </div>
         </div>
       </div>
