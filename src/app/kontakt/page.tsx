@@ -62,15 +62,23 @@ export default function KontaktPage() {
               </div>
             </div>
 
-            {/* Google Maps Einbettung */}
+            {/* ECHTE Google Maps Einbettung */}
             <div className="mt-8">
               <h3 className="font-semibold text-gray-900 mb-3">Anfahrt</h3>
-              <div className="bg-gray-200 rounded-lg h-64 flex items-center justify-center text-gray-500">
-                [Google Maps Karte würde hier erscheinen]
+              <div className="rounded-lg overflow-hidden shadow-md">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2517.8!2d6.8238405!3d50.8069582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bf3d8f37955a6d%3A0xc6386e16f5216e3b!2sKiosk%20Lollipop!5e0!3m2!1sde!2sde!4v1234567890"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Kiosk Lollipop Standort"
+                ></iframe>
               </div>
               <p className="text-sm text-gray-500 mt-2">
-                Hinweis: In der Live-Version wird hier eine interaktive Google Maps Karte
-                eingebettet.
+                💡 Tipp: Klicken Sie auf die Karte für eine größere Ansicht.
               </p>
             </div>
 

@@ -36,6 +36,18 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Aktuelle Aktion Banner (NEU) */}
+        <section className="bg-gradient-to-r from-yellow-400 to-orange-500 py-4">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p className="text-white font-bold text-lg">
+              🎉 AKTION: 10% Rabatt auf alle Getränke diese Woche! 🎉
+            </p>
+            <p className="text-white text-sm mt-1">
+              Gültig bis Sonntag, nur solange der Vorrat reicht.
+            </p>
+          </div>
+        </section>
+
         {/* Öffnungszeiten */}
         <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -100,7 +112,39 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Hermes Paketshop Highlight + Größen-Guide (NEU) */}
+        {/* Erweiterte Services (NEU) */}
+        <section className="py-12 bg-gray-50 border-b border-gray-200">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Weitere Services</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="text-3xl mb-2">💰</div>
+                <h3 className="font-semibold text-gray-900 text-sm">Geld abheben</h3>
+                <p className="text-xs text-gray-600 mt-1">EC-Karte & Kreditkarte</p>
+              </div>
+
+              <div className="text-center">
+                <div className="text-3xl mb-2">🖨️</div>
+                <h3 className="font-semibold text-gray-900 text-sm">Druckservice</h3>
+                <p className="text-xs text-gray-600 mt-1">Kopien & Ausdrucke</p>
+              </div>
+
+              <div className="text-center">
+                <div className="text-3xl mb-2">🔋</div>
+                <h3 className="font-semibold text-gray-900 text-sm">Powerakkus</h3>
+                <p className="text-xs text-gray-600 mt-1">Zum Ausleihen</p>
+              </div>
+
+              <div className="text-center">
+                <div className="text-3xl mb-2">🎁</div>
+                <h3 className="font-semibold text-gray-900 text-sm">Geschenkkarten</h3>
+                <p className="text-xs text-gray-600 mt-1">Verschiedene Anbieter</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Hermes Paketshop Highlight + Größen-Guide */}
         <section className="py-16 bg-yellow-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-yellow-100 p-8 rounded-xl border-2 border-yellow-300">
@@ -159,7 +203,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Beliebte Marken (NEU) */}
+        {/* Beliebte Marken */}
         <section className="py-12 bg-white border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Beliebte Marken bei uns</h2>
@@ -313,10 +357,20 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Über uns Section */}
+        {/* Über uns Section mit Trust-Badge (NEU) */}
         <section id="ueber-uns" className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Über uns</h2>
+
+            {/* Trust Badge */}
+            <div className="flex items-center justify-center mb-6">
+              <div className="bg-orange-100 border-2 border-orange-300 rounded-full px-6 py-3">
+                <span className="text-orange-800 font-bold text-lg">
+                  🏆 Seit über 10 Jahren in Liblar
+                </span>
+              </div>
+            </div>
+
             <div className="bg-orange-50 p-8 rounded-xl border border-orange-200">
               <p className="text-lg text-gray-700 leading-relaxed mb-4">
                 <strong>Kiosk Lollipop</strong> ist Ihr freundlicher Nachbarschaftskiosk und Hermes
@@ -337,7 +391,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA Section mit echtem Maps-Link (NEU) */}
+        {/* CTA Section mit echtem Maps-Link */}
         <section className="py-16 bg-gradient-to-r from-orange-500 to-red-500 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-4">Besuchen Sie uns!</h2>
