@@ -8,6 +8,9 @@ export const metadata: Metadata = {
     'Ihr lokaler Kiosk und Hermes Paketshop in Erftstadt-Liblar. Getränke, Snacks, Lotto & mehr. Täglich geöffnet!',
   keywords:
     'Kiosk Erftstadt, Hermes Paketshop Liblar, Späti 50374, Kiosk Nähe Bahnhof Liblar, Lotto Erftstadt',
+  icons: {
+    icon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍭</text></svg>',
+  },
   openGraph: {
     title: 'Kiosk Lollipop | Erftstadt-Liblar',
     description: 'Ihr freundlicher Nachbarschaftskiosk und Hermes Paketshop. Jetzt besuchen!',
@@ -24,12 +27,10 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className="antialiased bg-gray-50 text-gray-900 pb-20 md:pb-0">
-        {/* Demo Banner */}
         <div className="bg-yellow-100 border-b border-yellow-200 text-yellow-800 text-center text-sm py-2 px-4 font-medium">
           ⚠️ Konzept-Präsentation - Noch nicht live geschaltet
         </div>
 
-        {/* Strukturierte Daten für Google (SEO) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -47,8 +48,8 @@ export default function RootLayout({
               },
               geo: {
                 '@type': 'GeoCoordinates',
-                latitude: 50.8069582,
-                longitude: 6.8238405,
+                latitude: 50.806945,
+                longitude: 6.823683,
               },
               telephone: '+4922359291160',
               openingHoursSpecification: [
