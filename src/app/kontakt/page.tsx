@@ -6,50 +6,79 @@ export default function KontaktPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">Kontakt aufnehmen</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">Kontakt & Anfahrt</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Kontaktinformationen */}
           <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">So erreichen Sie uns</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">So finden Sie uns</h2>
             <div className="space-y-4 text-gray-700">
               <div className="flex items-start">
-                <span className="text-blue-600 mr-3 text-xl">📧</span>
+                <span className="text-orange-600 mr-3 text-xl">📍</span>
                 <div>
-                  <strong className="block text-gray-900">E-Mail</strong>
-                  <a
-                    href="mailto:kontakt@zero-defect-os.de"
-                    className="hover:text-blue-600 transition-colors"
-                  >
-                    kontakt@zero-defect-os.de
+                  <strong className="block text-gray-900">Adresse</strong>
+                  <span>
+                    Theodor-Heuss-Straße 35
+                    <br />
+                    50374 Erftstadt-Liblar
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-start">
+                <span className="text-orange-600 mr-3 text-xl">📞</span>
+                <div>
+                  <strong className="block text-gray-900">Telefon</strong>
+                  <a href="tel:+4922359291160" className="hover:text-orange-600 transition-colors">
+                    +49 2235 9291160
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start">
-                <span className="text-blue-600 mr-3 text-xl">📞</span>
+                <span className="text-orange-600 mr-3 text-xl">📧</span>
                 <div>
-                  <strong className="block text-gray-900">Telefon</strong>
-                  <span>+49 (0) 123 456789</span>
+                  <strong className="block text-gray-900">E-Mail</strong>
+                  <a
+                    href="mailto:info@kiosk-lollipop.de"
+                    className="hover:text-orange-600 transition-colors"
+                  >
+                    info@kiosk-lollipop.de
+                  </a>
                 </div>
               </div>
 
               <div className="flex items-start">
-                <span className="text-blue-600 mr-3 text-xl">📍</span>
+                <span className="text-orange-600 mr-3 text-xl">🕐</span>
                 <div>
-                  <strong className="block text-gray-900">Adresse</strong>
-                  <span>
-                    Musterstraße 1<br />
-                    12345 Musterstadt
-                  </span>
+                  <strong className="block text-gray-900">Öffnungszeiten</strong>
+                  <div className="text-sm space-y-1 mt-1">
+                    <p>Mo, Di, Fr: 07:30 - 19:00 Uhr</p>
+                    <p>Mi, Do: 14:00 - 19:00 Uhr</p>
+                    <p>Samstag: 07:30 - 13:30 Uhr</p>
+                    <p>Sonntag: Geschlossen</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-100">
+            {/* Google Maps Einbettung */}
+            <div className="mt-8">
+              <h3 className="font-semibold text-gray-900 mb-3">Anfahrt</h3>
+              <div className="bg-gray-200 rounded-lg h-64 flex items-center justify-center text-gray-500">
+                [Google Maps Karte würde hier erscheinen]
+              </div>
+              <p className="text-sm text-gray-500 mt-2">
+                Hinweis: In der Live-Version wird hier eine interaktive Google Maps Karte
+                eingebettet.
+              </p>
+            </div>
+
+            {/* Lage-Hinweis */}
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
               <p className="text-sm text-blue-800">
-                <strong>Hinweis:</strong> Dies ist eine Konzept-Präsentation. Die Kontaktdaten sind
-                Platzhalter.
+                <strong>📍 Lage:</strong> Wir befinden uns im Zentrum von Liblar, in der Nähe des
+                Bahnhofs und weiterer lokaler Geschäfte. Gute Parkmöglichkeiten in der Umgebung.
               </p>
             </div>
           </div>
@@ -66,7 +95,7 @@ export default function KontaktPage() {
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                   placeholder="Ihr Name"
                 />
               </div>
@@ -79,7 +108,7 @@ export default function KontaktPage() {
                   type="email"
                   id="email"
                   name="email"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                   placeholder="ihre@email.de"
                 />
               </div>
@@ -92,14 +121,14 @@ export default function KontaktPage() {
                   id="message"
                   name="message"
                   rows={5}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                   placeholder="Ihre Nachricht..."
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors shadow-sm"
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-lg transition-colors shadow-sm"
               >
                 Nachricht senden
               </button>

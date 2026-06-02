@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -7,10 +9,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand Section */}
           <div>
-            <h3 className="text-white text-lg font-semibold mb-4">Zero-Defect OS</h3>
-            <p className="text-sm text-gray-400">
-              Professionelle Webentwicklung mit automatischen Quality Gates und modernem Tech-Stack.
+            <h3 className="text-white text-lg font-semibold mb-4">🍭 Kiosk Lollipop</h3>
+            <p className="text-sm text-gray-400 mb-2">
+              Ihr Kiosk und Hermes Paketshop in Erftstadt-Liblar.
             </p>
+            <p className="text-sm text-gray-400">Täglich für Sie geöffnet (außer sonntags).</p>
           </div>
 
           {/* Links Section */}
@@ -18,19 +21,14 @@ export default function Footer() {
             <h3 className="text-white text-lg font-semibold mb-4">Rechtliches</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/impressum" className="hover:text-white transition-colors">
+                <Link href="/impressum" className="hover:text-white transition-colors">
                   Impressum
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/datenschutz" className="hover:text-white transition-colors">
+                <Link href="/datenschutz" className="hover:text-white transition-colors">
                   Datenschutz
-                </a>
-              </li>
-              <li>
-                <a href="/about" className="hover:text-white transition-colors">
-                  Über uns
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -39,15 +37,17 @@ export default function Footer() {
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">Kontakt</h3>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li>📧 kontakt@zero-defect-os.de</li>
-              <li>🌐 www.zero-defect-os.de</li>
+              <li>📍 Theodor-Heuss-Straße 35</li>
+              <li className="ml-6">50374 Erftstadt-Liblar</li>
+              <li>📞 +49 2235 9291160</li>
+              <li>📧 info@kiosk-lollipop.de</li>
             </ul>
           </div>
         </div>
 
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
-          <p>&copy; {currentYear} Zero-Defect OS. Alle Rechte vorbehalten.</p>
+          <p>&copy; {currentYear} Kiosk Lollipop. Alle Rechte vorbehalten.</p>
         </div>
       </div>
     </footer>
