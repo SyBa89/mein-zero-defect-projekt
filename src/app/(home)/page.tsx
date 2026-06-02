@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FAQ from '@/components/FAQ';
 import Reviews from '@/components/Reviews';
+import PackageCalculator from '@/components/PackageCalculator';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -13,7 +14,6 @@ export default function HomePage() {
       <main>
         {/* Hero Section mit optimiertem Hintergrundbild */}
         <section className="relative h-[80vh] min-h-[500px] flex items-center justify-center overflow-hidden">
-          {/* Hintergrundbild (Platzhalter - kann später durch public/images/kiosk.jpg ersetzt werden) */}
           <Image
             src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop"
             alt="Kiosk Lollipop Innenansicht"
@@ -21,11 +21,8 @@ export default function HomePage() {
             className="object-cover"
             priority
           />
-
-          {/* Dunkles Overlay für perfekte Lesbarkeit des Textes */}
           <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-pink-900/70" />
 
-          {/* Inhalt über dem Bild */}
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
               Willkommen bei <br />
@@ -65,30 +62,59 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Öffnungszeiten */}
+        {/* Öffnungszeiten - TABELLE */}
         <section className="py-16 bg-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">Öffnungszeiten</h2>
-            <div className="bg-pink-50 p-8 rounded-xl border-2 border-pink-200">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Montag, Dienstag, Freitag</h3>
-                  <p className="text-2xl text-pink-600 font-bold">07:30 - 19:00 Uhr</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Mittwoch, Donnerstag</h3>
-                  <p className="text-2xl text-pink-600 font-bold">14:00 - 19:00 Uhr</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Samstag</h3>
-                  <p className="text-2xl text-pink-600 font-bold">07:30 - 13:30 Uhr</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Sonntag</h3>
-                  <p className="text-2xl text-red-600 font-bold">Geschlossen</p>
-                </div>
-              </div>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Öffnungszeiten</h2>
+            <div className="bg-pink-50 rounded-xl border-2 border-pink-200 overflow-hidden shadow-sm">
+              <table className="w-full">
+                <tbody className="divide-y divide-pink-200">
+                  <tr className="hover:bg-pink-100 transition-colors">
+                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Montag</td>
+                    <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
+                      07:30 - 19:00 Uhr
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-pink-100 transition-colors">
+                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Dienstag</td>
+                    <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
+                      07:30 - 19:00 Uhr
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-pink-100 transition-colors">
+                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Mittwoch</td>
+                    <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
+                      14:00 - 19:00 Uhr
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-pink-100 transition-colors">
+                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Donnerstag</td>
+                    <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
+                      14:00 - 19:00 Uhr
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-pink-100 transition-colors">
+                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Freitag</td>
+                    <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
+                      07:30 - 19:00 Uhr
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-pink-100 transition-colors">
+                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Samstag</td>
+                    <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
+                      07:30 - 13:30 Uhr
+                    </td>
+                  </tr>
+                  <tr className="bg-red-50">
+                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Sonntag</td>
+                    <td className="px-6 py-4 text-right text-red-600 font-bold text-lg">
+                      Geschlossen
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <p className="text-center text-sm text-gray-600 mt-4">Feiertage: Nach Vereinbarung</p>
           </div>
         </section>
 
@@ -109,7 +135,7 @@ export default function HomePage() {
                 <div className="text-4xl mb-3">🚗</div>
                 <h3 className="font-semibold text-gray-900 mb-2">Parken</h3>
                 <p className="text-sm text-gray-600">
-                  Kurze Haltezone vor dem Geschäft
+                  Kostenfreie Parkplätze vor dem Geschäft
                   <br />
                   Öffentliche Parkplätze in der Nähe
                 </p>
@@ -156,7 +182,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Hermes Paketshop Highlight + Größen-Guide */}
+        {/* Hermes Paketshop Highlight + INTERAKTIVER RECHNER (NEU!) */}
         <section className="py-16 bg-yellow-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-yellow-100 p-8 rounded-xl border-2 border-yellow-300">
@@ -166,11 +192,15 @@ export default function HomePage() {
                 Wir sind Ihr offizieller Hermes Paketshop in Erftstadt-Liblar!
               </p>
 
-              <div className="bg-white rounded-lg p-6 mb-6 text-left">
-                <h3 className="font-semibold text-gray-900 mb-4 text-center">
-                  📏 Hermes Paketgrößen im Überblick
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+              {/* INTERAKTIVER PAKETGRÖSSEN-RECHNER (NEU!) */}
+              <PackageCalculator />
+
+              {/* Statische Tabelle als Referenz */}
+              <details className="bg-white rounded-lg p-4 mb-6 text-left">
+                <summary className="font-semibold text-gray-900 cursor-pointer hover:text-pink-600 transition-colors">
+                  📋 Alle Paketgrößen im Detail anzeigen
+                </summary>
+                <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                   <div className="border border-gray-200 rounded-lg p-4 text-center">
                     <span className="block font-bold text-pink-600 text-lg mb-1">S-Paket</span>
                     <span className="text-gray-600">bis 31,5 x 23,5 x 3,5 cm</span>
@@ -191,7 +221,7 @@ export default function HomePage() {
                     <span className="block text-gray-500 text-xs mt-1">(z.B. große Kartons)</span>
                   </div>
                 </div>
-              </div>
+              </details>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                 <div className="bg-white p-4 rounded-lg">
@@ -214,13 +244,46 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Beliebte Marken */}
+        {/* HEUTE BESONDERS GEFRAGT (NEU!) */}
+        <section className="py-12 bg-gradient-to-r from-pink-50 to-purple-50 border-b border-gray-200">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-white rounded-xl shadow-md border-2 border-pink-200 p-6">
+              <div className="flex items-center justify-center mb-4">
+                <span className="text-3xl mr-3">🔥</span>
+                <h2 className="text-2xl font-bold text-gray-900">Heute besonders gefragt</h2>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center p-4 bg-pink-50 rounded-lg">
+                  <div className="text-3xl mb-2">🥤</div>
+                  <p className="font-semibold text-gray-900 text-sm">Gekühlte Getränke</p>
+                </div>
+                <div className="text-center p-4 bg-yellow-50 rounded-lg">
+                  <div className="text-3xl mb-2">🍦</div>
+                  <p className="font-semibold text-gray-900 text-sm">Eis & Snacks</p>
+                </div>
+                <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <div className="text-3xl mb-2">📰</div>
+                  <p className="font-semibold text-gray-900 text-sm">Tageszeitungen</p>
+                </div>
+                <div className="text-center p-4 bg-green-50 rounded-lg">
+                  <div className="text-3xl mb-2">📦</div>
+                  <p className="font-semibold text-gray-900 text-sm">Hermes Versand</p>
+                </div>
+              </div>
+              <p className="text-center text-sm text-gray-600 mt-4">
+                Aktualisiert täglich • Alles sofort verfügbar
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Beliebte Marken - MIT KONKRETEN NAMEN */}
         <section className="py-12 bg-white border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Beliebte Marken bei uns</h2>
             <div className="flex flex-wrap justify-center gap-4 md:gap-8">
               <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
-                🥤 Coca-Cola
+                🥤 Coca-Cola & Fanta
               </span>
               <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
                 🍫 Milka & Ritter Sport
@@ -229,10 +292,10 @@ export default function HomePage() {
                 🚬 Marlboro & Camel
               </span>
               <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
-                🎫 Lotto 6aus49
+                🎫 Lotto 6aus49 & Eurojackpot
               </span>
               <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
-                📰 Express & KStA
+                📰 Express & Kölner Stadt-Anzeiger
               </span>
               <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
                 📱 Vodafone & Telekom
@@ -241,38 +304,39 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Produkte Section */}
+        {/* Produkte Section - MIT KONKRETEN ZAHLEN & EMOTIONALEN TEXTEN */}
         <section id="produkte" className="py-16 bg-gray-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Unser Sortiment</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">🥤</span>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Getränke</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Über 100 Getränke</h3>
                 <p className="text-gray-600">
-                  Kalte und warme Getränke, Softdrinks, Säfte, Wasser, Bier und mehr.
+                  Kalte und warme Getränke, Softdrinks, Säfte, Wasser, Bier und mehr. Immer frisch
+                  und gekühlt!
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">🍫</span>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Süßigkeiten & Snacks</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Süße Versuchungen</h3>
                 <p className="text-gray-600">
-                  Schokolade, Chips, Gummibärchen, Riegel und alle beliebten Snacks.
+                  Wie früher! Große Auswahl an Schokolade, Chips, Gummibärchen, Riegeln und allen
+                  beliebten Snacks.
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">📰</span>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Zeitungen & Zeitschriften
-                </h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Über 500 Zeitschriften</h3>
                 <p className="text-gray-600">
-                  Tageszeitungen, Magazine, Illustrierte und Fachzeitschriften.
+                  Tageszeitungen, Magazine, Illustrierte und Fachzeitschriften. Für jeden das
+                  Richtige!
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -281,16 +345,19 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Tabakwaren</h3>
                 <p className="text-gray-600">
-                  Zigaretten, Zigarren, Tabak und Zubehör aller gängigen Marken.
+                  Zigaretten, Zigarren, Tabak und Zubehör aller gängigen Marken. Alles vorrätig!
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">🎫</span>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Lotterie</h3>
-                <p className="text-gray-600">
-                  Lotto, Rubbellose, Eurojackpot und andere Lotterieprodukte.
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Lotterie & Glücksspiel</h3>
+                <p className="text-gray-600 mb-3">
+                  Lotto 6aus49, Eurojackpot, Rubbellose und weitere Lotterieprodukte.
+                </p>
+                <p className="text-xs text-red-600 font-medium">
+                  ⚠️ Die Teilnahme ist erst ab 18 Jahren erlaubt. Glücksspiel kann süchtig machen.
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -299,7 +366,8 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Handy-Guthaben</h3>
                 <p className="text-gray-600">
-                  Aufladung für alle Mobilfunkanbieter und Prepaid-Karten.
+                  Aufladung für alle Mobilfunkanbieter: Telekom, Vodafone, O2, Aldi Talk und viele
+                  mehr.
                 </p>
               </div>
             </div>
