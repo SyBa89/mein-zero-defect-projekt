@@ -3,4 +3,5 @@ export function addiere(a: number, b: number): number {
   return a + b;
 }
 
-console.log('Zero-Defect System ist bereit!');
+// console.warn ist erlaubt, console.log ist blockiert (Zero-Defect Regel)
+console.warn('Zero-Defect System ist bereit!');
