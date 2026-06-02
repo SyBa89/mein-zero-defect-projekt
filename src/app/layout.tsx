@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import MobileActionBar from '@/components/MobileActionBar';
+import CookieBanner from '@/components/CookieBanner';
 
 export const metadata: Metadata = {
   title: 'Kiosk Lollipop | Erftstadt-Liblar - Hermes Paketshop & Kiosk',
@@ -75,6 +76,7 @@ export default function RootLayout({
 
         {children}
         <MobileActionBar />
+        <CookieBanner />
       </body>
     </html>
   );

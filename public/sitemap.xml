@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Hauptseite (Highest Priority) -->
+  <url>
+    <loc>https://mein-zero-defect-projekt.vercel.app/</loc>
+    <lastmod>2024-05-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Kontaktseite (High Priority) -->
+  <url>
+    <loc>https://mein-zero-defect-projekt.vercel.app/kontakt</loc>
+    <lastmod>2024-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Impressum (Medium Priority - rechtlich wichtig) -->
+  <url>
+    <loc>https://mein-zero-defect-projekt.vercel.app/impressum</loc>
+    <lastmod>2024-05-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Datenschutz (Medium Priority - rechtlich wichtig) -->
+  <url>
+    <loc>https://mein-zero-defect-projekt.vercel.app/datenschutz</loc>
+    <lastmod>2024-05-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

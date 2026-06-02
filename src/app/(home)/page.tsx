@@ -1,5 +1,8 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import FAQ from '@/components/FAQ';
+import Reviews from '@/components/Reviews';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function HomePage() {
@@ -8,27 +11,40 @@ export default function HomePage() {
       <Header />
 
       <main>
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-pink-500 via-pink-600 to-purple-600 text-white py-20">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
+        {/* Hero Section mit optimiertem Hintergrundbild */}
+        <section className="relative h-[80vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+          {/* Hintergrundbild (Platzhalter - kann später durch public/images/kiosk.jpg ersetzt werden) */}
+          <Image
+            src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop"
+            alt="Kiosk Lollipop Innenansicht"
+            fill
+            className="object-cover"
+            priority
+          />
+
+          {/* Dunkles Overlay für perfekte Lesbarkeit des Textes */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-pink-900/70" />
+
+          {/* Inhalt über dem Bild */}
+          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
               Willkommen bei <br />
               <span className="text-yellow-300">Kiosk Lollipop</span>
             </h1>
-            <p className="mt-4 max-w-2xl mx-auto text-xl text-pink-50 mb-4">
+            <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-100 mb-4 drop-shadow-md">
               Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar
             </p>
-            <p className="max-w-2xl mx-auto text-lg text-pink-100 mb-10">
+            <p className="max-w-2xl mx-auto text-lg text-gray-200 mb-10 drop-shadow-md">
               Theodor-Heuss-Straße 35, 50374 Erftstadt
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/kontakt">
-                <button className="bg-white hover:bg-gray-100 text-pink-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
+                <button className="bg-white hover:bg-gray-100 text-pink-600 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                   Jetzt besuchen
                 </button>
               </Link>
               <Link href="/#produkte">
-                <button className="bg-pink-700 hover:bg-pink-800 text-white border-2 border-white px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-md hover:shadow-lg">
+                <button className="bg-pink-600 hover:bg-pink-700 text-white border-2 border-pink-400 px-8 py-3 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                   Unser Sortiment
                 </button>
               </Link>
@@ -291,57 +307,10 @@ export default function HomePage() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Häufige Fragen</h2>
-            <div className="space-y-4">
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  📦 Kann ich meine Hermes-Pakete auch sonntags abholen?
-                </h3>
-                <p className="text-gray-600">
-                  Nein, sonntags haben wir geschlossen. Sie können Ihre Pakete zu unseren regulären
-                  Öffnungszeiten abholen. Die Lagerfrist beträgt in der Regel 7 Tage.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  💳 Welche Zahlungsmethoden akzeptiert ihr?
-                </h3>
-                <p className="text-gray-600">
-                  Wir akzeptieren Barzahlung und EC-Karte (girocard). Kontaktlose Zahlungen mit
-                  Karte oder Smartphone (Apple Pay, Google Pay) sind ebenfalls möglich.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 className="font-semibold text-gray-900 mb-2">🚗 Gibt es Parkmöglichkeiten?</h3>
-                <p className="text-gray-600">
-                  Ja, direkt vor unserem Geschäft gibt es kurze Haltemöglichkeiten zum schnellen
-                  Ein- und Ausladen. Für längere Aufenthalte nutzen Sie bitte die öffentlichen
-                  Parkplätze in der Umgebung.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  ↩️ Kann ich Retouren bei euch abgeben?
-                </h3>
-                <p className="text-gray-600">
-                  Ja, wir nehmen Hermes-Retouren während unserer Öffnungszeiten entgegen. Bitte
-                  bringen Sie Ihr Retourenlabel mit oder lassen Sie es uns vor Ort erstellen.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  🚫 Bietet ihr einen Lieferservice an?
-                </h3>
-                <p className="text-gray-600">
-                  Nein, wir bieten keinen Lieferservice an. Alle Produkte sind jedoch sofort vor Ort
-                  verfügbar - ohne Wartezeit und ohne Mindestbestellwert.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <FAQ />
+
+        {/* Kundenbewertungen Section */}
+        <Reviews />
 
         {/* Über uns Section mit Trust-Badge */}
         <section id="ueber-uns" className="py-16 bg-white">

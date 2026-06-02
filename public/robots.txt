@@ -1,0 +1,11 @@
+# robots.txt für Kiosk Lollipop
+# Erlaubt allen Suchmaschinen das Crawlen der gesamten Webseite
+
+User-agent: *
+Allow: /
+
+# Verweise auf die Sitemap, damit Google alle Seiten sofort findet
+Sitemap: https://mein-zero-defect-projekt.vercel.app/sitemap.xml
+
+# Crawl-Delay (optional, aber höflich gegenüber Server-Ressourcen)
+Crawl-delay: 1

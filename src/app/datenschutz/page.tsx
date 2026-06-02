@@ -9,7 +9,7 @@ export default function DatenschutzPage() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <Link
           href="/"
-          className="inline-flex items-center text-orange-600 hover:text-orange-700 font-medium mb-6 transition-colors"
+          className="inline-flex items-center text-pink-600 hover:text-pink-700 font-medium mb-6 transition-colors"
         >
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -55,6 +55,43 @@ export default function DatenschutzPage() {
                 Diese Seite nutzt eine Einbettung von Google Maps. Dabei können Daten an Google
                 übertragen werden. In der finalen Version wird hier ein datenschutzkonformer Hinweis
                 mit Cookie-Banner implementiert.
+              </p>
+            </div>
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-2">4. Cookies</h2>
+              <p className="mb-3">
+                Diese Website verwendet Cookies. Dabei handelt es sich um kleine Textdateien, die
+                auf Ihrem Endgerät gespeichert werden. Ihr Browser greift auf diese Dateien zu.
+              </p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                4.1 Einwilligung (Consent-Management)
+              </h3>
+              <p className="mb-3">
+                Beim ersten Besuch der Website werden Sie um Ihre Einwilligung zur Nutzung von
+                Cookies gebeten. Ihre Einwilligung wird in Ihrem Browser (localStorage) gespeichert
+                und kann jederzeit durch Löschen der Browserdaten widerrufen werden.
+              </p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                4.2 Welche Cookies werden verwendet?
+              </h3>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>
+                  <strong>Technisch notwendige Cookies:</strong> Diese Cookies sind für die
+                  Grundfunktionalität der Website erforderlich (z.B. Session-Management).
+                </li>
+                <li>
+                  <strong>Google Maps:</strong> Beim Einbetten von Google Maps werden Cookies von
+                  Google gesetzt, um die Karte anzuzeigen und Ihre Interaktionen zu speichern.
+                </li>
+              </ul>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 mt-4">
+                4.3 Wie kann ich Cookies deaktivieren?
+              </h3>
+              <p>
+                Sie können die Speicherung von Cookies durch eine entsprechende Einstellung Ihrer
+                Browser-Software verhindern. Wir weisen Sie jedoch darauf hin, dass Sie in diesem
+                Fall gegebenenfalls nicht sämtliche Funktionen dieser Website vollumfänglich nutzen
+                können.
               </p>
             </div>
           </div>
