@@ -182,7 +182,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Hermes Paketshop Highlight + INTERAKTIVER RECHNER (NEU!) */}
+        {/* Hermes Paketshop Highlight + Tracker + Rechner */}
         <section className="py-16 bg-yellow-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-yellow-100 p-8 rounded-xl border-2 border-yellow-300">
@@ -192,10 +192,53 @@ export default function HomePage() {
                 Wir sind Ihr offizieller Hermes Paketshop in Erftstadt-Liblar!
               </p>
 
-              {/* INTERAKTIVER PAKETGRÖSSEN-RECHNER (NEU!) */}
+              {/* NEU: Hermes Sendungsverfolgung (Branded Gateway) */}
+              <div className="bg-white rounded-lg p-6 mb-6 shadow-sm">
+                <h3 className="font-semibold text-gray-900 mb-3 text-lg flex items-center justify-center gap-2">
+                  <span>🔍</span> Wo ist mein Paket?
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Geben Sie Ihre Hermes-Sendungsnummer ein, um den aktuellen Status direkt zu
+                  prüfen.
+                </p>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const input = (e.target as HTMLFormElement).elements.namedItem(
+                      'sendungsnummer'
+                    ) as HTMLInputElement;
+                    if (input.value.trim()) {
+                      window.open(
+                        `https://www.myhermes.de/empfangen/sendungsverfolgung/#/t/${input.value.trim()}`,
+                        '_blank'
+                      );
+                    }
+                  }}
+                  className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+                >
+                  <input
+                    type="text"
+                    name="sendungsnummer"
+                    placeholder="z.B. 00340434123456789012"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-center font-mono text-lg"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    className="bg-gray-900 hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-lg transition-colors shadow-sm whitespace-nowrap"
+                  >
+                    Jetzt prüfen
+                  </button>
+                </form>
+                <p className="text-xs text-gray-500 mt-3">
+                  *Sie werden zur sicheren, offiziellen Hermes-Verfolgungsseite weitergeleitet.
+                </p>
+              </div>
+
+              {/* Interaktiver Paketgrößen-Rechner */}
               <PackageCalculator />
 
-              {/* Statische Tabelle als Referenz */}
+              {/* Statische Tabelle als Referenz (aufklappbar) */}
               <details className="bg-white rounded-lg p-4 mb-6 text-left">
                 <summary className="font-semibold text-gray-900 cursor-pointer hover:text-pink-600 transition-colors">
                   📋 Alle Paketgrößen im Detail anzeigen
@@ -244,7 +287,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* HEUTE BESONDERS GEFRAGT (NEU!) */}
+        {/* HEUTE BESONDERS GEFRAGT */}
         <section className="py-12 bg-gradient-to-r from-pink-50 to-purple-50 border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-white rounded-xl shadow-md border-2 border-pink-200 p-6">
