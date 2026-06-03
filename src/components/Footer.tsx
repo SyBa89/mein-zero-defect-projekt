@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300 mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">🍭 Kiosk Lollipop</h3>
@@ -30,15 +30,35 @@ export default function Footer() {
                   Datenschutz
                 </Link>
               </li>
+              {/* Diskreter interner Link */}
+              <li className="pt-2">
+                <Link
+                  href="/intern"
+                  className="text-gray-600 hover:text-gray-400 transition-colors text-xs"
+                >
+                  Mitarbeiter-Login
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Services Section */}
+          <div>
+            <h3 className="text-white text-lg font-semibold mb-4">Services</h3>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li>📦 Hermes Paketshop</li>
+              <li>🎫 Lotto & Rubbellose</li>
+              <li>📱 Handy-Guthaben</li>
+              <li>💳 Geld abheben</li>
             </ul>
           </div>
 
           {/* Contact Section */}
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">Kontakt</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>📍 Theodor-Heuss-Straße 35</li>
-              <li className="ml-6">50374 Erftstadt-Liblar</li>
+            <ul className="space-y-2 text-sm text-gray-400 mb-4">
+              <li>📍 Theodor-Heuss-Str. 35</li>
+              <li className="ml-6">50374 Erftstadt</li>
               <li>📞 +49 2235 9291160</li>
               <li>📧 info@kiosk-lollipop.de</li>
             </ul>
