@@ -16,6 +16,8 @@ export default function CookieBanner() {
       }, 1000);
       return () => clearTimeout(timer);
     }
+    // Wenn Consent existiert, nichts tun
+    return undefined;
   }, []);
 
   const acceptCookies = () => {
