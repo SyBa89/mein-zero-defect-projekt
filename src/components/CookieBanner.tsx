@@ -10,11 +10,15 @@ export default function CookieBanner() {
   useEffect(() => {
     // Prüfe ob bereits eine Entscheidung getroffen wurde
     const consent = localStorage.getItem('cookie-consent');
-    if (!consent) {
-      // Verzögerung für bessere UX
-      const timer = setTimeout(() => setShowBanner(true), 1000);
-      return () => clearTimeout(timer);
-    }
+
+    // Wenn bereits entschieden, nichts tun (Early Return)
+    if (consent) return;
+
+    // Verzögerung für bessere UX
+    const timer = setTimeout(() => setShowBanner(true), 1000);
+
+    // Cleanup-Funktion
+    return () => clearTimeout(timer);
   }, []);
 
   const handleAcceptAll = () => {
