@@ -73,10 +73,10 @@ export default function Reviews() {
           ))}
         </div>
 
-        {/* Call to Action für neue Bewertungen */}
+        {/* Call to Action für neue Bewertungen - KORRIGIERTER LINK */}
         <div className="text-center mt-12">
           <a
-            href="https://search.google.com/local/writereview?placeid=ChIJeWG_1d8Xv0cRInW4W6roiP0"
+            href="https://www.google.com/maps/search/?api=1&query=Kiosk+Lollipop+Erftstadt+Liblar"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center text-pink-600 hover:text-pink-700 font-semibold transition-colors border-b-2 border-pink-200 hover:border-pink-600 pb-1"

@@ -12,11 +12,11 @@ export default function HomePage() {
       <Header />
 
       <main>
-        {/* Hero Section mit optimiertem Hintergrundbild */}
+        {/* Hero Section mit Platzhalter-Bild */}
         <section className="relative h-[80vh] min-h-[500px] flex items-center justify-center overflow-hidden">
           <Image
             src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop"
-            alt="Kiosk Lollipop Innenansicht"
+            alt="Kiosk Lollipop"
             fill
             className="object-cover"
             priority
@@ -70,31 +70,9 @@ export default function HomePage() {
               <table className="w-full">
                 <tbody className="divide-y divide-pink-200">
                   <tr className="hover:bg-pink-100 transition-colors">
-                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Montag</td>
-                    <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
-                      07:30 - 19:00 Uhr
+                    <td className="px-6 py-4 text-left font-semibold text-gray-900">
+                      Montag - Freitag
                     </td>
-                  </tr>
-                  <tr className="hover:bg-pink-100 transition-colors">
-                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Dienstag</td>
-                    <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
-                      07:30 - 19:00 Uhr
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-pink-100 transition-colors">
-                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Mittwoch</td>
-                    <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
-                      14:00 - 19:00 Uhr
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-pink-100 transition-colors">
-                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Donnerstag</td>
-                    <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
-                      14:00 - 19:00 Uhr
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-pink-100 transition-colors">
-                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Freitag</td>
                     <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
                       07:30 - 19:00 Uhr
                     </td>
@@ -102,11 +80,13 @@ export default function HomePage() {
                   <tr className="hover:bg-pink-100 transition-colors">
                     <td className="px-6 py-4 text-left font-semibold text-gray-900">Samstag</td>
                     <td className="px-6 py-4 text-right text-pink-600 font-bold text-lg">
-                      07:30 - 13:30 Uhr
+                      07:30 - 14:30 Uhr
                     </td>
                   </tr>
                   <tr className="bg-red-50">
-                    <td className="px-6 py-4 text-left font-semibold text-gray-900">Sonntag</td>
+                    <td className="px-6 py-4 text-left font-semibold text-gray-900">
+                      Sonn- und Feiertags
+                    </td>
                     <td className="px-6 py-4 text-right text-red-600 font-bold text-lg">
                       Geschlossen
                     </td>
@@ -114,7 +94,6 @@ export default function HomePage() {
                 </tbody>
               </table>
             </div>
-            <p className="text-center text-sm text-gray-600 mt-4">Feiertage: Nach Vereinbarung</p>
           </div>
         </section>
 
@@ -135,9 +114,9 @@ export default function HomePage() {
                 <div className="text-4xl mb-3">🚗</div>
                 <h3 className="font-semibold text-gray-900 mb-2">Parken</h3>
                 <p className="text-sm text-gray-600">
-                  Kostenfreie Parkplätze vor dem Geschäft
+                  Kurze Haltezone direkt vor dem Laden
                   <br />
-                  Öffentliche Parkplätze in der Nähe
+                  Öffentliche Parkplätze am Bürgerplatz
                 </p>
               </div>
               <div>
@@ -161,7 +140,7 @@ export default function HomePage() {
               <div className="text-center">
                 <div className="text-3xl mb-2">💰</div>
                 <h3 className="font-semibold text-gray-900 text-sm">Geld abheben</h3>
-                <p className="text-xs text-gray-600 mt-1">EC-Karte & Kreditkarte</p>
+                <p className="text-xs text-gray-600 mt-1">EC-Karte</p>
               </div>
               <div className="text-center">
                 <div className="text-3xl mb-2">🖨️</div>
@@ -182,7 +161,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Hermes Paketshop Highlight + Tracker + Rechner */}
+        {/* Hermes Paketshop Highlight + Rechner */}
         <section className="py-16 bg-yellow-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-yellow-100 p-8 rounded-xl border-2 border-yellow-300">
@@ -191,49 +170,6 @@ export default function HomePage() {
               <p className="text-lg text-gray-700 mb-6">
                 Wir sind Ihr offizieller Hermes Paketshop in Erftstadt-Liblar!
               </p>
-
-              {/* NEU: Hermes Sendungsverfolgung (Branded Gateway) */}
-              <div className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-                <h3 className="font-semibold text-gray-900 mb-3 text-lg flex items-center justify-center gap-2">
-                  <span>🔍</span> Wo ist mein Paket?
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Geben Sie Ihre Hermes-Sendungsnummer ein, um den aktuellen Status direkt zu
-                  prüfen.
-                </p>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const input = (e.target as HTMLFormElement).elements.namedItem(
-                      'sendungsnummer'
-                    ) as HTMLInputElement;
-                    if (input.value.trim()) {
-                      window.open(
-                        `https://www.myhermes.de/empfangen/sendungsverfolgung/#/t/${input.value.trim()}`,
-                        '_blank'
-                      );
-                    }
-                  }}
-                  className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-                >
-                  <input
-                    type="text"
-                    name="sendungsnummer"
-                    placeholder="z.B. 00340434123456789012"
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-center font-mono text-lg"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="bg-gray-900 hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-lg transition-colors shadow-sm whitespace-nowrap"
-                  >
-                    Jetzt prüfen
-                  </button>
-                </form>
-                <p className="text-xs text-gray-500 mt-3">
-                  *Sie werden zur sicheren, offiziellen Hermes-Verfolgungsseite weitergeleitet.
-                </p>
-              </div>
 
               {/* Interaktiver Paketgrößen-Rechner */}
               <PackageCalculator />
@@ -246,21 +182,30 @@ export default function HomePage() {
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                   <div className="border border-gray-200 rounded-lg p-4 text-center">
                     <span className="block font-bold text-pink-600 text-lg mb-1">S-Paket</span>
-                    <span className="text-gray-600">bis 31,5 x 23,5 x 3,5 cm</span>
+                    <span className="text-gray-600">Max. 31,5 cm × 23,5 cm × 3,5 cm</span>
+                    <span className="block text-gray-500 text-xs mt-1">
+                      (Länge × Breite × Höhe)
+                    </span>
                     <span className="block text-gray-500 text-xs mt-1">
                       (z.B. Briefe, kleine Artikel)
                     </span>
                   </div>
                   <div className="border border-gray-200 rounded-lg p-4 text-center bg-pink-50">
                     <span className="block font-bold text-pink-600 text-lg mb-1">M-Paket</span>
-                    <span className="text-gray-600">bis 50 x 30 x 10 cm</span>
+                    <span className="text-gray-600">Max. 50 cm × 30 cm × 10 cm</span>
+                    <span className="block text-gray-500 text-xs mt-1">
+                      (Länge × Breite × Höhe)
+                    </span>
                     <span className="block text-gray-500 text-xs mt-1">
                       (z.B. Schuhe, kleine Kartons)
                     </span>
                   </div>
                   <div className="border border-gray-200 rounded-lg p-4 text-center">
                     <span className="block font-bold text-pink-600 text-lg mb-1">L-Paket</span>
-                    <span className="text-gray-600">bis 120 x 60 x 60 cm</span>
+                    <span className="text-gray-600">Max. 120 cm × 60 cm × 60 cm</span>
+                    <span className="block text-gray-500 text-xs mt-1">
+                      (Länge × Breite × Höhe)
+                    </span>
                     <span className="block text-gray-500 text-xs mt-1">(z.B. große Kartons)</span>
                   </div>
                 </div>
@@ -320,7 +265,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Beliebte Marken - MIT KONKRETEN NAMEN */}
+        {/* Beliebte Marken */}
         <section className="py-12 bg-white border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Beliebte Marken bei uns</h2>
@@ -347,7 +292,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Produkte Section - MIT KONKRETEN ZAHLEN & EMOTIONALEN TEXTEN */}
+        {/* Produkte Section */}
         <section id="produkte" className="py-16 bg-gray-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Unser Sortiment</h2>
@@ -423,7 +368,7 @@ export default function HomePage() {
         {/* Kundenbewertungen Section */}
         <Reviews />
 
-        {/* Über uns Section mit Trust-Badge */}
+        {/* Über uns Section */}
         <section id="ueber-uns" className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Über uns</h2>
@@ -454,7 +399,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CTA Section mit GPS-Koordinaten */}
+        {/* CTA Section */}
         <section className="py-16 bg-gradient-to-r from-pink-500 to-purple-600 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-4">Besuchen Sie uns!</h2>
