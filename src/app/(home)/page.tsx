@@ -49,6 +49,27 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* NEU: Google Bewertungs-Badge - UNSER KILLER-ARGUMENT! */}
+        <section className="py-8 bg-gradient-to-r from-yellow-50 to-orange-50 border-b border-yellow-200">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div className="inline-flex items-center gap-4 bg-white px-8 py-4 rounded-full shadow-lg border-2 border-yellow-300">
+              <div className="flex text-yellow-400">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-8 h-8 fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <div className="text-left">
+                <p className="text-2xl font-bold text-gray-900">5,0 Sterne bei Google</p>
+                <p className="text-sm text-gray-600">
+                  Basierend auf über 60 echten Kundenbewertungen
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Aktuelle Aktion Banner */}
         <section className="bg-gradient-to-r from-yellow-400 to-orange-400 py-4">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -59,6 +80,87 @@ export default function HomePage() {
               Ändern Sie diesen Text jederzeit selbst, um auf neue Lieferungen oder Angebote
               hinzuweisen.
             </p>
+          </div>
+        </section>
+
+        {/* NEUE SEKTION: Warum Kunden zu uns kommen */}
+        <section className="py-16 bg-gradient-to-br from-pink-50 to-purple-50">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+                Warum Kunden zu uns kommen
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Mehr als nur ein Kiosk - wir sind Ihr Nachbar mit echtem Service
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Vorteil 1 */}
+              <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
+                <div className="text-4xl mb-3">📦</div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Hermes Paketshop</h3>
+                <p className="text-gray-600 text-sm">
+                  Komplett-Service für Paketversand, Abholung und Retouren. Schnell und zuverlässig.
+                </p>
+              </div>
+
+              {/* Vorteil 2 */}
+              <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
+                <div className="text-4xl mb-3">🕒</div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Lange Öffnungszeiten</h3>
+                <p className="text-gray-600 text-sm">
+                  Mo-Fr bis 19:00 Uhr, Sa bis 14:30 Uhr. Wir sind da, wenn Sie uns brauchen.
+                </p>
+              </div>
+
+              {/* Vorteil 3 */}
+              <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
+                <div className="text-4xl mb-3">📍</div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Zentrale Lage</h3>
+                <p className="text-gray-600 text-sm">
+                  Direkt am Bürgerplatz in Liblar. Gut zu Fuß oder mit dem Auto erreichbar.
+                </p>
+              </div>
+
+              {/* Vorteil 4 */}
+              <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
+                <div className="text-4xl mb-3">🅿️</div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Parkplätze vor der Tür</h3>
+                <p className="text-gray-600 text-sm">
+                  Kurze Haltezone direkt vor dem Laden und öffentliche Parkplätze in der Nähe.
+                </p>
+              </div>
+
+              {/* Vorteil 5 */}
+              <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
+                <div className="text-4xl mb-3">💳</div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Moderne Zahlung</h3>
+                <p className="text-gray-600 text-sm">
+                  Bar, EC-Karte, Kontaktlos, Apple Pay und Google Pay. Sie zahlen, wie Sie wollen.
+                </p>
+              </div>
+
+              {/* Vorteil 6 */}
+              <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
+                <div className="text-4xl mb-3">👋</div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Persönlicher Service</h3>
+                <p className="text-gray-600 text-sm">
+                  Seit über 10 Jahren für Liblar da. Wir kennen unsere Kunden und beraten
+                  persönlich.
+                </p>
+              </div>
+            </div>
+
+            {/* Trust-Badge unten */}
+            <div className="mt-12 text-center">
+              <div className="inline-flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-sm border border-pink-200">
+                <span className="text-2xl">🏆</span>
+                <span className="font-semibold text-gray-900">
+                  Seit über 10 Jahren Ihr Kiosk in Liblar
+                </span>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -132,7 +234,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Erweiterte Services */}
+        {/* Erweiterte Services - KORRIGIERT */}
         <section className="py-12 bg-gray-50 border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Weitere Services</h2>
@@ -148,14 +250,14 @@ export default function HomePage() {
                 <p className="text-xs text-gray-600 mt-1">Kopien & Ausdrucke</p>
               </div>
               <div className="text-center">
-                <div className="text-3xl mb-2">🔋</div>
-                <h3 className="font-semibold text-gray-900 text-sm">Powerakkus</h3>
-                <p className="text-xs text-gray-600 mt-1">Zum Ausleihen</p>
+                <div className="text-3xl mb-2">☕</div>
+                <h3 className="font-semibold text-gray-900 text-sm">Heiße Getränke</h3>
+                <p className="text-xs text-gray-600 mt-1">Kaffee & Tee to go</p>
               </div>
               <div className="text-center">
-                <div className="text-3xl mb-2">🎁</div>
-                <h3 className="font-semibold text-gray-900 text-sm">Geschenkkarten</h3>
-                <p className="text-xs text-gray-600 mt-1">Verschiedene Anbieter</p>
+                <div className="text-3xl mb-2">🔌</div>
+                <h3 className="font-semibold text-gray-900 text-sm">Handy-Ladestation</h3>
+                <p className="text-xs text-gray-600 mt-1">Smartphone aufladen</p>
               </div>
             </div>
           </div>
@@ -292,7 +394,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Produkte Section */}
+        {/* Produkte Section - MIT JUGENDSCHUTZ-HINWEISEN & SCHREIBWAREN */}
         <section id="produkte" className="py-16 bg-gray-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Unser Sortiment</h2>
@@ -302,9 +404,12 @@ export default function HomePage() {
                   <span className="text-3xl">🥤</span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Über 100 Getränke</h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 mb-2">
                   Kalte und warme Getränke, Softdrinks, Säfte, Wasser, Bier und mehr. Immer frisch
                   und gekühlt!
+                </p>
+                <p className="text-xs text-red-600 font-medium">
+                  ⚠️ Alkoholische Getränke nur an Personen ab 18 Jahren
                 </p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -332,16 +437,17 @@ export default function HomePage() {
                   <span className="text-3xl">🚬</span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Tabakwaren</h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 mb-2">
                   Zigaretten, Zigarren, Tabak und Zubehör aller gängigen Marken. Alles vorrätig!
                 </p>
+                <p className="text-xs text-red-600 font-medium">⚠️ Nur an Personen ab 18 Jahren</p>
               </div>
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
                   <span className="text-3xl">🎫</span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Lotterie & Glücksspiel</h3>
-                <p className="text-gray-600 mb-3">
+                <p className="text-gray-600 mb-2">
                   Lotto 6aus49, Eurojackpot, Rubbellose und weitere Lotterieprodukte.
                 </p>
                 <p className="text-xs text-red-600 font-medium">
@@ -358,6 +464,16 @@ export default function HomePage() {
                   mehr.
                 </p>
               </div>
+              {/* NEU: Schreibwaren */}
+              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-3xl">✏️</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Schreibwaren</h3>
+                <p className="text-gray-600">
+                  Stifte, Hefte, Briefumschläge und alles für Schule, Büro und Zuhause.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -372,13 +488,6 @@ export default function HomePage() {
         <section id="ueber-uns" className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Über uns</h2>
-            <div className="flex items-center justify-center mb-6">
-              <div className="bg-pink-100 border-2 border-pink-300 rounded-full px-6 py-3">
-                <span className="text-pink-800 font-bold text-lg">
-                  🏆 Seit über 10 Jahren in Liblar
-                </span>
-              </div>
-            </div>
             <div className="bg-pink-50 p-8 rounded-xl border border-pink-200">
               <p className="text-lg text-gray-700 leading-relaxed mb-4">
                 <strong>Kiosk Lollipop</strong> ist Ihr freundlicher Nachbarschaftskiosk und Hermes
