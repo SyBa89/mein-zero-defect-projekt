@@ -1,22 +1,30 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
-import MobileActionBar from '@/components/MobileActionBar';
 import CookieBanner from '@/components/CookieBanner';
 
+const inter = Inter({ subsets: ['latin'] });
+
 export const metadata: Metadata = {
-  title: 'Kiosk Lollipop | Erftstadt-Liblar - Hermes Paketshop & Kiosk',
-  description:
-    'Ihr lokaler Kiosk und Hermes Paketshop in Erftstadt-Liblar am Bürgerplatz. Getränke, Snacks, Lotto, Eis & mehr. Täglich geöffnet!',
-  keywords:
-    'Kiosk Erftstadt, Hermes Paketshop Liblar, Kiosk Bürgerplatz, Späti 50374, Lotto Erftstadt',
-  icons: {
-    icon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍭</text></svg>',
+  title: {
+    default: 'Kiosk Lollipop | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar',
+    template: '%s | Kiosk Lollipop',
   },
+  description:
+    'Kiosk Lollipop in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
+  keywords: ['Kiosk Erftstadt', 'Kiosk Liblar', 'Hermes Paketshop Erftstadt', 'Kiosk Lollipop'],
+  metadataBase: new URL('https://mein-zero-defect-projekt.vercel.app'),
   openGraph: {
-    title: 'Kiosk Lollipop | Erftstadt-Liblar',
-    description: 'Ihr freundlicher Nachbarschaftskiosk am Bürgerplatz. Jetzt besuchen!',
     type: 'website',
     locale: 'de_DE',
+    url: 'https://mein-zero-defect-projekt.vercel.app',
+    siteName: 'Kiosk Lollipop',
+    title: 'Kiosk Lollipop | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar',
+    description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -27,55 +35,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
-      <body className="antialiased bg-gray-50 text-gray-900 pb-20 md:pb-0">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'ConvenienceStore',
-              name: 'Kiosk Lollipop',
-              address: {
-                '@type': 'PostalAddress',
-                streetAddress: 'Theodor-Heuss-Straße 35',
-                addressLocality: 'Erftstadt',
-                addressRegion: 'NRW',
-                postalCode: '50374',
-                addressCountry: 'DE',
-              },
-              geo: {
-                '@type': 'GeoCoordinates',
-                latitude: 50.806945,
-                longitude: 6.823683,
-              },
-              telephone: '+4922359291160',
-              openingHoursSpecification: [
-                {
-                  '@type': 'OpeningHoursSpecification',
-                  dayOfWeek: ['Monday', 'Tuesday', 'Friday'],
-                  opens: '07:30',
-                  closes: '19:00',
-                },
-                {
-                  '@type': 'OpeningHoursSpecification',
-                  dayOfWeek: ['Wednesday', 'Thursday'],
-                  opens: '14:00',
-                  closes: '19:00',
-                },
-                {
-                  '@type': 'OpeningHoursSpecification',
-                  dayOfWeek: 'Saturday',
-                  opens: '07:30',
-                  closes: '13:30',
-                },
-              ],
-              priceRange: '€',
-            }),
-          }}
-        />
-
+      <body className={inter.className}>
         {children}
-        <MobileActionBar />
         <CookieBanner />
       </body>
     </html>

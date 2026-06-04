@@ -2,79 +2,141 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'; // <-- NEU: Um die aktuelle URL zu erkennen
 
 export default function CookieBanner() {
-  const pathname = usePathname(); // <-- NEU: Holt den aktuellen Pfad (z.B. "/datenschutz")
-  const [isVisible, setIsVisible] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
-  // <-- NEUE LOGIK: Wenn wir auf der Datenschutz- oder Impressum-Seite sind, zeige den Banner NICHT an.
-  if (pathname === '/datenschutz' || pathname === '/impressum') {
+  useEffect(() => {
+    // Prüfe ob bereits eine Entscheidung getroffen wurde
+    const consent = localStorage.getItem('cookie-consent');
+    if (!consent) {
+      // Verzögerung für bessere UX
+      const timer = setTimeout(() => setShowBanner(true), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  const handleAcceptAll = () => {
+    localStorage.setItem('cookie-consent', 'all');
+    setShowBanner(false);
+  };
+
+  const handleAcceptNecessary = () => {
+    localStorage.setItem('cookie-consent', 'necessary');
+    setShowBanner(false);
+  };
+
+  if (!showBanner) {
     return null;
   }
 
-  useEffect(() => {
-    const consent = localStorage.getItem('cookie-consent');
-    if (!consent) {
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-    return undefined;
-  }, []);
-
-  const acceptCookies = () => {
-    localStorage.setItem('cookie-consent', 'accepted');
-    localStorage.setItem('cookie-consent-date', new Date().toISOString());
-    setIsVisible(false);
-  };
-
-  if (!isVisible) return null;
-
   return (
-    <div
-      role="dialog"
-      aria-labelledby="cookie-banner-title"
-      aria-describedby="cookie-banner-description"
-      className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm text-white p-4 z-[9999] shadow-2xl border-t-2 border-pink-500"
-    >
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-          {/* Text-Bereich */}
-          <div className="flex-1">
-            <h2 id="cookie-banner-title" className="text-lg font-bold mb-2 text-pink-400">
-              🍪 Cookie-Einstellungen
-            </h2>
-            <p id="cookie-banner-description" className="text-sm text-gray-300 leading-relaxed">
-              Diese Webseite verwendet Google Maps zur Darstellung des Standorts. Durch die Nutzung
-              dieser Webseite stimmen Sie der Übertragung von Daten an Google zu. Weitere
-              Informationen finden Sie in unserer{' '}
-              <Link
-                href="/datenschutz"
-                className="text-pink-400 hover:text-pink-300 underline transition-colors font-medium cursor-pointer"
-              >
-                Datenschutzerklärung
-              </Link>
-              .
-            </p>
+    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6">
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-pink-600 to-purple-600 px-6 py-4">
+          <div className="flex items-center gap-3">
+            <div className="text-3xl">🍪</div>
+            <div>
+              <h2 className="text-white font-bold text-lg">Cookie-Einstellungen</h2>
+              <p className="text-pink-100 text-sm">Wir respektieren Ihre Privatsphäre</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="px-6 py-4">
+          <p className="text-gray-700 text-sm leading-relaxed mb-4">
+            Wir verwenden Cookies und ähnliche Technologien, um Ihnen die bestmögliche Erfahrung auf
+            unserer Website zu bieten. Einige Cookies sind für den Betrieb der Seite erforderlich,
+            andere helfen uns, die Website zu verbessern und Ihnen personalisierte Inhalte
+            anzuzeigen.
+          </p>
+
+          {/* Detail-Bereich (aufklappbar) */}
+          {showDetails && (
+            <div className="bg-gray-50 rounded-lg p-4 mb-4 border border-gray-200">
+              <h3 className="font-semibold text-gray-900 mb-3 text-sm">Cookie-Kategorien</h3>
+
+              <div className="space-y-3">
+                {/* Notwendige Cookies */}
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-medium text-gray-900 text-sm">Notwendige Cookies</span>
+                      <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
+                        Immer aktiv
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-600">
+                      Diese Cookies sind für den Betrieb der Website erforderlich und können nicht
+                      deaktiviert werden. Sie speichern z.B. Ihre Cookie-Einstellungen.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Funktionale Cookies */}
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-medium text-gray-900 text-sm">Funktionale Cookies</span>
+                    </div>
+                    <p className="text-xs text-gray-600">
+                      Diese Cookies ermöglichen es uns, die Nutzung der Website zu analysieren und
+                      zu verbessern. Sie werden nur mit Ihrer Einwilligung gesetzt.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-gray-200">
+                <p className="text-xs text-gray-600">
+                  Detaillierte Informationen finden Sie in unserer{' '}
+                  <Link
+                    href="/datenschutz"
+                    className="text-pink-600 hover:text-pink-700 underline font-medium"
+                  >
+                    Datenschutzerklärung
+                  </Link>
+                  .
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={handleAcceptAll}
+              className="flex-1 bg-pink-600 hover:bg-pink-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors shadow-sm"
+            >
+              Alle akzeptieren
+            </button>
+
+            <button
+              onClick={handleAcceptNecessary}
+              className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-3 rounded-lg transition-colors"
+            >
+              Nur notwendige
+            </button>
+
+            <button
+              onClick={() => setShowDetails(!showDetails)}
+              className="flex-1 bg-white border-2 border-gray-300 hover:border-pink-400 text-gray-700 font-semibold px-6 py-3 rounded-lg transition-colors"
+            >
+              {showDetails ? 'Weniger anzeigen' : 'Mehr erfahren'}
+            </button>
           </div>
 
-          {/* Button-Bereich */}
-          <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto relative z-20">
+          {/* Datenschutzerklärung Link */}
+          <div className="mt-4 text-center">
             <Link
               href="/datenschutz"
-              className="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg text-sm font-semibold transition-colors text-center border border-gray-700 cursor-pointer"
+              className="text-sm text-pink-600 hover:text-pink-700 font-medium underline"
             >
-              Mehr erfahren
+              Datenschutzerklärung
             </Link>
-            <button
-              onClick={acceptCookies}
-              className="px-6 py-3 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white rounded-lg text-sm font-bold transition-all shadow-lg hover:shadow-xl transform hover:scale-105 cursor-pointer"
-              aria-label="Cookies akzeptieren und Banner schließen"
-            >
-              ✓ Akzeptieren
-            </button>
           </div>
         </div>
       </div>

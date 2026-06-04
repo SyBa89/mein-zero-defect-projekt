@@ -2,101 +2,147 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 
+export const metadata = {
+  title: 'Datenschutzerklärung | Kiosk Lollipop',
+  description: 'Datenschutzerklärung der Kiosk Lollipop Webseite',
+};
+
 export default function DatenschutzPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <Link
-          href="/"
-          className="inline-flex items-center text-pink-600 hover:text-pink-700 font-medium mb-6 transition-colors"
-        >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
-          </svg>
-          Zurück zur Startseite
-        </Link>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Datenschutzerklärung</h1>
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-gray-600 mb-6 bg-yellow-50 p-4 rounded-lg border border-yellow-200 text-sm">
-            <strong>Hinweis:</strong> Dies ist eine Konzept-Präsentation. Die folgenden Angaben sind
-            Platzhalter und dienen nur der Darstellung der Webseiten-Struktur.
-          </p>
-          <div className="space-y-6 text-gray-700">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                1. Datenschutz auf einen Blick
-              </h2>
-              <p>
-                Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren
-                personenbezogenen Daten passiert, wenn Sie diese Website besuchen.
-              </p>
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                2. Datenerfassung auf dieser Website
-              </h2>
-              <p>
-                Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen
-                Kontaktdaten können Sie dem Impressum dieser Website entnehmen.
-              </p>
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                3. Hosting und Google Maps
-              </h2>
-              <p>
-                Diese Seite nutzt eine Einbettung von Google Maps. Dabei können Daten an Google
-                übertragen werden. In der finalen Version wird hier ein datenschutzkonformer Hinweis
-                mit Cookie-Banner implementiert.
-              </p>
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">4. Cookies</h2>
-              <p className="mb-3">
-                Diese Website verwendet Cookies. Dabei handelt es sich um kleine Textdateien, die
-                auf Ihrem Endgerät gespeichert werden. Ihr Browser greift auf diese Dateien zu.
-              </p>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                4.1 Einwilligung (Consent-Management)
-              </h3>
-              <p className="mb-3">
-                Beim ersten Besuch der Website werden Sie um Ihre Einwilligung zur Nutzung von
-                Cookies gebeten. Ihre Einwilligung wird in Ihrem Browser (localStorage) gespeichert
-                und kann jederzeit durch Löschen der Browserdaten widerrufen werden.
-              </p>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                4.2 Welche Cookies werden verwendet?
-              </h3>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>
-                  <strong>Technisch notwendige Cookies:</strong> Diese Cookies sind für die
-                  Grundfunktionalität der Website erforderlich (z.B. Session-Management).
-                </li>
-                <li>
-                  <strong>Google Maps:</strong> Beim Einbetten von Google Maps werden Cookies von
-                  Google gesetzt, um die Karte anzuzeigen und Ihre Interaktionen zu speichern.
-                </li>
-              </ul>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2 mt-4">
-                4.3 Wie kann ich Cookies deaktivieren?
-              </h3>
-              <p>
-                Sie können die Speicherung von Cookies durch eine entsprechende Einstellung Ihrer
-                Browser-Software verhindern. Wir weisen Sie jedoch darauf hin, dass Sie in diesem
-                Fall gegebenenfalls nicht sämtliche Funktionen dieser Website vollumfänglich nutzen
-                können.
-              </p>
-            </div>
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <article className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 space-y-8">
+          <header>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Datenschutzerklärung</h1>
+            <p className="text-sm text-gray-500">Stand: Juni 2026</p>
+          </header>
+
+          {/* 1. Datenschutz auf einen Blick */}
+          <section>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              1. Datenschutz auf einen Blick
+            </h2>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Allgemeine Hinweise</h3>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren
+              personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene
+              Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
+            </p>
+
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              Datenerfassung auf dieser Website
+            </h3>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              <strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong>
+              <br />
+              Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen
+              Kontaktdaten können Sie dem Impressum entnehmen.
+            </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              <strong>Wie erfassen wir Ihre Daten?</strong>
+              <br />
+              Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen (z. B. über
+              das Kontaktformular). Andere Daten werden automatisch beim Besuch der Website durch
+              unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser,
+              Betriebssystem oder Uhrzeit des Seitenaufrufs).
+            </p>
+          </section>
+
+          {/* 2. Hosting */}
+          <section>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Hosting</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Wir hosten die Inhalte unserer Website bei folgendem Anbieter:{' '}
+              <strong>Vercel Inc.</strong>, 340 S Lemon Ave #4133, Walnut, CA 91789, USA.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              Die Nutzung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes
+              Interesse an einer zuverlässigen Darstellung).
+            </p>
+          </section>
+
+          {/* 3. Cookies */}
+          <section>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Cookies</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Unsere Internetseiten verwenden teilweise so genannte Cookies. Cookies richten auf
+              Ihrem Rechner keinen Schaden an und enthalten keine Viren. Sie dienen dazu, unser
+              Angebot nutzerfreundlicher zu machen.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              Die meisten der von uns verwendeten Cookies sind so genannte „Session-Cookies". Sie
+              werden nach Ende Ihres Besuchs automatisch gelöscht.
+            </p>
+          </section>
+
+          {/* 4. Kontaktformular */}
+          <section>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Kontaktformular</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem
+              Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks
+              Bearbeitung der Anfrage bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre
+              Einwilligung weiter.
+            </p>
+          </section>
+
+          {/* 5. Ihre Rechte */}
+          <section>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Ihre Rechte</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf:
+            </p>
+            <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
+              <li>Auskunft über Ihre gespeicherten personenbezogenen Daten</li>
+              <li>Berichtigung unrichtiger personenbezogener Daten</li>
+              <li>Löschung Ihrer personenbezogenen Daten</li>
+              <li>Einschränkung der Datenverarbeitung</li>
+              <li>Datenübertragbarkeit</li>
+              <li>Widerspruch gegen die Verarbeitung</li>
+            </ul>
+          </section>
+
+          {/* Platzhalter-Hinweis */}
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-8">
+            <p className="text-sm text-yellow-800">
+              <strong>Hinweis:</strong> Diese Datenschutzerklärung ist ein Platzhalter und wurde
+              nicht von einem Rechtsanwalt geprüft. Für eine abmahnsichere Webseite empfehlen wir
+              die Nutzung eines Services wie{' '}
+              <a
+                href="https://www.it-recht-kanzlei.de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline font-semibold"
+              >
+                IT-Recht Kanzlei
+              </a>{' '}
+              oder{' '}
+              <a
+                href="https://www.haendlerbund.de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline font-semibold"
+              >
+                Händlerbund
+              </a>
+              .
+            </p>
           </div>
-        </div>
+
+          {/* Zurück-Link */}
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <Link
+              href="/"
+              className="inline-flex items-center text-pink-600 hover:text-pink-700 font-medium"
+            >
+              ← Zurück zur Startseite
+            </Link>
+          </div>
+        </article>
       </main>
+
       <Footer />
     </div>
   );
