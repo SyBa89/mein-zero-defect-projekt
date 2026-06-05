@@ -1,11 +1,13 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MobileActionBar from '@/components/MobileActionBar';
 import FAQ from '@/components/FAQ';
 import Reviews from '@/components/Reviews';
 import PackageCalculator from '@/components/PackageCalculator';
 import Image from 'next/image';
 import Link from 'next/link';
 
+// ✅ SEO Metadata - VOLLSTÄNDIG
 export const metadata = {
   title: 'Kiosk Lollipop | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar',
   description:
@@ -18,33 +20,86 @@ export const metadata = {
     'Bürgerplatz Liblar',
     'Kiosk 50374',
     'Paketshop Erftstadt',
+    'Kiosk in der Nähe',
+    'Paketshop in der Nähe',
+    'Lotto Erftstadt',
   ],
+  metadataBase: new URL('https://mein-zero-defect-projekt.vercel.app'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'Kiosk Lollipop | Erftstadt-Liblar',
     description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
     type: 'website',
     locale: 'de_DE',
+    url: 'https://mein-zero-defect-projekt.vercel.app',
+    siteName: 'Kiosk Lollipop',
+    images: [
+      {
+        url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop',
+        width: 1200,
+        height: 630,
+        alt: 'Kiosk Lollipop Erftstadt-Liblar',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Kiosk Lollipop | Erftstadt-Liblar',
+    description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
+    images: [
+      'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop',
+    ],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
+// ✅ Schema.org LocalBusiness - VOLLSTÄNDIG
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': 'ConvenienceStore',
+  '@id': 'https://mein-zero-defect-projekt.vercel.app/#store',
   name: 'Kiosk Lollipop',
+  url: 'https://mein-zero-defect-projekt.vercel.app',
+  logo: 'https://mein-zero-defect-projekt.vercel.app/favicon.ico',
   image:
     'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop',
+  description:
+    'Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. ★★★★★ 5,0 Sterne bei Google.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Theodor-Heuss-Straße 35',
     postalCode: '50374',
     addressLocality: 'Erftstadt',
+    addressRegion: 'NRW',
     addressCountry: 'DE',
   },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 50.806945,
+    longitude: 6.823683,
+  },
   telephone: '+4922359291160',
+  priceRange: '€',
   openingHours: ['Mo-Fr 07:30-19:00', 'Sa 07:30-14:30'],
+  sameAs: ['https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/'],
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '5.0',
+    bestRating: '5',
+    worstRating: '1',
+    ratingCount: '60',
     reviewCount: '60',
   },
 };
@@ -52,6 +107,7 @@ const schemaOrg = {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Schema.org JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
@@ -97,6 +153,7 @@ export default function HomePage() {
               Theodor-Heuss-Straße 35, 50374 Erftstadt
             </p>
 
+            {/* ✅ UX-korrekte Buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
                 href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
@@ -235,7 +292,7 @@ export default function HomePage() {
 
               <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
                 <div className="text-4xl mb-3" aria-hidden="true">
-                  ️
+                  🅿️
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Parkplätze vor der Tür</h3>
                 <p className="text-gray-600 text-sm">
@@ -254,7 +311,9 @@ export default function HomePage() {
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
-                <div className="text-4xl mb-3" aria-hidden="true"></div>
+                <div className="text-4xl mb-3" aria-hidden="true">
+                  👋
+                </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Persönlicher Service</h3>
                 <p className="text-gray-600 text-sm">
                   Seit 2020 für Liblar da. Wir kennen unsere Kunden und beraten persönlich.
@@ -432,7 +491,7 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                 <div className="bg-white p-4 rounded-lg">
                   <h3 className="font-semibold text-gray-900 mb-2">
-                    Pakete abholen & 📤 versenden
+                    📮 Pakete abholen & 📤 versenden
                   </h3>
                   <p className="text-sm text-gray-600">
                     Holen Sie Ihre Pakete bequem ab oder versenden Sie diese direkt bei uns.
@@ -455,7 +514,9 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-white rounded-xl shadow-md border-2 border-pink-200 p-6">
               <div className="flex items-center justify-center mb-4">
-                <span className="text-3xl mr-3" aria-hidden="true"></span>
+                <span className="text-3xl mr-3" aria-hidden="true">
+                  🔥
+                </span>
                 <h2 className="text-2xl font-bold text-gray-900">Heute besonders gefragt</h2>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -525,7 +586,9 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-3xl" aria-hidden="true"></span>
+                  <span className="text-3xl" aria-hidden="true">
+                    🥤
+                  </span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Über 100 Getränke</h3>
                 <p className="text-gray-600 mb-2">
@@ -719,6 +782,9 @@ export default function HomePage() {
       </main>
 
       <Footer />
+
+      {/* ✅ KRITISCH: Mobile Action Bar für mobile Nutzer! */}
+      <MobileActionBar />
     </div>
   );
 }
