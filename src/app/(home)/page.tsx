@@ -190,7 +190,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Warum Kunden zu uns kommen - ALLE EMOJIS KORRIGIERT */}
+        {/* Warum Kunden zu uns kommen */}
         <section className="py-16 bg-gradient-to-br from-pink-50 to-purple-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -235,7 +235,7 @@ export default function HomePage() {
 
               <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
                 <div className="text-4xl mb-3" aria-hidden="true">
-                  🅿️
+                  ️
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Parkplätze vor der Tür</h3>
                 <p className="text-gray-600 text-sm">
@@ -254,9 +254,7 @@ export default function HomePage() {
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
-                <div className="text-4xl mb-3" aria-hidden="true">
-                  👋
-                </div>
+                <div className="text-4xl mb-3" aria-hidden="true"></div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Persönlicher Service</h3>
                 <p className="text-gray-600 text-sm">
                   Seit 2020 für Liblar da. Wir kennen unsere Kunden und beraten persönlich.
@@ -310,7 +308,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Service & Zahlung - ALLE EMOJIS KORRIGIERT */}
+        {/* Service & Zahlung */}
         <section className="py-12 bg-white border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
@@ -388,7 +386,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Hermes Paketshop - EMOJI KORRIGIERT */}
+        {/* Hermes Paketshop */}
         <section className="py-16 bg-yellow-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-yellow-100 p-8 rounded-xl border-2 border-yellow-300">
@@ -434,7 +432,7 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                 <div className="bg-white p-4 rounded-lg">
                   <h3 className="font-semibold text-gray-900 mb-2">
-                    📮 Pakete abholen & 📤 versenden
+                    Pakete abholen & 📤 versenden
                   </h3>
                   <p className="text-sm text-gray-600">
                     Holen Sie Ihre Pakete bequem ab oder versenden Sie diese direkt bei uns.
@@ -452,14 +450,12 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Heute besonders gefragt - ALLE EMOJIS KORRIGIERT */}
+        {/* Heute besonders gefragt */}
         <section className="py-12 bg-gradient-to-r from-pink-50 to-purple-50 border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-white rounded-xl shadow-md border-2 border-pink-200 p-6">
               <div className="flex items-center justify-center mb-4">
-                <span className="text-3xl mr-3" aria-hidden="true">
-                  🔥
-                </span>
+                <span className="text-3xl mr-3" aria-hidden="true"></span>
                 <h2 className="text-2xl font-bold text-gray-900">Heute besonders gefragt</h2>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -495,7 +491,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Beliebte Marken - EMOJI KORRIGIERT */}
+        {/* Beliebte Marken */}
         <section className="py-12 bg-white border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Beliebte Marken bei uns</h2>
@@ -529,9 +525,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-3xl" aria-hidden="true">
-                    🥤
-                  </span>
+                  <span className="text-3xl" aria-hidden="true"></span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Über 100 Getränke</h3>
                 <p className="text-gray-600 mb-2">

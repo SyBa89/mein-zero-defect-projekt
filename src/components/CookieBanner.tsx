@@ -100,7 +100,7 @@ export default function CookieBanner() {
             </div>
           )}
 
-          {/* ✅ DSA-KONFORME BUTTONS: Beide optisch identisch! */}
+          {/* DSA-KONFORME BUTTONS: Beide optisch identisch! */}
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={handleAcceptAll}

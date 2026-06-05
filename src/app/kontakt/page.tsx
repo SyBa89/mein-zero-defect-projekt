@@ -154,7 +154,7 @@ export default function KontaktPage() {
                   />
                 </div>
 
-                {/* Honeypot (unsichtbarer Spamschutz - NICHT entfernen!) */}
+                {/* Honeypot (unsichtbarer Spamschutz) */}
                 <input
                   type="text"
                   name="_honeypot"

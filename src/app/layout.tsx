@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: '%s | Kiosk Lollipop',
   },
   description:
-    'Kiosk Lollipop in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
+    'Kiosk Lollipop in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. ★★★★★ 5,0 Sterne bei Google.',
   keywords: ['Kiosk Erftstadt', 'Kiosk Liblar', 'Hermes Paketshop Erftstadt', 'Kiosk Lollipop'],
   metadataBase: new URL('https://mein-zero-defect-projekt.vercel.app'),
   openGraph: {

@@ -61,7 +61,7 @@ export default function DatenschutzPage() {
             </p>
           </section>
 
-          {/* 3. Cookies - NEU: TDDDG + PIMS */}
+          {/* 3. Cookies - TDDDG + PIMS */}
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
               3. Cookies und Einwilligungsmanagement
@@ -105,20 +105,17 @@ export default function DatenschutzPage() {
             </p>
           </section>
 
-          {/* 5. Ihre Rechte */}
+          {/* 5. Betroffenenrechte - DEZENT FORMULIERT */}
           <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Ihre Rechte</h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf:
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Betroffenenrechte</h2>
+            <p className="text-gray-700 leading-relaxed">
+              Nach der Datenschutz-Grundverordnung stehen Ihnen als betroffene Person verschiedene
+              Rechte zu. Diese umfassen das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art.
+              16 DSGVO), Löschung (Art. 17 DSGVO), Einschränkung der Verarbeitung (Art. 18 DSGVO),
+              Datenübertragbarkeit (Art. 20 DSGVO) sowie Widerspruch (Art. 21 DSGVO). Zudem besteht
+              ein Beschwerderecht bei der zuständigen Aufsichtsbehörde (Art. 77 DSGVO). Zur Ausübung
+              Ihrer Rechte wenden Sie sich bitte an die im Impressum angegebenen Kontaktdaten.
             </p>
-            <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
-              <li>Auskunft über Ihre gespeicherten personenbezogenen Daten</li>
-              <li>Berichtigung unrichtiger personenbezogener Daten</li>
-              <li>Löschung Ihrer personenbezogenen Daten</li>
-              <li>Einschränkung der Datenverarbeitung</li>
-              <li>Datenübertragbarkeit</li>
-              <li>Widerspruch gegen die Verarbeitung</li>
-            </ul>
           </section>
 
           {/* Platzhalter-Hinweis */}

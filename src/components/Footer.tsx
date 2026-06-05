@@ -30,7 +30,6 @@ export default function Footer() {
                   Datenschutz
                 </Link>
               </li>
-              {/* Diskreter interner Link */}
               <li className="pt-2">
                 <Link
                   href="/intern"
@@ -61,7 +60,6 @@ export default function Footer() {
               <li className="ml-6">50374 Erftstadt</li>
               <li>📞 02235 9291160</li>
             </ul>
-            {/* NEU: Facebook-Link */}
             <a
               href="https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/"
               target="_blank"

@@ -48,7 +48,7 @@ export default function ImpressumPage() {
             </p>
           </section>
 
-          {/* NEU: Glücksspiel-Hinweis */}
+          {/* Glücksspiel-Hinweis */}
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Glücksspiel</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
