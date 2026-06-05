@@ -8,16 +8,12 @@ export default function CookieBanner() {
   const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
-    // Prüfe ob bereits eine Entscheidung getroffen wurde
     const consent = localStorage.getItem('cookie-consent');
 
-    // Wenn bereits entschieden, nichts tun (Early Return)
     if (consent) return;
 
-    // Verzögerung für bessere UX
     const timer = setTimeout(() => setShowBanner(true), 1000);
 
-    // Cleanup-Funktion
     return () => clearTimeout(timer);
   }, []);
 
@@ -54,17 +50,15 @@ export default function CookieBanner() {
           <p className="text-gray-700 text-sm leading-relaxed mb-4">
             Wir verwenden Cookies und ähnliche Technologien, um Ihnen die bestmögliche Erfahrung auf
             unserer Website zu bieten. Einige Cookies sind für den Betrieb der Seite erforderlich,
-            andere helfen uns, die Website zu verbessern und Ihnen personalisierte Inhalte
-            anzuzeigen.
+            andere helfen uns, die Website zu verbessern.
           </p>
 
-          {/* Detail-Bereich (aufklappbar) */}
+          {/* Detail-Bereich */}
           {showDetails && (
             <div className="bg-gray-50 rounded-lg p-4 mb-4 border border-gray-200">
               <h3 className="font-semibold text-gray-900 mb-3 text-sm">Cookie-Kategorien</h3>
 
               <div className="space-y-3">
-                {/* Notwendige Cookies */}
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
@@ -74,21 +68,18 @@ export default function CookieBanner() {
                       </span>
                     </div>
                     <p className="text-xs text-gray-600">
-                      Diese Cookies sind für den Betrieb der Website erforderlich und können nicht
-                      deaktiviert werden. Sie speichern z.B. Ihre Cookie-Einstellungen.
+                      Diese Cookies sind für den Betrieb der Website erforderlich.
                     </p>
                   </div>
                 </div>
 
-                {/* Funktionale Cookies */}
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-medium text-gray-900 text-sm">Funktionale Cookies</span>
                     </div>
                     <p className="text-xs text-gray-600">
-                      Diese Cookies ermöglichen es uns, die Nutzung der Website zu analysieren und
-                      zu verbessern. Sie werden nur mit Ihrer Einwilligung gesetzt.
+                      Diese Cookies helfen uns, die Website zu verbessern.
                     </p>
                   </div>
                 </div>
@@ -109,18 +100,18 @@ export default function CookieBanner() {
             </div>
           )}
 
-          {/* Buttons */}
+          {/* ✅ DSA-KONFORME BUTTONS: Beide optisch identisch! */}
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={handleAcceptAll}
-              className="flex-1 bg-pink-600 hover:bg-pink-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors shadow-sm"
+              className="flex-1 bg-white border-2 border-pink-600 text-pink-600 hover:bg-pink-50 font-semibold px-6 py-3 rounded-lg transition-colors"
             >
               Alle akzeptieren
             </button>
 
             <button
               onClick={handleAcceptNecessary}
-              className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-3 rounded-lg transition-colors"
+              className="flex-1 bg-white border-2 border-pink-600 text-pink-600 hover:bg-pink-50 font-semibold px-6 py-3 rounded-lg transition-colors"
             >
               Nur notwendige
             </button>
@@ -129,7 +120,7 @@ export default function CookieBanner() {
               onClick={() => setShowDetails(!showDetails)}
               className="flex-1 bg-white border-2 border-gray-300 hover:border-pink-400 text-gray-700 font-semibold px-6 py-3 rounded-lg transition-colors"
             >
-              {showDetails ? 'Weniger anzeigen' : 'Mehr erfahren'}
+              {showDetails ? 'Weniger' : 'Mehr erfahren'}
             </button>
           </div>
 

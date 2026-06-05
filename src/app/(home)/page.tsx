@@ -33,7 +33,8 @@ const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': 'ConvenienceStore',
   name: 'Kiosk Lollipop',
-  image: 'https://mein-zero-defect-projekt.vercel.app/images/fassade.jpg',
+  image:
+    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Theodor-Heuss-Straße 35',
@@ -62,8 +63,21 @@ export default function HomePage() {
       <Header />
 
       <main>
+        {/* Skip-Links für Barrierefreiheit */}
+        <div className="sr-only">
+          <a
+            href="#main-content"
+            className="focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-pink-600 focus:text-white focus:px-4 focus:py-2 focus:rounded"
+          >
+            Zum Hauptinhalt springen
+          </a>
+        </div>
+
         {/* Hero Section */}
-        <section className="relative h-[80vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+        <section
+          id="main-content"
+          className="relative h-[80vh] min-h-[500px] flex items-center justify-center overflow-hidden"
+        >
           <Image
             src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop"
             alt="Kiosk Lollipop Fassade"
@@ -86,7 +100,7 @@ export default function HomePage() {
               Theodor-Heuss-Straße 35, 50374 Erftstadt
             </p>
 
-            {/* ✅ KORRIGIERTE BUTTONS: "Jetzt besuchen" → Google Maps, "Nachricht senden" → Kontakt */}
+            {/* ✅ KORRIGIERTE BUTTONS */}
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
                 href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
@@ -194,9 +208,7 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-xl shadow-sm border-2 border-pink-100 hover:shadow-lg hover:-translate-y-1 transition-all">
-                <div className="text-4xl mb-3" aria-hidden="true">
-                  📦
-                </div>
+                <div className="text-4xl mb-3" aria-hidden="true"></div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Hermes Paketshop</h3>
                 <p className="text-gray-600 text-sm">
                   Komplett-Service für Paketversand, Abholung und Retouren. Schnell und zuverlässig.
@@ -249,20 +261,15 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Persönlicher Service</h3>
                 <p className="text-gray-600 text-sm">
-                  Seit über 10 Jahren für Liblar da. Wir kennen unsere Kunden und beraten
-                  persönlich.
+                  Seit 2020 für Liblar da. Wir kennen unsere Kunden und beraten persönlich.
                 </p>
               </div>
             </div>
 
             <div className="mt-12 text-center">
               <div className="inline-flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-sm border border-pink-200">
-                <span className="text-2xl" aria-hidden="true">
-                  🏆
-                </span>
-                <span className="font-semibold text-gray-900">
-                  Seit über 10 Jahren Ihr Kiosk in Liblar
-                </span>
+                <span className="text-2xl" aria-hidden="true"></span>
+                <span className="font-semibold text-gray-900">Seit 2020 Ihr Kiosk in Liblar</span>
               </div>
             </div>
           </div>
@@ -308,9 +315,7 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div>
-                <div className="text-4xl mb-3" aria-hidden="true">
-                  💳
-                </div>
+                <div className="text-4xl mb-3" aria-hidden="true"></div>
                 <h3 className="font-semibold text-gray-900 mb-2">Zahlungsmethoden</h3>
                 <p className="text-sm text-gray-600">
                   Bar · EC-Karte · Kontaktlos
@@ -385,9 +390,7 @@ export default function HomePage() {
         <section className="py-16 bg-yellow-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-yellow-100 p-8 rounded-xl border-2 border-yellow-300">
-              <div className="text-5xl mb-4" aria-hidden="true">
-                📦
-              </div>
+              <div className="text-5xl mb-4" aria-hidden="true"></div>
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Hermes Paketshop</h2>
               <p className="text-lg text-gray-700 mb-6">
                 Wir sind Ihr offizieller Hermes Paketshop in Erftstadt-Liblar!
@@ -445,7 +448,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Heute besonders gefragt - ALLE EMOJIS KORREKT */}
+        {/* Heute besonders gefragt */}
         <section className="py-12 bg-gradient-to-r from-pink-50 to-purple-50 border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-white rounded-xl shadow-md border-2 border-pink-200 p-6">
@@ -457,9 +460,7 @@ export default function HomePage() {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center p-4 bg-pink-50 rounded-lg">
-                  <div className="text-3xl mb-2" aria-hidden="true">
-                    🥤
-                  </div>
+                  <div className="text-3xl mb-2" aria-hidden="true"></div>
                   <p className="font-semibold text-gray-900 text-sm">Gekühlte Getränke</p>
                 </div>
                 <div className="text-center p-4 bg-yellow-50 rounded-lg">
@@ -503,7 +504,7 @@ export default function HomePage() {
                 🚬 Marlboro & Camel
               </span>
               <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
-                🎫 Lotto 6aus49 & Eurojackpot
+                Lotto 6aus49 & Eurojackpot
               </span>
               <span className="px-4 py-2 bg-pink-50 text-pink-700 rounded-full font-medium">
                 📰 Express & Kölner Stadt-Anzeiger
@@ -515,7 +516,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Produkte Section - ALLE EMOJIS KORREKT + JUGENDSCHUTZ */}
+        {/* Produkte Section */}
         <section id="produkte" className="py-16 bg-gray-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Unser Sortiment</h2>
@@ -572,7 +573,7 @@ export default function HomePage() {
                 <p className="text-gray-600 mb-2">
                   Zigaretten, Zigarren, Tabak und Zubehör aller gängigen Marken. Alles vorrätig!
                 </p>
-                <p className="text-xs text-red-600 font-medium">⚠️ Nur an Personen ab 18 Jahren</p>
+                <p className="text-xs text-red-600 font-medium">️ Nur an Personen ab 18 Jahren</p>
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -586,7 +587,7 @@ export default function HomePage() {
                   Lotto 6aus49, Eurojackpot, Rubbellose und weitere Lotterieprodukte.
                 </p>
                 <p className="text-xs text-red-600 font-medium">
-                  ⚠️ Die Teilnahme ist erst ab 18 Jahren erlaubt. Glücksspiel kann süchtig machen.
+                  ️ Die Teilnahme ist erst ab 18 Jahren erlaubt. Glücksspiel kann süchtig machen.
                 </p>
               </div>
 

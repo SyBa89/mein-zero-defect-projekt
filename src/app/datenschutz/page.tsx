@@ -27,8 +27,7 @@ export default function DatenschutzPage() {
             <h3 className="text-xl font-semibold text-gray-800 mb-3">Allgemeine Hinweise</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
               Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren
-              personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene
-              Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
+              personenbezogenen Daten passiert, wenn Sie diese Website besuchen.
             </p>
 
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
@@ -45,8 +44,7 @@ export default function DatenschutzPage() {
               <br />
               Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen (z. B. über
               das Kontaktformular). Andere Daten werden automatisch beim Besuch der Website durch
-              unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser,
-              Betriebssystem oder Uhrzeit des Seitenaufrufs).
+              unsere IT-Systeme erfasst.
             </p>
           </section>
 
@@ -63,17 +61,32 @@ export default function DatenschutzPage() {
             </p>
           </section>
 
-          {/* 3. Cookies */}
+          {/* 3. Cookies - NEU: TDDDG + PIMS */}
           <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Cookies</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              3. Cookies und Einwilligungsmanagement
+            </h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Unsere Internetseiten verwenden teilweise so genannte Cookies. Cookies richten auf
-              Ihrem Rechner keinen Schaden an und enthalten keine Viren. Sie dienen dazu, unser
-              Angebot nutzerfreundlicher zu machen.
+              Unsere Internetseiten verwenden Cookies. Cookies richten auf Ihrem Rechner keinen
+              Schaden an und enthalten keine Viren. Sie dienen dazu, unser Angebot
+              nutzerfreundlicher zu machen.
+            </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              <strong>Rechtsgrundlage:</strong> Die Speicherung von Cookies und der Zugriff auf
+              diese erfolgen gemäß <strong>§ 25 TDDDG</strong>{' '}
+              (Telekommunikation-Digitale-Dienste-Datenschutz-Gesetz). Nicht unbedingt erforderliche
+              Cookies werden nur mit Ihrer ausdrücklichen Einwilligung gesetzt.
+            </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              <strong>PIMS (Personal Information Management Services):</strong> Unsere Website
+              unterstützt die Verarbeitung von PIMS-Signalen gemäß der
+              Einwilligungs-Verwaltungsverordnung (EinwV). Wenn Sie Ihre Cookie-Präferenzen zentral
+              in Ihrem Browser oder über eine PIMS-App festgelegt haben, wird diese Präferenz
+              automatisch berücksichtigt, ohne dass ein Cookie-Banner angezeigt wird.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              Die meisten der von uns verwendeten Cookies sind so genannte „Session-Cookies". Sie
-              werden nach Ende Ihres Besuchs automatisch gelöscht.
+              Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies
+              informiert werden und Cookies nur im Einzelfall erlauben.
             </p>
           </section>
 
@@ -81,10 +94,14 @@ export default function DatenschutzPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Kontaktformular</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem
-              Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks
+              Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben zwecks
               Bearbeitung der Anfrage bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre
               Einwilligung weiter.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche
+              Maßnahmen) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung
+              Ihrer Anfrage).
             </p>
           </section>
 

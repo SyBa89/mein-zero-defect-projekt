@@ -48,6 +48,44 @@ export default function ImpressumPage() {
             </p>
           </section>
 
+          {/* NEU: Glücksspiel-Hinweis */}
+          <section>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Glücksspiel</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Verantwortlich für Lotteriedienstleistungen:
+              <br />
+              Diana Winkler
+              <br />
+              Theodor-Heuss-Straße 35
+              <br />
+              50374 Erftstadt
+            </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Konzession erteilt durch: Stadt Erftstadt - Ordnungsamt
+              <br />
+              Konzessionsnummer: [MUSS VON INHABERIN EINGEFÜGT WERDEN]
+            </p>
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 mt-4">
+              <p className="text-sm text-red-800">
+                <strong>Hinweis nach § 6 GlüStV 2021:</strong>
+                <br />
+                Teilnahme an Lotterien erst ab 18 Jahren.
+                <br />
+                Glücksspiel kann süchtig machen.
+                <br />
+                Hilfe und Informationen unter:{' '}
+                <a
+                  href="https://www.bzga.de"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  www.bzga.de
+                </a>
+              </p>
+            </div>
+          </section>
+
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Streitschlichtung</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
@@ -72,8 +110,8 @@ export default function ImpressumPage() {
           <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-8">
             <p className="text-sm text-yellow-800">
               <strong>Hinweis:</strong> Dies ist ein Platzhalter-Impressum. Vor dem Livegang müssen
-              die echten Daten (Name des Inhabers, USt-IdNr.) ergänzt werden. Für absolute
-              Rechtssicherheit empfehlen wir Dienste wie den{' '}
+              die echten Daten (Name des Inhabers, USt-IdNr., Glücksspiel-Konzessionsnummer) ergänzt
+              werden. Für absolute Rechtssicherheit empfehlen wir Dienste wie den{' '}
               <a
                 href="https://www.it-recht-kanzlei.de"
                 target="_blank"
