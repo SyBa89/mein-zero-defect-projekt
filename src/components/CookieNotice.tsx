@@ -5,7 +5,6 @@ import { useState } from 'react';
 export default function CookieNotice() {
   const [isVisible, setIsVisible] = useState(true);
 
-  // Wenn der Nutzer auf "Verstanden" geklickt hat, wird die Komponente nicht gerendert
   if (!isVisible) return null;
 
   return (

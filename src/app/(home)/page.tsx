@@ -99,7 +99,6 @@ const schemaOrg = {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 selection:bg-pink-200 selection:text-pink-900">
-      {/* Schema.org JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
@@ -108,7 +107,6 @@ export default function HomePage() {
       <Header />
 
       <main>
-        {/* Skip-Links für Barrierefreiheit */}
         <div className="sr-only">
           <a
             href="#main-content"
@@ -118,7 +116,7 @@ export default function HomePage() {
           </a>
         </div>
 
-        {/* 🚀 HERO SECTION mit echtem Fassade-Bild */}
+        {/* HERO SECTION */}
         <section
           id="main-content"
           className="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden"
@@ -131,7 +129,6 @@ export default function HomePage() {
             priority
             sizes="100vw"
           />
-          {/* Modernes, mehrschichtiges Overlay für Tiefe */}
           <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-purple-900/60 to-pink-900/80" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(236,72,153,0.4),transparent_50%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(253,224,71,0.2),transparent_50%)]" />
@@ -150,7 +147,6 @@ export default function HomePage() {
               Theodor-Heuss-Straße 35, 50374 Erftstadt
             </p>
 
-            {/* Buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-5">
               <a
                 href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
@@ -256,7 +252,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
-                  icon: '',
+                  icon: '📦',
                   title: 'Hermes Paketshop',
                   desc: 'Komplett-Service für Paketversand, Abholung und Retouren. Schnell und zuverlässig.',
                 },
@@ -266,7 +262,7 @@ export default function HomePage() {
                   desc: 'Mo-Fr bis 19:00 Uhr, Sa bis 14:30 Uhr. Wir sind da, wenn Sie uns brauchen.',
                 },
                 {
-                  icon: '',
+                  icon: '📍',
                   title: 'Zentrale Lage',
                   desc: 'Direkt am Bürgerplatz in Liblar. Gut zu Fuß oder mit dem Auto erreichbar.',
                 },
@@ -391,7 +387,7 @@ export default function HomePage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { icon: '💰', title: 'Geld abheben', sub: 'EC-Karte' },
-                { icon: '️', title: 'Druckservice', sub: 'Kopien & Ausdrucke' },
+                { icon: '🖨️', title: 'Druckservice', sub: 'Kopien & Ausdrucke' },
                 { icon: '☕', title: 'Heiße Getränke', sub: 'Kaffee & Tee to go' },
                 { icon: '🔌', title: 'Handy-Ladestation', sub: 'Smartphone aufladen' },
               ].map((s, i) => (
@@ -449,14 +445,16 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <h3 className="font-bold text-gray-900 mb-2 text-lg">
-                    📮 Pakete abholen & versenden
+                    📮 Pakete abholen & 📤 versenden
                   </h3>
                   <p className="text-sm text-gray-600">
                     Holen Sie Ihre Pakete bequem ab oder versenden Sie diese direkt bei uns.
                   </p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                  <h3 className="font-bold text-gray-900 mb-2 text-lg">️ Retouren & 🏷️ Etiketten</h3>
+                  <h3 className="font-bold text-gray-900 mb-2 text-lg">
+                    ↩️ Retouren & 🏷️ Etiketten
+                  </h3>
                   <p className="text-sm text-gray-600">
                     Geben Sie Retouren einfach ab oder lassen Sie sich vor Ort ein Etikett
                     erstellen.
@@ -467,7 +465,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Heute besonders gefragt (Mit korrigiertem 🥤 Emoji) */}
+        {/* Heute besonders gefragt */}
         <section className="py-16 bg-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-3xl shadow-lg border border-pink-100 p-8">
@@ -484,7 +482,7 @@ export default function HomePage() {
                   { icon: '🥤', text: 'Gekühlte Getränke', bg: 'bg-pink-100/50' },
                   { icon: '🍦', text: 'Eis & Snacks', bg: 'bg-yellow-100/50' },
                   { icon: '📰', text: 'Tageszeitungen', bg: 'bg-blue-100/50' },
-                  { icon: '', text: 'Hermes Versand', bg: 'bg-green-100/50' },
+                  { icon: '📦', text: 'Hermes Versand', bg: 'bg-green-100/50' },
                 ].map((item, i) => (
                   <div
                     key={i}
@@ -512,7 +510,7 @@ export default function HomePage() {
             </h2>
             <div className="flex flex-wrap justify-center gap-3 md:gap-4">
               {[
-                ' Coca-Cola & Fanta',
+                '🥤 Coca-Cola & Fanta',
                 '🍫 Milka & Ritter Sport',
                 '🚬 Marlboro & Camel',
                 '🎫 Lotto 6aus49 & Eurojackpot',
@@ -539,7 +537,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
-                  icon: '',
+                  icon: '🥤',
                   bg: 'bg-blue-100',
                   title: 'Über 100 Getränke',
                   desc: 'Kalte und warme Getränke, Softdrinks, Säfte, Wasser, Bier und mehr. Immer frisch und gekühlt!',
@@ -572,7 +570,7 @@ export default function HomePage() {
                   warn: '⚠️ Die Teilnahme ist erst ab 18 Jahren erlaubt. Glücksspiel kann süchtig machen.',
                 },
                 {
-                  icon: '',
+                  icon: '📱',
                   bg: 'bg-indigo-100',
                   title: 'Handy-Guthaben',
                   desc: 'Aufladung für alle Mobilfunkanbieter: Telekom, Vodafone, O2, Aldi Talk und viele mehr.',
