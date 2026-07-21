@@ -45,7 +45,7 @@ export default function Footer() {
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li>📦 Hermes Paketshop</li>
+              <li> Hermes Paketshop</li>
               <li>🎫 Lotto & Rubbellose</li>
               <li>📱 Handy-Guthaben</li>
               <li>💳 Geld abheben</li>
