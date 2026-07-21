@@ -413,7 +413,7 @@ export default function HomePage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { icon: '💰', title: 'Geld abheben', sub: 'EC-Karte' },
-                { icon: '️', title: 'Druckservice', sub: 'Kopien & Ausdrucke' },
+                { icon: '️🖨️', title: 'Druckservice', sub: 'Kopien & Ausdrucke' },
                 { icon: '☕', title: 'Heiße Getränke', sub: 'Kaffee & Tee to go' },
                 { icon: '🔌', title: 'Handy-Ladestation', sub: 'Smartphone aufladen' },
               ].map((s, i) => (
@@ -507,7 +507,7 @@ export default function HomePage() {
                 {[
                   { icon: '🥤', text: 'Gekühlte Getränke', bg: 'bg-pink-100/50' },
                   { icon: '🍦', text: 'Eis & Snacks', bg: 'bg-yellow-100/50' },
-                  { icon: '', text: 'Tageszeitungen', bg: 'bg-blue-100/50' },
+                  { icon: '📰', text: 'Tageszeitungen', bg: 'bg-blue-100/50' },
                   { icon: '📦', text: 'Hermes Versand', bg: 'bg-green-100/50' },
                 ].map((item, i) => (
                   <div
@@ -582,7 +582,7 @@ export default function HomePage() {
                   desc: 'Tageszeitungen, Magazine, Illustrierte und Fachzeitschriften. Für jeden das Richtige!',
                 },
                 {
-                  icon: '',
+                  icon: '🚬',
                   bg: 'bg-red-100',
                   title: 'Tabakwaren',
                   desc: 'Zigaretten, Zigarren, Tabak und Zubehör aller gängigen Marken. Alles vorrätig!',
