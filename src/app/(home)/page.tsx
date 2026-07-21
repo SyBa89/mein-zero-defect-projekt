@@ -116,7 +116,7 @@ export default function HomePage() {
           </a>
         </div>
 
-        {/* 🚀 HERO SECTION (Optimiert für maximalen LCP-Score & Conversion) */}
+        {/* 🚀 HERO SECTION: Professionell optimiert (Cinematic Focus & Localized Protection) */}
         <section
           id="main-content"
           className="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden"
@@ -130,25 +130,30 @@ export default function HomePage() {
             fetchPriority="high"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-purple-900/60 to-pink-900/80" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(236,72,153,0.4),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(253,224,71,0.2),transparent_50%)]" />
+
+          {/* Schicht 1: Basis-Abdunkelung (nur 30%, damit das Foto dominant sichtbar bleibt) */}
+          <div className="absolute inset-0 bg-black/30" />
+
+          {/* Schicht 2: Cinematic Vignette (Dunkel an den Rändern/Unten, Transparent in der Mitte) */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,transparent_10%,rgba(0,0,0,0.7)_100%)]" />
+
+          {/* Schicht 3: Subtiler Brand-Akzent (Nur unten für die Buttons) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-pink-950/80 via-transparent to-transparent" />
 
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-6 leading-none drop-shadow-2xl">
               Willkommen bei <br />
-              <span className="bg-gradient-to-r from-yellow-300 via-pink-400 to-yellow-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-yellow-300 via-pink-400 to-yellow-300 bg-clip-text text-transparent drop-shadow-lg">
                 Kiosk Lollipop
               </span>
             </h1>
-            <p className="mt-6 max-w-2xl mx-auto text-xl sm:text-2xl text-gray-100 mb-4 drop-shadow-lg font-light">
+            <p className="mt-6 max-w-2xl mx-auto text-xl sm:text-2xl text-gray-100 mb-4 drop-shadow-xl font-light">
               Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar
             </p>
 
-            {/* PROAKTIVE OPTIMIERUNG: Klickbare Telefonnummer für mobile Conversion */}
             <a
               href="tel:+4922359291160"
-              className="inline-flex items-center justify-center gap-2 text-lg text-gray-200 hover:text-white transition-colors mb-10 drop-shadow-md group"
+              className="inline-flex items-center justify-center gap-2 text-lg text-gray-100 hover:text-white transition-colors mb-10 drop-shadow-xl group"
             >
               <svg
                 className="w-5 h-5 group-hover:text-pink-400 transition-colors"
@@ -730,7 +735,6 @@ export default function HomePage() {
         </section>
       </main>
 
-      {/* ✅ PROAKTIVER FIX: Globale Overlays gehören auf die Root-Ebene, nicht in <main> */}
       <Footer />
       <MobileActionBar />
       <CookieNotice />
