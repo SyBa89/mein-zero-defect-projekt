@@ -1,4 +1,4 @@
-// ✅ FIX: Unbenutzter Link-Import entfernt
+'use client';
 
 interface Review {
   id: string;
@@ -10,6 +10,7 @@ interface Review {
   source: string;
 }
 
+// ✅ ARCHITEKTUR: Statische Daten außerhalb, sauber typisiert
 const reviews: Review[] = [
   {
     id: 'rev-1',
@@ -42,7 +43,7 @@ const reviews: Review[] = [
 
 export default function Reviews() {
   return (
-    <section className="py-16 bg-white" aria-labelledby="reviews-heading">
+    <section className="py-16 sm:py-20 bg-white" aria-labelledby="reviews-heading">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
           id="reviews-heading"
@@ -55,8 +56,9 @@ export default function Reviews() {
           {reviews.map((review) => (
             <article
               key={review.id}
-              className="bg-gray-50 p-8 rounded-3xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
+              className="bg-gray-50 p-8 rounded-3xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full"
             >
+              {/* ✅ ACCESSIBILITY: Exakte Sternchen-Bewertung für Screenreader */}
               <div
                 className="flex text-yellow-400 mb-4"
                 aria-label={`${review.rating} von 5 Sternen`}
@@ -79,6 +81,7 @@ export default function Reviews() {
 
               <footer className="flex items-center justify-between border-t border-gray-200 pt-4 mt-auto">
                 <div className="flex items-center gap-3">
+                  {/* Avatar-Initialen */}
                   <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-sm flex-shrink-0">
                     {review.name.charAt(0)}
                   </div>
@@ -92,8 +95,9 @@ export default function Reviews() {
                   </div>
                 </div>
 
+                {/* ✅ BUSINESS: Verifiziert-Badge steigert Glaubwürdigkeit (Social Proof) */}
                 <div
-                  className="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-full border border-gray-200 shadow-sm"
+                  className="flex items-center gap-1.5 bg-white px-2.5 py-1.5 rounded-full border border-gray-200 shadow-sm"
                   title={`Verifizierte Bewertung von ${review.source}`}
                 >
                   <svg
@@ -104,7 +108,7 @@ export default function Reviews() {
                   >
                     <path d="M12.545 10.239v3.821h5.445c-.712 2.315-2.647 3.972-5.445 3.972a6.033 6.033 0 110-12.064c1.498 0 2.866.549 3.921 1.453l2.814-2.814A9.969 9.969 0 0012.545 2C7.021 2 2.543 6.477 2.543 12s4.478 10 10.002 10c8.396 0 10.249-7.85 9.426-11.748l-9.426-.013z" />
                   </svg>
-                  <span className="text-[10px] font-bold text-gray-600 uppercase tracking-wide">
+                  <span className="text-[10px] font-black text-gray-600 uppercase tracking-wide">
                     {review.source}
                   </span>
                 </div>
@@ -113,13 +117,15 @@ export default function Reviews() {
           ))}
         </div>
 
+        {/* ✅ CONVERSION: Klarer, einladender Call-to-Action für neue Bewertungen */}
         <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">Auch Sie waren bei uns zufrieden?</p>
+          <p className="text-gray-600 mb-4 font-medium">Auch Sie waren bei uns zufrieden?</p>
           <a
             href="https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-pink-600 font-semibold hover:text-pink-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded px-2 py-1"
+            aria-label="Eine neue Bewertung für Kiosk Lollipop auf Google schreiben (öffnet neuen Tab)"
+            className="inline-flex items-center gap-2 text-pink-600 font-bold hover:text-pink-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded-lg px-4 py-2 hover:bg-pink-50"
           >
             <svg
               className="w-5 h-5"

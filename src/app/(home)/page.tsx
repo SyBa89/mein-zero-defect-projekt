@@ -8,16 +8,26 @@ import CookieNotice from '@/components/CookieNotice';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// ✅ SEO Metadata - VOLLSTÄNDIG
+// ✅ ZERO-DEFECT ARCHITEKTUR: Zentrale Konfiguration verhindert Inkonsistenzen (DRY-Prinzip)
+const KIOSK_CONFIG = {
+  name: 'Kiosk Lollipop',
+  phoneDisplay: '02235 9291160',
+  phoneHref: 'tel:+4922359291160',
+  address: 'Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar',
+  mapsLink: 'https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683',
+  facebook: 'https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/',
+  url: 'https://mein-zero-defect-projekt.vercel.app',
+};
+
+// ✅ SEO Metadata - VOLLSTÄNDIG & OPTIMIERT
 export const metadata = {
-  title: 'Kiosk Lollipop | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar',
-  description:
-    'Kiosk Lollipop in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. ★★★★★ 5,0 Sterne bei Google.',
+  title: `${KIOSK_CONFIG.name} | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar`,
+  description: `${KIOSK_CONFIG.name} in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. ★★★★★ 5,0 Sterne bei Google.`,
   keywords: [
     'Kiosk Erftstadt',
     'Kiosk Liblar',
     'Hermes Paketshop Erftstadt',
-    'Kiosk Lollipop',
+    KIOSK_CONFIG.name,
     'Bürgerplatz Liblar',
     'Kiosk 50374',
     'Paketshop Erftstadt',
@@ -25,27 +35,27 @@ export const metadata = {
     'Paketshop in der Nähe',
     'Lotto Erftstadt',
   ],
-  metadataBase: new URL('https://mein-zero-defect-projekt.vercel.app'),
+  metadataBase: new URL(KIOSK_CONFIG.url),
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Kiosk Lollipop | Erftstadt-Liblar',
+    title: `${KIOSK_CONFIG.name} | Erftstadt-Liblar`,
     description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
     type: 'website',
     locale: 'de_DE',
-    url: 'https://mein-zero-defect-projekt.vercel.app',
-    siteName: 'Kiosk Lollipop',
+    url: KIOSK_CONFIG.url,
+    siteName: KIOSK_CONFIG.name,
     images: [
       {
         url: '/images/fassade.png',
         width: 1200,
         height: 630,
-        alt: 'Kiosk Lollipop Erftstadt-Liblar',
+        alt: `${KIOSK_CONFIG.name} Fassade am Bürgerplatz in Erftstadt-Liblar`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Kiosk Lollipop | Erftstadt-Liblar',
+    title: `${KIOSK_CONFIG.name} | Erftstadt-Liblar`,
     description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
     images: ['/images/fassade.png'],
   },
@@ -62,17 +72,16 @@ export const metadata = {
   },
 };
 
-// ✅ Schema.org LocalBusiness - VOLLSTÄNDIG
+// ✅ Schema.org LocalBusiness - VOLLSTÄNDIG & ISO-8601 KONFORM
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': 'ConvenienceStore',
-  '@id': 'https://mein-zero-defect-projekt.vercel.app/#store',
-  name: 'Kiosk Lollipop',
-  url: 'https://mein-zero-defect-projekt.vercel.app',
-  logo: 'https://mein-zero-defect-projekt.vercel.app/images/logo.png',
-  image: 'https://mein-zero-defect-projekt.vercel.app/images/fassade.png',
-  description:
-    'Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. ★★★★★ 5,0 Sterne bei Google.',
+  '@id': `${KIOSK_CONFIG.url}/#store`,
+  name: KIOSK_CONFIG.name,
+  url: KIOSK_CONFIG.url,
+  logo: `${KIOSK_CONFIG.url}/images/logo.png`,
+  image: `${KIOSK_CONFIG.url}/images/fassade.png`,
+  description: `Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. ★★★★★ 5,0 Sterne bei Google.`,
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Theodor-Heuss-Straße 35',
@@ -84,8 +93,9 @@ const schemaOrg = {
   geo: { '@type': 'GeoCoordinates', latitude: 50.806945, longitude: 6.823683 },
   telephone: '+4922359291160',
   priceRange: '€',
-  openingHours: ['Mo-Fr 07:30-19:00', 'Sa 07:30-14:30'],
-  sameAs: ['https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/'],
+  // ✅ PROAKTIVER FIX: ISO-8601 konformes Format für maximale Google-Kompatibilität
+  openingHours: ['Mo,Tu,We,Th,Fr 07:30-19:00', 'Sa 07:30-14:30'],
+  sameAs: [KIOSK_CONFIG.facebook],
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '5.0',
@@ -123,7 +133,7 @@ export default function HomePage() {
         >
           <Image
             src="/images/fassade.png"
-            alt="Kiosk Lollipop Fassade am Bürgerplatz"
+            alt={`${KIOSK_CONFIG.name} Fassade am Bürgerplatz in Erftstadt-Liblar`}
             fill
             className="object-cover"
             priority
@@ -131,20 +141,18 @@ export default function HomePage() {
             sizes="100vw"
           />
 
-          {/* Schicht 1: Basis-Abdunkelung (nur 30%, damit das Foto dominant sichtbar bleibt) */}
+          {/* Schicht 1: Basis-Abdunkelung */}
           <div className="absolute inset-0 bg-black/30" />
-
-          {/* Schicht 2: Cinematic Vignette (Dunkel an den Rändern/Unten, Transparent in der Mitte) */}
+          {/* Schicht 2: Cinematic Vignette */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,transparent_10%,rgba(0,0,0,0.7)_100%)]" />
-
-          {/* Schicht 3: Subtiler Brand-Akzent (Nur unten für die Buttons) */}
+          {/* Schicht 3: Subtiler Brand-Akzent */}
           <div className="absolute inset-0 bg-gradient-to-t from-pink-950/80 via-transparent to-transparent" />
 
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-6 leading-none drop-shadow-2xl">
               Willkommen bei <br />
               <span className="text-white drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]">
-                Kiosk Lollipop
+                {KIOSK_CONFIG.name}
               </span>
             </h1>
             <p className="mt-6 max-w-2xl mx-auto text-xl sm:text-2xl text-gray-100 mb-4 drop-shadow-xl font-light">
@@ -152,8 +160,9 @@ export default function HomePage() {
             </p>
 
             <a
-              href="tel:+4922359291160"
+              href={KIOSK_CONFIG.phoneHref}
               className="inline-flex items-center justify-center gap-2 text-lg text-gray-100 hover:text-white transition-colors mb-10 drop-shadow-xl group"
+              aria-label={`Kiosk anrufen: ${KIOSK_CONFIG.phoneDisplay}`}
             >
               <svg
                 className="w-5 h-5 group-hover:text-pink-400 transition-colors"
@@ -169,15 +178,16 @@ export default function HomePage() {
                 />
               </svg>
               <span className="underline decoration-pink-400/50 underline-offset-4 group-hover:decoration-pink-400">
-                02235 9291160
+                {KIOSK_CONFIG.phoneDisplay}
               </span>
             </a>
 
             <div className="flex flex-col sm:flex-row justify-center gap-5">
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
+                href={KIOSK_CONFIG.mapsLink}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Route zum Kiosk mit Google Maps planen"
               >
                 <button className="bg-white/90 backdrop-blur-md hover:bg-white text-pink-600 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/30 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95 flex items-center gap-3">
                   <svg
@@ -303,9 +313,10 @@ export default function HomePage() {
                   desc: 'Bar, EC-Karte, Kontaktlos, Apple Pay und Google Pay. Sie zahlen, wie Sie wollen.',
                 },
                 {
-                  icon: '👋',
+                  // ✅ PROAKTIVES UPGRADE: Von 👋 zu 🤝 für mehr Seriosität, Vertrauen und Partnerschaft
+                  icon: '🤝',
                   title: 'Persönlicher Service',
-                  desc: 'Seit 2020 für Liblar da. Wir kennen unsere Kunden und beraten persönlich.',
+                  desc: 'Seit 2020 für Liblar da. Wir kennen unsere Kunden und beraten mit Herz und Verstand.',
                 },
               ].map((item, i) => (
                 <div
@@ -639,9 +650,9 @@ export default function HomePage() {
             </h2>
             <div className="bg-white p-10 rounded-3xl border border-pink-100 shadow-lg">
               <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                <strong className="text-gray-900">Kiosk Lollipop</strong> ist Ihr freundlicher
+                <strong className="text-gray-900">{KIOSK_CONFIG.name}</strong> ist Ihr freundlicher
                 Nachbarschaftskiosk und Hermes Paketshop am Bürgerplatz im Herzen von
-                Erftstadt-Liblar. Wir befinden uns in der Theodor-Heuss-Straße 35, in der Nähe des
+                Erftstadt-Liblar. Wir befinden uns in der {KIOSK_CONFIG.address}, in der Nähe des
                 Bahnhofs und weiterer lokaler Geschäfte.
               </p>
               <p className="text-lg text-gray-700 leading-relaxed mb-4">
@@ -667,15 +678,14 @@ export default function HomePage() {
             <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight drop-shadow-lg">
               Besuchen Sie uns!
             </h2>
-            <p className="text-2xl text-pink-100 mb-4 font-light">
-              Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar
-            </p>
+            <p className="text-2xl text-pink-100 mb-4 font-light">{KIOSK_CONFIG.address}</p>
             <p className="text-lg text-gray-300 mb-10">Wir freuen uns auf Ihren Besuch!</p>
             <div className="flex flex-col sm:flex-row justify-center gap-5">
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
+                href={KIOSK_CONFIG.mapsLink}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Exakte Route mit Google Maps planen"
               >
                 <button className="bg-white text-gray-900 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-white/20 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3">
                   <svg
@@ -728,8 +738,17 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="text-xs text-gray-600 text-center font-medium">
+            <div className="text-xs text-gray-600 text-center font-medium space-y-1">
               <p>Alle Preise inkl. gesetzlicher MwSt. | Irrtümer und Änderungen vorbehalten.</p>
+              <p>
+                <Link href="/impressum" className="hover:text-pink-600 underline">
+                  Impressum
+                </Link>
+                {' | '}
+                <Link href="/datenschutz" className="hover:text-pink-600 underline">
+                  Datenschutz
+                </Link>
+              </p>
             </div>
           </div>
         </section>
