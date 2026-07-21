@@ -2,7 +2,7 @@
   "name": "Kiosk Lollipop",
   "short_name": "Lollipop",
   "description": "Ihr Kiosk und Hermes Paketshop in Erftstadt-Liblar",
-  "start_url": "/",
+  "start_url": "/?utm_source=homescreen",
   "display": "standalone",
   "background_color": "#f9fafb",
   "theme_color": "#db2777",

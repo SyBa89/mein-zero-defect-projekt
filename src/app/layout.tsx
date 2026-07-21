@@ -47,8 +47,13 @@ export const metadata: Metadata = {
 
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
+    statusBarStyle: 'black-translucent', // ✅ OPTIMIERT: Moderner, nahtloser Look auf iOS
     title: 'Kiosk Lollipop',
+  },
+
+  // ✅ PROAKTIVER FIX: Windows-Phone / Edge Tile Color
+  other: {
+    'msapplication-TileColor': '#db2777',
   },
 
   // Verhindert, dass iOS zufällig Adressen oder E-Mails in klickbare Links verwandelt (außer Telefon)
@@ -65,7 +70,6 @@ export const metadata: Metadata = {
     siteName: 'Kiosk Lollipop',
     title: 'Kiosk Lollipop | Erftstadt-Liblar',
     description: 'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar.',
-    // ✅ PROAKTIVER FIX: Standard-Bild für alle Unterseiten (z.B. beim Teilen auf WhatsApp)
     images: [
       {
         url: '/images/fassade.png',
@@ -80,7 +84,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Kiosk Lollipop | Erftstadt-Liblar',
     description: 'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar.',
-    // ✅ PROAKTIVER FIX: Standard-Bild für Twitter/X-Shares
     images: ['/images/fassade.png'],
   },
 
