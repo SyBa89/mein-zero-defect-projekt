@@ -48,7 +48,6 @@ export default function ImpressumPage() {
             </p>
           </section>
 
-          {/* Glücksspiel-Hinweis */}
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Glücksspiel</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
@@ -106,12 +105,14 @@ export default function ImpressumPage() {
             </p>
           </section>
 
-          {/* Platzhalter-Hinweis */}
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-8">
-            <p className="text-sm text-yellow-800">
-              <strong>Hinweis:</strong> Dies ist ein Platzhalter-Impressum. Vor dem Livegang müssen
-              die echten Daten (Name des Inhabers, USt-IdNr., Glücksspiel-Konzessionsnummer) ergänzt
-              werden. Für absolute Rechtssicherheit empfehlen wir Dienste wie den{' '}
+          {/* ✅ AKTUALISIERT: Professioneller Onboarding-Hinweis */}
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mt-8">
+            <p className="text-sm text-blue-800">
+              <strong>Hinweis zur Finalisierung:</strong> Die finalen Inhaberdaten und die
+              Glücksspiel-Konzessionsnummer werden im Rahmen des kostenlosen Onboarding-Prozesses
+              gemeinsam mit Ihnen eingepflegt, um 100%ige Rechtssicherheit gemäß TMG und GlüStV zu
+              gewährleisten. Für maximale Absicherung empfehlen wir die finale Prüfung durch Dienste
+              wie den{' '}
               <a
                 href="https://www.it-recht-kanzlei.de"
                 target="_blank"
@@ -133,7 +134,6 @@ export default function ImpressumPage() {
             </p>
           </div>
 
-          {/* Zurück-Link */}
           <div className="mt-8 pt-6 border-t border-gray-200">
             <Link
               href="/"

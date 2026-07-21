@@ -234,15 +234,12 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Aktuelle Aktion Banner */}
+        {/* ✅ AKTUALISIERT: Aktuelle Aktion Banner (Pitch-Ready) */}
         <section className="bg-gradient-to-r from-yellow-400 to-orange-400 py-4">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-white font-bold text-lg">
-              🎉 PLATZHALTER: Hier können Sie Ihre aktuellen Aktionen eintragen! 🎉
-            </p>
-            <p className="text-white text-sm mt-1">
-              Ändern Sie diesen Text jederzeit selbst, um auf neue Lieferungen oder Angebote
-              hinzuweisen.
+              🎉 Frische Brötchen, gekühlte Getränke & Ihr Hermes Paketshop direkt am Bürgerplatz!
+              🎉
             </p>
           </div>
         </section>
@@ -782,8 +779,6 @@ export default function HomePage() {
       </main>
 
       <Footer />
-
-      {/* ✅ KRITISCH: Mobile Action Bar für mobile Nutzer! */}
       <MobileActionBar />
     </div>
   );

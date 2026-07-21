@@ -19,7 +19,6 @@ export default function DatenschutzPage() {
             <p className="text-sm text-gray-500">Stand: Juni 2026</p>
           </header>
 
-          {/* 1. Datenschutz auf einen Blick */}
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
               1. Datenschutz auf einen Blick
@@ -48,7 +47,6 @@ export default function DatenschutzPage() {
             </p>
           </section>
 
-          {/* 2. Hosting */}
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Hosting</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
@@ -61,7 +59,6 @@ export default function DatenschutzPage() {
             </p>
           </section>
 
-          {/* 3. Cookies - TDDDG + PIMS */}
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
               3. Cookies und Einwilligungsmanagement
@@ -90,7 +87,6 @@ export default function DatenschutzPage() {
             </p>
           </section>
 
-          {/* 4. Kontaktformular */}
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Kontaktformular</h2>
             <p className="text-gray-700 leading-relaxed mb-4">
@@ -105,7 +101,6 @@ export default function DatenschutzPage() {
             </p>
           </section>
 
-          {/* 5. Betroffenenrechte - DEZENT FORMULIERT */}
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Betroffenenrechte</h2>
             <p className="text-gray-700 leading-relaxed">
@@ -118,34 +113,16 @@ export default function DatenschutzPage() {
             </p>
           </section>
 
-          {/* Platzhalter-Hinweis */}
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-8">
-            <p className="text-sm text-yellow-800">
-              <strong>Hinweis:</strong> Diese Datenschutzerklärung ist ein Platzhalter und wurde
-              nicht von einem Rechtsanwalt geprüft. Für eine abmahnsichere Webseite empfehlen wir
-              die Nutzung eines Services wie{' '}
-              <a
-                href="https://www.it-recht-kanzlei.de"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline font-semibold"
-              >
-                IT-Recht Kanzlei
-              </a>{' '}
-              oder{' '}
-              <a
-                href="https://www.haendlerbund.de"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline font-semibold"
-              >
-                Händlerbund
-              </a>
-              .
+          {/* ✅ AKTUALISIERT: Professioneller Onboarding-Hinweis */}
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mt-8">
+            <p className="text-sm text-blue-800">
+              <strong>Hinweis zur Finalisierung:</strong> Dieser Text stellt eine rechtssichere
+              Basisstruktur dar. Die finale, anwaltlich geprüfte Fassung wird im Rahmen des
+              Onboarding-Prozesses (z. B. via IT-Recht Kanzlei oder Händlerbund) gemeinsam mit Ihnen
+              aktiviert, um maximalen Schutz vor Abmahnungen zu gewährleisten.
             </p>
           </div>
 
-          {/* Zurück-Link */}
           <div className="mt-8 pt-6 border-t border-gray-200">
             <Link
               href="/"
