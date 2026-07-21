@@ -7,7 +7,7 @@ import PackageCalculator from '@/components/PackageCalculator';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// ✅ SEO Metadata - VOLLSTÄNDIG (Unverändert für maximale Sicherheit)
+// ✅ SEO Metadata - VOLLSTÄNDIG
 export const metadata = {
   title: 'Kiosk Lollipop | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar',
   description:
@@ -35,7 +35,7 @@ export const metadata = {
     siteName: 'Kiosk Lollipop',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop',
+        url: '/images/fassade.png',
         width: 1200,
         height: 630,
         alt: 'Kiosk Lollipop Erftstadt-Liblar',
@@ -46,9 +46,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Kiosk Lollipop | Erftstadt-Liblar',
     description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
-    images: [
-      'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop',
-    ],
+    images: ['/images/fassade.png'],
   },
   robots: {
     index: true,
@@ -63,16 +61,15 @@ export const metadata = {
   },
 };
 
-// ✅ Schema.org LocalBusiness - VOLLSTÄNDIG (Unverändert)
+// ✅ Schema.org LocalBusiness - VOLLSTÄNDIG
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': 'ConvenienceStore',
   '@id': 'https://mein-zero-defect-projekt.vercel.app/#store',
   name: 'Kiosk Lollipop',
   url: 'https://mein-zero-defect-projekt.vercel.app',
-  logo: 'https://mein-zero-defect-projekt.vercel.app/favicon.ico',
-  image:
-    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop',
+  logo: 'https://mein-zero-defect-projekt.vercel.app/images/logo.png',
+  image: 'https://mein-zero-defect-projekt.vercel.app/images/fassade.png',
   description:
     'Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. ★★★★★ 5,0 Sterne bei Google.',
   address: {
@@ -120,16 +117,16 @@ export default function HomePage() {
           </a>
         </div>
 
-        {/* 🚀 UPGRADE 1: HERO SECTION (Apple-Typografie & Stripe-Lighting) */}
+        {/* 🚀 HERO SECTION (Hier ist der "Hero-Bereich" mit dem echten Fassade-Bild) */}
         <section
           id="main-content"
           className="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden"
         >
           <Image
-            src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop"
-            alt="Kiosk Lollipop Fassade"
+            src="/images/fassade.png"
+            alt="Kiosk Lollipop Fassade am Bürgerplatz"
             fill
-            className="object-cover scale-105"
+            className="object-cover"
             priority
             sizes="100vw"
           />
@@ -152,7 +149,7 @@ export default function HomePage() {
               Theodor-Heuss-Straße 35, 50374 Erftstadt
             </p>
 
-            {/* 🚀 UPGRADE 2: LINEAR-STYLE BUTTONS (Glassmorphism & Glow) */}
+            {/* Buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-5">
               <a
                 href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
@@ -207,7 +204,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 🚀 UPGRADE 3: GOOGLE BEWERTUNGS-BADGE (Premium Trust) */}
+        {/* Google Bewertungs-Badge */}
         <section className="py-10 bg-white border-b border-gray-100">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-flex items-center gap-5 bg-gradient-to-r from-yellow-50 to-orange-50 px-10 py-6 rounded-3xl shadow-xl border border-yellow-200/50">
@@ -233,7 +230,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Aktuelle Aktion Banner (Modernisiert) */}
+        {/* Aktuelle Aktion Banner */}
         <section className="bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 py-5">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-white font-bold text-lg drop-shadow-md">
@@ -243,7 +240,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 🚀 UPGRADE 4: AIRBNB-STYLE CARDS (Warum Kunden zu uns kommen) */}
+        {/* Warum Kunden zu uns kommen */}
         <section className="py-20 bg-gradient-to-br from-gray-50 via-pink-50/30 to-purple-50/30">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -306,7 +303,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Öffnungszeiten (Elegant) */}
+        {/* Öffnungszeiten */}
         <section className="py-20 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-4xl font-black text-gray-900 mb-10 text-center tracking-tight">
@@ -343,7 +340,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Service & Zahlung (Clean) */}
+        {/* Service & Zahlung */}
         <section className="py-16 bg-gray-50 border-y border-gray-100">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
@@ -412,7 +409,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Hermes Paketshop (Warm & Premium) */}
+        {/* Hermes Paketshop */}
         <section className="py-20 bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-white/70 backdrop-blur-sm p-10 rounded-[2rem] border border-yellow-200/50 shadow-xl">
@@ -430,7 +427,7 @@ export default function HomePage() {
 
               <details className="bg-white rounded-2xl p-6 mb-8 text-left shadow-sm border border-gray-100">
                 <summary className="font-bold text-gray-900 cursor-pointer hover:text-pink-600 transition-colors text-lg">
-                  📋 Alle Paketgrößen im Detail anzeigen
+                  Alle Paketgrößen im Detail anzeigen
                 </summary>
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                   <div className="border border-gray-200 rounded-xl p-4 text-center bg-gray-50">
@@ -451,16 +448,15 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <h3 className="font-bold text-gray-900 mb-2 text-lg">
-                    📮 Pakete abholen & 📤 versenden
+                    {' '}
+                    Pakete abholen & 📤 versenden
                   </h3>
                   <p className="text-sm text-gray-600">
                     Holen Sie Ihre Pakete bequem ab oder versenden Sie diese direkt bei uns.
                   </p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                  <h3 className="font-bold text-gray-900 mb-2 text-lg">
-                    ↩️ Retouren & 🏷️ Etiketten
-                  </h3>
+                  <h3 className="font-bold text-gray-900 mb-2 text-lg">↩️ Retouren & ️ Etiketten</h3>
                   <p className="text-sm text-gray-600">
                     Geben Sie Retouren einfach ab oder lassen Sie sich vor Ort ein Etikett
                     erstellen.
@@ -476,16 +472,14 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-3xl shadow-lg border border-pink-100 p-8">
               <div className="flex items-center justify-center mb-6">
-                <span className="text-3xl mr-3" aria-hidden="true">
-                  🔥
-                </span>
+                <span className="text-3xl mr-3" aria-hidden="true"></span>
                 <h2 className="text-3xl font-black text-gray-900 tracking-tight">
                   Heute besonders gefragt
                 </h2>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { icon: '🥤', text: 'Gekühlte Getränke', bg: 'bg-pink-100/50' },
+                  { icon: '', text: 'Gekühlte Getränke', bg: 'bg-pink-100/50' },
                   { icon: '🍦', text: 'Eis & Snacks', bg: 'bg-yellow-100/50' },
                   { icon: '📰', text: 'Tageszeitungen', bg: 'bg-blue-100/50' },
                   { icon: '📦', text: 'Hermes Versand', bg: 'bg-green-100/50' },
@@ -518,9 +512,9 @@ export default function HomePage() {
               {[
                 '🥤 Coca-Cola & Fanta',
                 '🍫 Milka & Ritter Sport',
-                '🚬 Marlboro & Camel',
+                ' Marlboro & Camel',
                 '🎫 Lotto 6aus49 & Eurojackpot',
-                '📰 Express & Kölner Stadt-Anzeiger',
+                ' Express & Kölner Stadt-Anzeiger',
                 '📱 Vodafone & Telekom',
               ].map((brand, i) => (
                 <span
@@ -638,9 +632,9 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 🚀 UPGRADE 5: SPOTIFY-STYLE CTA (Dunkel, Kontrastreich, Emotional) */}
+        {/* CTA Section */}
         <section className="relative py-24 bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 text-white overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay" />
+          <div className="absolute inset-0 bg-[url('/images/fassade.png')] bg-cover bg-center opacity-10 mix-blend-overlay" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
 
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
