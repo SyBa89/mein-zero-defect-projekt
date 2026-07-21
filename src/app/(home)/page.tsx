@@ -116,7 +116,7 @@ export default function HomePage() {
           </a>
         </div>
 
-        {/* 🚀 HERO SECTION: Professionell optimiert (Cinematic Focus & Localized Protection) */}
+        {/* 🚀 HERO SECTION: MAXIMALE PERFEKTION - Optimiert für Lesbarkeit & Ästhetik */}
         <section
           id="main-content"
           className="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden"
@@ -143,7 +143,7 @@ export default function HomePage() {
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-6 leading-none drop-shadow-2xl">
               Willkommen bei <br />
-              <span className="bg-gradient-to-r from-yellow-300 via-pink-400 to-yellow-300 bg-clip-text text-transparent drop-shadow-lg">
+              <span className="text-white drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]">
                 Kiosk Lollipop
               </span>
             </h1>
@@ -436,9 +436,7 @@ export default function HomePage() {
         <section className="py-20 bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-white/70 backdrop-blur-sm p-10 rounded-[2rem] border border-yellow-200/50 shadow-xl">
-              <div className="text-6xl mb-5" aria-hidden="true">
-                📦
-              </div>
+              <div className="text-6xl mb-5" aria-hidden="true"></div>
               <h2 className="text-4xl font-black text-gray-900 mb-4 tracking-tight">
                 Hermes Paketshop
               </h2>
@@ -471,16 +469,15 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <h3 className="font-bold text-gray-900 mb-2 text-lg">
-                    📮 Pakete abholen & 📤 versenden
+                    {' '}
+                    Pakete abholen & 📤 versenden
                   </h3>
                   <p className="text-sm text-gray-700">
                     Holen Sie Ihre Pakete bequem ab oder versenden Sie diese direkt bei uns.
                   </p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                  <h3 className="font-bold text-gray-900 mb-2 text-lg">
-                    ↩️ Retouren & 🏷️ Etiketten
-                  </h3>
+                  <h3 className="font-bold text-gray-900 mb-2 text-lg">️ Retouren & 🏷️ Etiketten</h3>
                   <p className="text-sm text-gray-700">
                     Geben Sie Retouren einfach ab oder lassen Sie sich vor Ort ein Etikett
                     erstellen.
@@ -506,7 +503,7 @@ export default function HomePage() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { icon: '🥤', text: 'Gekühlte Getränke', bg: 'bg-pink-100/50' },
-                  { icon: '🍦', text: 'Eis & Snacks', bg: 'bg-yellow-100/50' },
+                  { icon: '', text: 'Eis & Snacks', bg: 'bg-yellow-100/50' },
                   { icon: '📰', text: 'Tageszeitungen', bg: 'bg-blue-100/50' },
                   { icon: '📦', text: 'Hermes Versand', bg: 'bg-green-100/50' },
                 ].map((item, i) => (
@@ -567,7 +564,7 @@ export default function HomePage() {
                   bg: 'bg-blue-100',
                   title: 'Über 100 Getränke',
                   desc: 'Kalte und warme Getränke, Softdrinks, Säfte, Wasser, Bier und mehr. Immer frisch und gekühlt!',
-                  warn: '⚠️ Alkoholische Getränke nur an Personen ab 18 Jahren',
+                  warn: '️ Alkoholische Getränke nur an Personen ab 18 Jahren',
                 },
                 {
                   icon: '🍫',
@@ -582,14 +579,14 @@ export default function HomePage() {
                   desc: 'Tageszeitungen, Magazine, Illustrierte und Fachzeitschriften. Für jeden das Richtige!',
                 },
                 {
-                  icon: '🚬',
+                  icon: '',
                   bg: 'bg-red-100',
                   title: 'Tabakwaren',
                   desc: 'Zigaretten, Zigarren, Tabak und Zubehör aller gängigen Marken. Alles vorrätig!',
                   warn: '⚠️ Nur an Personen ab 18 Jahren',
                 },
                 {
-                  icon: '🎫',
+                  icon: '',
                   bg: 'bg-purple-100',
                   title: 'Lotterie & Glücksspiel',
                   desc: 'Lotto 6aus49, Eurojackpot, Rubbellose und weitere Lotterieprodukte.',
@@ -602,7 +599,7 @@ export default function HomePage() {
                   desc: 'Aufladung für alle Mobilfunkanbieter: Telekom, Vodafone, O2, Aldi Talk und viele mehr.',
                 },
                 {
-                  icon: '📝',
+                  icon: '',
                   bg: 'bg-teal-100',
                   title: 'Schreibwaren',
                   desc: 'Stifte, Hefte, Briefumschläge und alles für Schule, Büro und Zuhause.',
