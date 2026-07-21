@@ -4,6 +4,7 @@ import MobileActionBar from '@/components/MobileActionBar';
 import FAQ from '@/components/FAQ';
 import Reviews from '@/components/Reviews';
 import PackageCalculator from '@/components/PackageCalculator';
+import CookieNotice from '@/components/CookieNotice';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -117,7 +118,7 @@ export default function HomePage() {
           </a>
         </div>
 
-        {/* 🚀 HERO SECTION (Hier ist der "Hero-Bereich" mit dem echten Fassade-Bild) */}
+        {/* 🚀 HERO SECTION mit echtem Fassade-Bild */}
         <section
           id="main-content"
           className="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden"
@@ -255,7 +256,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
-                  icon: '📦',
+                  icon: '',
                   title: 'Hermes Paketshop',
                   desc: 'Komplett-Service für Paketversand, Abholung und Retouren. Schnell und zuverlässig.',
                 },
@@ -265,7 +266,7 @@ export default function HomePage() {
                   desc: 'Mo-Fr bis 19:00 Uhr, Sa bis 14:30 Uhr. Wir sind da, wenn Sie uns brauchen.',
                 },
                 {
-                  icon: '📍',
+                  icon: '',
                   title: 'Zentrale Lage',
                   desc: 'Direkt am Bürgerplatz in Liblar. Gut zu Fuß oder mit dem Auto erreichbar.',
                 },
@@ -390,7 +391,7 @@ export default function HomePage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { icon: '💰', title: 'Geld abheben', sub: 'EC-Karte' },
-                { icon: '🖨️', title: 'Druckservice', sub: 'Kopien & Ausdrucke' },
+                { icon: '️', title: 'Druckservice', sub: 'Kopien & Ausdrucke' },
                 { icon: '☕', title: 'Heiße Getränke', sub: 'Kaffee & Tee to go' },
                 { icon: '🔌', title: 'Handy-Ladestation', sub: 'Smartphone aufladen' },
               ].map((s, i) => (
@@ -427,7 +428,7 @@ export default function HomePage() {
 
               <details className="bg-white rounded-2xl p-6 mb-8 text-left shadow-sm border border-gray-100">
                 <summary className="font-bold text-gray-900 cursor-pointer hover:text-pink-600 transition-colors text-lg">
-                  Alle Paketgrößen im Detail anzeigen
+                  📋 Alle Paketgrößen im Detail anzeigen
                 </summary>
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                   <div className="border border-gray-200 rounded-xl p-4 text-center bg-gray-50">
@@ -448,15 +449,14 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <h3 className="font-bold text-gray-900 mb-2 text-lg">
-                    {' '}
-                    Pakete abholen & 📤 versenden
+                    📮 Pakete abholen & versenden
                   </h3>
                   <p className="text-sm text-gray-600">
                     Holen Sie Ihre Pakete bequem ab oder versenden Sie diese direkt bei uns.
                   </p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                  <h3 className="font-bold text-gray-900 mb-2 text-lg">↩️ Retouren & ️ Etiketten</h3>
+                  <h3 className="font-bold text-gray-900 mb-2 text-lg">️ Retouren & 🏷️ Etiketten</h3>
                   <p className="text-sm text-gray-600">
                     Geben Sie Retouren einfach ab oder lassen Sie sich vor Ort ein Etikett
                     erstellen.
@@ -467,22 +467,24 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Heute besonders gefragt */}
+        {/* Heute besonders gefragt (Mit korrigiertem 🥤 Emoji) */}
         <section className="py-16 bg-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-3xl shadow-lg border border-pink-100 p-8">
               <div className="flex items-center justify-center mb-6">
-                <span className="text-3xl mr-3" aria-hidden="true"></span>
+                <span className="text-3xl mr-3" aria-hidden="true">
+                  🔥
+                </span>
                 <h2 className="text-3xl font-black text-gray-900 tracking-tight">
                   Heute besonders gefragt
                 </h2>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { icon: '', text: 'Gekühlte Getränke', bg: 'bg-pink-100/50' },
+                  { icon: '🥤', text: 'Gekühlte Getränke', bg: 'bg-pink-100/50' },
                   { icon: '🍦', text: 'Eis & Snacks', bg: 'bg-yellow-100/50' },
                   { icon: '📰', text: 'Tageszeitungen', bg: 'bg-blue-100/50' },
-                  { icon: '📦', text: 'Hermes Versand', bg: 'bg-green-100/50' },
+                  { icon: '', text: 'Hermes Versand', bg: 'bg-green-100/50' },
                 ].map((item, i) => (
                   <div
                     key={i}
@@ -510,11 +512,11 @@ export default function HomePage() {
             </h2>
             <div className="flex flex-wrap justify-center gap-3 md:gap-4">
               {[
-                '🥤 Coca-Cola & Fanta',
+                ' Coca-Cola & Fanta',
                 '🍫 Milka & Ritter Sport',
-                ' Marlboro & Camel',
+                '🚬 Marlboro & Camel',
                 '🎫 Lotto 6aus49 & Eurojackpot',
-                ' Express & Kölner Stadt-Anzeiger',
+                '📰 Express & Kölner Stadt-Anzeiger',
                 '📱 Vodafone & Telekom',
               ].map((brand, i) => (
                 <span
@@ -537,7 +539,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
-                  icon: '🥤',
+                  icon: '',
                   bg: 'bg-blue-100',
                   title: 'Über 100 Getränke',
                   desc: 'Kalte und warme Getränke, Softdrinks, Säfte, Wasser, Bier und mehr. Immer frisch und gekühlt!',
@@ -570,7 +572,7 @@ export default function HomePage() {
                   warn: '⚠️ Die Teilnahme ist erst ab 18 Jahren erlaubt. Glücksspiel kann süchtig machen.',
                 },
                 {
-                  icon: '📱',
+                  icon: '',
                   bg: 'bg-indigo-100',
                   title: 'Handy-Guthaben',
                   desc: 'Aufladung für alle Mobilfunkanbieter: Telekom, Vodafone, O2, Aldi Talk und viele mehr.',
@@ -707,6 +709,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Zero-Defect Legal Polish: Cookie Notice */}
+        <CookieNotice />
       </main>
 
       <Footer />
