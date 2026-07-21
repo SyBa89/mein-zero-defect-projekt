@@ -116,7 +116,7 @@ export default function HomePage() {
           </a>
         </div>
 
-        {/* HERO SECTION */}
+        {/* 🚀 HERO SECTION (Optimiert für maximalen LCP-Score & Conversion) */}
         <section
           id="main-content"
           className="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden"
@@ -127,6 +127,7 @@ export default function HomePage() {
             fill
             className="object-cover"
             priority
+            fetchPriority="high"
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-purple-900/60 to-pink-900/80" />
@@ -143,9 +144,29 @@ export default function HomePage() {
             <p className="mt-6 max-w-2xl mx-auto text-xl sm:text-2xl text-gray-100 mb-4 drop-shadow-lg font-light">
               Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar
             </p>
-            <p className="max-w-2xl mx-auto text-lg text-gray-300 mb-12 drop-shadow-md">
-              Theodor-Heuss-Straße 35, 50374 Erftstadt
-            </p>
+
+            {/* PROAKTIVE OPTIMIERUNG: Klickbare Telefonnummer für mobile Conversion */}
+            <a
+              href="tel:+4922359291160"
+              className="inline-flex items-center justify-center gap-2 text-lg text-gray-200 hover:text-white transition-colors mb-10 drop-shadow-md group"
+            >
+              <svg
+                className="w-5 h-5 group-hover:text-pink-400 transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                />
+              </svg>
+              <span className="underline decoration-pink-400/50 underline-offset-4 group-hover:decoration-pink-400">
+                02235 9291160
+              </span>
+            </a>
 
             <div className="flex flex-col sm:flex-row justify-center gap-5">
               <a
@@ -153,7 +174,7 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <button className="bg-white/90 backdrop-blur-md hover:bg-white text-pink-600 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/30 transform hover:-translate-y-1 hover:scale-[1.02] flex items-center gap-3">
+                <button className="bg-white/90 backdrop-blur-md hover:bg-white text-pink-600 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/30 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95 flex items-center gap-3">
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -179,7 +200,7 @@ export default function HomePage() {
               </a>
 
               <Link href="/kontakt">
-                <button className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-1 hover:scale-[1.02] flex items-center gap-3">
+                <button className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95 flex items-center gap-3">
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -219,7 +240,7 @@ export default function HomePage() {
               </div>
               <div className="text-left border-l border-yellow-300/50 pl-5">
                 <p className="text-3xl font-black text-gray-900">5,0 Sterne</p>
-                <p className="text-sm text-gray-600 font-medium">
+                <p className="text-sm text-gray-700 font-medium">
                   Basierend auf über 60 echten Bewertungen
                 </p>
               </div>
@@ -244,7 +265,7 @@ export default function HomePage() {
               <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">
                 Warum Kunden zu uns kommen
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto font-light">
+              <p className="text-lg text-gray-700 max-w-2xl mx-auto font-light">
                 Mehr als nur ein Kiosk - wir sind Ihr Nachbar mit echtem Service
               </p>
             </div>
@@ -293,7 +314,7 @@ export default function HomePage() {
                     {item.icon}
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
-                  <p className="text-gray-600 text-base leading-relaxed">{item.desc}</p>
+                  <p className="text-gray-700 text-base leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -346,7 +367,7 @@ export default function HomePage() {
                   💳
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2 text-lg">Zahlungsmethoden</h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-700">
                   Bar · EC-Karte · Kontaktlos
                   <br />
                   Apple Pay · Google Pay
@@ -357,7 +378,7 @@ export default function HomePage() {
                   🚗
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2 text-lg">Parken</h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-700">
                   Kurze Haltezone direkt vor dem Laden
                   <br />
                   Öffentliche Parkplätze am Bürgerplatz
@@ -368,7 +389,7 @@ export default function HomePage() {
                   ♿
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2 text-lg">Barrierefreiheit</h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-700">
                   Stufenfreier Zugang
                   <br />
                   Rollstuhlgerecht
@@ -399,7 +420,7 @@ export default function HomePage() {
                     {s.icon}
                   </div>
                   <h3 className="font-bold text-gray-900 text-sm">{s.title}</h3>
-                  <p className="text-xs text-gray-500 mt-1">{s.sub}</p>
+                  <p className="text-xs text-gray-600 mt-1">{s.sub}</p>
                 </div>
               ))}
             </div>
@@ -429,15 +450,15 @@ export default function HomePage() {
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                   <div className="border border-gray-200 rounded-xl p-4 text-center bg-gray-50">
                     <span className="block font-black text-pink-600 text-lg mb-1">S-Paket</span>
-                    <span className="text-gray-600">Max. 31,5 × 23,5 × 3,5 cm</span>
+                    <span className="text-gray-700">Max. 31,5 × 23,5 × 3,5 cm</span>
                   </div>
                   <div className="border border-pink-200 rounded-xl p-4 text-center bg-pink-50">
                     <span className="block font-black text-pink-600 text-lg mb-1">M-Paket</span>
-                    <span className="text-gray-600">Max. 50 × 30 × 10 cm</span>
+                    <span className="text-gray-700">Max. 50 × 30 × 10 cm</span>
                   </div>
                   <div className="border border-gray-200 rounded-xl p-4 text-center bg-gray-50">
                     <span className="block font-black text-pink-600 text-lg mb-1">L-Paket</span>
-                    <span className="text-gray-600">Max. 120 × 60 × 60 cm</span>
+                    <span className="text-gray-700">Max. 120 × 60 × 60 cm</span>
                   </div>
                 </div>
               </details>
@@ -447,7 +468,7 @@ export default function HomePage() {
                   <h3 className="font-bold text-gray-900 mb-2 text-lg">
                     📮 Pakete abholen & 📤 versenden
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-700">
                     Holen Sie Ihre Pakete bequem ab oder versenden Sie diese direkt bei uns.
                   </p>
                 </div>
@@ -455,7 +476,7 @@ export default function HomePage() {
                   <h3 className="font-bold text-gray-900 mb-2 text-lg">
                     ↩️ Retouren & 🏷️ Etiketten
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-700">
                     Geben Sie Retouren einfach ab oder lassen Sie sich vor Ort ein Etikett
                     erstellen.
                   </p>
@@ -495,7 +516,7 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <p className="text-center text-sm text-gray-500 mt-6 font-medium">
+              <p className="text-center text-sm text-gray-600 mt-6 font-medium">
                 Aktualisiert täglich • Alles sofort verfügbar
               </p>
             </div>
@@ -594,7 +615,7 @@ export default function HomePage() {
                     </span>
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
-                  <p className="text-gray-600 mb-2 leading-relaxed">{item.desc}</p>
+                  <p className="text-gray-700 mb-2 leading-relaxed">{item.desc}</p>
                   {item.warn && <p className="text-xs text-red-600 font-bold mt-3">{item.warn}</p>}
                 </div>
               ))}
@@ -651,7 +672,7 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <button className="bg-white text-gray-900 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-white/20 transform hover:-translate-y-1 hover:scale-[1.02] flex items-center justify-center gap-3">
+                <button className="bg-white text-gray-900 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-white/20 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3">
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -676,7 +697,7 @@ export default function HomePage() {
                 </button>
               </a>
               <Link href="/kontakt">
-                <button className="bg-pink-600 hover:bg-pink-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/40 transform hover:-translate-y-1 hover:scale-[1.02]">
+                <button className="bg-pink-600 hover:bg-pink-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/40 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95">
                   Kontaktformular
                 </button>
               </Link>
@@ -702,18 +723,17 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="text-xs text-gray-500 text-center font-medium">
+            <div className="text-xs text-gray-600 text-center font-medium">
               <p>Alle Preise inkl. gesetzlicher MwSt. | Irrtümer und Änderungen vorbehalten.</p>
             </div>
           </div>
         </section>
-
-        {/* Zero-Defect Legal Polish: Cookie Notice */}
-        <CookieNotice />
       </main>
 
+      {/* ✅ PROAKTIVER FIX: Globale Overlays gehören auf die Root-Ebene, nicht in <main> */}
       <Footer />
       <MobileActionBar />
+      <CookieNotice />
     </div>
   );
 }
