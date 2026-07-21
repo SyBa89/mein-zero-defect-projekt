@@ -288,7 +288,7 @@ export default function HomePage() {
                   desc: 'Mo-Fr bis 19:00 Uhr, Sa bis 14:30 Uhr. Wir sind da, wenn Sie uns brauchen.',
                 },
                 {
-                  icon: '',
+                  icon: '📍',
                   title: 'Zentrale Lage',
                   desc: 'Direkt am Bürgerplatz in Liblar. Gut zu Fuß oder mit dem Auto erreichbar.',
                 },
@@ -413,7 +413,7 @@ export default function HomePage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { icon: '💰', title: 'Geld abheben', sub: 'EC-Karte' },
-                { icon: '️🖨️', title: 'Druckservice', sub: 'Kopien & Ausdrucke' },
+                { icon: '🖨️', title: 'Druckservice', sub: 'Kopien & Ausdrucke' },
                 { icon: '☕', title: 'Heiße Getränke', sub: 'Kaffee & Tee to go' },
                 { icon: '🔌', title: 'Handy-Ladestation', sub: 'Smartphone aufladen' },
               ].map((s, i) => (
