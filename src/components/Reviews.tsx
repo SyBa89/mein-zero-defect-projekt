@@ -121,7 +121,7 @@ export default function Reviews() {
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-4 font-medium">Auch Sie waren bei uns zufrieden?</p>
           <a
-            href="https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4"
+            href="https://search.google.com/local/writereview?placeid=ChIJeWG_xdsXv0cRInW4W6rog_0"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Eine neue Bewertung für Kiosk Lollipop auf Google schreiben (öffnet neuen Tab)"
