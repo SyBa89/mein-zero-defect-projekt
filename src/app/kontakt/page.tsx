@@ -221,12 +221,11 @@ export default function KontaktPage() {
                       </svg>
                       <div>
                         <p className="font-bold text-blue-900 text-base mb-1">
-                          Ihr Mail-Programm wurde geöffnet.
+                          E-Mail-Programm wurde gestartet.
                         </p>
                         <p className="text-sm text-blue-800 leading-relaxed">
-                          Bitte drücken Sie in Ihrem E-Mail-Programm auf "Senden", um die Nachricht
-                          an uns zu übermitteln. Falls sich kein Programm geöffnet hat, schreiben
-                          Sie uns bitte direkt an{' '}
+                          Bitte bestätigen Sie den Versand in Ihrem E-Mail-Programm. Falls sich
+                          nichts geöffnet hat, schreiben Sie uns bitte direkt an{' '}
                           <a
                             href="mailto:info@kiosk-lollipop.de"
                             className="underline font-semibold hover:text-blue-900"
@@ -371,12 +370,12 @@ export default function KontaktPage() {
                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                       />
                     </svg>
-                    Mail-Programm öffnen & Nachricht verfassen
+                    Nachricht jetzt absenden
                   </button>
 
-                  <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed">
-                    Hinweis: Es wird kein Server verwendet. Die Nachricht wird lokal in Ihrem
-                    E-Mail-Programm vorbereitet. Ihre Daten bleiben privat.
+                  <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed flex items-center justify-center gap-1">
+                    <span>🔒</span> Datenschutzfreundlich: Ihre Nachricht wird direkt über Ihr
+                    E-Mail-Programm gesendet. Es werden keine Daten auf unseren Servern gespeichert.
                   </p>
                 </form>
               </div>

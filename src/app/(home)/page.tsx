@@ -129,7 +129,7 @@ export default function HomePage() {
         {/* 🚀 HERO SECTION: MAXIMALE PERFEKTION - Optimiert für Lesbarkeit & Ästhetik */}
         <section
           id="main-content"
-          className="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden"
+          className="relative h-[85dvh] min-h-[600px] flex items-center justify-center overflow-hidden"
         >
           <Image
             src="/images/fassade.png"
