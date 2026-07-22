@@ -6,7 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function InternPage() {
-  // Authentifizierung & UI States
+  // Auth States
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState('');
@@ -21,12 +21,12 @@ export default function InternPage() {
     sauberkeit: false,
   });
   const [notes, setNotes] = useState('');
-  const [copied, setCopied] = useState('');
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
 
-  // Ref für den Banner-Generator (Zero-Defect: Vermeidet document.getElementById)
-  const bannerInputRef = useRef<HTMLInputElement>(null);
+  // Ref für Auto-Save Timer
+  const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // ✅ Initialisierung: Auth, LocalStorage laden
+  // Initialisierung
   useEffect(() => {
     const authStatus = sessionStorage.getItem('intern-auth');
     if (authStatus === 'true') {
@@ -48,13 +48,32 @@ export default function InternPage() {
     setIsLoading(false);
   }, []);
 
-  // ✅ Persistenz: Änderungen automatisch speichern
+  // Checkliste speichern
   useEffect(() => {
     localStorage.setItem('kiosk-checklist', JSON.stringify(checklist));
   }, [checklist]);
 
+  // Notizen mit Auto-Save (Debounced)
   useEffect(() => {
-    localStorage.setItem('kiosk-notes', notes);
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current);
+    }
+
+    setSaveStatus('saving');
+
+    saveTimerRef.current = setTimeout(() => {
+      localStorage.setItem('kiosk-notes', notes);
+      setSaveStatus('saved');
+
+      // Nach 2 Sekunden zurück zu 'idle'
+      setTimeout(() => setSaveStatus('idle'), 2000);
+    }, 500); // 500ms Delay
+
+    return () => {
+      if (saveTimerRef.current) {
+        clearTimeout(saveTimerRef.current);
+      }
+    };
   }, [notes]);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -99,24 +118,12 @@ export default function InternPage() {
     setChecklist({ kasse: false, lotto: false, brot: false, sauberkeit: false });
   };
 
-  const generateBannerCode = () => {
-    const text =
-      bannerInputRef.current?.value ||
-      'Frische Brötchen, gekühlte Getränke & Ihr Hermes Paketshop direkt am Bürgerplatz!';
-    const code = `{/* 📢 AKTIONS-BANNER */}\n<section className="bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 py-5">\n  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">\n    <p className="text-white font-bold text-lg drop-shadow-md">\n      🎉 ${text} 🎉\n    </p>\n  </div>\n</section>`;
-
-    navigator.clipboard
-      .writeText(code)
-      .then(() => {
-        setCopied('banner');
-        setTimeout(() => setCopied(''), 2000);
-      })
-      .catch(() => {
-        setError('Konnte Code nicht in Zwischenablage kopieren.');
-      });
+  const clearNotes = () => {
+    setNotes('');
+    localStorage.removeItem('kiosk-notes');
+    setSaveStatus('idle');
   };
 
-  // ✅ ZERO-DEFECT LOADING STATE
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -271,12 +278,32 @@ export default function InternPage() {
                   </ul>
                 </div>
 
-                {/* Übergabe-Notizen */}
+                {/* Übergabe-Notizen MIT AUTO-SAVE UND LÖSCHEN */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                    {/* ✅ FIX: Fehlendes Emoji hinzugefügt */}
-                    <span className="mr-2 text-xl">📝</span> Übergabe-Notizen
-                  </h2>
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-bold text-gray-900 flex items-center">
+                      <span className="mr-2 text-xl"></span> Übergabe-Notizen
+                    </h2>
+                    <div className="flex items-center gap-2">
+                      {saveStatus === 'saving' && (
+                        <span className="text-xs text-gray-500 flex items-center gap-1">
+                          <span className="animate-pulse"></span> Speichern...
+                        </span>
+                      )}
+                      {saveStatus === 'saved' && (
+                        <span className="text-xs text-green-600 flex items-center gap-1">
+                          <span>✅</span> Gespeichert
+                        </span>
+                      )}
+                      <button
+                        onClick={clearNotes}
+                        className="text-xs text-gray-500 hover:text-red-600 font-medium"
+                        title="Notizen löschen"
+                      >
+                        Löschen
+                      </button>
+                    </div>
+                  </div>
                   <textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
@@ -287,26 +314,6 @@ export default function InternPage() {
                   <p className="text-xs text-gray-400 mt-2 text-center">
                     Wird automatisch lokal auf diesem Gerät gespeichert.
                   </p>
-                </div>
-
-                {/* Aktions-Banner Generator */}
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="mr-2 text-xl">📢</span> Aktions-Banner Generator
-                  </h2>
-                  <input
-                    ref={bannerInputRef}
-                    type="text"
-                    defaultValue="Frische Brötchen, gekühlte Getränke & Ihr Hermes Paketshop direkt am Bürgerplatz!"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all mb-4 text-sm"
-                    placeholder="Neuen Text eingeben..."
-                  />
-                  <button
-                    onClick={generateBannerCode}
-                    className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-95"
-                  >
-                    {copied === 'banner' ? '✅ Code kopiert!' : 'Banner-Code generieren & kopieren'}
-                  </button>
                 </div>
               </div>
 
@@ -338,7 +345,6 @@ export default function InternPage() {
                       rel="noopener noreferrer"
                       className="flex items-center p-4 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 transition-colors group"
                     >
-                      {/* ✅ FIX: Fehlendes Emoji hinzugefügt */}
                       <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
                         🎫
                       </span>
