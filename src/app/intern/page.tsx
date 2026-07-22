@@ -23,14 +23,10 @@ export default function InternPage() {
   const [notes, setNotes] = useState('');
   const [copied, setCopied] = useState('');
 
-  // Notfall-Modus States
-  const [emergencyActive, setEmergencyActive] = useState(false);
-  const [isToggling, setIsToggling] = useState(false);
-
   // Ref für den Banner-Generator (Zero-Defect: Vermeidet document.getElementById)
   const bannerInputRef = useRef<HTMLInputElement>(null);
 
-  // ✅ Initialisierung: Auth, LocalStorage und Notfall-Status laden
+  // ✅ Initialisierung: Auth, LocalStorage laden
   useEffect(() => {
     const authStatus = sessionStorage.getItem('intern-auth');
     if (authStatus === 'true') {
@@ -60,21 +56,6 @@ export default function InternPage() {
   useEffect(() => {
     localStorage.setItem('kiosk-notes', notes);
   }, [notes]);
-
-  // ✅ Live-Status: Notfall-Modus abrufen, wenn eingeloggt
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const res = await fetch('/api/toggle-emergency');
-        const data = await res.json();
-        setEmergencyActive(data.emergencyMode);
-      } catch (e) {
-        // Silent fail, um UI nicht zu blockieren, wenn API mal hakt
-        console.warn('Konnte Notfall-Status nicht abrufen:', e);
-      }
-    };
-    if (isAuthenticated) fetchStatus();
-  }, [isAuthenticated]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -135,22 +116,6 @@ export default function InternPage() {
       });
   };
 
-  const handleEmergencyToggle = async () => {
-    setIsToggling(true);
-    try {
-      const res = await fetch('/api/toggle-emergency', { method: 'POST' });
-      const data = await res.json();
-      if (data.success) {
-        setEmergencyActive(data.emergencyMode);
-      }
-    } catch (error) {
-      console.error('Fehler beim Umschalten des Notfall-Modus:', error);
-      setError('Fehler beim Aktualisieren des Notfall-Status.');
-    } finally {
-      setIsToggling(false);
-    }
-  };
-
   // ✅ ZERO-DEFECT LOADING STATE
   if (isLoading) {
     return (
@@ -168,7 +133,6 @@ export default function InternPage() {
       <Header />
       <main className="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         {!isAuthenticated ? (
-          // ✅ ORIGINAL LOGIN UI: Mit Label, detailliertem Fehler-Handling und echtem Spinner
           <div className="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mt-10">
             <div className="text-center mb-6">
               <div className="text-4xl mb-3">🔒</div>
@@ -242,7 +206,6 @@ export default function InternPage() {
             </div>
           </div>
         ) : (
-          // ✅ MERGED DASHBOARD: Kombiniert neue Features mit ursprünglichen, kritischen Infos
           <div className="space-y-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200 pb-4 gap-4">
               <div>
@@ -258,36 +221,8 @@ export default function InternPage() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* LINKE SPALTE: Steuerung & Organisation */}
+              {/* LINKE SPALTE: Organisation & Notizen */}
               <div className="space-y-8">
-                {/* LIVE NOTFALL-MODUS */}
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-red-100">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="mr-2 text-xl">🚨</span> Live Notfall-Modus
-                  </h2>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Ein Klick schaltet den roten "Geschlossen"-Banner auf der öffentlichen
-                    Startseite sofort frei.
-                  </p>
-                  <button
-                    onClick={handleEmergencyToggle}
-                    disabled={isToggling}
-                    className={`w-full font-bold py-4 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 ${
-                      emergencyActive
-                        ? 'bg-green-600 hover:bg-green-700 text-white'
-                        : 'bg-red-600 hover:bg-red-700 text-white hover:shadow-red-500/30'
-                    }`}
-                  >
-                    {isToggling ? (
-                      <span className="animate-spin text-xl">⏳</span>
-                    ) : emergencyActive ? (
-                      '✅ Notfall-Modus ist AKTIV (Klicken zum Deaktivieren)'
-                    ) : (
-                      '⚠️ NOTFALL: Kiosk jetzt schließen'
-                    )}
-                  </button>
-                </div>
-
                 {/* Schicht-Checkliste */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <div className="flex justify-between items-center mb-4">
@@ -306,7 +241,7 @@ export default function InternPage() {
                       { key: 'kasse', label: 'Kasse gezählt & abgestimmt' },
                       { key: 'lotto', label: 'Lotto-Ziehung geprüft' },
                       { key: 'brot', label: 'Brötchen für morgen bestellt' },
-                      { key: 'sauberkeit', label: 'Kiosk gereinigt & aufgeräumt' }, // ✅ Rechtschreibfehler korrigiert
+                      { key: 'sauberkeit', label: 'Kiosk gereinigt & aufgeräumt' },
                     ].map((item) => (
                       <li
                         key={item.key}
@@ -339,6 +274,7 @@ export default function InternPage() {
                 {/* Übergabe-Notizen */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    {/* ✅ FIX: Fehlendes Emoji hinzugefügt */}
                     <span className="mr-2 text-xl">📝</span> Übergabe-Notizen
                   </h2>
                   <textarea
@@ -352,11 +288,31 @@ export default function InternPage() {
                     Wird automatisch lokal auf diesem Gerät gespeichert.
                   </p>
                 </div>
+
+                {/* Aktions-Banner Generator */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="mr-2 text-xl">📢</span> Aktions-Banner Generator
+                  </h2>
+                  <input
+                    ref={bannerInputRef}
+                    type="text"
+                    defaultValue="Frische Brötchen, gekühlte Getränke & Ihr Hermes Paketshop direkt am Bürgerplatz!"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all mb-4 text-sm"
+                    placeholder="Neuen Text eingeben..."
+                  />
+                  <button
+                    onClick={generateBannerCode}
+                    className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-95"
+                  >
+                    {copied === 'banner' ? '✅ Code kopiert!' : 'Banner-Code generieren & kopieren'}
+                  </button>
+                </div>
               </div>
 
               {/* RECHTE SPALTE: Ressourcen & Hinweise */}
               <div className="space-y-8">
-                {/* Wichtige externe Portale (Aus Original wiederhergestellt) */}
+                {/* Wichtige externe Portale */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
                     <span className="mr-2 text-xl">🔗</span> Wichtige externe Portale
@@ -382,6 +338,7 @@ export default function InternPage() {
                       rel="noopener noreferrer"
                       className="flex items-center p-4 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 transition-colors group"
                     >
+                      {/* ✅ FIX: Fehlendes Emoji hinzugefügt */}
                       <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
                         🎫
                       </span>
@@ -393,7 +350,7 @@ export default function InternPage() {
                   </div>
                 </div>
 
-                {/* Notfall- & Lieferantenkontakte (Merged: Original Details + Neue Klickbarkeit) */}
+                {/* Notfall- & Lieferantenkontakte */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
                     <span className="mr-2 text-xl">📞</span> Notfall- & Lieferantenkontakte
@@ -446,27 +403,7 @@ export default function InternPage() {
                   </div>
                 </div>
 
-                {/* Aktions-Banner Generator */}
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="mr-2 text-xl">📢</span> Aktions-Banner Generator
-                  </h2>
-                  <input
-                    ref={bannerInputRef}
-                    type="text"
-                    defaultValue="Frische Brötchen, gekühlte Getränke & Ihr Hermes Paketshop direkt am Bürgerplatz!"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all mb-4 text-sm"
-                    placeholder="Neuen Text eingeben..."
-                  />
-                  <button
-                    onClick={generateBannerCode}
-                    className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-95"
-                  >
-                    {copied === 'banner' ? '✅ Code kopiert!' : 'Banner-Code generieren & kopieren'}
-                  </button>
-                </div>
-
-                {/* Wichtige interne Hinweise (Aus Original wiederhergestellt) */}
+                {/* Wichtige interne Hinweise */}
                 <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
                   <h2 className="text-xl font-bold text-blue-900 mb-3 flex items-center">
                     <span className="mr-2 text-xl">💡</span> Wichtige interne Hinweise
