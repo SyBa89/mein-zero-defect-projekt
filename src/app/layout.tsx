@@ -2,20 +2,18 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
-// Optimierte Schriftart mit automatischem Swap für maximale Performance (kein FOIT)
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
 });
 
-// Viewport optimiert für Mobile PWA und erzwungenes Light-Theme (verhindert OS-Dark-Mode-Konflikte)
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#db2777', // Tailwind pink-600 für die Browser-Leiste
-  colorScheme: 'light', // Erzwingt das helle Design, unabhängig von den OS-Einstellungen des Nutzers
+  themeColor: '#db2777',
+  colorScheme: 'light',
 };
 
 export const metadata: Metadata = {
@@ -38,31 +36,23 @@ export const metadata: Metadata = {
   creator: 'Kiosk Lollipop',
   publisher: 'Kiosk Lollipop',
   manifest: '/manifest.json',
-
-  // ✅ PROAKTIVER FIX: Explizite Icon-Definition für 100%ige Browser-Kompatibilität
   icons: {
     icon: '/images/icon.png',
     apple: '/images/icon.png',
   },
-
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'black-translucent', // ✅ OPTIMIERT: Moderner, nahtloser Look auf iOS
+    statusBarStyle: 'black-translucent',
     title: 'Kiosk Lollipop',
   },
-
-  // ✅ PROAKTIVER FIX: Windows-Phone / Edge Tile Color
   other: {
     'msapplication-TileColor': '#db2777',
   },
-
-  // Verhindert, dass iOS zufällig Adressen oder E-Mails in klickbare Links verwandelt (außer Telefon)
   formatDetection: {
     email: false,
     address: false,
     telephone: true,
   },
-
   openGraph: {
     type: 'website',
     locale: 'de_DE',
@@ -79,14 +69,12 @@ export const metadata: Metadata = {
       },
     ],
   },
-
   twitter: {
     card: 'summary_large_image',
     title: 'Kiosk Lollipop | Erftstadt-Liblar',
     description: 'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar.',
     images: ['/images/fassade.png'],
   },
-
   robots: {
     index: true,
     follow: true,
@@ -100,11 +88,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="de" className={inter.variable}>
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased selection:bg-pink-200 selection:text-pink-900">
