@@ -1,3 +1,4 @@
+import { get } from '@vercel/edge-config';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileActionBar from '@/components/MobileActionBar';
@@ -106,7 +107,19 @@ const schemaOrg = {
   },
 };
 
-export default function HomePage() {
+// ✅ LIVE-ABFRAGE: Prüft bei jedem Seitenaufruf, ob der Notfall-Modus aktiv ist
+// ✅ ZERO-DEFECT: Try/Catch verhindert, dass die Seite bei Edge-Config-Fehlern abstürzt
+async function getEmergencyStatus() {
+  try {
+    return (await get('emergencyMode')) === true;
+  } catch {
+    return false;
+  }
+}
+
+export default async function HomePage() {
+  const isEmergency = await getEmergencyStatus();
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 selection:bg-pink-200 selection:text-pink-900">
       <script
@@ -115,6 +128,21 @@ export default function HomePage() {
       />
 
       <Header />
+
+      {/* 🚨 NOTFALL-BANNER: Wird nur angezeigt, wenn isEmergency === true */}
+      {isEmergency && (
+        <section className="bg-red-600 text-white py-4 text-center font-bold text-lg shadow-lg animate-pulse sticky top-0 z-50">
+          <div className="max-w-6xl mx-auto px-4 flex items-center justify-center gap-3">
+            <span className="text-2xl" aria-hidden="true">
+              ⚠️
+            </span>
+            <span>
+              WICHTIG: Der Kiosk ist heute aufgrund eines unvorhergesehenen Notfalls geschlossen.
+              Wir bitten um Verständnis!
+            </span>
+          </div>
+        </section>
+      )}
 
       <main>
         <div className="sr-only">

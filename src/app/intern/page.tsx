@@ -1,24 +1,80 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function InternPage() {
+  // Authentifizierung & UI States
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Dashboard States
+  const [checklist, setChecklist] = useState({
+    kasse: false,
+    lotto: false,
+    brot: false,
+    sauberkeit: false,
+  });
+  const [notes, setNotes] = useState('');
+  const [copied, setCopied] = useState('');
+
+  // Notfall-Modus States
+  const [emergencyActive, setEmergencyActive] = useState(false);
+  const [isToggling, setIsToggling] = useState(false);
+
+  // Ref für den Banner-Generator (Zero-Defect: Vermeidet document.getElementById)
+  const bannerInputRef = useRef<HTMLInputElement>(null);
+
+  // ✅ Initialisierung: Auth, LocalStorage und Notfall-Status laden
   useEffect(() => {
     const authStatus = sessionStorage.getItem('intern-auth');
     if (authStatus === 'true') {
       setIsAuthenticated(true);
     }
+
+    const savedChecklist = localStorage.getItem('kiosk-checklist');
+    if (savedChecklist) {
+      try {
+        setChecklist(JSON.parse(savedChecklist));
+      } catch (e) {
+        console.error('Fehler beim Laden der Checkliste:', e);
+      }
+    }
+
+    const savedNotes = localStorage.getItem('kiosk-notes');
+    if (savedNotes) setNotes(savedNotes);
+
     setIsLoading(false);
   }, []);
+
+  // ✅ Persistenz: Änderungen automatisch speichern
+  useEffect(() => {
+    localStorage.setItem('kiosk-checklist', JSON.stringify(checklist));
+  }, [checklist]);
+
+  useEffect(() => {
+    localStorage.setItem('kiosk-notes', notes);
+  }, [notes]);
+
+  // ✅ Live-Status: Notfall-Modus abrufen, wenn eingeloggt
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const res = await fetch('/api/toggle-emergency');
+        const data = await res.json();
+        setEmergencyActive(data.emergencyMode);
+      } catch (e) {
+        // Silent fail, um UI nicht zu blockieren, wenn API mal hakt
+        console.warn('Konnte Notfall-Status nicht abrufen:', e);
+      }
+    };
+    if (isAuthenticated) fetchStatus();
+  }, [isAuthenticated]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,6 +110,48 @@ export default function InternPage() {
     setPassword('');
   };
 
+  const toggleChecklist = (key: keyof typeof checklist) => {
+    setChecklist((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const resetChecklist = () => {
+    setChecklist({ kasse: false, lotto: false, brot: false, sauberkeit: false });
+  };
+
+  const generateBannerCode = () => {
+    const text =
+      bannerInputRef.current?.value ||
+      'Frische Brötchen, gekühlte Getränke & Ihr Hermes Paketshop direkt am Bürgerplatz!';
+    const code = `{/* 📢 AKTIONS-BANNER */}\n<section className="bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 py-5">\n  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">\n    <p className="text-white font-bold text-lg drop-shadow-md">\n      🎉 ${text} 🎉\n    </p>\n  </div>\n</section>`;
+
+    navigator.clipboard
+      .writeText(code)
+      .then(() => {
+        setCopied('banner');
+        setTimeout(() => setCopied(''), 2000);
+      })
+      .catch(() => {
+        setError('Konnte Code nicht in Zwischenablage kopieren.');
+      });
+  };
+
+  const handleEmergencyToggle = async () => {
+    setIsToggling(true);
+    try {
+      const res = await fetch('/api/toggle-emergency', { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        setEmergencyActive(data.emergencyMode);
+      }
+    } catch (error) {
+      console.error('Fehler beim Umschalten des Notfall-Modus:', error);
+      setError('Fehler beim Aktualisieren des Notfall-Status.');
+    } finally {
+      setIsToggling(false);
+    }
+  };
+
+  // ✅ ZERO-DEFECT LOADING STATE
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -68,8 +166,9 @@ export default function InternPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
-      <main className="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <main className="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         {!isAuthenticated ? (
+          // ✅ ORIGINAL LOGIN UI: Mit Label, detailliertem Fehler-Handling und echtem Spinner
           <div className="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mt-10">
             <div className="text-center mb-6">
               <div className="text-4xl mb-3">🔒</div>
@@ -143,11 +242,12 @@ export default function InternPage() {
             </div>
           </div>
         ) : (
+          // ✅ MERGED DASHBOARD: Kombiniert neue Features mit ursprünglichen, kritischen Infos
           <div className="space-y-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200 pb-4 gap-4">
               <div>
-                <h1 className="text-3xl font-black text-gray-900">Internes Dashboard</h1>
-                <p className="text-gray-600">Willkommen im Mitarbeiter-Bereich.</p>
+                <h1 className="text-3xl font-black text-gray-900">Smart Kiosk Dashboard</h1>
+                <p className="text-gray-600">Willkommen zurück. Hier ist deine Zentrale.</p>
               </div>
               <button
                 onClick={handleLogout}
@@ -157,84 +257,236 @@ export default function InternPage() {
               </button>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                <span className="mr-2 text-xl">🔗</span> Wichtige externe Portale
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a
-                  href="https://myhermes.de/partner"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center p-4 bg-yellow-50 border border-yellow-200 rounded-xl hover:bg-yellow-100 transition-colors group"
-                >
-                  <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
-                    📦
-                  </span>
-                  <div>
-                    <span className="block font-bold text-gray-900">Hermes Partner Portal</span>
-                    <span className="text-xs text-gray-600">Sendungsverfolgung & Retouren</span>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* LINKE SPALTE: Steuerung & Organisation */}
+              <div className="space-y-8">
+                {/* LIVE NOTFALL-MODUS */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-red-100">
+                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="mr-2 text-xl">🚨</span> Live Notfall-Modus
+                  </h2>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Ein Klick schaltet den roten "Geschlossen"-Banner auf der öffentlichen
+                    Startseite sofort frei.
+                  </p>
+                  <button
+                    onClick={handleEmergencyToggle}
+                    disabled={isToggling}
+                    className={`w-full font-bold py-4 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 ${
+                      emergencyActive
+                        ? 'bg-green-600 hover:bg-green-700 text-white'
+                        : 'bg-red-600 hover:bg-red-700 text-white hover:shadow-red-500/30'
+                    }`}
+                  >
+                    {isToggling ? (
+                      <span className="animate-spin text-xl">⏳</span>
+                    ) : emergencyActive ? (
+                      '✅ Notfall-Modus ist AKTIV (Klicken zum Deaktivieren)'
+                    ) : (
+                      '⚠️ NOTFALL: Kiosk jetzt schließen'
+                    )}
+                  </button>
+                </div>
+
+                {/* Schicht-Checkliste */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-bold text-gray-900 flex items-center">
+                      <span className="mr-2 text-xl">✅</span> Schicht-Checkliste
+                    </h2>
+                    <button
+                      onClick={resetChecklist}
+                      className="text-xs text-gray-500 hover:text-red-600 font-medium"
+                    >
+                      Zurücksetzen
+                    </button>
                   </div>
-                </a>
-                <a
-                  href="https://www.westlotto.de"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center p-4 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 transition-colors group"
-                >
-                  <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
-                    🎫
-                  </span>
-                  <div>
-                    <span className="block font-bold text-gray-900">Lotto Annahmesystem</span>
-                    <span className="text-xs text-gray-600">WestLotto Partner-Login</span>
-                  </div>
-                </a>
+                  <ul className="space-y-3">
+                    {[
+                      { key: 'kasse', label: 'Kasse gezählt & abgestimmt' },
+                      { key: 'lotto', label: 'Lotto-Ziehung geprüft' },
+                      { key: 'brot', label: 'Brötchen für morgen bestellt' },
+                      { key: 'sauberkeit', label: 'Kiosk gereinigt & aufgeräumt' }, // ✅ Rechtschreibfehler korrigiert
+                    ].map((item) => (
+                      <li
+                        key={item.key}
+                        className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-pink-50 transition-colors cursor-pointer"
+                        onClick={() => toggleChecklist(item.key as keyof typeof checklist)}
+                      >
+                        <div
+                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                            checklist[item.key as keyof typeof checklist]
+                              ? 'bg-green-500 border-green-500 text-white'
+                              : 'border-gray-300'
+                          }`}
+                        >
+                          {checklist[item.key as keyof typeof checklist] && '✓'}
+                        </div>
+                        <span
+                          className={`font-medium text-sm ${
+                            checklist[item.key as keyof typeof checklist]
+                              ? 'line-through text-gray-400'
+                              : 'text-gray-700'
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Übergabe-Notizen */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="mr-2 text-xl">📝</span> Übergabe-Notizen
+                  </h2>
+                  <textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    rows={5}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all resize-none text-sm"
+                    placeholder="Notizen für die nächste Schicht (z.B. 'Kassenschublade klemmt', 'Milch fast leer')..."
+                  />
+                  <p className="text-xs text-gray-400 mt-2 text-center">
+                    Wird automatisch lokal auf diesem Gerät gespeichert.
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                <span className="mr-2 text-xl">📞</span> Notfall- & Lieferantenkontakte
-              </h2>
-              <ul className="space-y-3 text-sm">
-                <li className="flex justify-between border-b border-gray-100 pb-3">
-                  <span className="font-medium text-gray-700">Getränke-Großhandel (Notfall)</span>
-                  <span className="text-pink-600 font-bold">02235 / 123 456</span>
-                </li>
-                <li className="flex justify-between border-b border-gray-100 pb-3">
-                  <span className="font-medium text-gray-700">Bäckerei-Lieferant</span>
-                  <span className="text-pink-600 font-bold">02235 / 654 321</span>
-                </li>
-                <li className="flex justify-between border-b border-gray-100 pb-3">
-                  <span className="font-medium text-gray-700">Schlüsseldienst / Sicherheit</span>
-                  <span className="text-pink-600 font-bold">02235 / 987 654</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="font-medium text-gray-700">Geschäftsleitung (Inhaber)</span>
-                  <span className="text-pink-600 font-bold">017x / 123 456 78</span>
-                </li>
-              </ul>
-            </div>
+              {/* RECHTE SPALTE: Ressourcen & Hinweise */}
+              <div className="space-y-8">
+                {/* Wichtige externe Portale (Aus Original wiederhergestellt) */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="mr-2 text-xl">🔗</span> Wichtige externe Portale
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a
+                      href="https://myhermes.de/partner"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center p-4 bg-yellow-50 border border-yellow-200 rounded-xl hover:bg-yellow-100 transition-colors group"
+                    >
+                      <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
+                        📦
+                      </span>
+                      <div>
+                        <span className="block font-bold text-gray-900">Hermes Partner Portal</span>
+                        <span className="text-xs text-gray-600">Sendungsverfolgung & Retouren</span>
+                      </div>
+                    </a>
+                    <a
+                      href="https://www.westlotto.de"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center p-4 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 transition-colors group"
+                    >
+                      <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
+                        🎫
+                      </span>
+                      <div>
+                        <span className="block font-bold text-gray-900">Lotto Annahmesystem</span>
+                        <span className="text-xs text-gray-600">WestLotto Partner-Login</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
 
-            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
-              <h2 className="text-xl font-bold text-blue-900 mb-3 flex items-center">
-                <span className="mr-2 text-xl">💡</span> Wichtige interne Hinweise
-              </h2>
-              <ul className="list-disc list-inside space-y-2 text-sm text-blue-800">
-                <li>
-                  Bei Hermes-Retouren ohne Label: Kunde anweisen, das Label in der Hermes-App zu
-                  erstellen.
-                </li>
-                <li>
-                  Kassensystem Neustart: Halten Sie den roten Knopf an der Seite für 10 Sekunden
-                  gedrückt.
-                </li>
-                <li>
-                  Bitte achten Sie darauf, dass der Kiosk am Samstag um 13:15 Uhr geschlossen wird,
-                  um pünktlich um 13:30 Uhr die Rollläden unten zu haben.
-                </li>
-              </ul>
+                {/* Notfall- & Lieferantenkontakte (Merged: Original Details + Neue Klickbarkeit) */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="mr-2 text-xl">📞</span> Notfall- & Lieferantenkontakte
+                  </h2>
+                  <div className="space-y-3">
+                    <a
+                      href="tel:+492235123456"
+                      className="flex justify-between items-center p-3 bg-gray-50 hover:bg-pink-50 rounded-xl transition-colors group"
+                    >
+                      <span className="font-medium text-gray-700 text-sm">
+                        🥤 Getränke-Großhandel (Notfall)
+                      </span>
+                      <span className="text-pink-600 font-bold text-sm group-hover:scale-105 transition-transform">
+                        02235 / 123 456
+                      </span>
+                    </a>
+                    <a
+                      href="tel:+492235654321"
+                      className="flex justify-between items-center p-3 bg-gray-50 hover:bg-pink-50 rounded-xl transition-colors group"
+                    >
+                      <span className="font-medium text-gray-700 text-sm">
+                        🥐 Bäckerei-Lieferant
+                      </span>
+                      <span className="text-pink-600 font-bold text-sm group-hover:scale-105 transition-transform">
+                        02235 / 654 321
+                      </span>
+                    </a>
+                    <a
+                      href="tel:+492235987654"
+                      className="flex justify-between items-center p-3 bg-gray-50 hover:bg-pink-50 rounded-xl transition-colors group"
+                    >
+                      <span className="font-medium text-gray-700 text-sm">
+                        🔑 Schlüsseldienst / Sicherheit
+                      </span>
+                      <span className="text-pink-600 font-bold text-sm group-hover:scale-105 transition-transform">
+                        02235 / 987 654
+                      </span>
+                    </a>
+                    <a
+                      href="tel:+491701234567"
+                      className="flex justify-between items-center p-3 bg-gray-50 hover:bg-pink-50 rounded-xl transition-colors group"
+                    >
+                      <span className="font-medium text-gray-700 text-sm">
+                        👤 Geschäftsleitung (Inhaber)
+                      </span>
+                      <span className="text-pink-600 font-bold text-sm group-hover:scale-105 transition-transform">
+                        017x / 123 456 78
+                      </span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Aktions-Banner Generator */}
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <span className="mr-2 text-xl">📢</span> Aktions-Banner Generator
+                  </h2>
+                  <input
+                    ref={bannerInputRef}
+                    type="text"
+                    defaultValue="Frische Brötchen, gekühlte Getränke & Ihr Hermes Paketshop direkt am Bürgerplatz!"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all mb-4 text-sm"
+                    placeholder="Neuen Text eingeben..."
+                  />
+                  <button
+                    onClick={generateBannerCode}
+                    className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-95"
+                  >
+                    {copied === 'banner' ? '✅ Code kopiert!' : 'Banner-Code generieren & kopieren'}
+                  </button>
+                </div>
+
+                {/* Wichtige interne Hinweise (Aus Original wiederhergestellt) */}
+                <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
+                  <h2 className="text-xl font-bold text-blue-900 mb-3 flex items-center">
+                    <span className="mr-2 text-xl">💡</span> Wichtige interne Hinweise
+                  </h2>
+                  <ul className="list-disc list-inside space-y-2 text-sm text-blue-800">
+                    <li>
+                      Bei Hermes-Retouren ohne Label: Kunde anweisen, das Label in der Hermes-App zu
+                      erstellen.
+                    </li>
+                    <li>
+                      Kassensystem Neustart: Halten Sie den roten Knopf an der Seite für 10 Sekunden
+                      gedrückt.
+                    </li>
+                    <li>
+                      Bitte achten Sie darauf, dass der Kiosk am Samstag um 13:15 Uhr geschlossen
+                      wird, um pünktlich um 13:30 Uhr die Rollläden unten zu haben.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         )}
