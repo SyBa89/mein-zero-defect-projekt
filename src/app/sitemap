@@ -1,30 +1,45 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
+
+// ✅ ZERO-DEFECT: Zentrale URL-Konfiguration für konsistente Sitemap-Generierung
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://mein-zero-defect-projekt.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // ✅ PERFORMANCE: Das Datum wird einmalig pro Build/Request ermittelt, um Inkonsistenzen zu vermeiden
+  const currentDate = new Date();
+
   return [
     {
-      url: 'https://mein-zero-defect-projekt.vercel.app',
-      lastModified: new Date(),
+      url: BASE_URL,
+      lastModified: currentDate,
       changeFrequency: 'weekly',
-      priority: 1,
+      priority: 1.0,
     },
     {
-      url: 'https://mein-zero-defect-projekt.vercel.app/kontakt',
-      lastModified: new Date(),
+      url: `${BASE_URL}/kontakt`,
+      lastModified: currentDate,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: 'https://mein-zero-defect-projekt.vercel.app/impressum',
-      lastModified: new Date(),
+      url: `${BASE_URL}/about`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${BASE_URL}/impressum`,
+      lastModified: currentDate,
       changeFrequency: 'yearly',
       priority: 0.5,
     },
     {
-      url: 'https://mein-zero-defect-projekt.vercel.app/datenschutz',
-      lastModified: new Date(),
+      url: `${BASE_URL}/datenschutz`,
+      lastModified: currentDate,
       changeFrequency: 'yearly',
       priority: 0.5,
     },
-  ]
+    // ✅ SEO-HINWEIS: 
+    // - '/kontakt/danke' wird bewusst NICHT aufgenommen, da es eine Dead-End-Seite ohne eigenständigen Suchwert ist.
+    // - '/intern' wird NICHT aufgenommen, da es sich um einen geschützten Mitarbeiterbereich handelt.
+  ];
 }

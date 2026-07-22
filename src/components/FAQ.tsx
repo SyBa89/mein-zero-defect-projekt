@@ -34,7 +34,7 @@ const faqData: FaqItem[] = [
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  // ✅ PROAKTIVER FIX: useMemo verhindert unnötige Neuberechnung des Schema-Objekts bei jedem Klick
+  // ✅ PERFORMANCE: useMemo verhindert unnötige Neuberechnung des Schema-Objekts bei jedem Render
   const faqSchema = useMemo(
     () => ({
       '@context': 'https://schema.org',
@@ -50,6 +50,10 @@ export default function FAQ() {
     }),
     []
   );
+
+  const toggleAccordion = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
     <section className="py-16 bg-gray-50" aria-labelledby="faq-heading">
@@ -75,48 +79,50 @@ export default function FAQ() {
                 key={index}
                 className={`bg-white rounded-2xl border transition-all duration-300 ${
                   isOpen
-                    ? 'border-pink-300 shadow-lg shadow-pink-100'
+                    ? 'border-pink-300 shadow-lg shadow-pink-100/50'
                     : 'border-gray-200 hover:border-pink-200'
                 }`}
               >
                 <button
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
+                  onClick={() => toggleAccordion(index)}
                   className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 rounded-2xl"
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${index}`}
                 >
                   <span className="text-lg font-bold text-gray-900 pr-4">{faq.question}</span>
                   <span
-                    className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-pink-50 text-pink-600 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                    className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-pink-50 text-pink-600 transition-transform duration-300 ease-out ${
+                      isOpen ? 'rotate-180' : ''
+                    }`}
+                    aria-hidden="true"
                   >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        strokeWidth={2}
+                        strokeWidth={2.5}
                         d="M19 9l-7 7-7-7"
                       />
                     </svg>
                   </span>
                 </button>
 
-                {/* ✅ PROAKTIVER FIX: aria-hidden sorgt dafür, dass Screenreader geschlossene Antworten komplett ignorieren */}
+                {/* ✅ ARCHITEKTUR: Bulletproof Grid-Animation statt willkürlicher max-h-[1000px] Werte */}
                 <div
                   id={`faq-answer-${index}`}
                   role="region"
-                  aria-hidden={!isOpen}
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+                  aria-labelledby={`faq-question-${index}`}
+                  className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                    isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
                   }`}
                 >
-                  <div className="p-6 pt-0 text-gray-700 leading-relaxed border-t border-gray-100 mt-2">
-                    {faq.answer}
+                  <div className="overflow-hidden">
+                    <div
+                      id={`faq-question-${index}`} // Verknüpfung für Screenreader
+                      className="p-6 pt-0 text-gray-700 leading-relaxed border-t border-gray-100 mt-2"
+                    >
+                      {faq.answer}
+                    </div>
                   </div>
                 </div>
               </div>

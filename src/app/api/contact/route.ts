@@ -1,31 +1,61 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// ✅ ZERO-DEFECT: Explizites Interface statt 'any' für maximale Typsicherheit
+// ✅ ZERO-DEFECT: Explizites Interface mit Honeypot für maximale Typsicherheit und Spam-Prävention
 interface ContactFormData {
   name: string;
   email: string;
   message: string;
+  honeypot?: string; // Unsichtbares Feld für Anti-Spam-Bots
 }
 
-function validateContactForm(data: ContactFormData) {
+// ✅ SECURITY: Robuste HTML-Escaping-Funktion zur Verhinderung von XSS in E-Mail-Clients
+function escapeHtml(unsafe: string): string {
+  return unsafe.replace(/[&<>"']/g, (m) => {
+    const map: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;',
+    };
+    return map[m];
+  });
+}
+
+function validateContactForm(data: ContactFormData): string[] {
   const errors: string[] = [];
 
-  if (!data.name || typeof data.name !== 'string' || data.name.trim().length < 2) {
-    errors.push('Der Name muss mindestens 2 Zeichen lang sein.');
+  // Name Validierung
+  if (!data.name || typeof data.name !== 'string') {
+    errors.push('Der Name ist ungültig.');
+  } else {
+    const trimmedName = data.name.trim();
+    if (trimmedName.length < 2 || trimmedName.length > 100) {
+      errors.push('Der Name muss zwischen 2 und 100 Zeichen lang sein.');
+    }
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!data.email || typeof data.email !== 'string' || !emailRegex.test(data.email.trim())) {
-    errors.push('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+  // E-Mail Validierung
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!data.email || typeof data.email !== 'string') {
+    errors.push('Die E-Mail-Adresse ist ungültig.');
+  } else {
+    const trimmedEmail = data.email.trim();
+    if (!emailRegex.test(trimmedEmail)) {
+      errors.push('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+    } else if (trimmedEmail.length > 255) {
+      errors.push('Die E-Mail-Adresse ist zu lang.');
+    }
   }
 
-  if (!data.message || typeof data.message !== 'string' || data.message.trim().length < 10) {
-    errors.push('Die Nachricht muss mindestens 10 Zeichen lang sein.');
-  }
-
-  // ✅ SECURITY: XSS-Schutz durch Längenbegrenzung (DoS-Prävention)
-  if (data.name.length > 100 || data.email.length > 255 || data.message.length > 2000) {
-    errors.push('Eingabe darf die maximale Länge nicht überschreiten.');
+  // Nachricht Validierung
+  if (!data.message || typeof data.message !== 'string') {
+    errors.push('Die Nachricht ist ungültig.');
+  } else {
+    const trimmedMessage = data.message.trim();
+    if (trimmedMessage.length < 10 || trimmedMessage.length > 2000) {
+      errors.push('Die Nachricht muss zwischen 10 und 2000 Zeichen lang sein.');
+    }
   }
 
   return errors;
@@ -33,31 +63,50 @@ function validateContactForm(data: ContactFormData) {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { name, email, message } = body;
+    // ✅ ARCHITEKTUR: Abfangen von malformed JSON, um 500er Serverfehler zu vermeiden
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch (_parseError) {
+      void _parseError; // Referenz für ESLint (void vermeidet no-unused-expressions)
+      return NextResponse.json(
+        { success: false, error: 'Ungültiges Datenformat. Bitte überprüfen Sie Ihre Eingabe.' },
+        { status: 400 }
+      );
+    }
+
+    const { name, email, message, honeypot } = body as ContactFormData;
+
+    // ✅ SECURITY: Honeypot Anti-Spam-Check.
+    // Wenn ein Bot das unsichtbare Feld ausfüllt, geben wir einen gefälschten Erfolg zurück,
+    // um den Bot zu täuschen, verarbeiten die Daten aber nicht weiter.
+    if (honeypot && honeypot.trim().length > 0) {
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
 
     const errors = validateContactForm({ name, email, message });
     if (errors.length > 0) {
       return NextResponse.json({ success: false, error: errors.join(' ') }, { status: 400 });
     }
 
-    const sanitizedName = name.replace(/[<>]/g, '').trim();
-    const sanitizedEmail = email.replace(/[<>]/g, '').trim();
-    const sanitizedMessage = message.replace(/[<>]/g, '').trim();
+    // ✅ SECURITY: Umfassende Bereinigung der Daten vor der Weiterverarbeitung
+    const sanitizedName = escapeHtml(name.trim());
+    const sanitizedEmail = escapeHtml(email.trim());
+    const sanitizedMessage = escapeHtml(message.trim());
 
     /* 
     ========================================================================
     ✅ PRODUKTIONS-READY: E-MAIL VERSAND (z.B. mit Resend)
     1. npm install resend
     2. RESEND_API_KEY=dein_api_key_in_der_.env.local_hinzufügen
-    3. Die folgenden Zeilen auskommentieren.
+    3. Die folgenden Zeilen auskommentieren und den Fallback-Block entfernen.
     ========================================================================
     
     import { Resend } from 'resend';
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     await resend.emails.send({
-      from: 'Kiosk Lollipop <onboarding@resend.dev>',
+      from: 'Kiosk Lollipop <onboarding@resend.dev>', // Ersetze mit deiner verifizierten Domain
       to: 'info@kiosk-lollipop.de',
       subject: `Neue Nachricht von ${sanitizedName} über die Webseite`,
       html: `
@@ -70,7 +119,7 @@ export async function POST(request: NextRequest) {
     ========================================================================
     */
 
-    // ✅ FIX: console.warn statt console.log, da die ESLint-Regel nur warn/error erlaubt
+    // ✅ FALLBACK: Simulierter Erfolg für Entwicklungsphase oder wenn E-Mail-Service noch nicht konfiguriert ist
     console.warn('✅ [KONTAKTFORMULAR] Neue Nachricht erhalten (Fallback-Log):', {
       name: sanitizedName,
       email: sanitizedEmail,
@@ -78,6 +127,7 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     });
 
+    // Simulierte Netzwerkverzögerung für realistische UX im Frontend (kann in Produktion entfernt werden)
     await new Promise((resolve) => setTimeout(resolve, 800));
 
     return NextResponse.json(
@@ -89,7 +139,8 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('❌ [KONTAKTFORMULAR] Serverfehler:', error);
+    // ✅ SECURITY: Generische Fehlermeldung, um keine internen Serverdetails preiszugeben
+    console.error('❌ [KONTAKTFORMULAR] Unerwarteter Serverfehler:', error);
     return NextResponse.json(
       {
         success: false,

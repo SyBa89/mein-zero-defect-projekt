@@ -17,17 +17,29 @@ export default function Header() {
   // Funktion zum Schließen des Menüs nach einem Klick (Mobile UX)
   const closeMenu = () => setIsMenuOpen(false);
 
-  // ✅ PROAKTIVER FIX: Menü automatisch schließen, wenn Fenster auf Desktop-Größe skaliert wird
+  // ✅ PROAKTIVER FIX 1: Menü automatisch schließen, wenn Fenster auf Desktop-Größe skaliert wird
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
-        // 'md' breakpoint in Tailwind
         setIsMenuOpen(false);
       }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // ✅ PROAKTIVER FIX 2: Scroll-Lock für den Body, wenn das Mobile-Menü geöffnet ist
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    // Cleanup-Funktion, falls die Komponente unmountet, während das Menü offen ist
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
 
   return (
     <header className="w-full border-b border-gray-200 bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-sm">
@@ -82,47 +94,55 @@ export default function Header() {
           >
             <div className="relative w-6 h-6">
               <span
-                className={`absolute top-1 left-0 w-6 h-0.5 bg-gray-700 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2.5' : ''}`}
+                className={`absolute top-1 left-0 w-6 h-0.5 bg-gray-700 transition-all duration-300 ${
+                  isMenuOpen ? 'rotate-45 translate-y-2.5' : ''
+                }`}
               />
               <span
-                className={`absolute top-3 left-0 w-6 h-0.5 bg-gray-700 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}
+                className={`absolute top-3 left-0 w-6 h-0.5 bg-gray-700 transition-all duration-300 ${
+                  isMenuOpen ? 'opacity-0' : 'opacity-100'
+                }`}
               />
               <span
-                className={`absolute top-5 left-0 w-6 h-0.5 bg-gray-700 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2.5' : ''}`}
+                className={`absolute top-5 left-0 w-6 h-0.5 bg-gray-700 transition-all duration-300 ${
+                  isMenuOpen ? '-rotate-45 -translate-y-2.5' : ''
+                }`}
               />
             </div>
           </button>
         </div>
 
-        {/* Mobile Navigation Dropdown - Smooth & Accessible */}
+        {/* ✅ PROAKTIVER FIX 3: Mobile Navigation Dropdown mit bulletproof Grid-Animation (keine Magic Numbers) */}
         <div
           id="mobile-menu"
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            isMenuOpen ? 'max-h-96 opacity-100 pb-6 pt-2' : 'max-h-0 opacity-0'
+          className={`md:hidden grid transition-[grid-template-rows] duration-300 ease-out ${
+            isMenuOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
           }`}
         >
-          <nav
-            aria-label="Mobile Navigation"
-            className="flex flex-col gap-2 border-t border-gray-100 pt-4"
-          >
-            {navItems.map((item) => (
+          <div className="overflow-hidden">
+            <nav
+              aria-label="Mobile Navigation"
+              className="flex flex-col gap-2 border-t border-gray-100 pt-4 pb-6"
+            >
+              {navItems.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="block py-3 px-4 text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all duration-200 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 active:scale-95"
+                  onClick={closeMenu}
+                >
+                  {item.label}
+                </Link>
+              ))}
               <Link
-                key={item.label}
-                href={item.href}
-                className="block py-3 px-4 text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all duration-200 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 active:scale-95"
+                href="/kontakt"
+                className="block py-3 px-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg font-semibold text-center mt-2 shadow-md transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 active:scale-95"
                 onClick={closeMenu}
               >
-                {item.label}
+                Kontakt
               </Link>
-            ))}
-            <Link
-              href="/kontakt"
-              className="block py-3 px-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg font-semibold text-center mt-2 shadow-md transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 active:scale-95"
-              onClick={closeMenu}
-            >
-              Kontakt
-            </Link>
-          </nav>
+            </nav>
+          </div>
         </div>
       </div>
     </header>

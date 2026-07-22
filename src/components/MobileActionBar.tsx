@@ -1,10 +1,16 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function MobileActionBar() {
+  const pathname = usePathname();
+
+  // Hilfsfunktion zur Bestimmung des aktiven Tabs
+  const isActive = (path: string) => pathname === path;
+
   return (
-    // z-50 stellt sicher, dass es über dem Cookie-Banner (z-40) liegt
+    // ✅ ARCHITEKTUR: z-50 liegt sicher über dem CookieNotice (z-40), aber unter Fullscreen-Modals (z-[60])
     <div
       className="fixed bottom-0 left-0 right-0 z-50 md:hidden"
       role="navigation"
@@ -40,7 +46,7 @@ export default function MobileActionBar() {
             href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center gap-1 text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 active:scale-95 border-x border-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-inset"
+            className="flex flex-col items-center justify-center gap-1 text-gray-700 hover:text-pink-600 hover:bg-pink-50 border-x border-gray-100 transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-inset"
             aria-label="Route zum Kiosk Lollipop mit Google Maps planen"
           >
             <svg
@@ -66,11 +72,16 @@ export default function MobileActionBar() {
             <span className="text-xs font-bold">Route</span>
           </a>
 
-          {/* 3. Kontaktformular */}
+          {/* 3. Kontaktformular (Mit aktiver Status-Erkennung) */}
           <Link
             href="/kontakt"
-            className="flex flex-col items-center justify-center gap-1 text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-inset"
+            className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-inset ${
+              isActive('/kontakt')
+                ? 'text-pink-600 bg-pink-50'
+                : 'text-gray-700 hover:text-pink-600 hover:bg-pink-50'
+            }`}
             aria-label="Kontaktformular öffnen"
+            aria-current={isActive('/kontakt') ? 'page' : undefined}
           >
             <svg
               className="w-6 h-6"

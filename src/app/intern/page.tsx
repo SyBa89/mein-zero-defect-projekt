@@ -5,6 +5,16 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+// ✅ ZERO-DEFECT: Explizite Typisierung für maximale Sicherheit und Intellisense
+interface ChecklistState {
+  kasse: boolean;
+  lotto: boolean;
+  brot: boolean;
+  sauberkeit: boolean;
+}
+
+type SaveStatus = 'idle' | 'saving' | 'saved';
+
 export default function InternPage() {
   // Auth States
   const [password, setPassword] = useState('');
@@ -14,20 +24,22 @@ export default function InternPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Dashboard States
-  const [checklist, setChecklist] = useState({
+  const [checklist, setChecklist] = useState<ChecklistState>({
     kasse: false,
     lotto: false,
     brot: false,
     sauberkeit: false,
   });
   const [notes, setNotes] = useState('');
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
 
-  // Ref für Auto-Save Timer
+  // Refs für Auto-Save Timer
   const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Initialisierung
   useEffect(() => {
+    // Hinweis: sessionStorage ist ein UI-Gate. Die echte Sicherheit liegt in der API-Validierung.
     const authStatus = sessionStorage.getItem('intern-auth');
     if (authStatus === 'true') {
       setIsAuthenticated(true);
@@ -36,9 +48,13 @@ export default function InternPage() {
     const savedChecklist = localStorage.getItem('kiosk-checklist');
     if (savedChecklist) {
       try {
-        setChecklist(JSON.parse(savedChecklist));
+        const parsed = JSON.parse(savedChecklist);
+        // Validierung, um korrupte Daten abzufangen
+        if (typeof parsed === 'object' && parsed !== null) {
+          setChecklist((prev) => ({ ...prev, ...parsed }));
+        }
       } catch (e) {
-        console.error('Fehler beim Laden der Checkliste:', e);
+        console.error('[INTERN] Fehler beim Laden der Checkliste:', e);
       }
     }
 
@@ -48,33 +64,36 @@ export default function InternPage() {
     setIsLoading(false);
   }, []);
 
-  // Checkliste speichern
+  // Checkliste speichern (bei jeder Änderung)
   useEffect(() => {
     localStorage.setItem('kiosk-checklist', JSON.stringify(checklist));
   }, [checklist]);
 
-  // Notizen mit Auto-Save (Debounced)
+  // Notizen mit robustem Auto-Save (Debounced)
   useEffect(() => {
-    if (saveTimerRef.current) {
-      clearTimeout(saveTimerRef.current);
-    }
+    // Vorherige Timer aufräumen, um Race Conditions zu verhindern
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
 
-    setSaveStatus('saving');
+    if (saveStatus !== 'saving') {
+      setSaveStatus('saving');
+    }
 
     saveTimerRef.current = setTimeout(() => {
       localStorage.setItem('kiosk-notes', notes);
       setSaveStatus('saved');
 
-      // Nach 2 Sekunden zurück zu 'idle'
-      setTimeout(() => setSaveStatus('idle'), 2000);
-    }, 500); // 500ms Delay
+      // Timer für den Rückwechsel zu 'idle'
+      idleTimerRef.current = setTimeout(() => {
+        setSaveStatus('idle');
+      }, 2000);
+    }, 800); // 800ms ist optimal für Tipp-Flüssigkeit vs. Speicher-Last
 
     return () => {
-      if (saveTimerRef.current) {
-        clearTimeout(saveTimerRef.current);
-      }
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
     };
-  }, [notes]);
+  }, [notes, saveStatus]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,7 +113,7 @@ export default function InternPage() {
         setIsAuthenticated(true);
         sessionStorage.setItem('intern-auth', 'true');
       } else {
-        setError(data.error || 'Falsches Passwort.');
+        setError(data.message || 'Falsches Passwort.');
         setPassword('');
       }
     } catch {
@@ -108,20 +127,26 @@ export default function InternPage() {
     setIsAuthenticated(false);
     sessionStorage.removeItem('intern-auth');
     setPassword('');
+    setError('');
   };
 
-  const toggleChecklist = (key: keyof typeof checklist) => {
+  const toggleChecklist = (key: keyof ChecklistState) => {
     setChecklist((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const resetChecklist = () => {
-    setChecklist({ kasse: false, lotto: false, brot: false, sauberkeit: false });
+    if (window.confirm('Möchtest du die Checkliste wirklich für die neue Schicht zurücksetzen?')) {
+      setChecklist({ kasse: false, lotto: false, brot: false, sauberkeit: false });
+    }
   };
 
   const clearNotes = () => {
-    setNotes('');
-    localStorage.removeItem('kiosk-notes');
-    setSaveStatus('idle');
+    if (notes.trim() === '') return;
+    if (window.confirm('Möchtest du die Notizen wirklich unwiderruflich löschen?')) {
+      setNotes('');
+      localStorage.removeItem('kiosk-notes');
+      setSaveStatus('idle');
+    }
   };
 
   if (isLoading) {
@@ -162,11 +187,12 @@ export default function InternPage() {
                   placeholder="••••••••"
                   required
                   disabled={isSubmitting}
+                  autoComplete="current-password"
                 />
               </div>
               {error && (
                 <div className="bg-red-50 text-red-700 text-sm p-3 rounded-xl border border-red-200 font-medium flex items-center gap-2">
-                  <span>⚠️</span> {error}
+                  <span aria-hidden="true">⚠️</span> {error}
                 </div>
               )}
               <button
@@ -181,6 +207,7 @@ export default function InternPage() {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <circle
                         className="opacity-25"
@@ -206,9 +233,17 @@ export default function InternPage() {
             <div className="mt-6 text-center">
               <Link
                 href="/"
-                className="text-sm text-pink-600 hover:text-pink-700 font-semibold transition-colors"
+                className="text-sm text-pink-600 hover:text-pink-700 font-semibold transition-colors inline-flex items-center gap-1"
               >
-                ← Zurück zur öffentlichen Webseite
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
+                </svg>
+                Zurück zur öffentlichen Webseite
               </Link>
             </div>
           </div>
@@ -221,8 +256,16 @@ export default function InternPage() {
               </div>
               <button
                 onClick={handleLogout}
-                className="px-5 py-2.5 bg-red-100 text-red-700 hover:bg-red-200 rounded-xl font-bold transition-colors text-sm"
+                className="px-5 py-2.5 bg-red-100 text-red-700 hover:bg-red-200 rounded-xl font-bold transition-colors text-sm flex items-center gap-2"
               >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+                </svg>
                 Abmelden
               </button>
             </div>
@@ -234,47 +277,69 @@ export default function InternPage() {
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-bold text-gray-900 flex items-center">
-                      <span className="mr-2 text-xl">✅</span> Schicht-Checkliste
+                      <span className="mr-2 text-xl" aria-hidden="true">
+                        ✅
+                      </span>{' '}
+                      Schicht-Checkliste
                     </h2>
                     <button
                       onClick={resetChecklist}
-                      className="text-xs text-gray-500 hover:text-red-600 font-medium"
+                      className="text-xs text-gray-500 hover:text-red-600 font-medium transition-colors"
                     >
                       Zurücksetzen
                     </button>
                   </div>
                   <ul className="space-y-3">
                     {[
-                      { key: 'kasse', label: 'Kasse gezählt & abgestimmt' },
-                      { key: 'lotto', label: 'Lotto-Ziehung geprüft' },
-                      { key: 'brot', label: 'Brötchen für morgen bestellt' },
-                      { key: 'sauberkeit', label: 'Kiosk gereinigt & aufgeräumt' },
-                    ].map((item) => (
-                      <li
-                        key={item.key}
-                        className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-pink-50 transition-colors cursor-pointer"
-                        onClick={() => toggleChecklist(item.key as keyof typeof checklist)}
-                      >
-                        <div
-                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                            checklist[item.key as keyof typeof checklist]
-                              ? 'bg-green-500 border-green-500 text-white'
-                              : 'border-gray-300'
-                          }`}
-                        >
-                          {checklist[item.key as keyof typeof checklist] && '✓'}
-                        </div>
-                        <span
-                          className={`font-medium text-sm ${
-                            checklist[item.key as keyof typeof checklist]
-                              ? 'line-through text-gray-400'
-                              : 'text-gray-700'
-                          }`}
-                        >
-                          {item.label}
-                        </span>
-                      </li>
-                    ))}
+                      { key: 'kasse' as const, label: 'Kasse gezählt & abgestimmt' },
+                      { key: 'lotto' as const, label: 'Lotto-Ziehung geprüft' },
+                      { key: 'brot' as const, label: 'Brötchen für morgen bestellt' },
+                      { key: 'sauberkeit' as const, label: 'Kiosk gereinigt & aufgeräumt' },
+                    ].map((item) => {
+                      const isChecked = checklist[item.key];
+                      return (
+                        <li key={item.key}>
+                          {/* ✅ A11y FIX: Button statt li mit onClick für volle Tastatur-Unterstützung */}
+                          <button
+                            type="button"
+                            onClick={() => toggleChecklist(item.key)}
+                            className="w-full flex items-center gap-3 p-3 bg-gray-50 rounded-xl hover:bg-pink-50 transition-colors text-left group"
+                            aria-pressed={isChecked}
+                          >
+                            <div
+                              className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
+                                isChecked
+                                  ? 'bg-green-500 border-green-500 text-white'
+                                  : 'border-gray-300 group-hover:border-pink-400'
+                              }`}
+                            >
+                              {isChecked && (
+                                <svg
+                                  className="w-4 h-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={3}
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                              )}
+                            </div>
+                            <span
+                              className={`font-medium text-sm transition-colors ${
+                                isChecked ? 'line-through text-gray-400' : 'text-gray-700'
+                              }`}
+                            >
+                              {item.label}
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
 
@@ -282,23 +347,29 @@ export default function InternPage() {
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-bold text-gray-900 flex items-center">
-                      <span className="mr-2 text-xl"></span> Übergabe-Notizen
+                      {/* ✅ FIX: Fehlendes Emoji hinzugefügt für Konsistenz */}
+                      <span className="mr-2 text-xl" aria-hidden="true">
+                        📝
+                      </span>{' '}
+                      Übergabe-Notizen
                     </h2>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-3">
                       {saveStatus === 'saving' && (
                         <span className="text-xs text-gray-500 flex items-center gap-1">
-                          <span className="animate-pulse"></span> Speichern...
+                          <span className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></span>{' '}
+                          Speichern...
                         </span>
                       )}
                       {saveStatus === 'saved' && (
-                        <span className="text-xs text-green-600 flex items-center gap-1">
-                          <span>✅</span> Gespeichert
+                        <span className="text-xs text-green-600 flex items-center gap-1 font-medium">
+                          <span aria-hidden="true">✅</span> Gespeichert
                         </span>
                       )}
                       <button
                         onClick={clearNotes}
-                        className="text-xs text-gray-500 hover:text-red-600 font-medium"
+                        className="text-xs text-gray-500 hover:text-red-600 font-medium transition-colors"
                         title="Notizen löschen"
+                        disabled={notes.trim() === ''}
                       >
                         Löschen
                       </button>
@@ -322,7 +393,10 @@ export default function InternPage() {
                 {/* Wichtige externe Portale */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="mr-2 text-xl">🔗</span> Wichtige externe Portale
+                    <span className="mr-2 text-xl" aria-hidden="true">
+                      🔗
+                    </span>{' '}
+                    Wichtige externe Portale
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <a
@@ -331,11 +405,14 @@ export default function InternPage() {
                       rel="noopener noreferrer"
                       className="flex items-center p-4 bg-yellow-50 border border-yellow-200 rounded-xl hover:bg-yellow-100 transition-colors group"
                     >
-                      <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
+                      <span
+                        className="text-2xl mr-3 group-hover:scale-110 transition-transform"
+                        aria-hidden="true"
+                      >
                         📦
                       </span>
                       <div>
-                        <span className="block font-bold text-gray-900">Hermes Partner Portal</span>
+                        <span className="block font-bold text-gray-900">Hermes Partner</span>
                         <span className="text-xs text-gray-600">Sendungsverfolgung & Retouren</span>
                       </div>
                     </a>
@@ -345,11 +422,14 @@ export default function InternPage() {
                       rel="noopener noreferrer"
                       className="flex items-center p-4 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 transition-colors group"
                     >
-                      <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
+                      <span
+                        className="text-2xl mr-3 group-hover:scale-110 transition-transform"
+                        aria-hidden="true"
+                      >
                         🎫
                       </span>
                       <div>
-                        <span className="block font-bold text-gray-900">Lotto Annahmesystem</span>
+                        <span className="block font-bold text-gray-900">Lotto System</span>
                         <span className="text-xs text-gray-600">WestLotto Partner-Login</span>
                       </div>
                     </a>
@@ -359,15 +439,18 @@ export default function InternPage() {
                 {/* Notfall- & Lieferantenkontakte */}
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                   <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span className="mr-2 text-xl">📞</span> Notfall- & Lieferantenkontakte
+                    <span className="mr-2 text-xl" aria-hidden="true">
+                      📞
+                    </span>{' '}
+                    Notfallkontakte
                   </h2>
                   <div className="space-y-3">
                     <a
                       href="tel:+492235123456"
                       className="flex justify-between items-center p-3 bg-gray-50 hover:bg-pink-50 rounded-xl transition-colors group"
                     >
-                      <span className="font-medium text-gray-700 text-sm">
-                        🥤 Getränke-Großhandel (Notfall)
+                      <span className="font-medium text-gray-700 text-sm flex items-center gap-2">
+                        <span aria-hidden="true">🥤</span> Getränke-Großhandel
                       </span>
                       <span className="text-pink-600 font-bold text-sm group-hover:scale-105 transition-transform">
                         02235 / 123 456
@@ -377,8 +460,8 @@ export default function InternPage() {
                       href="tel:+492235654321"
                       className="flex justify-between items-center p-3 bg-gray-50 hover:bg-pink-50 rounded-xl transition-colors group"
                     >
-                      <span className="font-medium text-gray-700 text-sm">
-                        🥐 Bäckerei-Lieferant
+                      <span className="font-medium text-gray-700 text-sm flex items-center gap-2">
+                        <span aria-hidden="true">🥐</span> Bäckerei-Lieferant
                       </span>
                       <span className="text-pink-600 font-bold text-sm group-hover:scale-105 transition-transform">
                         02235 / 654 321
@@ -388,8 +471,8 @@ export default function InternPage() {
                       href="tel:+492235987654"
                       className="flex justify-between items-center p-3 bg-gray-50 hover:bg-pink-50 rounded-xl transition-colors group"
                     >
-                      <span className="font-medium text-gray-700 text-sm">
-                        🔑 Schlüsseldienst / Sicherheit
+                      <span className="font-medium text-gray-700 text-sm flex items-center gap-2">
+                        <span aria-hidden="true">🔑</span> Schlüsseldienst
                       </span>
                       <span className="text-pink-600 font-bold text-sm group-hover:scale-105 transition-transform">
                         02235 / 987 654
@@ -399,11 +482,11 @@ export default function InternPage() {
                       href="tel:+491701234567"
                       className="flex justify-between items-center p-3 bg-gray-50 hover:bg-pink-50 rounded-xl transition-colors group"
                     >
-                      <span className="font-medium text-gray-700 text-sm">
-                        👤 Geschäftsleitung (Inhaber)
+                      <span className="font-medium text-gray-700 text-sm flex items-center gap-2">
+                        <span aria-hidden="true">👤</span> Geschäftsleitung
                       </span>
                       <span className="text-pink-600 font-bold text-sm group-hover:scale-105 transition-transform">
-                        017x / 123 456 78
+                        0170 / 123 45 67
                       </span>
                     </a>
                   </div>
@@ -412,20 +495,22 @@ export default function InternPage() {
                 {/* Wichtige interne Hinweise */}
                 <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
                   <h2 className="text-xl font-bold text-blue-900 mb-3 flex items-center">
-                    <span className="mr-2 text-xl">💡</span> Wichtige interne Hinweise
+                    <span className="mr-2 text-xl" aria-hidden="true">
+                      💡
+                    </span>{' '}
+                    Interne Hinweise
                   </h2>
-                  <ul className="list-disc list-inside space-y-2 text-sm text-blue-800">
+                  <ul className="list-disc list-inside space-y-2 text-sm text-blue-800 marker:text-blue-600">
                     <li>
                       Bei Hermes-Retouren ohne Label: Kunde anweisen, das Label in der Hermes-App zu
                       erstellen.
                     </li>
                     <li>
-                      Kassensystem Neustart: Halten Sie den roten Knopf an der Seite für 10 Sekunden
-                      gedrückt.
+                      Kassensystem Neustart: Roten Knopf an der Seite für 10 Sekunden gedrückt
+                      halten.
                     </li>
                     <li>
-                      Bitte achten Sie darauf, dass der Kiosk am Samstag um 13:15 Uhr geschlossen
-                      wird, um pünktlich um 13:30 Uhr die Rollläden unten zu haben.
+                      Samstags um 13:15 Uhr schließen, um 13:30 Uhr die Rollläden unten zu haben.
                     </li>
                   </ul>
                 </div>

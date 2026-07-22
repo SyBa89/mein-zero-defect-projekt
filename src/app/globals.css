@@ -3,9 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 249, 250, 251;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 17, 24, 39; /* Entspricht Tailwind gray-900 für maximalen Kontrast */
+  --background-start-rgb: 249, 250, 251; /* Entspricht Tailwind gray-50 */
+  --background-end-rgb: 255, 255, 255; /* Entspricht Tailwind white */
+}
+
+/* ✅ ZERO-DEFECT: Globale Auswahl-Farbe für ein konsistentes Premium-Feeling */
+::selection {
+  background-color: #fbcfe8; /* pink-200 */
+  color: #831843; /* pink-900 */
 }
 
 body {
@@ -16,9 +22,52 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  /* ✅ ARCHITEKTUR: Verhindert horizontales Scrollen durch versehentliche Overflows auf mobilen Geräten */
+  overflow-x: hidden;
 }
 
-/* Smooth scrolling für interne Links */
+/* ✅ ZERO-DEFECT: Smooth scrolling mit Respekt vor Barrierefreiheit (Reduced Motion) */
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ✅ ZERO-DEFECT: Druck-Optimierung für Öffnungszeiten, Kontakt, etc. */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+  
+  /* Verstecke interaktive Elemente, die beim Drucken keinen Sinn ergeben */
+  nav, footer, button, .no-print, .fixed, [aria-hidden="true"] {
+    display: none !important;
+  }
+  
+  /* Stelle sicher, dass Links lesbar sind */
+  a {
+    text-decoration: underline;
+    color: black !important;
+  }
+  
+  /* Verhindere Seitenumbrüche mitten in wichtigen Blöcken (z.B. einer Preistabelle) */
+  section, .bg-white, .rounded-3xl, .rounded-2xl {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+    background: white !important;
+  }
 }

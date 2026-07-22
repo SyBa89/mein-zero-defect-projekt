@@ -2,20 +2,23 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
+// ✅ ZERO-DEFECT: Optimierte Schriftart-Ladung mit 'swap' für sofortige Textanzeige (kein FOIT)
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
 });
 
+// ✅ ZERO-DEFECT: Viewport für maximale Mobile-Kompatibilität und PWA-Support
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#db2777',
+  themeColor: '#db2777', // Entspricht Tailwind pink-600
   colorScheme: 'light',
 };
 
+// ✅ ZERO-DEFECT: Umfassende, mehrschichtige SEO- und Social-Media-Metadaten
 export const metadata: Metadata = {
   metadataBase: new URL('https://mein-zero-defect-projekt.vercel.app'),
   title: {
@@ -36,9 +39,14 @@ export const metadata: Metadata = {
   creator: 'Kiosk Lollipop',
   publisher: 'Kiosk Lollipop',
   manifest: '/manifest.json',
+
+  // ✅ OPTIMIERUNG: Explizite Icon-Definitionen für alle Geräte-Typen
   icons: {
-    icon: '/images/icon.png',
-    apple: '/images/icon.png',
+    icon: [
+      { url: '/images/icon.png', type: 'image/png' },
+      { url: '/favicon.ico', type: 'image/x-icon' }, // Fallback für ältere Browser
+    ],
+    apple: [{ url: '/images/icon.png', sizes: '180x180', type: 'image/png' }],
   },
   appleWebApp: {
     capable: true,
@@ -51,7 +59,7 @@ export const metadata: Metadata = {
   formatDetection: {
     email: false,
     address: false,
-    telephone: true,
+    telephone: true, // Erlaubt dem Browser, Telefonnummern automatisch verlinkbar zu machen
   },
   openGraph: {
     type: 'website',
@@ -66,6 +74,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: 'Kiosk Lollipop Erftstadt-Liblar',
+        type: 'image/png',
       },
     ],
   },
@@ -88,9 +97,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="de" className={inter.variable}>
+    // ✅ A11y: Explizite Sprach- und Leserichtungsangabe für Screenreader
+    <html lang="de" dir="ltr" className={inter.variable}>
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased selection:bg-pink-200 selection:text-pink-900">
         {children}
       </body>

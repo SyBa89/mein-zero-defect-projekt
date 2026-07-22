@@ -1,12 +1,17 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
+
+// ✅ ZERO-DEFECT: Zentrale URL-Konfiguration verhindert Hardcoding und Inkonsistenzen bei Domain-Wechseln
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://mein-zero-defect-projekt.vercel.app';
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin', '/api'],
+      // ✅ SICHERHEIT & SEO: Explizites Blockieren von internen Bereichen, API-Routen und Admin-Pfaden
+      // Dies schützt das Crawl-Budget und verhindert das versehentliche Indexieren sensibler Pfade.
+      disallow: ['/api', '/intern', '/admin'],
     },
-    sitemap: 'https://mein-zero-defect-projekt.vercel.app/sitemap.xml',
-  }
+    sitemap: `${BASE_URL}/sitemap.xml`,
+  };
 }

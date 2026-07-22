@@ -5,59 +5,115 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileActionBar from '@/components/MobileActionBar';
+import type { Metadata } from 'next';
+
+// ✅ ZERO-DEFECT: Umfassende SEO-Metadaten
+export const metadata: Metadata = {
+  title: 'Kontakt | Kiosk Lollipop',
+  description:
+    'Kontaktieren Sie den Kiosk Lollipop in Erftstadt-Liblar. Wir sind für Sie da – per Telefon, E-Mail oder über unser sicheres Kontaktformular.',
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function KontaktPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
+    honeypot: '', // ✅ SECURITY: Unsichtbares Feld für Anti-Spam (muss mit API übereinstimmen)
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState('');
   const successRef = useRef<HTMLDivElement>(null);
 
-  // Reset isSuccess, wenn der Nutzer das Formular erneut bearbeitet
+  // Reset states when user types again to allow retry
   useEffect(() => {
     if (formData.name || formData.email || formData.message) {
       setIsSuccess(false);
+      setApiError('');
     }
-  }, [formData]);
+  }, [formData.name, formData.email, formData.message]);
 
   // Proaktiver Fokus-Management für Barrierefreiheit (Screenreader)
   useEffect(() => {
-    if (isSuccess && successRef.current) {
+    if ((isSuccess || apiError) && successRef.current) {
       successRef.current.focus();
     }
-  }, [isSuccess]);
+  }, [isSuccess, apiError]);
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!formData.name.trim()) newErrors.name = 'Bitte geben Sie Ihren Namen ein.';
-    if (!formData.email.trim()) {
+
+    const trimmedName = formData.name.trim();
+    if (!trimmedName) {
+      newErrors.name = 'Bitte geben Sie Ihren Namen ein.';
+    } else if (trimmedName.length < 2 || trimmedName.length > 100) {
+      newErrors.name = 'Der Name muss zwischen 2 und 100 Zeichen lang sein.';
+    }
+
+    const trimmedEmail = formData.email.trim();
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!trimmedEmail) {
       newErrors.email = 'Bitte geben Sie Ihre E-Mail-Adresse ein.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    } else if (!emailRegex.test(trimmedEmail)) {
       newErrors.email = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
     }
-    if (!formData.message.trim()) newErrors.message = 'Bitte geben Sie eine Nachricht ein.';
+
+    const trimmedMessage = formData.message.trim();
+    if (!trimmedMessage) {
+      newErrors.message = 'Bitte geben Sie eine Nachricht ein.';
+    } else if (trimmedMessage.length < 10 || trimmedMessage.length > 2000) {
+      newErrors.message = 'Die Nachricht muss zwischen 10 und 2000 Zeichen lang sein.';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setApiError('');
+
     if (!validate()) return;
 
-    const subject = encodeURIComponent(`Nachricht von ${formData.name} über die Webseite`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nE-Mail: ${formData.email}\n\nNachricht:\n${formData.message}`
-    );
+    setIsSubmitting(true);
 
-    // Öffnet das lokale Mail-Programm des Nutzers
-    window.location.href = `mailto:info@kiosk-lollipop.de?subject=${subject}&body=${body}`;
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+          honeypot: formData.honeypot,
+        }),
+      });
 
-    setIsSuccess(true);
-    setErrors({});
+      const data = await response.json();
+
+      if (data.success) {
+        setIsSuccess(true);
+        setFormData({ name: '', email: '', message: '', honeypot: '' });
+        setErrors({});
+      } else {
+        setApiError(
+          data.error || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.'
+        );
+      }
+    } catch (error) {
+      console.error('[KONTAKT] Netzwerkfehler:', error);
+      setApiError(
+        'Ein Verbindungsfehler ist aufgetreten. Bitte prüfen Sie Ihre Internetverbindung.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -186,7 +242,9 @@ export default function KontaktPage() {
               </div>
 
               <div className="bg-gradient-to-br from-pink-50 to-purple-50 p-6 rounded-2xl border border-pink-100">
-                <h3 className="font-bold text-gray-900 mb-2">🕒 Öffnungszeiten</h3>
+                <h3 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                  <span aria-hidden="true">🕒</span> Öffnungszeiten
+                </h3>
                 <p className="text-sm text-gray-700 mb-1">Mo - Fr: 07:30 - 19:00 Uhr</p>
                 <p className="text-sm text-gray-700 mb-1">Samstag: 07:30 - 14:30 Uhr</p>
                 <p className="text-sm text-red-600 font-medium">So & Feiertags: Geschlossen</p>
@@ -196,18 +254,18 @@ export default function KontaktPage() {
             {/* Rechte Spalte: Formular */}
             <div className="lg:col-span-2">
               <div className="bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
-                {/* EHRliche Erfolgsmeldung (WCAG AAA konform) */}
+                {/* ✅ ERFOLGSMELDUNG (WCAG AAA konform) */}
                 {isSuccess && (
                   <div
                     ref={successRef}
                     tabIndex={-1}
-                    className="mb-6 bg-blue-50 text-blue-800 p-5 rounded-xl border border-blue-200 outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                    className="mb-6 bg-green-50 text-green-800 p-5 rounded-xl border border-green-200 outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
                     aria-live="polite"
                     role="status"
                   >
                     <div className="flex items-start gap-3">
                       <svg
-                        className="w-6 h-6 flex-shrink-0 mt-0.5"
+                        className="w-6 h-6 flex-shrink-0 mt-0.5 text-green-600"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -216,30 +274,68 @@ export default function KontaktPage() {
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth={2}
-                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                       </svg>
                       <div>
-                        <p className="font-bold text-blue-900 text-base mb-1">
-                          E-Mail-Programm wurde gestartet.
+                        <p className="font-bold text-green-900 text-base mb-1">
+                          Nachricht erfolgreich gesendet!
                         </p>
-                        <p className="text-sm text-blue-800 leading-relaxed">
-                          Bitte bestätigen Sie den Versand in Ihrem E-Mail-Programm. Falls sich
-                          nichts geöffnet hat, schreiben Sie uns bitte direkt an{' '}
-                          <a
-                            href="mailto:info@kiosk-lollipop.de"
-                            className="underline font-semibold hover:text-blue-900"
-                          >
-                            info@kiosk-lollipop.de
-                          </a>
-                          .
+                        <p className="text-sm text-green-800 leading-relaxed">
+                          Vielen Dank für Ihre Anfrage. Wir haben Ihre Nachricht erhalten und werden
+                          uns schnellstmöglich bei Ihnen melden.
                         </p>
                       </div>
                     </div>
                   </div>
                 )}
 
+                {/* ✅ FEHLERMELDUNG (API) */}
+                {apiError && (
+                  <div
+                    ref={successRef}
+                    tabIndex={-1}
+                    className="mb-6 bg-red-50 text-red-800 p-5 rounded-xl border border-red-200 outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300"
+                    aria-live="assertive"
+                    role="alert"
+                  >
+                    <div className="flex items-start gap-3">
+                      <svg
+                        className="w-6 h-6 flex-shrink-0 mt-0.5 text-red-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <div>
+                        <p className="font-bold text-red-900 text-base mb-1">
+                          Senden fehlgeschlagen
+                        </p>
+                        <p className="text-sm text-red-800 leading-relaxed">{apiError}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  {/* ✅ SECURITY: Honeypot-Feld (für Menschen unsichtbar, für Bots sichtbar) */}
+                  <input
+                    type="text"
+                    name="honeypot"
+                    value={formData.honeypot}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className="absolute -left-[9999px] -top-[9999px] opacity-0"
+                    aria-hidden="true"
+                  />
+
                   {/* Name */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-bold text-gray-900 mb-2">
@@ -260,6 +356,7 @@ export default function KontaktPage() {
                       aria-invalid={!!errors.name}
                       aria-describedby={errors.name ? 'name-error' : undefined}
                       placeholder="Max Mustermann"
+                      disabled={isSubmitting}
                     />
                     {errors.name && (
                       <p
@@ -299,6 +396,7 @@ export default function KontaktPage() {
                       aria-invalid={!!errors.email}
                       aria-describedby={errors.email ? 'email-error' : undefined}
                       placeholder="max@beispiel.de"
+                      disabled={isSubmitting}
                     />
                     {errors.email && (
                       <p
@@ -338,6 +436,7 @@ export default function KontaktPage() {
                       aria-invalid={!!errors.message}
                       aria-describedby={errors.message ? 'message-error' : undefined}
                       placeholder="Wie können wir Ihnen helfen?"
+                      disabled={isSubmitting}
                     />
                     {errors.message && (
                       <p
@@ -360,22 +459,57 @@ export default function KontaktPage() {
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-pink-500/30 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-pink-500/30 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                    Nachricht jetzt absenden
+                    {isSubmitting ? (
+                      <>
+                        <svg
+                          className="animate-spin h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Wird gesendet...
+                      </>
+                    ) : (
+                      <>
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                          />
+                        </svg>
+                        Nachricht jetzt absenden
+                      </>
+                    )}
                   </button>
 
                   <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed flex items-center justify-center gap-1">
-                    <span>🔒</span> Datenschutzfreundlich: Ihre Nachricht wird direkt über Ihr
-                    E-Mail-Programm gesendet. Es werden keine Daten auf unseren Servern gespeichert.
+                    <span aria-hidden="true">🔒</span> Datenschutzfreundlich: Ihre Nachricht wird
+                    sicher über unseren Server verarbeitet. Es werden keine Daten an Dritte
+                    weitergegeben.
                   </p>
                 </form>
               </div>

@@ -93,7 +93,8 @@ const schemaOrg = {
   geo: { '@type': 'GeoCoordinates', latitude: 50.806945, longitude: 6.823683 },
   telephone: '+4922359291160',
   priceRange: '€',
-  // ✅ PROAKTIVER FIX: ISO-8601 konformes Format für maximale Google-Kompatibilität
+  currenciesAccepted: 'EUR',
+  paymentAccepted: 'Cash, Credit Card, Debit Card',
   openingHours: ['Mo,Tu,We,Th,Fr 07:30-19:00', 'Sa 07:30-14:30'],
   sameAs: [KIOSK_CONFIG.facebook],
   aggregateRating: {
@@ -183,55 +184,56 @@ export default function HomePage() {
             </a>
 
             <div className="flex flex-col sm:flex-row justify-center gap-5">
+              {/* ✅ FIX: <a> statt <a><button> für 100% W3C Validität */}
               <a
                 href={KIOSK_CONFIG.mapsLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Route zum Kiosk mit Google Maps planen"
+                className="inline-flex items-center justify-center gap-3 bg-white/90 backdrop-blur-md hover:bg-white text-pink-600 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/30 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95"
               >
-                <button className="bg-white/90 backdrop-blur-md hover:bg-white text-pink-600 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/30 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95 flex items-center gap-3">
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Jetzt besuchen
-                </button>
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                Jetzt besuchen
               </a>
 
-              <Link href="/kontakt">
-                <button className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95 flex items-center gap-3">
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                  Nachricht senden
-                </button>
+              <Link
+                href="/kontakt"
+                className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+                Nachricht senden
               </Link>
             </div>
           </div>
@@ -631,7 +633,11 @@ export default function HomePage() {
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
                   <p className="text-gray-700 mb-2 leading-relaxed">{item.desc}</p>
-                  {item.warn && <p className="text-xs text-red-600 font-bold mt-3">{item.warn}</p>}
+                  {item.warn && (
+                    <p className="text-xs text-red-600 font-bold mt-3 flex items-center gap-1">
+                      {item.warn}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
@@ -670,7 +676,15 @@ export default function HomePage() {
 
         {/* CTA Section */}
         <section className="relative py-24 bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 text-white overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/images/fassade.png')] bg-cover bg-center opacity-10 mix-blend-overlay" />
+          {/* ✅ FIX: Next.js Image statt CSS Background für optimale Performance */}
+          <Image
+            src="/images/fassade.png"
+            alt="Hintergrund Kiosk Lollipop"
+            fill
+            className="object-cover opacity-10 mix-blend-overlay"
+            sizes="100vw"
+            quality={75}
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
 
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -680,40 +694,41 @@ export default function HomePage() {
             <p className="text-2xl text-pink-100 mb-4 font-light">{KIOSK_CONFIG.address}</p>
             <p className="text-lg text-gray-300 mb-10">Wir freuen uns auf Ihren Besuch!</p>
             <div className="flex flex-col sm:flex-row justify-center gap-5">
+              {/* ✅ FIX: <a> statt <a><button> für 100% W3C Validität */}
               <a
                 href={KIOSK_CONFIG.mapsLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Exakte Route mit Google Maps planen"
+                className="inline-flex items-center justify-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-white/20 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95"
               >
-                <button className="bg-white text-gray-900 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-white/20 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3">
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Exakte Route planen
-                </button>
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                Exakte Route planen
               </a>
-              <Link href="/kontakt">
-                <button className="bg-pink-600 hover:bg-pink-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/40 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95">
-                  Kontaktformular
-                </button>
+              <Link
+                href="/kontakt"
+                className="inline-flex items-center justify-center bg-pink-600 hover:bg-pink-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/40 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95"
+              >
+                Kontaktformular
               </Link>
             </div>
           </div>
@@ -740,11 +755,14 @@ export default function HomePage() {
             <div className="text-xs text-gray-600 text-center font-medium space-y-1">
               <p>Alle Preise inkl. gesetzlicher MwSt. | Irrtümer und Änderungen vorbehalten.</p>
               <p>
-                <Link href="/impressum" className="hover:text-pink-600 underline">
+                <Link href="/impressum" className="hover:text-pink-600 underline transition-colors">
                   Impressum
                 </Link>
                 {' | '}
-                <Link href="/datenschutz" className="hover:text-pink-600 underline">
+                <Link
+                  href="/datenschutz"
+                  className="hover:text-pink-600 underline transition-colors"
+                >
                   Datenschutz
                 </Link>
               </p>

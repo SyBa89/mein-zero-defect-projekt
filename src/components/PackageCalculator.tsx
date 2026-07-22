@@ -34,8 +34,8 @@ export default function PackageCalculator() {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // ✅ UX: Akzeptiert nur Zahlen und ein einziges Komma oder Punkt (max. 2 Dezimalstellen)
-  const validateInput = (value: string) => /^\d*([.,]\d{0,2})?$/.test(value);
+  // ✅ UX: Akzeptiert Zahlen, ein Komma/Punkt und toleriert führende/anhängende Leerzeichen (z.B. beim Kopieren)
+  const validateInput = (value: string) => /^\s*\d*([.,]\d{0,2})?\s*$/.test(value);
 
   const handleInputChange =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>
@@ -52,10 +52,10 @@ export default function PackageCalculator() {
     setError(null);
     setResult(null);
 
-    // ✅ BUSINESS: Ersetzt deutsches Komma durch Punkt für parseFloat
-    const l = parseFloat(length.replace(',', '.'));
-    const w = parseFloat(width.replace(',', '.'));
-    const h = parseFloat(height.replace(',', '.'));
+    // ✅ BUSINESS: Ersetzt deutsches Komma durch Punkt und entfernt Leerzeichen für parseFloat
+    const l = parseFloat(length.replace(',', '.').trim());
+    const w = parseFloat(width.replace(',', '.').trim());
+    const h = parseFloat(height.replace(',', '.').trim());
 
     if (isNaN(l) || isNaN(w) || isNaN(h) || l <= 0 || w <= 0 || h <= 0) {
       setError('Bitte geben Sie gültige Maße ein (alle Werte müssen größer als 0 sein).');
@@ -157,7 +157,21 @@ export default function PackageCalculator() {
           className="px-5 py-3.5 border-2 border-gray-200 text-gray-600 font-bold rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
           aria-label="Eingaben zurücksetzen"
         >
-          ↺
+          {/* ✅ UI: Konsistentes SVG-Icon statt Unicode-Zeichen für perfekte Skalierung */}
+          <svg
+            className="w-5 h-5 mx-auto"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
+          </svg>
         </button>
       </div>
 
@@ -169,17 +183,17 @@ export default function PackageCalculator() {
         className="min-h-[4rem] flex items-center justify-center"
       >
         {hasError && (
-          <div className="w-full bg-red-50 text-red-800 px-4 py-3 rounded-xl font-semibold text-center border border-red-200 animate-in fade-in slide-in-from-bottom-2 duration-300 flex items-center justify-center gap-2">
+          <div className="w-full bg-red-50 text-red-800 px-4 py-3 rounded-xl font-semibold text-center border border-red-200 transition-all duration-300 ease-out flex items-center justify-center gap-2">
             <span aria-hidden="true">⚠️</span> {error}
           </div>
         )}
         {result && !hasError && (
-          <div className="w-full bg-green-50 text-green-800 px-4 py-3 rounded-xl font-bold text-center border border-green-200 animate-in fade-in slide-in-from-bottom-2 duration-300 flex items-center justify-center gap-2">
+          <div className="w-full bg-green-50 text-green-800 px-4 py-3 rounded-xl font-bold text-center border border-green-200 transition-all duration-300 ease-out flex items-center justify-center gap-2">
             <span aria-hidden="true">✅</span> {result}
           </div>
         )}
         {!result && !hasError && (
-          <p className="text-sm text-gray-400 text-center font-medium">
+          <p className="text-sm text-gray-400 text-center font-medium transition-all duration-300 ease-out">
             Das Ergebnis erscheint hier nach dem Prüfen.
           </p>
         )}
