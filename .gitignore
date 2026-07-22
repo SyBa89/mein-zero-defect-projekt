@@ -9,12 +9,16 @@ build/
 .next/
 out/
 
+# TypeScript Inkremental-Cache (verhindert Build-Konflikte)
+tsconfig.tsbuildinfo
+
 # Environment Variables (GEHEIM - niemals hochladen!)
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env*.local
 
 # Logs (werden bei Bedarf neu erstellt)
 logs/
@@ -44,3 +48,7 @@ Thumbs.db
 *.tmp
 *.temp
 .cache/
+
+# Vercel (wird automatisch verwaltet, aber zur Sicherheit)
+.vercel/
+.eslintcache
