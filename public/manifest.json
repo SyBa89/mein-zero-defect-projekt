@@ -1,20 +1,37 @@
+// public/manifest.json (erweitert)
 {
   "name": "Kiosk Lollipop",
-  "short_name": "Lollipop",
-  "description": "Ihr Kiosk und Hermes Paketshop in Erftstadt-Liblar",
-  "start_url": "/?utm_source=homescreen",
+  "short_name": "Kiosk Lollipop",
+  "description": "Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#f9fafb",
   "theme_color": "#db2777",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "/images/icon.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "/images/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/images/icon.png",
+      "src": "/images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-512x512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-1.png",
+      "sizes": "1080x1920",
       "type": "image/png"
     }
   ]
