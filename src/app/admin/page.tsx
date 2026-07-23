@@ -1,11 +1,13 @@
 'use client';
 import { useState } from 'react';
+
 interface SiteConfig {
   isClosed: boolean;
   bannerText: string;
   emergencyMessage: string;
   updatedAt: string;
 }
+
 export default function AdminPanel() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
