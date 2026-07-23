@@ -1,4 +1,4 @@
-﻿import { KIOSK_CONFIG } from '@/lib/config';
+import { KIOSK_CONFIG } from '@/lib/config';
 
 export default function AboutSection() {
   return (

@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 
 interface SiteConfig {
@@ -35,17 +34,12 @@ export default function AdminPanel() {
     e.preventDefault();
     setIsLoading(true);
     setMessage(null);
-
     try {
       const res = await fetch('/api/admin/config', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-password': password,
-        },
-        body: JSON.stringify({ isClosed: false, bannerText: '', emergencyMessage: '' }),
+        headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
+        body: JSON.stringify({}), // Leerer Body, Auth erfolgt rein über den Header
       });
-
       if (res.ok) {
         setIsAuthenticated(true);
         await loadConfig();
@@ -66,10 +60,7 @@ export default function AdminPanel() {
     try {
       const res = await fetch('/api/admin/config', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-password': password,
-        },
+        headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
         body: JSON.stringify(config),
       });
       const data = await res.json();
@@ -137,7 +128,6 @@ export default function AdminPanel() {
             Abmelden
           </button>
         </div>
-
         <div className="grid grid-cols-1 gap-6 mb-8">
           <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl p-6 text-white">
             <h2 className="text-xl font-bold mb-4">🚨 Notfall-Modus</h2>
@@ -169,7 +159,6 @@ export default function AdminPanel() {
               </div>
             )}
           </div>
-
           <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
             <h2 className="text-xl font-bold mb-4 text-gray-900">📢 Aktions-Banner</h2>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -185,7 +174,6 @@ export default function AdminPanel() {
             <p className="text-sm text-gray-500 mt-2">Leer lassen, um kein Banner anzuzeigen</p>
           </div>
         </div>
-
         <button
           onClick={saveConfig}
           disabled={isLoading}
@@ -193,7 +181,6 @@ export default function AdminPanel() {
         >
           {isLoading ? '💾 Speichere...' : '💾 Alle Änderungen speichern'}
         </button>
-
         {message && (
           <div
             className={`mt-4 p-4 rounded-xl text-center font-medium ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}
@@ -201,7 +188,6 @@ export default function AdminPanel() {
             {message.text}
           </div>
         )}
-
         {config.updatedAt && (
           <p className="text-xs text-gray-500 text-center mt-4">
             Zuletzt aktualisiert: {new Date(config.updatedAt).toLocaleString('de-DE')}
