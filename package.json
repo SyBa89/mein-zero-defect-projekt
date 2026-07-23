@@ -1,12 +1,12 @@
 {
   "name": "mein-zero-defect-projekt",
   "version": "1.0.0",
-  "description": "Zero-Defect Web OS v2.0 | Kiosk Lollipop - Die perfekte Webseite fÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼r Ihren Kiosk und Hermes Paketshop in Erftstadt-Liblar",
+  "description": "Zero-Defect Web OS v2.0 | Kiosk Lollipop - Die perfekte Webseite fÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼r Ihren Kiosk und Hermes Paketshop in Erftstadt-Liblar",
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=20.0.0",
-    "npm": ">=10.0.0"
+    "node": "\u003e=20.0.0",
+    "npm": "\u003e=10.0.0"
   },
   "packageManager": "npm@10.9.0",
   "scripts": {
@@ -24,10 +24,10 @@
   "dependencies": {
     "@upstash/redis": "^1.38.0",
     "critters": "^0.0.23",
-    "next": "16.2.11",
+    "next": "15.5.7",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "resend": "^6.18.0"
+    "resend": "4.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",
