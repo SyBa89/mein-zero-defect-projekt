@@ -1,6 +1,6 @@
 ﻿import Image from 'next/image';
 import Link from 'next/link';
-import { KIOSK_CONFIG } from '@/app/(home)/page';
+import { KIOSK_CONFIG } from '@/lib/config';
 
 export default function CTASection() {
   return (
