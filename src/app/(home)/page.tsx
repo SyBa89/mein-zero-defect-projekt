@@ -1,4 +1,4 @@
-﻿import Header from '@/components/Header';
+import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileActionBar from '@/components/MobileActionBar';
 import FAQ from '@/components/FAQ';
@@ -16,8 +16,9 @@ import CTASection from '@/components/CTASection';
 import AboutSection from '@/components/AboutSection';
 import LegalNotice from '@/components/LegalNotice';
 import { KIOSK_CONFIG } from '@/lib/config';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: `${KIOSK_CONFIG.name} | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar`,
   description: `${KIOSK_CONFIG.name} in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. ★★★★★ 5,0 Sterne bei Google.`,
   keywords: [

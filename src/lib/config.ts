@@ -1,4 +1,4 @@
-﻿export const KIOSK_CONFIG = {
+export const KIOSK_CONFIG = {
   name: 'Kiosk Lollipop',
   phoneDisplay: '02235 9291160',
   phoneHref: 'tel:+4922359291160',

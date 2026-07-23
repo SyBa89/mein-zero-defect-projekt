@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 
@@ -21,7 +21,6 @@ export default function AdminPanel() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  // ✅ FIX 1: loadConfig MUSS vor handleLogin definiert sein (vermeidet no-use-before-define)
   const loadConfig = async () => {
     try {
       const res = await fetch('/api/admin/config');
@@ -32,7 +31,6 @@ export default function AdminPanel() {
     }
   };
 
-  // ✅ FIX 2: Sichere API-Authentifizierung statt lokaler Hardcode-Prüfung
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -45,7 +43,7 @@ export default function AdminPanel() {
           'Content-Type': 'application/json',
           'x-admin-password': password,
         },
-        body: JSON.stringify({ isClosed: false, bannerText: '', emergencyMessage: '' }), // Dummy-Payload für den Check
+        body: JSON.stringify({ isClosed: false, bannerText: '', emergencyMessage: '' }),
       });
 
       if (res.ok) {

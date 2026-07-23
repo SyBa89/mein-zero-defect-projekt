@@ -1,7 +1,7 @@
 {
   "name": "mein-zero-defect-projekt",
   "version": "1.0.0",
-  "description": "Zero-Defect Web OS v2.0 | Kiosk Lollipop - Die perfekte Webseite fÃƒÂ¼r Ihren Kiosk.",
+  "description": "Zero-Defect Web OS v2.0 | Kiosk Lollipop - Die perfekte Webseite fÃƒÆ’Ã‚Â¼r Ihren Kiosk.",
   "private": true,
   "type": "module",
   "engines": {
@@ -20,9 +20,9 @@
   "dependencies": {
     "@upstash/redis": "^1.38.0",
     "critters": "^0.0.23",
-    "next": "^15.1.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "next": "15.1.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@types/node": "22.13.5",
