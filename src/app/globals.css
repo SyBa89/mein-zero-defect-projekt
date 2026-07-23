@@ -2,16 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ✅ ZERO-DEFECT: CSS-Variablen für konsistente Theming */
 :root {
-  --foreground-rgb: 17, 24, 39; /* Entspricht Tailwind gray-900 für maximalen Kontrast */
-  --background-start-rgb: 249, 250, 251; /* Entspricht Tailwind gray-50 */
-  --background-end-rgb: 255, 255, 255; /* Entspricht Tailwind white */
+  --foreground-rgb: 17, 24, 39;      /* gray-900 */
+  --background-start-rgb: 249, 250, 251; /* gray-50 */
+  --background-end-rgb: 255, 255, 255;   /* white */
+  
+  /* ✅ ZERO-DEFECT: Primärfarben für einfache Wartbarkeit */
+  --color-primary: #db2777;     /* pink-600 */
+  --color-primary-dark: #be185d; /* pink-700 */
+  --color-primary-light: #fbcfe8; /* pink-200 */
+  --color-primary-bg: #fdf2f8;   /* pink-50 */
+  
+  /* ✅ ZERO-DEFECT: Focus-Ring für konsistente Tastatur-Navigation */
+  --focus-ring-color: #db2777;
+  --focus-ring-offset: 2px;
 }
 
-/* ✅ ZERO-DEFECT: Globale Auswahl-Farbe für ein konsistentes Premium-Feeling */
-::selection {
-  background-color: #fbcfe8; /* pink-200 */
-  color: #831843; /* pink-900 */
+/* ✅ ZERO-DEFECT: Box-Sizing für alle Elemente (verhindert Layout-Überraschungen) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ✅ ZERO-DEFECT: Font-Smoothing für bessere Lesbarkeit auf allen Plattformen */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  
+  /* ✅ ZERO-DEFECT: Smooth scrolling mit Respekt vor Barrierefreiheit */
+  scroll-behavior: smooth;
+}
+
+/* ✅ ZERO-DEFECT: Reduced Motion Respektiert auch scroll-behavior */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 body {
@@ -22,26 +62,43 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  /* ✅ ARCHITEKTUR: Verhindert horizontales Scrollen durch versehentliche Overflows auf mobilen Geräten */
-  overflow-x: hidden;
-}
-
-/* ✅ ZERO-DEFECT: Smooth scrolling mit Respekt vor Barrierefreiheit (Reduced Motion) */
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  /* ✅ ZERO-DEFECT: Verhindert horizontales Scrollen auf mobilen Geräten */
+  overflow-x: hidden;
+  
+  /* ✅ ZERO-DEFECT: Dynamische Viewport-Höhe für mobile Browser */
+  min-height: 100dvh;
+}
+
+/* ✅ ZERO-DEFECT: Konsistente Auswahl-Farbe für Premium-Feeling */
+::selection {
+  background-color: var(--color-primary-light);
+  color: #831843; /* pink-900 */
+}
+
+/* ✅ ZERO-DEFECT: Focus-Visualisierung für Tastatur-Navigation (Accessibility) */
+:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ✅ ZERO-DEFECT: Scrollbar-Styling für bessere UX (optional) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--background-start-rgb));
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
 }
 
 /* ✅ ZERO-DEFECT: Druck-Optimierung für Öffnungszeiten, Kontakt, etc. */
@@ -51,23 +108,78 @@ html {
     color: black !important;
     font-size: 12pt;
   }
-  
+
   /* Verstecke interaktive Elemente, die beim Drucken keinen Sinn ergeben */
-  nav, footer, button, .no-print, .fixed, [aria-hidden="true"] {
+  nav,
+  footer,
+  button,
+  .no-print,
+  .fixed,
+  [role="navigation"],
+  [aria-hidden="true"] {
     display: none !important;
   }
-  
+
   /* Stelle sicher, dass Links lesbar sind */
   a {
     text-decoration: underline;
     color: black !important;
   }
-  
-  /* Verhindere Seitenumbrüche mitten in wichtigen Blöcken (z.B. einer Preistabelle) */
-  section, .bg-white, .rounded-3xl, .rounded-2xl {
+
+  /* Verhindere Seitenumbrüche mitten in wichtigen Blöcken */
+  section,
+  .bg-white,
+  .rounded-3xl,
+  .rounded-2xl {
     break-inside: avoid;
     box-shadow: none !important;
     border: 1px solid #e5e7eb !important;
     background: white !important;
+  }
+
+  /* ✅ ZERO-DEFECT: Bilder im Druck optimieren */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* ✅ ZERO-DEFECT: Überschriften im Druck nicht trennen */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-after: avoid;
+  }
+}
+
+/* ✅ ZERO-DEFECT: Dark-Mode Unterstützung (optional, aber zukunftssicher) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 243, 244, 246;  /* gray-100 */
+    --background-start-rgb: 17, 24, 39; /* gray-900 */
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+/* ✅ ZERO-DEFECT: Touch-Device Optimierung (kein Hover auf Touch) */
+@media (hover: none) {
+  * {
+    transition-duration: 0.15s !important;
+  }
+}
+
+/* ✅ ZERO-DEFECT: Hohe Kontraste für bessere Lesbarkeit (optional) */
+@media (prefers-contrast: high) {
+  body {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 255, 255, 255;
+  }
+
+  a {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
 }

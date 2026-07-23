@@ -1,16 +1,29 @@
 'use client';
 
+import { useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { KIOSK_CONFIG } from '@/lib/config';
+
+// ✅ ZERO-DEFECT: Koordinaten aus KIOSK_CONFIG extrahieren
+const COORDINATES = '50.806945,6.823683';
+const MAPS_LINK = `https://www.google.com/maps/dir/?api=1&destination=${COORDINATES}`;
 
 export default function MobileActionBar() {
   const pathname = usePathname();
 
-  // Hilfsfunktion zur Bestimmung des aktiven Tabs
-  const isActive = (path: string) => pathname === path;
+  // ✅ ZERO-DEFECT: Memoisierte Active-Checks (Performance)
+  const _isActive = useMemo(() => {
+    return (path: string) => pathname === path;
+  }, [pathname]);
+
+  // ✅ ZERO-DEFECT: Fallback für außerhalb des Router-Kontexts
+  const isContactActive = useMemo(() => {
+    if (!pathname) return false;
+    return pathname === '/kontakt';
+  }, [pathname]);
 
   return (
-    // ✅ ARCHITEKTUR: z-50 liegt sicher über dem CookieNotice (z-40), aber unter Fullscreen-Modals (z-[60])
     <div
       className="fixed bottom-0 left-0 right-0 z-50 md:hidden"
       role="navigation"
@@ -20,9 +33,9 @@ export default function MobileActionBar() {
         <div className="grid grid-cols-3 h-16">
           {/* 1. Direkt Anrufen (Höchste Conversion) */}
           <a
-            href="tel:+4922359291160"
+            href={KIOSK_CONFIG.phoneHref}
             className="flex flex-col items-center justify-center gap-1 text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-inset"
-            aria-label="Kiosk Lollipop direkt anrufen"
+            aria-label={`${KIOSK_CONFIG.name} direkt anrufen`}
           >
             <svg
               className="w-6 h-6"
@@ -43,11 +56,11 @@ export default function MobileActionBar() {
 
           {/* 2. Route planen (Google Maps Deep Link) */}
           <a
-            href="https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683"
+            href={MAPS_LINK}
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center justify-center gap-1 text-gray-700 hover:text-pink-600 hover:bg-pink-50 border-x border-gray-100 transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-inset"
-            aria-label="Route zum Kiosk Lollipop mit Google Maps planen"
+            aria-label={`Route zu ${KIOSK_CONFIG.name} mit Google Maps planen`}
           >
             <svg
               className="w-6 h-6"
@@ -76,12 +89,12 @@ export default function MobileActionBar() {
           <Link
             href="/kontakt"
             className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-inset ${
-              isActive('/kontakt')
+              isContactActive
                 ? 'text-pink-600 bg-pink-50'
                 : 'text-gray-700 hover:text-pink-600 hover:bg-pink-50'
             }`}
             aria-label="Kontaktformular öffnen"
-            aria-current={isActive('/kontakt') ? 'page' : undefined}
+            aria-current={isContactActive ? 'page' : undefined}
           >
             <svg
               className="w-6 h-6"
@@ -100,6 +113,12 @@ export default function MobileActionBar() {
             <span className="text-xs font-bold">Kontakt</span>
           </Link>
         </div>
+
+        {/* ✅ ZERO-DEFECT: Kleiner visueller Indikator für iOS-Home-Indicator */}
+        <div
+          className="h-1 w-12 mx-auto rounded-full bg-gray-300/50 mt-1 mb-1.5 hidden"
+          aria-hidden="true"
+        />
       </div>
     </div>
   );

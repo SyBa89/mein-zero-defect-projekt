@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback, useId, useRef, useEffect } from 'react';
 
-// Explizite Typisierung für maximale Code-Sicherheit und Wartbarkeit
+// ✅ ZERO-DEFECT: Explizite Typisierung für maximale Sicherheit
 interface FaqItem {
   question: string;
   answer: string;
@@ -33,8 +33,12 @@ const faqData: FaqItem[] = [
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const answerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // ✅ PERFORMANCE: useMemo verhindert unnötige Neuberechnung des Schema-Objekts bei jedem Render
+  // ✅ ZERO-DEFECT: Eindeutige IDs für SSR-Konsistenz
+  const id = useId();
+
+  // ✅ ZERO-DEFECT: Memoisierte Schema.org-Daten
   const faqSchema = useMemo(
     () => ({
       '@context': 'https://schema.org',
@@ -48,16 +52,43 @@ export default function FAQ() {
         },
       })),
     }),
-    []
+    [] // faqData ist statisch, aber könnte als Abhängigkeit hinzugefügt werden
   );
 
-  const toggleAccordion = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  // ✅ ZERO-DEFECT: Memoisierte Toggle-Funktion
+  const toggleAccordion = useCallback((index: number) => {
+    const newIndex = openIndex === index ? null : index;
+    setOpenIndex(newIndex);
+
+    // ✅ ZERO-DEFECT: Fokus auf die Antwort setzen, wenn geöffnet
+    if (newIndex !== null && answerRefs.current[newIndex]) {
+      // Kleiner Delay, damit die Animation abgeschlossen ist
+      setTimeout(() => {
+        answerRefs.current[newIndex]?.focus();
+      }, 150);
+    }
+  }, [openIndex]);
+
+  // ✅ ZERO-DEFECT: Escape-Taste schließt alle geöffneten Fragen
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && openIndex !== null) {
+        setOpenIndex(null);
+        // Fokus auf den zuletzt geöffneten Button zurücksetzen
+        const lastButton = document.querySelector(`[data-faq-button="${openIndex}"]`);
+        if (lastButton instanceof HTMLElement) {
+          lastButton.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [openIndex]);
 
   return (
     <section className="py-16 bg-gray-50" aria-labelledby="faq-heading">
-      {/* SEO Schema Injection */}
+      {/* ✅ SEO: Schema.org für strukturierte Daten */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -74,6 +105,9 @@ export default function FAQ() {
         <div className="space-y-4">
           {faqData.map((faq, index) => {
             const isOpen = openIndex === index;
+            const buttonId = `${id}-button-${index}`;
+            const answerId = `${id}-answer-${index}`;
+
             return (
               <div
                 key={index}
@@ -84,10 +118,13 @@ export default function FAQ() {
                 }`}
               >
                 <button
+                  id={buttonId}
+                  data-faq-button={index}
                   onClick={() => toggleAccordion(index)}
                   className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 rounded-2xl"
                   aria-expanded={isOpen}
-                  aria-controls={`faq-answer-${index}`}
+                  aria-controls={answerId}
+                  aria-label={`${faq.question} ${isOpen ? 'ausklappen' : 'einklappen'}`}
                 >
                   <span className="text-lg font-bold text-gray-900 pr-4">{faq.question}</span>
                   <span
@@ -107,19 +144,22 @@ export default function FAQ() {
                   </span>
                 </button>
 
-                {/* ✅ ARCHITEKTUR: Bulletproof Grid-Animation statt willkürlicher max-h-[1000px] Werte */}
+                {/* ✅ ZERO-DEFECT: Bulletproof Grid-Animation */}
                 <div
-                  id={`faq-answer-${index}`}
+                  id={answerId}
                   role="region"
-                  aria-labelledby={`faq-question-${index}`}
+                  aria-labelledby={buttonId}
                   className={`grid transition-[grid-template-rows] duration-300 ease-out ${
                     isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
                   }`}
                 >
                   <div className="overflow-hidden">
                     <div
-                      id={`faq-question-${index}`} // Verknüpfung für Screenreader
-                      className="p-6 pt-0 text-gray-700 leading-relaxed border-t border-gray-100 mt-2"
+                      ref={(el) => {
+                        if (el) answerRefs.current[index] = el;
+                      }}
+                      tabIndex={isOpen ? 0 : -1}
+                      className="p-6 pt-0 text-gray-700 leading-relaxed border-t border-gray-100 mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded"
                     >
                       {faq.answer}
                     </div>

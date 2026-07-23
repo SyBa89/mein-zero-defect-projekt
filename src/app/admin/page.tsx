@@ -41,6 +41,8 @@ export default function AdminPanel() {
         body: JSON.stringify({ isClosed: false, bannerText: '', emergencyMessage: '' }),
       });
       if (res.ok) {
+        // ✅ ZERO-DEFECT: Session-Cookie für Middleware setzen
+        document.cookie = 'admin-session=authenticated; path=/; max-age=3600; SameSite=Lax; Secure';
         setIsAuthenticated(true);
         await loadConfig();
       } else {
@@ -65,6 +67,8 @@ export default function AdminPanel() {
       });
       const data = await res.json();
       if (res.ok) {
+        // ✅ ZERO-DEFECT: Session-Cookie für Middleware setzen
+        document.cookie = 'admin-session=authenticated; path=/; max-age=3600; SameSite=Lax; Secure';
         setMessage({ type: 'success', text: '✅ Änderungen erfolgreich gespeichert!' });
       } else {
         setMessage({ type: 'error', text: data.error || 'Fehler beim Speichern' });
@@ -74,6 +78,9 @@ export default function AdminPanel() {
     } finally {
       setIsLoading(false);
     }
+  };  const handleLogout = () => {
+    document.cookie = 'admin-session=; path=/; max-age=0';
+    window.location.href = '/';
   };
 
   if (!isAuthenticated) {
@@ -126,6 +133,12 @@ export default function AdminPanel() {
             className="text-sm text-gray-600 hover:text-gray-900"
           >
             Abmelden
+          </button>
+          <button
+            onClick={handleLogout}
+            className="text-sm text-red-600 hover:text-red-800 ml-4"
+          >
+            Logout (Cookie löschen)
           </button>
         </div>
         <div className="grid grid-cols-1 gap-6 mb-8">

@@ -1,26 +1,57 @@
-# Dependencies (werden bei Bedarf neu installiert)
+# ==============================================================================
+# DEPENDENCIES (werden bei Bedarf neu installiert)
+# ==============================================================================
 node_modules/
-.pnp
+.pnp/
 .pnp.js
+.pnp.*
+.yarn/
+.pnpm-store/
+.pnpm/
 
-# Build-Output (wird automatisch generiert)
+# ==============================================================================
+# BUILD-OUTPUT (wird automatisch generiert)
+# ==============================================================================
 dist/
 build/
 .next/
 out/
+.nuxt/
+.vuepress/
+.nuxt-dist/
+.swc/
 
-# TypeScript Inkremental-Cache (verhindert Build-Konflikte)
+# ==============================================================================
+# NEXT.JS SPEZIFISCH
+# ==============================================================================
+.next/
+out/
+.vercel_build_cache/
+.turbo/                         # ✅ Turbopack-Cache
+next-telemetry.json             # ✅ Next.js Telemetrie
+.eslintcache                    # ✅ ESLint-Cache
+.prettiercache                  # ✅ Prettier-Cache
+
+# ==============================================================================
+# TYPESCRIPT (verhindert Build-Konflikte)
+# ==============================================================================
 tsconfig.tsbuildinfo
+*.tsbuildinfo
 
-# Environment Variables (GEHEIM - niemals hochladen!)
+# ==============================================================================
+# ENVIRONMENT VARIABLES (GEHEIM - niemals hochladen!)
+# ==============================================================================
 .env
+.env.*
+.env.*.local
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-.env*.local
 
-# Logs (werden bei Bedarf neu erstellt)
+# ==============================================================================
+# LOGS (werden bei Bedarf neu erstellt)
+# ==============================================================================
 logs/
 *.log
 npm-debug.log*
@@ -29,26 +60,116 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Testing
+# ==============================================================================
+# TESTING
+# ==============================================================================
 coverage/
 .nyc_output/
+test-results/
+*.test.html
 
-# IDE & Editor
+# ==============================================================================
+# BUNDLE-ANALYZER (wird lokal generiert)
+# ==============================================================================
+*.html
+*.report.html
+bundle-analyzer-report.html
+*.webpack-bundle-analyzer.html
+
+# ==============================================================================
+# IDE & EDITOR
+# ==============================================================================
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 .DS_Store
+.vscode/settings.json
+.vscode/launch.json
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/dataSources.local.xml
 
+# ==============================================================================
 # OS
+# ==============================================================================
 Thumbs.db
+Desktop.ini
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
 
-# Temporary files
+# ==============================================================================
+# TEMPORARY FILES
+# ==============================================================================
 *.tmp
 *.temp
 .cache/
+*.bak
+*.swp
+*.swo
 
-# Vercel (wird automatisch verwaltet, aber zur Sicherheit)
+# ==============================================================================
+# VERCEL (wird automatisch verwaltet)
+# ==============================================================================
 .vercel/
-.eslintcache
+*.vercel
+.vercel_build_cache/
+
+# ==============================================================================
+# EXTERNAL SERVICES & TOOLS
+# ==============================================================================
+# Sentry
+.sentry/
+sentry.properties
+
+# VSCode debugging
+.vscode-test/
+
+# Debug
+*.log
+
+# ==============================================================================
+# MISC
+# ==============================================================================
+# PNPM
+pnpm-lock.yaml
+pnpm-lock.yaml.cache
+
+# Yarn
+yarn.lock
+yarn-error.log
+
+# NPM
+package-lock.json
+
+# ==============================================================================
+# SICHERHEIT: Secrets (zusätzliche Absicherung)
+# ==============================================================================
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+*.secret
+*.secrets
+*.token
+*.jwt
+*.pem
+
+# ==============================================================================
+# UPSTASH / DATENBANK (lokale Konfiguration)
+# ==============================================================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ==============================================================================
+# DO NOT IGNORE (wichtig für Vercel/Next.js)
+# ==============================================================================
+# !.env.example   # Optional: Beispiel für benötigte Env-Variablen

@@ -1,35 +1,72 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
-export default function CookieNotice() {
+// ✅ ZERO-DEFECT: Custom Hook für Cookie-Consent (wiederverwendbar & testbar)
+function useCookieConsent() {
+  const [consent, setConsent] = useState<boolean | null>(null);
   const [isMounted, setIsMounted] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [show, setShow] = useState(false); // Für sanfte Entrance-Animation
 
-  // Hydration-Schutz: localStorage darf erst gelesen werden, wenn der Client bereit ist
   useEffect(() => {
     setIsMounted(true);
-    const hasConsented = localStorage.getItem('cookie-consent');
-    if (!hasConsented) {
-      setIsVisible(true);
-      // Kurze Verzögerung, damit die CSS-Transition greifen kann
-      requestAnimationFrame(() => {
-        setShow(true);
-      });
-    }
+    const stored = localStorage.getItem('cookie-consent');
+    setConsent(stored === 'true');
   }, []);
 
-  const handleAccept = () => {
+  const accept = useCallback(() => {
     localStorage.setItem('cookie-consent', 'true');
-    setShow(false); // Animation zum Ausblenden
+    setConsent(true);
+  }, []);
+
+  return { consent, isMounted, accept };
+}
+
+export default function CookieNotice() {
+  const { consent, isMounted, accept } = useCookieConsent();
+  const [isVisible, setIsVisible] = useState(false);
+  const [show, setShow] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // ✅ ZERO-DEFECT: Banner einblenden, wenn noch kein Consent vorhanden ist
+  useEffect(() => {
+    if (!isMounted) return;
+    if (consent === false) {
+      setIsVisible(true);
+      // Kurze Verzögerung für die CSS-Transition
+      requestAnimationFrame(() => setShow(true));
+    }
+  }, [isMounted, consent]);
+
+  // ✅ ZERO-DEFECT: Fokus-Management für Screenreader
+  useEffect(() => {
+    if (isVisible && show && buttonRef.current) {
+      // Kleine Verzögerung für die Animation
+      setTimeout(() => buttonRef.current?.focus(), 150);
+    }
+  }, [isVisible, show]);
+
+  const handleAccept = () => {
+    setShow(false);
     setTimeout(() => {
+      accept();
       setIsVisible(false);
-    }, 300); // Warte auf das Ende der Transition (duration-300)
+    }, 300); // Warte auf die Transition (duration-300)
   };
 
-  // Verhindert Hydration-Mismatch und rendert nichts, wenn nicht sichtbar
-  if (!isMounted || !isVisible) return null;
+  // ✅ ZERO-DEFECT: Escape-Taste schließt das Banner
+  useEffect(() => {
+    if (!isVisible || !show) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleAccept();
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isVisible, show]);
+
+  // Nichts rendern, wenn noch nicht gemountet, Consent bereits gegeben oder ausgeblendet
+  if (!isMounted || consent === true || !isVisible) return null;
 
   return (
     <div
@@ -39,6 +76,7 @@ export default function CookieNotice() {
       role="dialog"
       aria-labelledby="cookie-notice-title"
       aria-describedby="cookie-notice-desc"
+      aria-modal="true"
     >
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <p id="cookie-notice-desc" className="text-center sm:text-left leading-relaxed">
@@ -51,15 +89,17 @@ export default function CookieNotice() {
           Daten an Dritte statt.
           <a
             href="/datenschutz"
-            className="underline hover:text-pink-400 ml-1 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 rounded"
+            className="underline hover:text-pink-400 ml-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded"
+            aria-label="Weitere Informationen zum Datenschutz"
           >
             Mehr erfahren
           </a>
           .
         </p>
         <button
+          ref={buttonRef}
           onClick={handleAccept}
-          className="bg-pink-600 hover:bg-pink-500 text-white px-6 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-all shadow-lg hover:shadow-pink-500/30 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-gray-900 active:scale-95"
+          className="bg-pink-600 hover:bg-pink-500 text-white px-6 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-all shadow-lg hover:shadow-pink-500/30 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 active:scale-95"
           aria-label="Cookie-Hinweis schließen und Zustimmung erteilen"
         >
           Verstanden
