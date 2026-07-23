@@ -9,8 +9,6 @@ interface SiteConfig {
   updatedAt: string;
 }
 
-const ADMIN_PASSWORD = 'lollipop2024';
-
 export default function AdminPanel() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
@@ -23,13 +21,31 @@ export default function AdminPanel() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
-      loadConfig();
-    } else {
-      setMessage({ type: 'error', text: 'Falsches Passwort!' });
+    setIsLoading(true);
+    setMessage(null);
+    try {
+      const res = await fetch('/api/admin/config', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': password,
+        },
+        body: JSON.stringify({ isClosed: false, bannerText: '', emergencyMessage: '' }), // Dummy-Payload zum Testen des Passworts
+      });
+
+      if (res.ok) {
+        setIsAuthenticated(true);
+        loadConfig();
+      } else {
+        setMessage({ type: 'error', text: 'Falsches Passwort!' });
+        setPassword('');
+      }
+    } catch {
+      setMessage({ type: 'error', text: 'Verbindungsfehler zur API.' });
+    } finally {
+      setIsLoading(false);
     }
   };
 
