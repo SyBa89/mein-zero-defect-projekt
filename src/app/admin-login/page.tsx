@@ -1,14 +1,15 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function AdminLoginPage() {
+function AdminLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect') || '/admin';
-  
+
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +27,6 @@ export default function AdminLoginPage() {
       });
 
       if (res.ok) {
-        // ✅ Session-Cookie setzen (für Middleware)
         document.cookie = 'admin-session=authenticated; path=/; max-age=3600; SameSite=Lax; Secure';
         router.push(redirect);
       } else {
@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
           <h1 className="text-2xl font-black text-gray-900">Admin-Login</h1>
           <p className="text-sm text-gray-500 mt-1">Geben Sie Ihr Passwort ein, um fortzufahren.</p>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
@@ -66,13 +66,13 @@ export default function AdminLoginPage() {
               autoFocus
             />
           </div>
-          
+
           {error && (
             <div className="bg-red-50 text-red-700 p-3 rounded-lg text-sm flex items-center gap-2">
               <span aria-hidden="true">⚠️</span> {error}
             </div>
           )}
-          
+
           <button
             type="submit"
             disabled={isLoading}
@@ -81,16 +81,23 @@ export default function AdminLoginPage() {
             {isLoading ? 'Prüfe...' : 'Anmelden'}
           </button>
         </form>
-        
+
         <div className="mt-4 text-center">
-          <Link
-            href="/"
-            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-          >
+          <Link href="/" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
             ← Zurück zur Startseite
           </Link>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense
+      fallback={<div className="min-h-screen flex items-center justify-center">Lade Login...</div>}
+    >
+      <AdminLoginForm />
+    </Suspense>
   );
 }

@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { KIOSK_CONFIG } from '@/lib/config';
 
@@ -17,7 +18,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* 1. Brand Section */}
           <div>
-            <h3 id="footer-brand" className="text-white text-lg font-semibold mb-4 flex items-center gap-2">
+            <h3
+              id="footer-brand"
+              className="text-white text-lg font-semibold mb-4 flex items-center gap-2"
+            >
               <span aria-hidden="true">🍭</span> {KIOSK_CONFIG.name}
             </h3>
             <p className="text-sm text-gray-400 mb-2">
@@ -28,7 +32,9 @@ export default function Footer() {
 
           {/* 2. Links Section (Rechtliches + Intern) */}
           <div aria-labelledby="footer-legal">
-            <h3 id="footer-legal" className="text-white text-lg font-semibold mb-4">Rechtliches</h3>
+            <h3 id="footer-legal" className="text-white text-lg font-semibold mb-4">
+              Rechtliches
+            </h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
@@ -88,7 +94,9 @@ export default function Footer() {
 
           {/* 3. Services Section */}
           <div aria-labelledby="footer-services">
-            <h3 id="footer-services" className="text-white text-lg font-semibold mb-4">Services</h3>
+            <h3 id="footer-services" className="text-white text-lg font-semibold mb-4">
+              Services
+            </h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li className="flex items-center gap-2">
                 <span aria-hidden="true">📦</span> Hermes Paketshop
@@ -107,14 +115,14 @@ export default function Footer() {
 
           {/* 4. Contact Section */}
           <div aria-labelledby="footer-contact">
-            <h3 id="footer-contact" className="text-white text-lg font-semibold mb-4">Kontakt</h3>
+            <h3 id="footer-contact" className="text-white text-lg font-semibold mb-4">
+              Kontakt
+            </h3>
             <address className="not-italic text-sm text-gray-400 mb-4">
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span aria-hidden="true">📍</span>
-                  <span>
-                    {KIOSK_CONFIG.address}
-                  </span>
+                  <span>{KIOSK_CONFIG.address}</span>
                 </li>
                 <li>
                   <a
@@ -152,8 +160,19 @@ export default function Footer() {
                 className="text-xs text-gray-500 hover:text-gray-300 transition-colors flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded px-1"
                 aria-label="Zum Seitenanfang scrollen"
               >
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                <svg
+                  className="w-3.5 h-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 10l7-7m0 0l7 7m-7-7v18"
+                  />
                 </svg>
                 Nach oben
               </a>
@@ -163,7 +182,9 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
-          <p>&copy; {currentYear} {KIOSK_CONFIG.name}. Alle Rechte vorbehalten.</p>
+          <p>
+            &copy; {currentYear} {KIOSK_CONFIG.name}. Alle Rechte vorbehalten.
+          </p>
         </div>
       </div>
     </footer>
