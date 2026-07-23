@@ -11,12 +11,12 @@ function useCookieConsent() {
     setIsMounted(true);
     const stored = localStorage.getItem('cookie-consent');
     setConsent(stored === 'true');
-  }, [handleAccept]);
+  }, []); // ✅ FIX: Keine Dependencies nötig
 
   const accept = useCallback(() => {
     localStorage.setItem('cookie-consent', 'true');
     setConsent(true);
-  }, [handleAccept]);
+  }, []); // ✅ FIX: Keine Dependencies nötig
 
   return { consent, isMounted, accept };
 }
@@ -32,7 +32,6 @@ export default function CookieNotice() {
     if (!isMounted) return;
     if (consent === false) {
       setIsVisible(true);
-      // Kurze Verzögerung für die CSS-Transition
       requestAnimationFrame(() => setShow(true));
     }
   }, [isMounted, consent]);
@@ -40,7 +39,6 @@ export default function CookieNotice() {
   // ✅ ZERO-DEFECT: Fokus-Management für Screenreader
   useEffect(() => {
     if (isVisible && show && buttonRef.current) {
-      // Kleine Verzögerung für die Animation
       setTimeout(() => buttonRef.current?.focus(), 150);
     }
   }, [isVisible, show]);
@@ -50,7 +48,7 @@ export default function CookieNotice() {
     setTimeout(() => {
       accept();
       setIsVisible(false);
-    }, 300); // Warte auf die Transition (duration-300)
+    }, 300);
   };
 
   // ✅ ZERO-DEFECT: Escape-Taste schließt das Banner
@@ -63,9 +61,8 @@ export default function CookieNotice() {
     };
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [isVisible, show]);
+  }, [isVisible, show, handleAccept]); // ✅ FIX: handleAccept als Dependency hinzugefügt
 
-  // Nichts rendern, wenn noch nicht gemountet, Consent bereits gegeben oder ausgeblendet
   if (!isMounted || consent === true || !isVisible) return null;
 
   return (

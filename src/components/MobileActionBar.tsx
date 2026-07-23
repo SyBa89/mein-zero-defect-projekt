@@ -12,11 +12,6 @@ const MAPS_LINK = `https://www.google.com/maps/dir/?api=1&destination=${COORDINA
 export default function MobileActionBar() {
   const pathname = usePathname();
 
-  // ✅ ZERO-DEFECT: Memoisierte Active-Checks (Performance)
-  const _isActive = useMemo(() => {
-    return (path: string) => pathname === path;
-  }, [pathname]);
-
   // ✅ ZERO-DEFECT: Fallback für außerhalb des Router-Kontexts
   const isContactActive = useMemo(() => {
     if (!pathname) return false;
