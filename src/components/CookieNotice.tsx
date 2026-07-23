@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-// ✅ ZERO-DEFECT: Custom Hook für Cookie-Consent (wiederverwendbar & testbar)
 function useCookieConsent() {
   const [consent, setConsent] = useState<boolean | null>(null);
   const [isMounted, setIsMounted] = useState(false);
@@ -11,12 +10,12 @@ function useCookieConsent() {
     setIsMounted(true);
     const stored = localStorage.getItem('cookie-consent');
     setConsent(stored === 'true');
-  }, []); // ✅ FIX: Keine Dependencies nötig
+  }, []);
 
   const accept = useCallback(() => {
     localStorage.setItem('cookie-consent', 'true');
     setConsent(true);
-  }, []); // ✅ FIX: Keine Dependencies nötig
+  }, []);
 
   return { consent, isMounted, accept };
 }
@@ -27,7 +26,6 @@ export default function CookieNotice() {
   const [show, setShow] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // ✅ ZERO-DEFECT: Banner einblenden, wenn noch kein Consent vorhanden ist
   useEffect(() => {
     if (!isMounted) return;
     if (consent === false) {
@@ -36,22 +34,22 @@ export default function CookieNotice() {
     }
   }, [isMounted, consent]);
 
-  // ✅ ZERO-DEFECT: Fokus-Management für Screenreader
   useEffect(() => {
     if (isVisible && show && buttonRef.current) {
       setTimeout(() => buttonRef.current?.focus(), 150);
     }
   }, [isVisible, show]);
 
-  const handleAccept = () => {
+  // ✅ FIX: handleAccept mit useCallback umschließen
+  const handleAccept = useCallback(() => {
     setShow(false);
     setTimeout(() => {
       accept();
       setIsVisible(false);
     }, 300);
-  };
+  }, [accept]);
 
-  // ✅ ZERO-DEFECT: Escape-Taste schließt das Banner
+  // ✅ FIX: handleAccept als Dependency hinzufügen
   useEffect(() => {
     if (!isVisible || !show) return;
     const handleEscape = (e: KeyboardEvent) => {
@@ -61,7 +59,7 @@ export default function CookieNotice() {
     };
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [isVisible, show, handleAccept]); // ✅ FIX: handleAccept als Dependency hinzugefügt
+  }, [isVisible, show, handleAccept]);
 
   if (!isMounted || consent === true || !isVisible) return null;
 
