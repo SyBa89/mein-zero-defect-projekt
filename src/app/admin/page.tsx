@@ -1,13 +1,11 @@
 'use client';
 import { useState } from 'react';
-
 interface SiteConfig {
   isClosed: boolean;
   bannerText: string;
   emergencyMessage: string;
   updatedAt: string;
 }
-
 export default function AdminPanel() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
@@ -38,7 +36,7 @@ export default function AdminPanel() {
       const res = await fetch('/api/admin/config', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
-        body: JSON.stringify({}), // Leerer Body, Auth erfolgt rein über den Header
+        body: JSON.stringify({ isClosed: false, bannerText: '', emergencyMessage: '' }),
       });
       if (res.ok) {
         setIsAuthenticated(true);
