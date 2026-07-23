@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import EmergencyBanner from '@/components/EmergencyBanner'; // ✅ NEU: Banner-Komponente importiert
 
 // ✅ ZERO-DEFECT: Optimierte Schriftart-Ladung mit 'swap' für sofortige Textanzeige (kein FOIT)
 const inter = Inter({
@@ -106,6 +107,8 @@ export default function RootLayout({
     // ✅ A11y: Explizite Sprach- und Leserichtungsangabe für Screenreader
     <html lang="de" dir="ltr" className={inter.variable}>
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased selection:bg-pink-200 selection:text-pink-900">
+        {/* ✅ ZERO-DEFECT: Emergency Banner wird immer als erstes im Body gerendert */}
+        <EmergencyBanner />
         {children}
       </body>
     </html>
