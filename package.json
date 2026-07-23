@@ -1,52 +1,62 @@
 {
-    "name":  "mein-zero-defect-projekt",
-    "version":  "1.0.0",
-    "description":  "Zero-Defect Web OS v2.0 | Kiosk Lollipop - Die perfekte Webseite fÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼r Ihren Kiosk und Hermes Paketshop in Erftstadt-Liblar",
-    "private":  true,
-    "type":  "module",
-    "engines":  {
-                    "node":  "\u003e=20.0.0",
-                    "npm":  "\u003e=10.0.0"
-                },
-    "packageManager":  "npm@10.9.0",
-    "scripts":  {
-                    "dev":  "next dev",
-                    "build":  "next build",
-                    "start":  "next start",
-                    "lint":  "next lint",
-                    "type-check":  "tsc --noEmit",
-                    "prepare":  "husky",
-                    "test":  "vitest run",
-                    "test:watch":  "vitest",
-                    "test:e2e":  "npx playwright test",
-                    "test:audit":  "node scripts/audit.js"
-                },
-    "dependencies":  {
-                         "@upstash/redis":  "^1.38.0",
-                         "critters":  "^0.0.23",
-                         "next":  "16.2.11",
-                         "react":  "19.0.0",
-                         "react-dom":  "19.0.0"
-                     },
-    "devDependencies":  {
-                            "@types/node":  "^22.13.5",
-                            "@types/react":  "^19.0.10",
-                            "@types/react-dom":  "^19.0.4",
-                            "@typescript-eslint/eslint-plugin":  "^8.26.0",
-                            "@typescript-eslint/parser":  "^8.26.0",
-                            "autoprefixer":  "^10.4.20",
-                            "eslint":  "^9.21.0",
-                            "eslint-config-prettier":  "^10.0.1",
-                            "eslint-plugin-react-hooks":  "^5.2.0",
-                            "husky":  "^9.0.0",
-                            "lint-staged":  "^15.2.0",
-                            "postcss":  "^8.5.1",
-                            "postcss-nesting":  "^14.0.1",
-                            "prettier":  "^3.2.0",
-                            "tailwindcss":  "^3.4.17",
-                            "typescript":  "^5.7.3"
-                        },
-    "overrides":  {
-                      "sharp":  "0.35.0"
-                  }
+  "name": "mein-zero-defect-projekt",
+  "version": "1.0.0",
+  "description": "Zero-Defect Web OS v2.0 | Kiosk Lollipop - Die perfekte Webseite fÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼r Ihren Kiosk und Hermes Paketshop in Erftstadt-Liblar",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "packageManager": "npm@10.9.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "prepare": "husky",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "npx playwright test",
+    "test:audit": "node scripts/audit.js"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.38.0",
+    "critters": "^0.0.23",
+    "next": "16.2.11",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "resend": "^6.18.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^22.13.5",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.0",
+    "@vitejs/plugin-react": "^6.0.4",
+    "@vitest/ui": "^4.1.10",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "^9.0.0",
+    "lighthouse": "^13.4.1",
+    "lint-staged": "^15.2.0",
+    "playwright": "^1.61.1",
+    "postcss": "^8.5.1",
+    "postcss-nesting": "^14.0.1",
+    "prettier": "^3.2.0",
+    "puppeteer": "^25.3.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "sharp": "0.35.0"
+  }
 }
