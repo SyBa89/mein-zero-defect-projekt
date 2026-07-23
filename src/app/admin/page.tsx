@@ -21,10 +21,23 @@ export default function AdminPanel() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
+  // ✅ FIX 1: loadConfig MUSS vor handleLogin definiert sein (vermeidet no-use-before-define)
+  const loadConfig = async () => {
+    try {
+      const res = await fetch('/api/admin/config');
+      const data = await res.json();
+      setConfig(data);
+    } catch {
+      setMessage({ type: 'error', text: 'Fehler beim Laden der Konfiguration' });
+    }
+  };
+
+  // ✅ FIX 2: Sichere API-Authentifizierung statt lokaler Hardcode-Prüfung
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage(null);
+
     try {
       const res = await fetch('/api/admin/config', {
         method: 'POST',
@@ -32,12 +45,12 @@ export default function AdminPanel() {
           'Content-Type': 'application/json',
           'x-admin-password': password,
         },
-        body: JSON.stringify({ isClosed: false, bannerText: '', emergencyMessage: '' }), // Dummy-Payload zum Testen des Passworts
+        body: JSON.stringify({ isClosed: false, bannerText: '', emergencyMessage: '' }), // Dummy-Payload für den Check
       });
 
       if (res.ok) {
         setIsAuthenticated(true);
-        loadConfig();
+        await loadConfig();
       } else {
         setMessage({ type: 'error', text: 'Falsches Passwort!' });
         setPassword('');
@@ -49,23 +62,16 @@ export default function AdminPanel() {
     }
   };
 
-  const loadConfig = async () => {
-    try {
-      const res = await fetch('/api/admin/config');
-      const data = await res.json();
-      setConfig(data);
-    } catch {
-      setMessage({ type: 'error', text: 'Fehler beim Laden der Konfiguration' });
-    }
-  };
-
   const saveConfig = async () => {
     setIsLoading(true);
     setMessage(null);
     try {
       const res = await fetch('/api/admin/config', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-password': ADMIN_PASSWORD },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': password,
+        },
         body: JSON.stringify(config),
       });
       const data = await res.json();
@@ -103,9 +109,10 @@ export default function AdminPanel() {
             </div>
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-600 hover:to-purple-700 transition-all"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-600 hover:to-purple-700 transition-all disabled:opacity-50"
             >
-              Anmelden
+              {isLoading ? 'Prüfe...' : 'Anmelden'}
             </button>
           </form>
           {message && (
