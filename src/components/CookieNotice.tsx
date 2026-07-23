@@ -11,12 +11,12 @@ function useCookieConsent() {
     setIsMounted(true);
     const stored = localStorage.getItem('cookie-consent');
     setConsent(stored === 'true');
-  }, []);
+  }, [handleAccept]);
 
   const accept = useCallback(() => {
     localStorage.setItem('cookie-consent', 'true');
     setConsent(true);
-  }, []);
+  }, [handleAccept]);
 
   return { consent, isMounted, accept };
 }

@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('[KONTAKT] E-Mail erfolgreich gesendet:', data);
+    console.warn('[KONTAKT] E-Mail erfolgreich gesendet:', data);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('[KONTAKT] Server-Fehler:', error);
