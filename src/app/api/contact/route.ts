@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     // ✅ E-MAIL VERSENDEN (mit Resend)
     const { data, error } = await resend.emails.send({
       from: 'Kiosk Lollipop <noreply@kiosk-lollipop.de>',
-      to: ['info@kiosk-lollipop.de'],
+      to: ['lol111@live.de'],
       subject: `Neue Kontaktanfrage von ${name}`,
       replyTo: email,
       html: `
