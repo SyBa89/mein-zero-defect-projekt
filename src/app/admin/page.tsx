@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface SiteConfig {
   isClosed: boolean;
@@ -50,6 +50,22 @@ export default function AdminPanel() {
 
   // Tab state
   const [activeTab, setActiveTab] = useState<'notfall' | 'betrieb'>('notfall');
+
+  // ──────────────────────────────────────────────────────────────
+  // PERSISTENT LOGIN: Prüfe beim Laden, ob bereits eingeloggt
+  // ──────────────────────────────────────────────────────────────
+
+  useEffect(() => {
+    const savedAuth = localStorage.getItem('admin-auth');
+    if (savedAuth === 'true') {
+      // Automatisch einloggen und Daten laden
+      setIsAuthenticated(true);
+      loadConfig();
+      loadContacts();
+      loadChecklist();
+      loadNotes();
+    }
+  }, []);
 
   // ──────────────────────────────────────────────────────────────
   // LOAD FUNCTIONS
@@ -119,6 +135,8 @@ export default function AdminPanel() {
         body: JSON.stringify({}),
       });
       if (res.ok) {
+        // ✅ Login-Status im localStorage speichern (persistent)
+        localStorage.setItem('admin-auth', 'true');
         setIsAuthenticated(true);
         await loadConfig();
         await loadContacts();
@@ -133,6 +151,17 @@ export default function AdminPanel() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // ──────────────────────────────────────────────────────────────
+  // LOGOUT
+  // ──────────────────────────────────────────────────────────────
+
+  const handleLogout = () => {
+    localStorage.removeItem('admin-auth');
+    setIsAuthenticated(false);
+    setPassword('');
+    setMessage(null);
   };
 
   // ──────────────────────────────────────────────────────────────
@@ -333,7 +362,10 @@ export default function AdminPanel() {
     }
   }, [notes, password]);
 
-  // ✅ NACHRICHT BEIM TAB-WECHSEL ZURÜCKSETZEN
+  // ──────────────────────────────────────────────────────────────
+  // TAB CHANGE
+  // ──────────────────────────────────────────────────────────────
+
   const handleTabChange = (tab: 'notfall' | 'betrieb') => {
     setActiveTab(tab);
     setMessage(null);
@@ -394,10 +426,7 @@ export default function AdminPanel() {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-3xl font-black text-gray-900">Admin-Cockpit</h1>
-            <button
-              onClick={() => setIsAuthenticated(false)}
-              className="text-sm text-gray-600 hover:text-gray-900"
-            >
+            <button onClick={handleLogout} className="text-sm text-gray-600 hover:text-gray-900">
               Abmelden
             </button>
           </div>
