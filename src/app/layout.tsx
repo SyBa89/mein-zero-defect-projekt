@@ -1,25 +1,23 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import EmergencyBanner from '@/components/EmergencyBanner'; // ✅ NEU: Banner-Komponente importiert
+import EmergencyBanner from '@/components/EmergencyBanner';
+import { MobileBottomNav } from '@/components/MobileBottomNav';
 
-// ✅ ZERO-DEFECT: Optimierte Schriftart-Ladung mit 'swap' für sofortige Textanzeige (kein FOIT)
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
 });
 
-// ✅ ZERO-DEFECT: Viewport für maximale Mobile-Kompatibilität und PWA-Support
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#db2777', // Entspricht Tailwind pink-600
+  themeColor: '#db2777',
   colorScheme: 'light',
 };
 
-// ✅ ZERO-DEFECT: Umfassende, mehrschichtige SEO- und Social-Media-Metadaten
 export const metadata: Metadata = {
   metadataBase: new URL('https://mein-zero-defect-projekt.vercel.app'),
   title: {
@@ -40,12 +38,10 @@ export const metadata: Metadata = {
   creator: 'Kiosk Lollipop',
   publisher: 'Kiosk Lollipop',
   manifest: '/manifest.json',
-
-  // ✅ OPTIMIERUNG: Explizite Icon-Definitionen für alle Geräte-Typen
   icons: {
     icon: [
       { url: '/images/icon.png', type: 'image/png' },
-      { url: '/favicon.ico', type: 'image/x-icon' }, // Fallback für ältere Browser
+      { url: '/favicon.ico', type: 'image/x-icon' },
     ],
     apple: [{ url: '/images/icon.png', sizes: '180x180', type: 'image/png' }],
   },
@@ -60,7 +56,7 @@ export const metadata: Metadata = {
   formatDetection: {
     email: false,
     address: false,
-    telephone: true, // Erlaubt dem Browser, Telefonnummern automatisch verlinkbar zu machen
+    telephone: true,
   },
   openGraph: {
     type: 'website',
@@ -104,12 +100,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // ✅ A11y: Explizite Sprach- und Leserichtungsangabe für Screenreader
     <html lang="de" dir="ltr" className={inter.variable}>
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased selection:bg-pink-200 selection:text-pink-900">
-        {/* ✅ ZERO-DEFECT: Emergency Banner wird immer als erstes im Body gerendert */}
         <EmergencyBanner />
         {children}
+        <MobileBottomNav />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js');
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   );
