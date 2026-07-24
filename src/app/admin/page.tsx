@@ -104,42 +104,8 @@ export default function AdminPanel() {
   const [dailyRevenue, setDailyRevenue] = useState('');
 
   // ──────────────────────────────────────────────────────────────
-  // PERSISTENT LOGIN
+  // LOAD FUNCTIONS (definiert VOR loadAllData)
   // ──────────────────────────────────────────────────────────────
-
-  useEffect(() => {
-    const savedAuth = localStorage.getItem('admin-auth');
-    const savedDarkMode = localStorage.getItem('admin-dark-mode');
-    if (savedDarkMode === 'true') setDarkMode(true);
-    if (savedAuth === 'true') {
-      setIsAuthenticated(true);
-      loadAllData();
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('admin-dark-mode', String(darkMode));
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
-
-  // ──────────────────────────────────────────────────────────────
-  // LOAD FUNCTIONS
-  // ──────────────────────────────────────────────────────────────
-
-  const loadAllData = useCallback(async () => {
-    await Promise.all([
-      loadConfig(),
-      loadContacts(),
-      loadChecklist(),
-      loadSuppliers(),
-      loadNotes(),
-      loadDashboard(),
-    ]);
-  }, [loadConfig, loadContacts, loadChecklist, loadSuppliers, loadNotes, loadDashboard]);
 
   const loadConfig = useCallback(async () => {
     try {
@@ -210,6 +176,42 @@ export default function AdminPanel() {
       setMessage({ type: 'error', text: 'Fehler beim Laden des Dashboards' });
     }
   }, [password]);
+
+  // ✅ FIX: loadAllData ist KEIN useCallback mehr – es hat keine Dependencies
+  const loadAllData = async () => {
+    await Promise.all([
+      loadConfig(),
+      loadContacts(),
+      loadChecklist(),
+      loadSuppliers(),
+      loadNotes(),
+      loadDashboard(),
+    ]);
+  };
+
+  // ──────────────────────────────────────────────────────────────
+  // PERSISTENT LOGIN
+  // ──────────────────────────────────────────────────────────────
+
+  useEffect(() => {
+    const savedAuth = localStorage.getItem('admin-auth');
+    const savedDarkMode = localStorage.getItem('admin-dark-mode');
+    if (savedDarkMode === 'true') setDarkMode(true);
+    if (savedAuth === 'true') {
+      setIsAuthenticated(true);
+      loadAllData();
+    }
+    // ✅ FIX: Leeres Dependency-Array – wird nur einmal beim Mount ausgeführt
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('admin-dark-mode', String(darkMode));
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   // ──────────────────────────────────────────────────────────────
   // AUTH
