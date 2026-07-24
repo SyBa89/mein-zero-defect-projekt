@@ -1,6 +1,3 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import { Review, getReviews } from '@/lib/reviews';
 
 // ✅ PERFORMANCE: Icons außerhalb der Komponente
@@ -64,33 +61,9 @@ const ReviewJsonLd = ({ reviews }: { reviews: Review[] }) => {
   );
 };
 
-export default function Reviews() {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    getReviews()
-      .then((data) => {
-        setReviews(data);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading) {
-    return (
-      <section className="py-16 sm:py-20 bg-white" aria-labelledby="reviews-heading">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 id="reviews-heading" className="text-3xl md:text-4xl font-black text-gray-900 mb-12">
-            Das sagen unsere Kunden
-          </h2>
-          <div className="animate-pulse text-gray-400">Bewertungen werden geladen...</div>
-        </div>
-      </section>
-    );
-  }
+// ✅ SERVER COMPONENT: Reviews werden serverseitig geladen
+export default async function Reviews() {
+  const reviews = await getReviews();
 
   if (reviews.length === 0) {
     return null;
