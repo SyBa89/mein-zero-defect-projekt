@@ -1,50 +1,9 @@
 'use client';
 
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { Review, getReviews } from '@/lib/reviews';
 
-// ✅ ARCHITEKTUR: Sauber typisiert und exportierbar für eventuelle Wiederverwendung
-export interface Review {
-  id: string;
-  name: string;
-  displayDate: string;
-  isoDate: string;
-  text: string;
-  rating: number;
-  source: string;
-}
-
-// ✅ DATEN: Statisch, aber strukturell perfekt vorbereitet für spätere API-Integration
-const REVIEWS: Review[] = [
-  {
-    id: 'rev-1',
-    name: 'Thomas M.',
-    displayDate: 'vor 2 Wochen',
-    isoDate: '2023-10-15',
-    text: 'Super freundlicher Service! Mein Hermes-Paket war schnell gefunden und die Abwicklung hat keine 2 Minuten gedauert. Gerne wieder!',
-    rating: 5,
-    source: 'Google',
-  },
-  {
-    id: 'rev-2',
-    name: 'Sandra K.',
-    displayDate: 'vor 1 Monat',
-    isoDate: '2023-09-20',
-    text: 'Der beste Kiosk in Liblar. Immer sauber, gut sortiert und das Personal ist wirklich nett. Die Öffnungszeiten sind auch top.',
-    rating: 5,
-    source: 'Google',
-  },
-  {
-    id: 'rev-3',
-    name: 'Markus B.',
-    displayDate: 'vor 2 Monaten',
-    isoDate: '2023-08-10',
-    text: 'Praktische Lage direkt am Bürgerplatz. Parkplätze sind in der Nähe. Getränke sind immer schön kalt. Empfehlenswert!',
-    rating: 5,
-    source: 'Google',
-  },
-];
-
-// ✅ PERFORMANCE: Icons außerhalb der Komponente, um Re-Renders zu optimieren
+// ✅ PERFORMANCE: Icons außerhalb der Komponente
 const StarIcon = ({ filled }: { filled: boolean }) => (
   <svg
     className={`w-5 h-5 ${filled ? 'text-yellow-400 fill-current' : 'text-gray-300 fill-current'}`}
@@ -72,8 +31,10 @@ const WriteReviewIcon = () => (
   </svg>
 );
 
-// ✅ SEO UPGRADE: JSON-LD für strukturierte Daten (Google Rich Snippets)
+// ✅ JSON-LD für strukturierte Daten (SEO)
 const ReviewJsonLd = ({ reviews }: { reviews: Review[] }) => {
+  if (reviews.length === 0) return null;
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -104,14 +65,40 @@ const ReviewJsonLd = ({ reviews }: { reviews: Review[] }) => {
 };
 
 export default function Reviews() {
-  // ✅ RESILIENZ: Zero-Defect Absicherung gegen leere Datenbestände
-  if (!REVIEWS || REVIEWS.length === 0) {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getReviews()
+      .then((data) => {
+        setReviews(data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section className="py-16 sm:py-20 bg-white" aria-labelledby="reviews-heading">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 id="reviews-heading" className="text-3xl md:text-4xl font-black text-gray-900 mb-12">
+            Das sagen unsere Kunden
+          </h2>
+          <div className="animate-pulse text-gray-400">Bewertungen werden geladen...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (reviews.length === 0) {
     return null;
   }
 
   return (
     <section className="py-16 sm:py-20 bg-white" aria-labelledby="reviews-heading">
-      <ReviewJsonLd reviews={REVIEWS} />
+      <ReviewJsonLd reviews={reviews} />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
@@ -122,7 +109,7 @@ export default function Reviews() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {REVIEWS.map((review) => (
+          {reviews.map((review) => (
             <article
               key={review.id}
               className="bg-gray-50 p-8 rounded-3xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full"
