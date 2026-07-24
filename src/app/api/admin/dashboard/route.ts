@@ -8,6 +8,12 @@ const redis = new Redis({
   token: process.env.KV_REST_API_TOKEN!,
 });
 
+interface ChecklistItem {
+  id: string;
+  text: string;
+  done: boolean;
+}
+
 export async function GET(request: NextRequest) {
   const password = request.headers.get('x-admin-password');
   if (password !== ADMIN_PASSWORD) {
@@ -17,7 +23,7 @@ export async function GET(request: NextRequest) {
     const today = new Date().toISOString().split('T')[0];
     const revenue = (await redis.get<number>(`revenue-${today}`)) || 0;
     const contacts = (await redis.get<unknown[]>('admin-contacts')) || [];
-    const checklist = (await redis.get<unknown[]>('admin-checklist')) || [];
+    const checklist = (await redis.get<ChecklistItem[]>('admin-checklist')) || [];
     const openTasks = checklist.filter((item) => !item.done).length;
 
     return NextResponse.json({
