@@ -111,7 +111,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
-      <Header />
+      <Header currentPath="/" />
       <main>
         <div className="sr-only">
           <a
