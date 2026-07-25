@@ -30,9 +30,7 @@ export default function NotFound() {
       <article className="max-w-md w-full space-y-6">
         {/* Visuell ansprechender, aber klarer Fehler-Indikator */}
         <div className="relative">
-          <h1 className="text-9xl font-black bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent select-none">
-            404
-          </h1>
+          <h1 className="text-9xl font-black text-gradient select-none">404</h1>
           {/* ✅ ZERO-DEFECT: Kleiner dekorativer Akzent */}
           <div
             className="absolute -top-2 -right-4 w-16 h-16 rounded-full bg-pink-100/50 blur-2xl"
@@ -42,10 +40,7 @@ export default function NotFound() {
 
         <div className="space-y-2">
           <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Seite nicht gefunden</h2>
-          <p
-            className="text-lg text-gray-600 leading-relaxed"
-            id="not-found-description"
-          >
+          <p className="text-lg text-gray-600 leading-relaxed" id="not-found-description">
             Diese Seite existiert nicht oder wurde verschoben. Keine Sorge, wir helfen Ihnen gerne
             weiter.
           </p>
@@ -56,7 +51,7 @@ export default function NotFound() {
           <Link
             href="/"
             prefetch={true}
-            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white px-8 py-3.5 rounded-xl font-bold shadow-lg hover:shadow-pink-500/30 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
+            className="inline-flex items-center justify-center gap-2 bg-pink-600 hover:bg-purple-600 md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white px-8 py-3.5 rounded-xl font-bold shadow-lg hover:shadow-pink-500/30 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
             aria-label="Zur Startseite von Kiosk Lollipop"
           >
             <svg
@@ -109,8 +104,8 @@ export default function NotFound() {
             aria-label="Zum Kontaktformular"
           >
             kontaktieren Sie uns
-          </Link>
-          {' '}direkt am Bürgerplatz in Erftstadt-Liblar.
+          </Link>{' '}
+          direkt am Bürgerplatz in Erftstadt-Liblar.
         </p>
 
         {/* ✅ ZERO-DEFECT: Micro-Interaction für bessere UX */}

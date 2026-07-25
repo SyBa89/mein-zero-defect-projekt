@@ -84,7 +84,7 @@ export default function HeroSection() {
           </a>
           <Link
             href="/kontakt"
-            className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95"
+            className="inline-flex items-center justify-center gap-3 bg-pink-600 hover:bg-purple-600 md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95"
           >
             <svg
               className="w-6 h-6"

@@ -132,3 +132,14 @@ body {
     text-decoration-thickness: 2px;
   }
 }
+
+/* ✅ GOLDSTANDARD: Cross-Browser Text Gradient */
+@layer utilities {
+  .text-gradient {
+    background-image: linear-gradient(to right, #db2777, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+}

@@ -130,9 +130,7 @@ export default function Header({ currentPath }: HeaderProps) {
               priority
               quality={90}
             />
-            <span className="text-xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent hidden sm:block">
-              Kiosk Lollipop
-            </span>
+            <span className="text-xl font-bold text-gradient hidden sm:block">Kiosk Lollipop</span>
           </Link>
 
           {/* ─── Desktop Navigation ─────────────────────────── */}
@@ -154,7 +152,7 @@ export default function Header({ currentPath }: HeaderProps) {
             })}
             <Link
               href="/kontakt"
-              className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-pink-500/30 transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
+              className="bg-pink-600 hover:bg-purple-600 md:bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-pink-500/30 transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
             >
               Kontakt
             </Link>
@@ -218,7 +216,7 @@ export default function Header({ currentPath }: HeaderProps) {
               })}
               <Link
                 href="/kontakt"
-                className="block py-3 px-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg font-semibold text-center mt-2 shadow-md transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 active:scale-95"
+                className="block py-3 px-4 bg-pink-600 hover:bg-purple-600 md:bg-gradient-to-r from-pink-600 to-purple-600 text-white rounded-lg font-semibold text-center mt-2 shadow-md transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 active:scale-95"
                 onClick={closeMenu}
               >
                 Kontakt

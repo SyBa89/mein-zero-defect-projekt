@@ -80,7 +80,7 @@ export default function AboutPage() {
 
           <h1 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight mb-4 text-center">
             Über{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">
+            <span className="text-transparent bg-clip-text bg-pink-600 hover:bg-purple-600 md:bg-gradient-to-r from-pink-600 to-purple-600">
               Zero-Defect OS
             </span>
           </h1>

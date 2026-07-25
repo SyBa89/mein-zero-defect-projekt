@@ -54,7 +54,10 @@ function ErrorBoundary({ error, reset }: ErrorProps) {
 
         {/* ✅ ZERO-DEFECT: Error-Digest für Support (optional) */}
         {error.digest && (
-          <p className="text-xs text-gray-400 mb-6 font-mono break-all bg-gray-50 p-2 rounded-lg" aria-hidden="true">
+          <p
+            className="text-xs text-gray-400 mb-6 font-mono break-all bg-gray-50 p-2 rounded-lg"
+            aria-hidden="true"
+          >
             Fehler-ID: {error.digest}
           </p>
         )}
@@ -62,7 +65,7 @@ function ErrorBoundary({ error, reset }: ErrorProps) {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={handleReset}
-            className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white px-8 py-3.5 rounded-xl font-bold shadow-lg hover:shadow-pink-500/30 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
+            className="bg-pink-600 hover:bg-purple-600 md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white px-8 py-3.5 rounded-xl font-bold shadow-lg hover:shadow-pink-500/30 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
             aria-label="Seite erneut laden"
           >
             Erneut versuchen
