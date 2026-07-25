@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -25,14 +26,16 @@ function useLockBodyScroll(lock: boolean) {
 }
 
 interface HeaderProps {
-  currentPath: string; // ✅ Pfad wird von der Server-Komponente übergeben
+  currentPath?: string; // ✅ Pfad wird von der Server-Komponente übergeben
 }
 
 export default function Header({ currentPath }: HeaderProps) {
+  const pathname = usePathname();
+  const activePath = currentPath ?? pathname;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const pathname = currentPath; // ✅ Verwende den übergebenen Pfad
+  const pathname = activePath; // ✅ Verwende den übergebenen Pfad
 
   // ─── Hydration-Guard ──────────────────────────────────────
   useEffect(() => {
