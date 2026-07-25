@@ -6,7 +6,7 @@ import { revalidateTag } from 'next/cache';
 // ✅ GOLDSTANDARD: Interface wird importiert, keine Duplikate
 import { SiteConfig } from '@/lib/site-config';
 
-const ADMIN_PASSWORD = process.env.INTERN_PASSWORD || 'lollipop2024';
+const ADMIN_PASSWORD = process.env.INTERN_PASSWORD;
 
 const redis = new Redis({
   url: process.env.KV_REST_API_URL!,
@@ -43,6 +43,11 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  // ✅ GOLDSTANDARD: Fail-Safe Check für Production
+  if (!ADMIN_PASSWORD) {
+    console.error('CRITICAL SECURITY: INTERN_PASSWORD is not set!');
+    return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+  }
   try {
     const ip = request.headers.get('x-forwarded-for') ?? '127.0.0.1';
     const { success } = await ratelimit.limit(ip);
