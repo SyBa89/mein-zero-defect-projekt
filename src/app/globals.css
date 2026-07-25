@@ -134,8 +134,17 @@ body {
 }
 
 /* ✅ GOLDSTANDARD: Cross-Browser Text Gradient */
+@layer utilities {
+  .text-gradient {
+    background-image: linear-gradient(to right, #db2777, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+}
 
-/* ✅ ABSOLUT FINALER FIREFOX-KOMPATIBLER TEXT-GRADIENT */
+/* ✅ FIREFOX-KOMPATIBLER TEXT-GRADIENT (ohne @layer) */
 .text-gradient {
   display: inline-block !important;
   background-image: linear-gradient(to right, #db2777, #7c3aed) !important;
@@ -145,12 +154,10 @@ body {
   color: transparent !important;
 }
 
-/* Fallback für sehr alte Browser, die background-clip: text nicht unterstützen */
 @supports not (background-clip: text) {
   .text-gradient {
     color: #7c3aed !important;
     background-image: none !important;
     -webkit-text-fill-color: #7c3aed !important;
   }
-}
 }
