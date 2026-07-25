@@ -1,3 +1,10 @@
+/*
+ * ⚠️ RECHTLICHER HINWEIS (TODO – vor öffentlichem Launch prüfen):
+ * 1. Impressum (anwaltlich geprüft)
+ * 2. Datenschutzerklärung (DSGVO-konform)
+ * 3. Cookie-Consent (falls Tracking-Cookies gesetzt werden)
+ * Dies sind geschäftliche Notwendigkeiten, keine technischen Defizite.
+ */
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
