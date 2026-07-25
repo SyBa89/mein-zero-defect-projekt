@@ -26,16 +26,19 @@ function useLockBodyScroll(lock: boolean) {
 }
 
 interface HeaderProps {
-  currentPath?: string; // ✅ Pfad wird von der Server-Komponente übergeben
+  currentPath?: string; // ✅ Pfad wird von der Server-Komponente übergeben (optional)
 }
 
 export default function Header({ currentPath }: HeaderProps) {
-  const pathname = usePathname();
-  const activePath = currentPath ?? pathname;
+  // 1. HOOK BEDINGUNGSLOS AUFRUFEN (Das verlangt ESLint zwingend)
+  const routerPathname = usePathname();
+
+  // 2. ERST DANACH bedingt zuweisen (Das ist erlaubt)
+  const pathname = currentPath ?? routerPathname;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const pathname = activePath; // ✅ Verwende den übergebenen Pfad
 
   // ─── Hydration-Guard ──────────────────────────────────────
   useEffect(() => {
@@ -45,7 +48,7 @@ export default function Header({ currentPath }: HeaderProps) {
   // ─── Scroll-Lock ──────────────────────────────────────────
   useLockBodyScroll(isMounted && isMenuOpen);
 
-  // ─── Menü bei Fensteränderung schließen ──────────────────
+  // ─── Menü bei Fensteränderung schließen ───────────────────
   useEffect(() => {
     if (!isMounted) return;
     let timeoutId: NodeJS.Timeout;
@@ -77,7 +80,7 @@ export default function Header({ currentPath }: HeaderProps) {
     }
   }, [isMenuOpen, isMounted]);
 
-  // ─── Escape-Taste ──────────────────────────────────────────
+  // ─── Escape-Taste ─────────────────────────────────────────
   useEffect(() => {
     if (!isMounted || !isMenuOpen) return;
     const handleEscape = (e: KeyboardEvent) => {
@@ -90,7 +93,7 @@ export default function Header({ currentPath }: HeaderProps) {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isMenuOpen, isMounted]);
 
-  // ─── Aktiven Link prüfen (mit normalisiertem Pfad) ──────────
+  // ─── Aktiven Link prüfen (mit normalisiertem Pfad) ────────
   const isActiveLink = (href: string, exact: boolean = false) => {
     const hrefPath = href.split('#')[0]; // Hash entfernen
 
@@ -132,7 +135,7 @@ export default function Header({ currentPath }: HeaderProps) {
             </span>
           </Link>
 
-          {/* ─── Desktop Navigation ────────────────────────────────── */}
+          {/* ─── Desktop Navigation ─────────────────────────── */}
           <nav aria-label="Hauptnavigation" className="hidden md:flex items-center gap-8">
             {navItems.map((item) => {
               const active = isActiveLink(item.href, item.exact || false);
@@ -157,7 +160,7 @@ export default function Header({ currentPath }: HeaderProps) {
             </Link>
           </nav>
 
-          {/* ─── Mobile Menu Button ────────────────────────────────── */}
+          {/* ─── Mobile Menu Button ─────────────────────────── */}
           <button
             ref={menuButtonRef}
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500"
@@ -186,7 +189,7 @@ export default function Header({ currentPath }: HeaderProps) {
           </button>
         </div>
 
-        {/* ─── Mobile Navigation ──────────────────────────────────── */}
+        {/* ─── Mobile Navigation ────────────────────────────── */}
         <div
           id="mobile-menu"
           className={`md:hidden grid transition-[grid-template-rows] duration-300 ease-out ${
