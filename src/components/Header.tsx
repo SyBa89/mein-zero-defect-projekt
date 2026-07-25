@@ -130,7 +130,7 @@ export default function Header({ currentPath }: HeaderProps) {
               priority
               quality={90}
             />
-            <span className="text-xl font-bold text-gradient hidden sm:block">Kiosk Lollipop</span>
+            <span style="display:inline-block;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 30%22><defs><linearGradient id=%22g%22 x1=%220%%22 y1=%220%%22 x2=%22100%%22 y2=%220%%22><stop offset=%220%%22 stop-color=%22%23db2777%22/><stop offset=%22100%%22 stop-color=%22%237c3aed%22/></linearGradient></defs><text x=%220%22 y=%2222%22 fill=%22url(%23g)%22 font-size=%2220%22 font-weight=%22bold%22 font-family=%22sans-serif%22>Kiosk Lollipop</text></svg>');background-size:contain;background-repeat:no-repeat;width:200px;height:30px;display:inline-block;"></span>
           </Link>
 
           {/* ─── Desktop Navigation ─────────────────────────── */}
