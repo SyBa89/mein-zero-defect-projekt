@@ -6,7 +6,8 @@ import { revalidateTag } from 'next/cache';
 // ✅ GOLDSTANDARD: Interface wird importiert, keine Duplikate
 import { SiteConfig } from '@/lib/site-config';
 
-const ADMIN_PASSWORD = process.env.INTERN_PASSWORD;
+// ✅ NOTFALL: Passwort fest im Code (nur für Production, da Vercel die Env-Variable überschreibt)
+const ADMIN_PASSWORD = 'lollipop2024';
 
 const redis = new Redis({
   url: process.env.KV_REST_API_URL!,
