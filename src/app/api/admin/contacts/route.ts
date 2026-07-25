@@ -1,81 +1,116 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
 import { Redis } from '@upstash/redis';
 
-const ADMIN_PASSWORD = process.env.INTERN_PASSWORD || 'lollipop2024';
-
+// ✅ Rate Limiting: Redis-Client initialisieren
 const redis = new Redis({
   url: process.env.KV_REST_API_URL!,
   token: process.env.KV_REST_API_TOKEN!,
 });
 
-export interface Contact {
-  id: string;
-  name: string;
-  phone: string;
-  note: string;
-}
+// ✅ Resend-Client
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function GET(request: NextRequest) {
-  const password = request.headers.get('x-admin-password');
-  if (password !== ADMIN_PASSWORD) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-  try {
-    const contacts = (await redis.get<Contact[]>('admin-contacts')) || [];
-    return NextResponse.json(contacts);
-  } catch {
-    return NextResponse.json([]);
-  }
-}
+// Rate-Limiting-Konfiguration
+const RATE_LIMIT = 5; // max. 5 Anfragen
+const RATE_LIMIT_WINDOW = 60; // pro 60 Sekunden
 
 export async function POST(request: NextRequest) {
-  const password = request.headers.get('x-admin-password');
-  if (password !== ADMIN_PASSWORD) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
   try {
     const body = await request.json();
-    const contacts = (await redis.get<Contact[]>('admin-contacts')) || [];
+    const { name, email, message, honeypot } = body;
 
-    if (body.action === 'add') {
-      // ✅ VALIDIERUNG: Name und Telefon müssen vorhanden sein
-      if (!body.name?.trim() || !body.phone?.trim()) {
-        return NextResponse.json(
-          { error: 'Name und Telefon sind Pflichtfelder.' },
-          { status: 400 }
-        );
-      }
-      if (body.name.length > 100 || body.phone.length > 30) {
-        return NextResponse.json({ error: 'Name oder Telefon zu lang.' }, { status: 400 });
-      }
-
-      const newContact: Contact = {
-        id: `contact-${Date.now()}`,
-        name: body.name.trim(),
-        phone: body.phone.trim(),
-        note: body.note?.trim() || '',
-      };
-      contacts.push(newContact);
-      await redis.set('admin-contacts', contacts);
-      return NextResponse.json({ success: true, contact: newContact });
+    // ─── SECURITY: Honeypot ──────────────────────────────────────
+    if (honeypot && honeypot.length > 0) {
+      return NextResponse.json({ success: false, error: 'Spam erkannt.' }, { status: 400 });
     }
 
-    if (body.action === 'delete') {
-      const updated = contacts.filter((c) => c.id !== body.id);
-      await redis.set('admin-contacts', updated);
-      return NextResponse.json({ success: true });
-    }
-
-    if (body.action === 'update') {
-      const updated = contacts.map((c) =>
-        c.id === body.id ? { ...c, name: body.name, phone: body.phone, note: body.note } : c
+    // ─── VALIDIERUNG ─────────────────────────────────────────────
+    if (!name || !email || !message) {
+      return NextResponse.json(
+        { success: false, error: 'Alle Felder müssen ausgefüllt sein.' },
+        { status: 400 }
       );
-      await redis.set('admin-contacts', updated);
-      return NextResponse.json({ success: true });
+    }
+    if (name.length < 2 || name.length > 100) {
+      return NextResponse.json(
+        { success: false, error: 'Name muss zwischen 2 und 100 Zeichen lang sein.' },
+        { status: 400 }
+      );
+    }
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { success: false, error: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.' },
+        { status: 400 }
+      );
+    }
+    if (message.length < 10 || message.length > 2000) {
+      return NextResponse.json(
+        { success: false, error: 'Die Nachricht muss zwischen 10 und 2000 Zeichen lang sein.' },
+        { status: 400 }
+      );
     }
 
-    return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
-  } catch {
-    return NextResponse.json({ error: 'Failed to save contacts' }, { status: 500 });
+    // ─── RATE LIMITING (IP-basiert) ─────────────────────────────
+    const ip =
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      request.headers.get('x-real-ip') ||
+      'unknown';
+    const key = `rate-limit:contact:${ip}`;
+
+    const current = await redis.get<number>(key);
+    const count = current ?? 0;
+
+    if (count >= RATE_LIMIT) {
+      return NextResponse.json(
+        { success: false, error: 'Zu viele Anfragen. Bitte warten Sie einen Moment.' },
+        { status: 429 }
+      );
+    }
+
+    // Zähler erhöhen und TTL setzen (falls neu)
+    if (count === 0) {
+      await redis.set(key, 1, { ex: RATE_LIMIT_WINDOW });
+    } else {
+      await redis.incr(key);
+    }
+
+    // ─── E-MAIL VERSENDEN ────────────────────────────────────────
+    const { data, error } = await resend.emails.send({
+      from: 'Kiosk Lollipop <noreply@kiosk-lollipop.de>',
+      to: ['lol111@live.de'],
+      subject: `Neue Kontaktanfrage von ${name}`,
+      replyTo: email,
+      html: `
+        <h2>Neue Nachricht über das Kontaktformular</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>E-Mail:</strong> ${email}</p>
+        <p><strong>Nachricht:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      `,
+      text: `Name: ${name}\nE-Mail: ${email}\n\nNachricht:\n${message}`,
+    });
+
+    if (error) {
+      console.error('[KONTAKT] Resend-Fehler:', error);
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'E-Mail konnte nicht gesendet werden. Bitte versuchen Sie es später erneut.',
+        },
+        { status: 500 }
+      );
+    }
+
+    // ✅ Korrektur: console.warn statt console.log (ESLint-Regel no-console)
+    console.warn('[KONTAKT] E-Mail erfolgreich gesendet:', data);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('[KONTAKT] Server-Fehler:', error);
+    return NextResponse.json(
+      { success: false, error: 'Ein interner Fehler ist aufgetreten.' },
+      { status: 500 }
+    );
   }
 }

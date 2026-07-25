@@ -1,7 +1,7 @@
 {
   "name": "mein-zero-defect-projekt",
   "version": "1.0.0",
-  "description": "Zero-Defect Web OS v2.0 | Kiosk Lollipop - Die perfekte Webseite fÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼r Ihren Kiosk und Hermes Paketshop in Erftstadt-Liblar",
+  "description": "Zero-Defect Web OS v2.0 | Kiosk Lollipop - Die perfekte Webseite fÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼r Ihren Kiosk und Hermes Paketshop in Erftstadt-Liblar",
   "private": true,
   "type": "module",
   "engines": {
@@ -47,9 +47,10 @@
     "@vitejs/plugin-react": "^6.0.4",
     "@vitest/ui": "^4.1.10",
     "autoprefixer": "^10.4.20",
-    "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.0.1",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.2.11",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "husky": "^9.0.0",
     "lighthouse": "^13.4.1",
     "lint-staged": "^15.2.0",

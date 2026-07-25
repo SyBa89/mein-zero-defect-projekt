@@ -7,26 +7,42 @@ const redis = new Redis({
   token: process.env.KV_REST_API_TOKEN!,
 });
 
-export async function middleware(request: NextRequest) {
-  const ip = request.ip || 'anonymous';
-  const key = `rate-limit:${ip}`;
-  const limit = 100; // Anfragen pro Minute
-  const window = 60; // Sekunden
+// Rate-Limiting: max. 100 Anfragen pro Minute pro IP
+const LIMIT = 100;
+const WINDOW = 60; // Sekunden
 
-  try {
-    const current = (await redis.get<number>(key)) || 0;
-    if (current >= limit) {
-      return new NextResponse('Zu viele Anfragen. Bitte warte eine Minute.', { status: 429 });
-    }
-    await redis.incr(key);
-    await redis.expire(key, window);
-    return NextResponse.next();
-  } catch {
-    // Bei Redis-Fehler: Anfrage trotzdem erlauben (Fail-open)
-    return NextResponse.next();
+export async function middleware(request: NextRequest) {
+  // ─── IP aus Headern holen ──────────────────────────────────────
+  const ip =
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    request.headers.get('x-real-ip') ||
+    'anonymous';
+
+  const key = `rate-limit:middleware:${ip}`;
+
+  // ─── Aktuellen Zähler abrufen ────────────────────────────────
+  const current = await redis.get<number>(key);
+  const count = current ?? 0;
+
+  if (count >= LIMIT) {
+    return new NextResponse(JSON.stringify({ error: 'Zu viele Anfragen. Bitte warten Sie.' }), {
+      status: 429,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
+
+  // ─── Zähler erhöhen ──────────────────────────────────────────
+  if (count === 0) {
+    await redis.set(key, 1, { ex: WINDOW });
+  } else {
+    await redis.incr(key);
+  }
+
+  // ─── Anfrage erlauben ────────────────────────────────────────
+  return NextResponse.next();
 }
 
+// ─── Nur für API-Routen anwenden ────────────────────────────────
 export const config = {
-  matcher: '/api/:path*',
+  matcher: '/api/:path*', // Nur API-Routen schützen
 };

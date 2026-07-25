@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     'Ihre Nachricht wurde erfolgreich an den Kiosk Lollipop gesendet. Wir melden uns schnellstmöglich.',
   robots: {
-    index: false, // WICHTIG: Danke-Seiten dürfen nicht von Suchmaschinen indexiert werden
+    index: false,
     follow: false,
   },
 };
@@ -18,12 +18,11 @@ export const metadata: Metadata = {
 export default function DankePage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
-      <Header />
+      {/* ✅ Korrektur: currentPath wird als Prop übergeben */}
+      <Header currentPath="/kontakt/danke" />
 
-      {/* ✅ LAYOUT: flex-grow sorgt für korrekte Footer-Platzierung auf allen Bildschirmhöhen */}
       <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         <div className="max-w-2xl w-full bg-white p-8 sm:p-12 rounded-3xl shadow-xl border border-gray-100 text-center">
-          {/* Erfolgs-Icon: Professionelles SVG, Plugin-freie, sanfte Entrance-Animation */}
           <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6 transition-all duration-700 ease-out hover:scale-105">
             <svg
               className="w-10 h-10 text-green-600"
@@ -50,7 +49,6 @@ export default function DankePage() {
             melden.
           </p>
 
-          {/* ✅ BUSINESS/PSYCHOLOGIE: Vertrauensaufbau & klare Erwartungshaltung */}
           <div className="bg-pink-50 border border-pink-100 rounded-2xl p-6 mb-8 text-left">
             <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
               <svg
@@ -123,7 +121,6 @@ export default function DankePage() {
               </li>
             </ul>
 
-            {/* ✅ DSGVO/VERTRAUEN: Subtile, aber wirksame Beruhigung nach Datenpreisgabe */}
             <p className="text-xs text-gray-500 mt-4 pt-4 border-t border-pink-100 flex items-center gap-1.5">
               <svg
                 className="w-4 h-4"
@@ -144,7 +141,6 @@ export default function DankePage() {
             </p>
           </div>
 
-          {/* Action Buttons: Klare primäre und sekundäre Handlungsaufforderung */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/"

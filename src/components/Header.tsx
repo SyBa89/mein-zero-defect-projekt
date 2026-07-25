@@ -4,14 +4,14 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// ✅ ZERO-DEFECT: Navigation zentralisiert (DRY-Prinzip)
+// ✅ Navigation zentralisiert
 const navItems = [
   { label: 'Startseite', href: '/', exact: true },
   { label: 'Produkte', href: '/#produkte' },
   { label: 'Über uns', href: '/#ueber-uns' },
 ];
 
-// ✅ ZERO-DEFECT: Custom Hook für Scroll-Lock (wiederverwendbar & sauber)
+// ✅ Custom Hook für Scroll-Lock
 function useLockBodyScroll(lock: boolean) {
   useEffect(() => {
     if (lock) {
@@ -24,23 +24,27 @@ function useLockBodyScroll(lock: boolean) {
   }, [lock]);
 }
 
-export default function Header() {
+interface HeaderProps {
+  currentPath: string; // ✅ Pfad wird von der Server-Komponente übergeben
+}
+
+export default function Header({ currentPath }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const pathname = currentPath; // ✅ Verwende den übergebenen Pfad
 
-  // ✅ ZERO-DEFECT: Hydration-Guard – verhindert Client/Server-Mismatch
+  // ─── Hydration-Guard ──────────────────────────────────────
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // ✅ ZERO-DEFECT: Scroll-Lock über Custom Hook
+  // ─── Scroll-Lock ──────────────────────────────────────────
   useLockBodyScroll(isMounted && isMenuOpen);
 
-  // ✅ ZERO-DEFECT: Menü bei Fensteränderung schließen (mit Debounce)
+  // ─── Menü bei Fensteränderung schließen ──────────────────
   useEffect(() => {
     if (!isMounted) return;
-    
     let timeoutId: NodeJS.Timeout;
     const handleResize = () => {
       clearTimeout(timeoutId);
@@ -50,7 +54,6 @@ export default function Header() {
         }
       }, 100);
     };
-    
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -58,52 +61,53 @@ export default function Header() {
     };
   }, [isMounted]);
 
-  // ✅ ZERO-DEFECT: Fokus-Management beim Öffnen/Schließen
+  // ─── Fokus-Management ─────────────────────────────────────
   useEffect(() => {
     if (!isMounted) return;
-    
     if (isMenuOpen) {
-      // Fokus auf den ersten Link im mobilen Menü setzen
       const firstLink = document.querySelector('#mobile-menu a');
       if (firstLink instanceof HTMLElement) {
         setTimeout(() => firstLink.focus(), 100);
       }
     } else {
-      // Fokus zurück zum Toggle-Button
       menuButtonRef.current?.focus();
     }
   }, [isMenuOpen, isMounted]);
 
-  const closeMenu = () => setIsMenuOpen(false);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  // ✅ ZERO-DEFECT: Escape-Taste schließt Menü
+  // ─── Escape-Taste ──────────────────────────────────────────
   useEffect(() => {
     if (!isMounted || !isMenuOpen) return;
-    
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsMenuOpen(false);
         menuButtonRef.current?.focus();
       }
     };
-    
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isMenuOpen, isMounted]);
 
-  // ✅ ZERO-DEFECT: Prüft, ob ein Link aktiv ist (für aria-current)
+  // ─── Aktiven Link prüfen (mit normalisiertem Pfad) ──────────
   const isActiveLink = (href: string, exact: boolean = false) => {
-    if (typeof window === 'undefined') return false;
-    if (exact) return window.location.pathname === href;
-    return window.location.pathname + window.location.hash === href;
+    const hrefPath = href.split('#')[0]; // Hash entfernen
+
+    if (exact) {
+      // Exakter Vergleich (ignoriere trailing slash)
+      return pathname === hrefPath || pathname === hrefPath + '/';
+    }
+
+    // Für nicht-exakte Links: prüfen, ob der aktuelle Pfad mit hrefPath beginnt
+    return pathname.startsWith(hrefPath);
   };
+
+  const closeMenu = () => setIsMenuOpen(false);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <header className="w-full border-b border-gray-200 bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo & Brand - priority für LCP-Optimierung */}
+          {/* Logo & Brand */}
           <Link
             href="/"
             className="flex items-center gap-3 group"
@@ -125,7 +129,7 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* ─── Desktop Navigation ────────────────────────────────── */}
           <nav aria-label="Hauptnavigation" className="hidden md:flex items-center gap-8">
             {navItems.map((item) => {
               const active = isActiveLink(item.href, item.exact || false);
@@ -150,7 +154,7 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Mobile Menu Button - WCAG AAA konform mit ARIA */}
+          {/* ─── Mobile Menu Button ────────────────────────────────── */}
           <button
             ref={menuButtonRef}
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500"
@@ -179,7 +183,7 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Navigation Dropdown mit Grid-Animation */}
+        {/* ─── Mobile Navigation ──────────────────────────────────── */}
         <div
           id="mobile-menu"
           className={`md:hidden grid transition-[grid-template-rows] duration-300 ease-out ${

@@ -1,34 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { Redis } from '@upstash/redis';
 
-// ✅ ZERO-DEFECT: Resend-Client initialisieren (API-Key aus .env.local)
+// ✅ Rate Limiting: Redis-Client initialisieren
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
+});
+
+// ✅ Resend-Client
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Rate-Limiting-Konfiguration
+const RATE_LIMIT = 5; // max. 5 Anfragen
+const RATE_LIMIT_WINDOW = 60; // pro 60 Sekunden
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { name, email, message, honeypot } = body;
 
-    // ✅ SECURITY: Honeypot-Feld prüfen (Spam-Abwehr)
+    // ─── SECURITY: Honeypot ──────────────────────────────────────
     if (honeypot && honeypot.length > 0) {
       return NextResponse.json({ success: false, error: 'Spam erkannt.' }, { status: 400 });
     }
 
-    // ✅ VALIDIERUNG: Grundlegende Prüfungen (werden auch im Client gemacht, aber Sicherheitsschicht)
+    // ─── VALIDIERUNG ─────────────────────────────────────────────
     if (!name || !email || !message) {
       return NextResponse.json(
         { success: false, error: 'Alle Felder müssen ausgefüllt sein.' },
         { status: 400 }
       );
     }
-
     if (name.length < 2 || name.length > 100) {
       return NextResponse.json(
         { success: false, error: 'Name muss zwischen 2 und 100 Zeichen lang sein.' },
         { status: 400 }
       );
     }
-
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -36,7 +45,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
     if (message.length < 10 || message.length > 2000) {
       return NextResponse.json(
         { success: false, error: 'Die Nachricht muss zwischen 10 und 2000 Zeichen lang sein.' },
@@ -44,7 +52,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ✅ E-MAIL VERSENDEN (mit Resend)
+    // ─── RATE LIMITING (IP-basiert) ─────────────────────────────
+    const ip =
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      request.headers.get('x-real-ip') ||
+      'unknown';
+    const key = `rate-limit:contact:${ip}`;
+
+    const current = await redis.get<number>(key);
+    const count = current ?? 0;
+
+    if (count >= RATE_LIMIT) {
+      return NextResponse.json(
+        { success: false, error: 'Zu viele Anfragen. Bitte warten Sie einen Moment.' },
+        { status: 429 }
+      );
+    }
+
+    // Zähler erhöhen und TTL setzen (falls neu)
+    if (count === 0) {
+      await redis.set(key, 1, { ex: RATE_LIMIT_WINDOW });
+    } else {
+      await redis.incr(key);
+    }
+
+    // ─── E-MAIL VERSENDEN ────────────────────────────────────────
     const { data, error } = await resend.emails.send({
       from: 'Kiosk Lollipop <noreply@kiosk-lollipop.de>',
       to: ['lol111@live.de'],
@@ -71,7 +103,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.warn('[KONTAKT] E-Mail erfolgreich gesendet:', data);
+    console.log('[KONTAKT] E-Mail erfolgreich gesendet:', data);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('[KONTAKT] Server-Fehler:', error);

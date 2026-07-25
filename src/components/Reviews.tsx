@@ -1,6 +1,5 @@
 import { Review, getReviews } from '@/lib/reviews';
 
-// ✅ PERFORMANCE: Icons außerhalb der Komponente
 const StarIcon = ({ filled }: { filled: boolean }) => (
   <svg
     className={`w-5 h-5 ${filled ? 'text-yellow-400 fill-current' : 'text-gray-300 fill-current'}`}
@@ -28,10 +27,8 @@ const WriteReviewIcon = () => (
   </svg>
 );
 
-// ✅ JSON-LD für strukturierte Daten (SEO)
 const ReviewJsonLd = ({ reviews }: { reviews: Review[] }) => {
   if (reviews.length === 0) return null;
-
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -43,16 +40,11 @@ const ReviewJsonLd = ({ reviews }: { reviews: Review[] }) => {
         author: { '@type': 'Person', name: review.name },
         datePublished: review.isoDate,
         reviewBody: review.text,
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: review.rating,
-          bestRating: '5',
-        },
+        reviewRating: { '@type': 'Rating', ratingValue: review.rating, bestRating: '5' },
         publisher: { '@type': 'Organization', name: review.source },
       },
     })),
   };
-
   return (
     <script
       type="application/ld+json"
@@ -61,18 +53,13 @@ const ReviewJsonLd = ({ reviews }: { reviews: Review[] }) => {
   );
 };
 
-// ✅ SERVER COMPONENT: Reviews werden serverseitig geladen
 export default async function Reviews() {
   const reviews = await getReviews();
-
-  if (reviews.length === 0) {
-    return null;
-  }
+  if (reviews.length === 0) return null;
 
   return (
     <section className="py-16 sm:py-20 bg-white" aria-labelledby="reviews-heading">
       <ReviewJsonLd reviews={reviews} />
-
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
           id="reviews-heading"
@@ -80,7 +67,6 @@ export default async function Reviews() {
         >
           Das sagen unsere Kunden
         </h2>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {reviews.map((review) => (
             <article
@@ -92,17 +78,12 @@ export default async function Reviews() {
                   <StarIcon key={i} filled={i < review.rating} />
                 ))}
               </div>
-
               <blockquote className="text-gray-700 text-base leading-relaxed mb-6 flex-grow">
                 &ldquo;{review.text}&rdquo;
               </blockquote>
-
               <footer className="flex items-center justify-between border-t border-gray-200 pt-4 mt-auto">
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-sm flex-shrink-0"
-                    aria-hidden="true"
-                  >
+                  <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-sm flex-shrink-0">
                     {review.name.charAt(0).toUpperCase()}
                   </div>
                   <div>
@@ -114,7 +95,6 @@ export default async function Reviews() {
                     </time>
                   </div>
                 </div>
-
                 <div
                   className="flex items-center gap-1.5 bg-white px-2.5 py-1.5 rounded-full border border-gray-200 shadow-sm"
                   title={`Verifizierte Bewertung von ${review.source}`}
@@ -128,18 +108,15 @@ export default async function Reviews() {
             </article>
           ))}
         </div>
-
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-4 font-medium">Auch Sie waren bei uns zufrieden?</p>
           <a
             href="https://search.google.com/local/writereview?placeid=ChIJeWG_xdsXv0cRInW4W6rog_0"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Eine neue Bewertung für Kiosk Lollipop auf Google schreiben (öffnet neuen Tab)"
             className="inline-flex items-center gap-2 text-pink-600 font-bold hover:text-pink-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded-lg px-4 py-2 hover:bg-pink-50"
           >
-            <WriteReviewIcon />
-            Bewertung auf Google schreiben
+            <WriteReviewIcon /> Bewertung auf Google schreiben
           </a>
         </div>
       </div>

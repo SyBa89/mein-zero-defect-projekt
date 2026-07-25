@@ -1,5 +1,6 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
+import crypto from 'crypto';
 
 const ADMIN_PASSWORD = process.env.INTERN_PASSWORD || 'lollipop2024';
 
@@ -34,8 +35,17 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const password = request.headers.get('x-admin-password');
-    if (password !== ADMIN_PASSWORD) {
+    const password = request.headers.get('x-admin-password') || '';
+
+    // ✅ ZERO-DEFECT: Sicherer Längen-Check vor timingSafeEqual
+    const expectedBuffer = Buffer.from(ADMIN_PASSWORD);
+    const providedBuffer = Buffer.from(password);
+
+    if (expectedBuffer.length !== providedBuffer.length) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    if (!crypto.timingSafeEqual(expectedBuffer, providedBuffer)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
