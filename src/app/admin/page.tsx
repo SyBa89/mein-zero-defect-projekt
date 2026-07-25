@@ -1,18 +1,41 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
+import { SiteConfig } from '@/lib/site-config';
 
-interface SiteConfig {
-  isClosed: boolean;
-  bannerText: string;
-  emergencyMessage: string;
-  updatedAt: string;
+// ✅ GOLDSTANDARD FIX: Hilfskomponenten MÜSSEN außerhalb der Hauptkomponente definiert werden
+interface InputFieldProps {
+  label: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
+  placeholder?: string;
 }
+
+const InputField = ({
+  label,
+  name,
+  value,
+  onChange,
+  type = 'text',
+  placeholder = '',
+}: InputFieldProps) => (
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+    <input
+      type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+    />
+  </div>
+);
 
 export default function AdminPanel() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('admin-auth') === 'true';
-    }
+    if (typeof window !== 'undefined') return localStorage.getItem('admin-auth') === 'true';
     return false;
   });
 
@@ -21,6 +44,13 @@ export default function AdminPanel() {
     isClosed: false,
     bannerText: '',
     emergencyMessage: '',
+    name: 'Kiosk Lollipop',
+    phoneDisplay: '02235 9291160',
+    phoneHref: 'tel:+4922359291160',
+    address: 'Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar',
+    mapsLink: 'https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683',
+    facebook: 'https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/',
+    openingHoursText: 'Mo-Fr 07:30-19:00, Sa 07:30-14:30',
     updatedAt: '',
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -37,9 +67,7 @@ export default function AdminPanel() {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      loadConfig();
-    }
+    if (isAuthenticated) loadConfig();
   }, [isAuthenticated, loadConfig]);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -79,6 +107,7 @@ export default function AdminPanel() {
       const data = await res.json();
       if (res.ok) {
         setMessage({ type: 'success', text: '✅ Änderungen erfolgreich gespeichert!' });
+        await loadConfig();
       } else {
         setMessage({ type: 'error', text: data.error || 'Fehler beim Speichern' });
       }
@@ -144,6 +173,7 @@ export default function AdminPanel() {
             Abmelden
           </button>
         </div>
+
         <div className="grid grid-cols-1 gap-6 mb-8">
           <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl p-6 text-white">
             <h2 className="text-xl font-bold mb-4">🚨 Notfall-Modus</h2>
@@ -162,9 +192,7 @@ export default function AdminPanel() {
             </label>
             {config.isClosed && (
               <div className="bg-white/10 rounded-lg p-4 mt-4">
-                <label className="block text-sm font-medium mb-2">
-                  Grund für Schließung (optional):
-                </label>
+                <label className="block text-sm font-medium mb-2">Grund für Schließung:</label>
                 <textarea
                   value={config.emergencyMessage}
                   onChange={(e) => setConfig({ ...config, emergencyMessage: e.target.value })}
@@ -175,21 +203,73 @@ export default function AdminPanel() {
               </div>
             )}
           </div>
+
+          <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
+            <h2 className="text-xl font-bold mb-4 text-gray-900">🏪 Stammdaten</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <InputField
+                label="Name des Kiosks"
+                name="name"
+                value={config.name}
+                onChange={(e) => setConfig({ ...config, name: e.target.value })}
+              />
+              <InputField
+                label="Telefon (Anzeige)"
+                name="phoneDisplay"
+                value={config.phoneDisplay}
+                onChange={(e) => setConfig({ ...config, phoneDisplay: e.target.value })}
+              />
+              <InputField
+                label="Telefon (Link)"
+                name="phoneHref"
+                value={config.phoneHref}
+                onChange={(e) => setConfig({ ...config, phoneHref: e.target.value })}
+              />
+              <InputField
+                label="Öffnungszeiten"
+                name="openingHoursText"
+                value={config.openingHoursText}
+                onChange={(e) => setConfig({ ...config, openingHoursText: e.target.value })}
+              />
+              <div className="md:col-span-2">
+                <InputField
+                  label="Adresse"
+                  name="address"
+                  value={config.address}
+                  onChange={(e) => setConfig({ ...config, address: e.target.value })}
+                />
+              </div>
+              <div className="md:col-span-2">
+                <InputField
+                  label="Google Maps Link"
+                  name="mapsLink"
+                  value={config.mapsLink}
+                  onChange={(e) => setConfig({ ...config, mapsLink: e.target.value })}
+                />
+              </div>
+              <div className="md:col-span-2">
+                <InputField
+                  label="Facebook Link"
+                  name="facebook"
+                  value={config.facebook}
+                  onChange={(e) => setConfig({ ...config, facebook: e.target.value })}
+                />
+              </div>
+            </div>
+          </div>
+
           <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
             <h2 className="text-xl font-bold mb-4 text-gray-900">📢 Aktions-Banner</h2>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Text für das Banner oben auf der Seite:
-            </label>
-            <input
-              type="text"
+            <InputField
+              label="Banner-Text"
+              name="bannerText"
               value={config.bannerText}
               onChange={(e) => setConfig({ ...config, bannerText: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
               placeholder="z.B. 🎉 Heute: Lotto Jackpot 45 Millionen!"
             />
-            <p className="text-sm text-gray-500 mt-2">Leer lassen, um kein Banner anzuzeigen</p>
           </div>
         </div>
+
         <button
           onClick={saveConfig}
           disabled={isLoading}

@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { Ratelimit } from '@upstash/ratelimit';
 import crypto from 'crypto';
+import { revalidateTag } from 'next/cache';
+// ✅ GOLDSTANDARD: Interface wird importiert, keine Duplikate
+import { SiteConfig } from '@/lib/site-config';
 
 const ADMIN_PASSWORD = process.env.INTERN_PASSWORD || 'lollipop2024';
 
@@ -15,26 +18,6 @@ const ratelimit = new Ratelimit({
   limiter: Ratelimit.slidingWindow(5, '1 m'),
 });
 
-// ✅ GOLDSTANDARD: Alle geschäftsrelevanten Daten in einem zentralen Interface
-export interface SiteConfig {
-  // Status & Banner
-  isClosed: boolean;
-  bannerText: string;
-  emergencyMessage: string;
-
-  // Stammdaten (werden jetzt dynamisch verwaltet)
-  name: string;
-  phoneDisplay: string;
-  phoneHref: string;
-  address: string;
-  mapsLink: string;
-  facebook: string;
-  openingHoursText: string; // z.B. "Mo-Fr 07:30-19:00, Sa 07:30-14:30"
-
-  updatedAt: string;
-}
-
-// ✅ Fallback, falls Redis noch keine Daten enthält
 const DEFAULT_CONFIG: SiteConfig = {
   isClosed: false,
   bannerText: '',
@@ -83,8 +66,6 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-
-    // ✅ Nur erlaubte Felder aktualisieren, um Schema-Drift zu verhindern
     const newConfig: SiteConfig = {
       ...DEFAULT_CONFIG,
       ...body,
@@ -92,6 +73,7 @@ export async function POST(request: NextRequest) {
     };
 
     await redis.set('site-config', newConfig);
+    revalidateTag('config');
 
     return NextResponse.json({
       success: true,
