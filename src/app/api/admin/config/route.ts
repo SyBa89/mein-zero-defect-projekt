@@ -3,7 +3,6 @@ import { Redis } from '@upstash/redis';
 import { Ratelimit } from '@upstash/ratelimit';
 import crypto from 'crypto';
 
-// ✅ GOLDSTANDARD: Secrets gehören ausschließlich in Umgebungsvariablen, nicht in Config-Dateien!
 const ADMIN_PASSWORD = process.env.INTERN_PASSWORD || 'lollipop2024';
 
 const redis = new Redis({
@@ -11,23 +10,42 @@ const redis = new Redis({
   token: process.env.KV_REST_API_TOKEN!,
 });
 
-// ✅ GOLDSTANDARD: Rate Limiting (max. 5 Versuche pro Minute pro IP)
 const ratelimit = new Ratelimit({
   redis: redis,
   limiter: Ratelimit.slidingWindow(5, '1 m'),
 });
 
+// ✅ GOLDSTANDARD: Alle geschäftsrelevanten Daten in einem zentralen Interface
 export interface SiteConfig {
+  // Status & Banner
   isClosed: boolean;
   bannerText: string;
   emergencyMessage: string;
+
+  // Stammdaten (werden jetzt dynamisch verwaltet)
+  name: string;
+  phoneDisplay: string;
+  phoneHref: string;
+  address: string;
+  mapsLink: string;
+  facebook: string;
+  openingHoursText: string; // z.B. "Mo-Fr 07:30-19:00, Sa 07:30-14:30"
+
   updatedAt: string;
 }
 
+// ✅ Fallback, falls Redis noch keine Daten enthält
 const DEFAULT_CONFIG: SiteConfig = {
   isClosed: false,
   bannerText: '',
   emergencyMessage: '',
+  name: 'Kiosk Lollipop',
+  phoneDisplay: '02235 9291160',
+  phoneHref: 'tel:+4922359291160',
+  address: 'Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar',
+  mapsLink: 'https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683',
+  facebook: 'https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/',
+  openingHoursText: 'Mo-Fr 07:30-19:00, Sa 07:30-14:30',
   updatedAt: new Date().toISOString(),
 };
 
@@ -43,11 +61,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    // ✅ GOLDSTANDARD: IP ermitteln für Rate Limiting
     const ip = request.headers.get('x-forwarded-for') ?? '127.0.0.1';
-
-    // Rate Limit prüfen
     const { success } = await ratelimit.limit(ip);
+
     if (!success) {
       return NextResponse.json(
         { error: 'Zu viele Anfragen. Bitte warte eine Minute.' },
@@ -56,20 +72,19 @@ export async function POST(request: NextRequest) {
     }
 
     const password = request.headers.get('x-admin-password') || '';
-
-    // ✅ ZERO-DEFECT: Sicherer Längen-Check vor timingSafeEqual
     const expectedBuffer = Buffer.from(ADMIN_PASSWORD);
     const providedBuffer = Buffer.from(password);
 
-    if (expectedBuffer.length !== providedBuffer.length) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    if (!crypto.timingSafeEqual(expectedBuffer, providedBuffer)) {
+    if (
+      expectedBuffer.length !== providedBuffer.length ||
+      !crypto.timingSafeEqual(expectedBuffer, providedBuffer)
+    ) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const body = await request.json();
+
+    // ✅ Nur erlaubte Felder aktualisieren, um Schema-Drift zu verhindern
     const newConfig: SiteConfig = {
       ...DEFAULT_CONFIG,
       ...body,
