@@ -6,7 +6,7 @@ test.describe('Admin Panel', () => {
     await page.goto('/admin');
 
     // Prüfen ob Login-Seite geladen wird
-    await expect(page.locator('h1')).toContainText('Admin-Login');
+    await expect(page.locator('h1')).toContainText('Mitarbeiter-Login');
     await expect(page.locator('input[type="password"]')).toBeVisible();
     await expect(page.locator('button[type="submit"]')).toBeVisible();
   });
