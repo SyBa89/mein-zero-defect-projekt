@@ -26,29 +26,23 @@ function useLockBodyScroll(lock: boolean) {
 }
 
 interface HeaderProps {
-  currentPath?: string; // ✅ Pfad wird von der Server-Komponente übergeben (optional)
+  currentPath?: string;
 }
 
 export default function Header({ currentPath }: HeaderProps) {
-  // 1. HOOK BEDINGUNGSLOS AUFRUFEN (Das verlangt ESLint zwingend)
   const routerPathname = usePathname();
-
-  // 2. ERST DANACH bedingt zuweisen (Das ist erlaubt)
   const pathname = currentPath ?? routerPathname;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
-  // ─── Hydration-Guard ──────────────────────────────────────
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // ─── Scroll-Lock ──────────────────────────────────────────
   useLockBodyScroll(isMounted && isMenuOpen);
 
-  // ─── Menü bei Fensteränderung schließen ───────────────────
   useEffect(() => {
     if (!isMounted) return;
     let timeoutId: NodeJS.Timeout;
@@ -67,7 +61,6 @@ export default function Header({ currentPath }: HeaderProps) {
     };
   }, [isMounted]);
 
-  // ─── Fokus-Management ─────────────────────────────────────
   useEffect(() => {
     if (!isMounted) return;
     if (isMenuOpen) {
@@ -80,7 +73,6 @@ export default function Header({ currentPath }: HeaderProps) {
     }
   }, [isMenuOpen, isMounted]);
 
-  // ─── Escape-Taste ─────────────────────────────────────────
   useEffect(() => {
     if (!isMounted || !isMenuOpen) return;
     const handleEscape = (e: KeyboardEvent) => {
@@ -93,21 +85,19 @@ export default function Header({ currentPath }: HeaderProps) {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isMenuOpen, isMounted]);
 
-  // ─── Aktiven Link prüfen (mit normalisiertem Pfad) ────────
   const isActiveLink = (href: string, exact: boolean = false) => {
-    const hrefPath = href.split('#')[0]; // Hash entfernen
-
+    const hrefPath = href.split('#')[0];
     if (exact) {
-      // Exakter Vergleich (ignoriere trailing slash)
       return pathname === hrefPath || pathname === hrefPath + '/';
     }
-
-    // Für nicht-exakte Links: prüfen, ob der aktuelle Pfad mit hrefPath beginnt
     return pathname.startsWith(hrefPath);
   };
 
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  // ✅ SVG als Data-URI – 100 % browser-kompatibel, kein TypeScript-Fehler
+  const logoSvg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 30"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="%23db2777"/><stop offset="100%" stop-color="%237c3aed"/></linearGradient></defs><text x="0" y="22" fill="url(%23g)" font-size="20" font-weight="bold" font-family="sans-serif">Kiosk Lollipop</text></svg>`;
 
   return (
     <header className="w-full border-b border-gray-200 bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-sm">
@@ -130,18 +120,16 @@ export default function Header({ currentPath }: HeaderProps) {
               priority
               quality={90}
             />
-            <span
+            {/* ✅ SVG-Gradient als img – kein CSS, kein doppelter display, 100 % Firefox-kompatibel */}
+            <img
+              src={logoSvg}
+              alt="Kiosk Lollipop"
               style={{
                 display: 'inline-block',
-                backgroundImage:
-                  'url("data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 30%22><defs><linearGradient id=%22g%22 x1=%220%%22 y1=%220%%22 x2=%22100%%22 y2=%220%%22><stop offset=%220%%22 stop-color=%22%23db2777%22/><stop offset=%22100%%22 stop-color=%22%237c3aed%22/></linearGradient></defs><text x=%220%22 y=%2222%22 fill=%22url(%23g)%22 font-size=%2220%22 font-weight=%22bold%22 font-family=%22sans-serif%22>Kiosk Lollipop</text></svg>")',
-                backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat',
                 width: '200px',
                 height: '30px',
-                display: 'inline-block',
               }}
-            ></span>
+            />
           </Link>
 
           {/* ─── Desktop Navigation ─────────────────────────── */}
