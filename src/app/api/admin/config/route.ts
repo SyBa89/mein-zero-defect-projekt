@@ -5,12 +5,10 @@ import crypto from 'crypto';
 import { revalidateTag } from 'next/cache';
 import { SiteConfig } from '@/lib/site-config';
 
-// ✅ GOLD STANDARD: Passwort aus Environment Variable (nicht hartcodiert!)
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'lollipop2024';
-
-// ✅ GOLD STANDARD: Force-Dynamic verhindert Next.js 15 Caching
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'lollipop2024';
 
 const redis = new Redis({
   url: process.env.KV_REST_API_URL!,
@@ -37,6 +35,7 @@ const DEFAULT_CONFIG: SiteConfig = {
   updatedAt: new Date().toISOString(),
 };
 
+// ✅ GET hat KEIN Rate Limiting – nur POST wird begrenzt!
 export async function GET() {
   try {
     const config = await redis.get<SiteConfig>('site-config');
@@ -48,27 +47,18 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  // ✅ GOLD STANDARD: Rate Limiting aktiv (Schutz gegen Brute-Force)
+  // ✅ Rate Limiting NUR für POST (Login-Versuche)
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
-  const { success, reset } = await ratelimit.limit(ip);
+  const { success } = await ratelimit.limit(ip);
 
   if (!success) {
-    // ✅ GOLD STANDARD: Berechne exakte Sekunden bis zum Reset
-    const retryAfter = Math.max(1, Math.ceil((reset - Date.now()) / 1000));
-
     return NextResponse.json(
-      { error: `Zu viele Anmeldeversuche. Bitte warten Sie ${retryAfter} Sekunden.` },
-      {
-        status: 429,
-        headers: {
-          'Retry-After': retryAfter.toString(),
-        },
-      }
+      { error: 'Zu viele Anmeldeversuche. Bitte warten Sie 60 Sekunden.' },
+      { status: 429 }
     );
   }
 
   try {
-    // ✅ GOLD STANDARD: Sichere Passwort-Prüfung mit Längen-Check
     const password = request.headers.get('x-admin-password') || '';
 
     if (!password) {
@@ -78,7 +68,6 @@ export async function POST(request: NextRequest) {
     const expectedBuffer = Buffer.from(ADMIN_PASSWORD);
     const providedBuffer = Buffer.from(password);
 
-    // ✅ GOLD STANDARD: Längen-Check VOR timingSafeEqual (verhindert Crash!)
     if (expectedBuffer.length !== providedBuffer.length) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
