@@ -46,7 +46,8 @@ html {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
+    rgb(var(--background-start-rgb));
   overflow-x: hidden;
   min-height: 100dvh;
 }
@@ -85,14 +86,23 @@ body {
     color: black !important;
     font-size: 12pt;
   }
-  nav, footer, button, .no-print, .fixed, [role="navigation"], [aria-hidden="true"] {
+  nav,
+  footer,
+  button,
+  .no-print,
+  .fixed,
+  [role='navigation'],
+  [aria-hidden='true'] {
     display: none !important;
   }
   a {
     text-decoration: underline;
     color: black !important;
   }
-  section, .bg-white, .rounded-3xl, .rounded-2xl {
+  section,
+  .bg-white,
+  .rounded-3xl,
+  .rounded-2xl {
     break-inside: avoid;
     box-shadow: none !important;
     border: 1px solid #e5e7eb !important;
@@ -102,7 +112,12 @@ body {
     max-width: 100% !important;
     page-break-inside: avoid;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     page-break-after: avoid;
   }
 }

@@ -8,7 +8,7 @@ import { verifySessionToken, hasPermission } from '@/lib/auth';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// ─── Redis-Client mit Fehlerbehandlung ──────────────────────────────
+// â”€â”€â”€ Redis-Client mit Fehlerbehandlung â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 let redis: Redis | null = null;
 try {
   if (env.KV_REST_API_URL && env.KV_REST_API_TOKEN) {
@@ -18,7 +18,7 @@ try {
     });
     console.log('[CONFIG] Redis initialized successfully');
   } else {
-    console.warn('[CONFIG] Redis credentials missing – using static config');
+    console.warn('[CONFIG] Redis credentials missing â€“ using static config');
   }
 } catch (error) {
   console.error('[CONFIG] Redis init error:', error);
@@ -31,12 +31,12 @@ const STATIC_CONFIG: SiteConfig = {
   name: 'Kiosk Lollipop',
   phoneDisplay: '02235 9291160',
   phoneHref: 'tel:+4922359291160',
-  address: 'Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar',
+  address: 'Theodor-Heuss-StraÃŸe 35, 50374 Erftstadt-Liblar',
   mapsLink: 'https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683',
   facebook: 'https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/',
   openingHoursText: 'Mo-Fr 07:30-19:00, Sa 07:30-14:30',
   jackpot: '45.000.000',
-  highlight: '🎉 Test-Highlight!',
+  highlight: 'ðŸŽ‰ Test-Highlight!',
   updatedAt: new Date().toISOString(),
 };
 
@@ -68,7 +68,7 @@ function validateConfig(data: any): SiteConfig {
   };
 }
 
-// ─── GET: Config laden ──────────────────────────────────────────────────
+// â”€â”€â”€ GET: Config laden â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export async function GET(request: NextRequest) {
   try {
     const token = request.cookies.get('session')?.value;
@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Versuche Redis – fallback auf static config
+    // Versuche Redis â€“ fallback auf static config
     if (redis) {
       try {
         const rawData = await redis.get('site-config');
@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// ─── POST: Config speichern ─────────────────────────────────────────────
+// â”€â”€â”€ POST: Config speichern â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export async function POST(request: NextRequest) {
   try {
     const token = request.cookies.get('session')?.value;
@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
       updatedAt: new Date().toISOString(),
     };
 
-    // Speichern in Redis (wenn verfügbar)
+    // Speichern in Redis (wenn verfÃ¼gbar)
     if (redis) {
       try {
         await redis.set('site-config', sanitized);

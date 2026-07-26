@@ -12,7 +12,7 @@ export function useAuth() {
   useEffect(() => {
     const checkAuth = () => {
       const cookies = document.cookie.split(';');
-      const sessionCookie = cookies.find(c => c.trim().startsWith('admin-session='));
+      const sessionCookie = cookies.find((c) => c.trim().startsWith('admin-session='));
       if (sessionCookie && sessionCookie.includes('authenticated')) {
         setIsAuthenticated(true);
       } else {

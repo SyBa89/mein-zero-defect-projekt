@@ -56,18 +56,21 @@ export default function FAQ() {
   );
 
   // ✅ ZERO-DEFECT: Memoisierte Toggle-Funktion
-  const toggleAccordion = useCallback((index: number) => {
-    const newIndex = openIndex === index ? null : index;
-    setOpenIndex(newIndex);
+  const toggleAccordion = useCallback(
+    (index: number) => {
+      const newIndex = openIndex === index ? null : index;
+      setOpenIndex(newIndex);
 
-    // ✅ ZERO-DEFECT: Fokus auf die Antwort setzen, wenn geöffnet
-    if (newIndex !== null && answerRefs.current[newIndex]) {
-      // Kleiner Delay, damit die Animation abgeschlossen ist
-      setTimeout(() => {
-        answerRefs.current[newIndex]?.focus();
-      }, 150);
-    }
-  }, [openIndex]);
+      // ✅ ZERO-DEFECT: Fokus auf die Antwort setzen, wenn geöffnet
+      if (newIndex !== null && answerRefs.current[newIndex]) {
+        // Kleiner Delay, damit die Animation abgeschlossen ist
+        setTimeout(() => {
+          answerRefs.current[newIndex]?.focus();
+        }, 150);
+      }
+    },
+    [openIndex]
+  );
 
   // ✅ ZERO-DEFECT: Escape-Taste schließt alle geöffneten Fragen
   useEffect(() => {
