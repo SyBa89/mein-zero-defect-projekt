@@ -1,17 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { Ratelimit } from '@upstash/ratelimit';
-import crypto from 'crypto';
 import { revalidateTag, revalidatePath } from 'next/cache';
 import { SiteConfig } from '@/lib/site-config';
 import { env } from '@/lib/env';
-import { verifySessionToken, hasPermission } from '@/lib/auth';
 import DOMPurify from 'isomorphic-dompurify';
+import { verifySessionToken, hasPermission } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-
-const ADMIN_PASSWORD = env.ADMIN_PASSWORD;
 
 const redis = new Redis({
   url: env.KV_REST_API_URL,
@@ -21,7 +18,7 @@ const redis = new Redis({
 const ratelimit = new Ratelimit({
   redis: redis,
   limiter: Ratelimit.slidingWindow(5, '1 m'),
-  prefix: 'admin-login',
+  prefix: 'admin-config',
 });
 
 const DEFAULT_CONFIG: SiteConfig = {
@@ -40,7 +37,15 @@ const DEFAULT_CONFIG: SiteConfig = {
   updatedAt: new Date().toISOString(),
 };
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  // ✅ JWT-Session-Check für GET
+  const token = request.cookies.get('session')?.value;
+  const sessionUser = token ? verifySessionToken(token) : null;
+
+  if (!sessionUser || !hasPermission(sessionUser.role, 'edit-config')) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const config = await redis.get<SiteConfig>('site-config');
     return NextResponse.json(config || DEFAULT_CONFIG);
@@ -51,38 +56,27 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  // ✅ Rate Limiting für Login-Versuche
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
   const { success } = await ratelimit.limit(ip);
 
   if (!success) {
     return NextResponse.json(
-      { error: 'Zu viele Anmeldeversuche. Bitte warten Sie 60 Sekunden.' },
+      { error: 'Zu viele Anfragen. Bitte warten Sie 60 Sekunden.' },
       { status: 429 }
     );
   }
 
+  // ✅ JWT-Session-Check für POST
+  const token = request.cookies.get('session')?.value;
+  const sessionUser = token ? verifySessionToken(token) : null;
+
+  if (!sessionUser || !hasPermission(sessionUser.role, 'edit-config')) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
-    const password = request.headers.get('x-admin-password') || '';
-
-    if (!password) {
-      return NextResponse.json({ error: 'Kein Passwort übermittelt' }, { status: 401 });
-    }
-
-    const expectedBuffer = Buffer.from(ADMIN_PASSWORD);
-    const providedBuffer = Buffer.from(password);
-
-    if (expectedBuffer.length !== providedBuffer.length) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    if (!crypto.timingSafeEqual(expectedBuffer, providedBuffer)) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const body = await request.json();
 
-    // ✅ Validation für Jackpot + Highlight
     if (body.jackpot && body.jackpot.length > 30) {
       return NextResponse.json(
         { error: 'Jackpot darf maximal 30 Zeichen haben.' },
@@ -96,7 +90,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ✅ XSS-Schutz: Sanitization für User-Input
+    // ✅ XSS-Schutz
     const sanitized = {
       ...DEFAULT_CONFIG,
       ...body,
