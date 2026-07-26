@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -46,6 +46,7 @@ export default function AdminLoginPage() {
 
       if (response.ok && data.success) {
         sessionStorage.setItem('admin-authenticated', 'true');
+        sessionStorage.setItem('admin-login-time', Date.now().toString());
         router.push('/admin/cockpit');
       } else {
         setError(data.error || 'Falsches Passwort oder Server-Fehler');

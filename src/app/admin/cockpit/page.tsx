@@ -13,8 +13,14 @@ export default function AdminCockpit() {
 
   useEffect(() => {
     // Prüfe ob User eingeloggt ist
+    // ✅ Session-Check mit 8-Stunden-Timeout
     const isAuthenticated = sessionStorage.getItem('admin-authenticated');
-    if (!isAuthenticated) {
+    const loginTime = sessionStorage.getItem('admin-login-time');
+    const EIGHT_HOURS = 8 * 60 * 60 * 1000;
+
+    if (!isAuthenticated || !loginTime || Date.now() - parseInt(loginTime) > EIGHT_HOURS) {
+      sessionStorage.removeItem('admin-authenticated');
+      sessionStorage.removeItem('admin-login-time');
       router.push('/admin');
       return;
     }

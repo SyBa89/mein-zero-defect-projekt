@@ -173,3 +173,6 @@ package-lock.json
 # DO NOT IGNORE (wichtig für Vercel/Next.js)
 # ==============================================================================
 # !.env.example   # Optional: Beispiel für benötigte Env-Variablen
+# Backup-Dateien
+*.backup_*
+backup_*/
