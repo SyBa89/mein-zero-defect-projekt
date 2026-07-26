@@ -50,12 +50,20 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   // ✅ GOLD STANDARD: Rate Limiting aktiv (Schutz gegen Brute-Force)
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
-  const { success } = await ratelimit.limit(ip);
+  const { success, reset } = await ratelimit.limit(ip);
 
   if (!success) {
+    // ✅ GOLD STANDARD: Berechne exakte Sekunden bis zum Reset
+    const retryAfter = Math.max(1, Math.ceil((reset - Date.now()) / 1000));
+
     return NextResponse.json(
-      { error: 'Zu viele Anmeldeversuche. Bitte warten Sie 60 Sekunden.' },
-      { status: 429 }
+      { error: `Zu viele Anmeldeversuche. Bitte warten Sie ${retryAfter} Sekunden.` },
+      {
+        status: 429,
+        headers: {
+          'Retry-After': retryAfter.toString(),
+        },
+      }
     );
   }
 
