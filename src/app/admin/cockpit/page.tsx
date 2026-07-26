@@ -9,44 +9,62 @@ export default function AdminCockpit() {
   const [config, setConfig] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [debugInfo, setDebugInfo] = useState('');
   const router = useRouter();
 
-  // ✅ Alle Funktionen VOR useEffect deklarieren
   const loadConfig = async () => {
     try {
+      setDebugInfo('Lade Config...');
       const response = await fetch('/api/admin/config', {
         credentials: 'include',
       });
+
+      setDebugInfo(`Config API Status: ${response.status}`);
+
       if (response.ok) {
         const data = await response.json();
         setConfig(data);
+        setDebugInfo('Config geladen!');
+      } else {
+        const errorData = await response.text();
+        setDebugInfo(`Config Error: ${response.status} - ${errorData}`);
+        setError(`Config-Fehler: ${response.status}`);
       }
-    } catch (err) {
-      console.error('Error loading config:', err);
+    } catch (err: any) {
+      setDebugInfo(`Config Fetch Error: ${err.message}`);
+      setError('Config konnte nicht geladen werden');
     }
   };
 
   const checkSession = async () => {
     try {
+      setDebugInfo('Prüfe Session...');
       const response = await fetch('/api/admin/users', {
         method: 'GET',
         credentials: 'include',
       });
 
+      setDebugInfo(`Session API Status: ${response.status}`);
+
       if (response.ok) {
         setUser({ name: 'Admin', role: 'admin' });
-        loadConfig();
+        await loadConfig();
       } else {
         setError('Nicht angemeldet');
         setTimeout(() => router.push('/admin'), 2000);
       }
-    } catch (err) {
+    } catch (err: any) {
+      setDebugInfo(`Session Error: ${err.message}`);
       setError('Session-Check fehlgeschlagen');
       setTimeout(() => router.push('/admin'), 2000);
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    checkSession();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -84,18 +102,17 @@ export default function AdminCockpit() {
     }
   };
 
-  // ✅ useEffect NACH den Funktionen
-  useEffect(() => {
-    checkSession();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Prüfe Anmeldung...</p>
+          {debugInfo && (
+            <div className="mt-4 p-3 bg-gray-100 rounded-xl text-xs font-mono text-gray-700">
+              <strong>Debug:</strong> {debugInfo}
+            </div>
+          )}
         </div>
       </div>
     );
@@ -104,9 +121,20 @@ export default function AdminCockpit() {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600 mb-4">{error}</p>
-          <p className="text-gray-600">Leite weiter zum Login...</p>
+        <div className="text-center max-w-md">
+          <p className="text-red-600 mb-4 text-lg font-bold">{error}</p>
+          {debugInfo && (
+            <div className="mt-4 p-3 bg-gray-100 rounded-xl text-xs font-mono text-gray-700 text-left">
+              <strong>Debug-Info:</strong>
+              <pre className="mt-2 whitespace-pre-wrap">{debugInfo}</pre>
+            </div>
+          )}
+          <button
+            onClick={() => router.push('/admin')}
+            className="mt-6 px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700"
+          >
+            Zurück zum Login
+          </button>
         </div>
       </div>
     );
@@ -115,7 +143,14 @@ export default function AdminCockpit() {
   if (!config) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Lade Konfiguration...</p>
+        <div className="text-center">
+          <p className="text-gray-600">Lade Konfiguration...</p>
+          {debugInfo && (
+            <div className="mt-4 p-3 bg-gray-100 rounded-xl text-xs font-mono text-gray-700">
+              <strong>Debug:</strong> {debugInfo}
+            </div>
+          )}
+        </div>
       </div>
     );
   }

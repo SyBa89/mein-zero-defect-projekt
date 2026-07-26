@@ -64,8 +64,11 @@ function validateConfig(data: any): SiteConfig {
 }
 
 export async function GET(request: NextRequest) {
+  console.log('[CONFIG API] GET request received');
+  console.log('[CONFIG API] Token:', token ? 'present' : 'missing');
   const token = request.cookies.get('session')?.value;
   const sessionUser = token ? verifySessionToken(token) : null;
+  console.log('[CONFIG API] Session user:', sessionUser);
 
   if (!sessionUser || !hasPermission(sessionUser.role, 'edit-config')) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -89,8 +92,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Zu viele Anfragen' }, { status: 429 });
   }
 
+  console.log('[CONFIG API] Token:', token ? 'present' : 'missing');
   const token = request.cookies.get('session')?.value;
   const sessionUser = token ? verifySessionToken(token) : null;
+  console.log('[CONFIG API] Session user:', sessionUser);
 
   if (!sessionUser || !hasPermission(sessionUser.role, 'edit-config')) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
