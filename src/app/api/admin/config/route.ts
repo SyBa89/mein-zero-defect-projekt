@@ -1,8 +1,8 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { Ratelimit } from '@upstash/ratelimit';
 import crypto from 'crypto';
-import { revalidateTag } from 'next/cache';
+import { revalidateTag, revalidatePath } from 'next/cache';
 import { SiteConfig } from '@/lib/site-config';
 
 export const dynamic = 'force-dynamic';
@@ -78,6 +78,19 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+    // ✅ Validation für Jackpot + Highlight
+    if (body.jackpot && body.jackpot.length > 30) {
+      return NextResponse.json(
+        { error: 'Jackpot darf maximal 30 Zeichen haben.' },
+        { status: 400 }
+      );
+    }
+    if (body.highlight && body.highlight.length > 100) {
+      return NextResponse.json(
+        { error: 'Highlight darf maximal 100 Zeichen haben.' },
+        { status: 400 }
+      );
+    }
     const newConfig: SiteConfig = {
       ...DEFAULT_CONFIG,
       ...body,
@@ -86,6 +99,7 @@ export async function POST(request: NextRequest) {
 
     await redis.set('site-config', newConfig);
     revalidateTag('config');
+    revalidatePath('/');
 
     return NextResponse.json({
       success: true,

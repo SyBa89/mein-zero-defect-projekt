@@ -1,13 +1,6 @@
-import { Redis } from '@upstash/redis';
 import { unstable_cache } from 'next/cache';
-import { KIOSK_CONFIG } from '@/lib/config';
+import { Redis } from '@upstash/redis';
 
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL!,
-  token: process.env.KV_REST_API_TOKEN!,
-});
-
-// ✅ GOLDSTANDARD: Interface wird exportiert, um Duplikate zu vermeiden
 export interface SiteConfig {
   isClosed: boolean;
   bannerText: string;
@@ -19,22 +12,31 @@ export interface SiteConfig {
   mapsLink: string;
   facebook: string;
   openingHoursText: string;
+  jackpot?: string;
+  highlight?: string;
   updatedAt: string;
 }
 
-const DEFAULT_CONFIG: SiteConfig = {
+export const DEFAULT_CONFIG: SiteConfig = {
   isClosed: false,
   bannerText: '',
   emergencyMessage: '',
-  name: KIOSK_CONFIG.name,
-  phoneDisplay: KIOSK_CONFIG.phoneDisplay,
-  phoneHref: KIOSK_CONFIG.phoneHref,
-  address: KIOSK_CONFIG.address,
-  mapsLink: KIOSK_CONFIG.mapsLink,
-  facebook: KIOSK_CONFIG.facebook,
+  name: 'Kiosk Lollipop',
+  phoneDisplay: '02235 9291160',
+  phoneHref: 'tel:+4922359291160',
+  address: 'Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar',
+  mapsLink: 'https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683',
+  facebook: 'https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/',
   openingHoursText: 'Mo-Fr 07:30-19:00, Sa 07:30-14:30',
+  jackpot: '',
+  highlight: '',
   updatedAt: new Date().toISOString(),
 };
+
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
+});
 
 export const getSiteConfig = unstable_cache(
   async (): Promise<SiteConfig> => {
@@ -42,7 +44,7 @@ export const getSiteConfig = unstable_cache(
       const config = await redis.get<SiteConfig>('site-config');
       return config || DEFAULT_CONFIG;
     } catch (error) {
-      console.error('Error fetching config from Redis:', error);
+      console.error('[getSiteConfig] Error fetching config from Redis:', error);
       return DEFAULT_CONFIG;
     }
   },

@@ -1,4 +1,5 @@
 import Header from '@/components/Header';
+import JackpotBanner from '@/components/JackpotBanner';
 import Footer from '@/components/Footer';
 import MobileActionBar from '@/components/MobileActionBar';
 import FAQ from '@/components/FAQ';
@@ -112,6 +113,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
       <Header currentPath="/" />
+      <JackpotBanner />
       <main>
         <div className="sr-only">
           <a

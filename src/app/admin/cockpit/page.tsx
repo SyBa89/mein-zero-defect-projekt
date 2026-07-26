@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -225,6 +225,47 @@ export default function AdminCockpit() {
         </div>
 
         {/* Letzte Aktualisierung */}
+
+        {/* ─── Lotto Jackpot ────────────────────────────────────── */}
+        <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl shadow-sm border border-yellow-200 p-6">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">🎰 Lotto Jackpot</h2>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Aktueller Jackpot (€)
+            </label>
+            <input
+              type="text"
+              value={config.jackpot || ''}
+              onChange={(e) => setConfig({ ...config, jackpot: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              placeholder="z.B. 45.000.000"
+              maxLength={30}
+            />
+            <p className="mt-2 text-xs text-gray-500">
+              {`Wird auf der Startseite als "🎰 Jackpot: 45.000.000 €" angezeigt`}
+            </p>
+          </div>
+        </div>
+
+        {/* ─── Tages-Highlight ────────────────────────────────────── */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-sm border border-blue-200 p-6">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">⭐ Tages-Highlight</h2>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Highlight-Text</label>
+            <input
+              type="text"
+              value={config.highlight || ''}
+              onChange={(e) => setConfig({ ...config, highlight: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="z.B. 🎉 Heute: Lotto Jackpot 45 Millionen!"
+              maxLength={100}
+            />
+            <p className="mt-2 text-xs text-gray-500">
+              Wird als Banner auf der Startseite angezeigt
+            </p>
+          </div>
+        </div>
+
         <div className="mt-6 text-center text-sm text-gray-500">
           Letzte Aktualisierung: {new Date(config.updatedAt).toLocaleString('de-DE')}
         </div>
