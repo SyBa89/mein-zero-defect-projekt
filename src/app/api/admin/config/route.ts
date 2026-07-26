@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import { revalidateTag, revalidatePath } from 'next/cache';
 import { SiteConfig } from '@/lib/site-config';
 import { env } from '@/lib/env';
+import { verifySessionToken, hasPermission } from '@/lib/auth';
 import DOMPurify from 'isomorphic-dompurify';
 
 export const dynamic = 'force-dynamic';

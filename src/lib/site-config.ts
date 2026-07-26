@@ -51,3 +51,13 @@ export const getSiteConfig = unstable_cache(
   ['site-config'],
   { revalidate: 60, tags: ['config'] }
 );
+
+export interface User {
+  id: string;
+  username: string;
+  passwordHash: string;
+  role: 'admin' | 'mitarbeiter' | 'redakteur';
+  name: string;
+  createdAt: string;
+  lastLogin?: string;
+}
