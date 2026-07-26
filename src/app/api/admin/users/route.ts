@@ -88,15 +88,21 @@ export async function POST(request: NextRequest) {
     const { action } = body;
 
     if (action === 'login') {
+      // DEBUG: Login-Attempt loggen
+      console.log('[USER API] Login attempt:', { username, ip });
       const { username, password } = body;
       const users = await getUsers();
       const user = users.find((u) => u.username === username);
 
+      // DEBUG: Login-Fail loggen
+      console.log('[USER API] Login FAIL:', { username, reason: 'invalid credentials' });
       if (!user || !(await verifyPassword(password, user.passwordHash))) {
         return NextResponse.json({ error: 'Ungültige Anmeldedaten' }, { status: 401 });
       }
 
       user.lastLogin = new Date().toISOString();
+      // DEBUG: Login-Success loggen
+      console.log('[USER API] Login SUCCESS:', { username: user.username, role: user.role });
       await saveUsers(users);
 
       const token = createSessionToken({
@@ -145,6 +151,8 @@ export async function POST(request: NextRequest) {
       const users = await getUsers();
       const user = users.find((u) => u.id === sessionUser.id);
 
+      // DEBUG: Login-Fail loggen
+      console.log('[USER API] Login FAIL:', { username, reason: 'invalid credentials' });
       if (!user || !(await verifyPassword(oldPassword, user.passwordHash))) {
         return NextResponse.json({ error: 'Altes Passwort ist falsch' }, { status: 401 });
       }

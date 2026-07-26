@@ -8,21 +8,25 @@ export default function AdminLoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [debugInfo, setDebugInfo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setDebugInfo('');
     setIsLoading(true);
 
     try {
+      setDebugInfo('Sende Login-Request...');
+
       const response = await fetch('/api/admin/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // Wichtig für Cookies!
+        credentials: 'include',
         body: JSON.stringify({
           action: 'login',
           username,
@@ -30,16 +34,29 @@ export default function AdminLoginPage() {
         }),
       });
 
-      const data = await response.json();
+      setDebugInfo(`Response Status: ${response.status}`);
+      const text = await response.text();
+      setDebugInfo((prev) => prev + ` | Body: ${text.substring(0, 100)}`);
+
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        setError('Server-Antwort konnte nicht gelesen werden');
+        setIsLoading(false);
+        return;
+      }
 
       if (response.ok && data.success) {
-        router.push('/admin/cockpit');
+        setDebugInfo('Login erfolgreich! Leite weiter...');
+        setTimeout(() => router.push('/admin/cockpit'), 500);
       } else {
-        setError(data.error || 'Ungültige Anmeldedaten');
+        setError(data.error || `Fehler ${response.status}: ${text}`);
       }
-    } catch (err) {
-      setError('Verbindungsfehler. Bitte versuchen Sie es erneut.');
-      console.error('[ADMIN LOGIN] Fetch error:', err);
+    } catch (err: any) {
+      setError('Verbindungsfehler: ' + err.message);
+      setDebugInfo('Fetch-Fehler: ' + err.message);
+      console.error('[ADMIN LOGIN] Error:', err);
     } finally {
       setIsLoading(false);
     }
@@ -122,30 +139,15 @@ export default function AdminLoginPage() {
             disabled={isLoading || !username || !password}
             className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-pink-500/30 transform hover:-translate-y-0.5 active:scale-95"
           >
-            {isLoading ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                Anmeldung läuft...
-              </span>
-            ) : (
-              'Anmelden'
-            )}
+            {isLoading ? 'Anmeldung läuft...' : 'Anmelden'}
           </button>
         </form>
+
+        {debugInfo && (
+          <div className="mt-4 p-3 bg-gray-100 rounded-xl text-xs font-mono text-gray-700">
+            <strong>Debug:</strong> {debugInfo}
+          </div>
+        )}
 
         <div className="mt-8 text-center">
           <Link href="/" className="text-sm text-gray-600 hover:text-pink-600 transition-colors">
@@ -159,7 +161,7 @@ export default function AdminLoginPage() {
             <br />
             Benutzer: <code className="bg-blue-100 px-1 rounded">admin</code>
             <br />
-            Passwort: Ihr ADMIN_PASSWORD aus der Konfiguration
+            Passwort: <code className="bg-blue-100 px-1 rounded">lollipop2024</code>
           </p>
         </div>
       </div>
