@@ -1,294 +1,137 @@
-'use client';
-import { useState, useEffect, useCallback } from 'react';
-import { SiteConfig } from '@/lib/site-config';
+﻿'use client';
 
-// ✅ GOLDSTANDARD FIX: Hilfskomponenten MÜSSEN außerhalb der Hauptkomponente definiert werden
-interface InputFieldProps {
-  label: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: string;
-  placeholder?: string;
-}
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-const InputField = ({
-  label,
-  name,
-  value,
-  onChange,
-  type = 'text',
-  placeholder = '',
-}: InputFieldProps) => (
-  <div>
-    <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-    <input
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-    />
-  </div>
-);
-
-export default function AdminPanel() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    if (typeof window !== 'undefined') return localStorage.getItem('admin-auth') === 'true';
-    return false;
-  });
-
+export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
-  const [config, setConfig] = useState<SiteConfig>({
-    isClosed: false,
-    bannerText: '',
-    emergencyMessage: '',
-    name: 'Kiosk Lollipop',
-    phoneDisplay: '02235 9291160',
-    phoneHref: 'tel:+4922359291160',
-    address: 'Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar',
-    mapsLink: 'https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683',
-    facebook: 'https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/',
-    openingHoursText: 'Mo-Fr 07:30-19:00, Sa 07:30-14:30',
-    updatedAt: '',
-  });
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-  const loadConfig = useCallback(async () => {
-    try {
-      const res = await fetch('/api/admin/config');
-      const data = await res.json();
-      setConfig(data);
-    } catch {
-      setMessage({ type: 'error', text: 'Fehler beim Laden der Konfiguration' });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) loadConfig();
-  }, [isAuthenticated, loadConfig]);
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     setIsLoading(true);
-    setMessage(null);
+
     try {
-      const res = await fetch('/api/admin/config', {
+      const response = await fetch('/api/admin/config', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
-        body: JSON.stringify({}),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': password,
+        },
+        body: JSON.stringify({ action: 'login' }),
       });
-      if (res.ok) {
-        localStorage.setItem('admin-auth', 'true');
-        setIsAuthenticated(true);
-        await loadConfig();
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        sessionStorage.setItem('admin-authenticated', 'true');
+        router.push('/admin/cockpit');
       } else {
-        setMessage({ type: 'error', text: 'Falsches Passwort!' });
-        setPassword('');
+        setError(data.error || 'Falsches Passwort oder Server-Fehler');
       }
-    } catch {
-      setMessage({ type: 'error', text: 'Verbindungsfehler zur API.' });
+    } catch (err) {
+      setError('Verbindungsfehler. Bitte versuchen Sie es erneut.');
+      console.error('[ADMIN LOGIN] Fetch error:', err);
     } finally {
       setIsLoading(false);
     }
   };
-
-  const saveConfig = async () => {
-    setIsLoading(true);
-    setMessage(null);
-    try {
-      const res = await fetch('/api/admin/config', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
-        body: JSON.stringify(config),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setMessage({ type: 'success', text: '✅ Änderungen erfolgreich gespeichert!' });
-        await loadConfig();
-      } else {
-        setMessage({ type: 'error', text: data.error || 'Fehler beim Speichern' });
-      }
-    } catch {
-      setMessage({ type: 'error', text: 'Fehler beim Speichern' });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full">
-          <h1 className="text-2xl font-black text-gray-900 mb-6 text-center">Mitarbeiter-Login</h1>
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Passwort
-              </label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                placeholder="Passwort eingeben"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-3 px-6 rounded-xl hover:from-pink-600 hover:to-purple-700 transition-all disabled:opacity-50"
-            >
-              {isLoading ? 'Prüfe...' : 'Anmelden'}
-            </button>
-          </form>
-          {message && (
-            <div
-              className={`mt-4 p-3 rounded-lg text-sm ${message.type === 'error' ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`}
-            >
-              {message.text}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-black text-gray-900">Admin-Cockpit</h1>
-          <button
-            onClick={() => {
-              localStorage.removeItem('admin-auth');
-              setIsAuthenticated(false);
-            }}
-            className="text-sm text-gray-600 hover:text-gray-900"
-          >
-            Abmelden
-          </button>
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8">
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg
+              className="w-10 h-10 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </svg>
+          </div>
+          <h1 className="text-3xl font-black text-gray-900 mb-2">Admin Login</h1>
+          <p className="text-gray-600">Kiosk Lollipop Verwaltung</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 mb-8">
-          <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl p-6 text-white">
-            <h2 className="text-xl font-bold mb-4">🚨 Notfall-Modus</h2>
-            <label className="flex items-center gap-3 cursor-pointer mb-4">
-              <input
-                type="checkbox"
-                checked={config.isClosed}
-                onChange={(e) => setConfig({ ...config, isClosed: e.target.checked })}
-                className="w-6 h-6 rounded border-gray-300 text-pink-600 focus:ring-pink-500"
-              />
-              <span className="font-medium">
-                {config.isClosed
-                  ? '✅ Geschäft als "Geschlossen" markieren'
-                  : '⭕ Geschäft als "Geöffnet" markieren'}
-              </span>
-            </label>
-            {config.isClosed && (
-              <div className="bg-white/10 rounded-lg p-4 mt-4">
-                <label className="block text-sm font-medium mb-2">Grund für Schließung:</label>
-                <textarea
-                  value={config.emergencyMessage}
-                  onChange={(e) => setConfig({ ...config, emergencyMessage: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg text-gray-900"
-                  rows={2}
-                  placeholder="z.B. Krankheitsbedingt geschlossen bis..."
+        {error && (
+          <div className="mb-6 bg-red-50 border-2 border-red-200 text-red-800 px-4 py-3 rounded-xl">
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                  clipRule="evenodd"
                 />
-              </div>
-            )}
-          </div>
-
-          <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
-            <h2 className="text-xl font-bold mb-4 text-gray-900">🏪 Stammdaten</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InputField
-                label="Name des Kiosks"
-                name="name"
-                value={config.name}
-                onChange={(e) => setConfig({ ...config, name: e.target.value })}
-              />
-              <InputField
-                label="Telefon (Anzeige)"
-                name="phoneDisplay"
-                value={config.phoneDisplay}
-                onChange={(e) => setConfig({ ...config, phoneDisplay: e.target.value })}
-              />
-              <InputField
-                label="Telefon (Link)"
-                name="phoneHref"
-                value={config.phoneHref}
-                onChange={(e) => setConfig({ ...config, phoneHref: e.target.value })}
-              />
-              <InputField
-                label="Öffnungszeiten"
-                name="openingHoursText"
-                value={config.openingHoursText}
-                onChange={(e) => setConfig({ ...config, openingHoursText: e.target.value })}
-              />
-              <div className="md:col-span-2">
-                <InputField
-                  label="Adresse"
-                  name="address"
-                  value={config.address}
-                  onChange={(e) => setConfig({ ...config, address: e.target.value })}
-                />
-              </div>
-              <div className="md:col-span-2">
-                <InputField
-                  label="Google Maps Link"
-                  name="mapsLink"
-                  value={config.mapsLink}
-                  onChange={(e) => setConfig({ ...config, mapsLink: e.target.value })}
-                />
-              </div>
-              <div className="md:col-span-2">
-                <InputField
-                  label="Facebook Link"
-                  name="facebook"
-                  value={config.facebook}
-                  onChange={(e) => setConfig({ ...config, facebook: e.target.value })}
-                />
-              </div>
+              </svg>
+              <p className="font-semibold">{error}</p>
             </div>
           </div>
+        )}
 
-          <div className="bg-gray-50 rounded-xl p-6 border-2 border-gray-200">
-            <h2 className="text-xl font-bold mb-4 text-gray-900">📢 Aktions-Banner</h2>
-            <InputField
-              label="Banner-Text"
-              name="bannerText"
-              value={config.bannerText}
-              onChange={(e) => setConfig({ ...config, bannerText: e.target.value })}
-              placeholder="z.B. 🎉 Heute: Lotto Jackpot 45 Millionen!"
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div>
+            <label htmlFor="password" className="block text-sm font-bold text-gray-900 mb-2">
+              Admin-Passwort
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 outline-none transition-all"
+              placeholder="••••••••••••"
+              required
+              disabled={isLoading}
+              autoFocus
             />
           </div>
-        </div>
 
-        <button
-          onClick={saveConfig}
-          disabled={isLoading}
-          className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-4 px-6 rounded-xl hover:from-pink-600 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-lg"
-        >
-          {isLoading ? '💾 Speichere...' : '💾 Alle Änderungen speichern'}
-        </button>
-        {message && (
-          <div
-            className={`mt-4 p-4 rounded-xl text-center font-medium ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}
+          <button
+            type="submit"
+            disabled={isLoading || !password}
+            className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-pink-500/30 transform hover:-translate-y-0.5 active:scale-95"
           >
-            {message.text}
-          </div>
-        )}
-        {config.updatedAt && (
-          <p className="text-xs text-gray-500 text-center mt-4">
-            Zuletzt aktualisiert: {new Date(config.updatedAt).toLocaleString('de-DE')}
-          </p>
-        )}
+            {isLoading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Anmeldung läuft...
+              </span>
+            ) : (
+              'Anmelden'
+            )}
+          </button>
+        </form>
+
+        <div className="mt-8 text-center">
+          <Link href="/" className="text-sm text-gray-600 hover:text-pink-600 transition-colors">
+            ← Zurück zur Startseite
+          </Link>
+        </div>
       </div>
     </div>
   );

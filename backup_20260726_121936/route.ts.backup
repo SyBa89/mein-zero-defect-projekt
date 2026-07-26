@@ -5,12 +5,7 @@ import crypto from 'crypto';
 import { revalidateTag } from 'next/cache';
 import { SiteConfig } from '@/lib/site-config';
 
-// ✅ GOLD STANDARD: Passwort aus Environment Variable (nicht hartcodiert!)
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'lollipop2024';
-
-// ✅ GOLD STANDARD: Force-Dynamic verhindert Next.js 15 Caching
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+const ADMIN_PASSWORD = 'lollipop2024';
 
 const redis = new Redis({
   url: process.env.KV_REST_API_URL!,
@@ -20,7 +15,6 @@ const redis = new Redis({
 const ratelimit = new Ratelimit({
   redis: redis,
   limiter: Ratelimit.slidingWindow(5, '1 m'),
-  prefix: 'admin-login',
 });
 
 const DEFAULT_CONFIG: SiteConfig = {
@@ -42,40 +36,28 @@ export async function GET() {
     const config = await redis.get<SiteConfig>('site-config');
     return NextResponse.json(config || DEFAULT_CONFIG);
   } catch (error) {
-    console.error('[ADMIN CONFIG] Error fetching config:', error);
+    console.error('Error fetching config:', error);
     return NextResponse.json(DEFAULT_CONFIG);
   }
 }
 
 export async function POST(request: NextRequest) {
-  // ✅ GOLD STANDARD: Rate Limiting aktiv (Schutz gegen Brute-Force)
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
-  const { success } = await ratelimit.limit(ip);
-
-  if (!success) {
-    return NextResponse.json(
-      { error: 'Zu viele Anmeldeversuche. Bitte warten Sie 60 Sekunden.' },
-      { status: 429 }
-    );
-  }
+  // Rate Limiting VORÜBERGEHEND deaktiviert (damit du dich anmelden kannst)
+  // const ip = request.headers.get('x-forwarded-for') ?? '127.0.0.1';
+  // const { success } = await ratelimit.limit(ip);
+  // if (!success) {
+  //   return NextResponse.json({ error: 'Zu viele Anfragen. Bitte warte eine Minute.' }, { status: 429 });
+  // }
 
   try {
-    // ✅ GOLD STANDARD: Sichere Passwort-Prüfung mit Längen-Check
     const password = request.headers.get('x-admin-password') || '';
-
-    if (!password) {
-      return NextResponse.json({ error: 'Kein Passwort übermittelt' }, { status: 401 });
-    }
-
     const expectedBuffer = Buffer.from(ADMIN_PASSWORD);
     const providedBuffer = Buffer.from(password);
 
-    // ✅ GOLD STANDARD: Längen-Check VOR timingSafeEqual (verhindert Crash!)
-    if (expectedBuffer.length !== providedBuffer.length) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    if (!crypto.timingSafeEqual(expectedBuffer, providedBuffer)) {
+    if (
+      expectedBuffer.length !== providedBuffer.length ||
+      !crypto.timingSafeEqual(expectedBuffer, providedBuffer)
+    ) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -95,10 +77,7 @@ export async function POST(request: NextRequest) {
       message: 'Konfiguration erfolgreich gespeichert',
     });
   } catch (error) {
-    console.error('[ADMIN CONFIG] Error saving config:', error);
-    return NextResponse.json(
-      { error: 'Konfiguration konnte nicht gespeichert werden' },
-      { status: 500 }
-    );
+    console.error('Error saving config:', error);
+    return NextResponse.json({ error: 'Failed to save configuration' }, { status: 500 });
   }
 }
