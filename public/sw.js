@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kiosk-v2';
+﻿const CACHE_NAME = 'kiosk-v2';
 const urlsToCache = ['/', '/admin', '/kontakt', '/images/icon.png', '/manifest.json'];
 
 self.addEventListener('install', (event) => {
@@ -6,6 +6,11 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  // ✅ GOLD STANDARD: POST-Anfragen nicht cachen (verhindert Cache.put TypeError)
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((response) => {
       return (
