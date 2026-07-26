@@ -53,9 +53,9 @@ export default function AdminLoginPage() {
       } else {
         setError(data.error || `Fehler ${response.status}: ${text}`);
       }
-    } catch (err: any) {
-      setError('Verbindungsfehler: ' + err.message);
-      setDebugInfo('Fetch-Fehler: ' + err.message);
+    } catch (err) {
+      setError('Verbindungsfehler: ' + (err as Error).message);
+      setDebugInfo('Fetch-Fehler: ' + (err as Error).message);
       console.error('[ADMIN LOGIN] Error:', err);
     } finally {
       setIsLoading(false);
