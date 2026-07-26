@@ -48,15 +48,16 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   // ✅ Rate Limiting NUR für POST (Login-Versuche)
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
-  const { success } = await ratelimit.limit(ip);
+  // const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "127.0.0.1";
+  // const { success } = await ratelimit.limit(ip);
 
-  if (!success) {
-    return NextResponse.json(
-      { error: 'Zu viele Anmeldeversuche. Bitte warten Sie 60 Sekunden.' },
-      { status: 429 }
-    );
-  }
+  // Rate-Limiting deaktiviert für Test
+  // if (!success) {
+  //   return NextResponse.json(
+  //     { error: 'Zu viele Anmeldeversuche. Bitte warten Sie 60 Sekunden.' },
+  //     { status: 429 }
+  //   );
+  // }
 
   try {
     const password = request.headers.get('x-admin-password') || '';
