@@ -1,4 +1,4 @@
-﻿/*
+import CookieBanner from '@/components/CookieBanner'; /*
  * ⚠️ RECHTLICHER HINWEIS (TODO – vor öffentlichem Launch prüfen):
  * 1. Impressum (anwaltlich geprüft)
  * 2. Datenschutzerklärung (DSGVO-konform)
@@ -111,6 +111,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased selection:bg-pink-200 selection:text-pink-900">
         <EmergencyBanner />
         {children}
+        <CookieBanner />
         <MobileBottomNav />
         <script
           dangerouslySetInnerHTML={{

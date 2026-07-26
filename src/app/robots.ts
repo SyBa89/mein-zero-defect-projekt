@@ -1,16 +1,14 @@
 import { MetadataRoute } from 'next';
-import { KIOSK_CONFIG } from '@/lib/config';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = KIOSK_CONFIG.url.replace(/\/$/, '');
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mein-zero-defect-projekt.vercel.app';
 
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      // Admin-Bereich und interne APIs strikt für Crawler sperren
-      disallow: ['/admin', '/api/'],
+      disallow: ['/admin', '/api'],
     },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${siteUrl}/sitemap.xml`,
   };
 }
