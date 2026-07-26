@@ -1,4 +1,4 @@
-/*
+﻿/*
  * ⚠️ RECHTLICHER HINWEIS (TODO – vor öffentlichem Launch prüfen):
  * 1. Impressum (anwaltlich geprüft)
  * 2. Datenschutzerklärung (DSGVO-konform)
@@ -115,8 +115,8 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js');
+              // [REMOVED BY ZERO-DEFECT] // [REMOVED BY ZERO-DEFECT] if ('serviceWorker' in navigator) {
+                // [REMOVED BY ZERO-DEFECT] // [REMOVED BY ZERO-DEFECT] navigator.serviceWorker.register('/sw.js');
               }
             `,
           }}
