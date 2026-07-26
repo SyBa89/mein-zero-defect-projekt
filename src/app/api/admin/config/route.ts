@@ -37,8 +37,33 @@ const DEFAULT_CONFIG: SiteConfig = {
   updatedAt: new Date().toISOString(),
 };
 
+// ✅ Hilfsfunktion: Validiert und repariert Config-Daten
+function validateConfig(data: any): SiteConfig {
+  return {
+    isClosed: typeof data?.isClosed === 'boolean' ? data.isClosed : DEFAULT_CONFIG.isClosed,
+    bannerText: typeof data?.bannerText === 'string' ? data.bannerText : DEFAULT_CONFIG.bannerText,
+    emergencyMessage:
+      typeof data?.emergencyMessage === 'string'
+        ? data.emergencyMessage
+        : DEFAULT_CONFIG.emergencyMessage,
+    name: typeof data?.name === 'string' ? data.name : DEFAULT_CONFIG.name,
+    phoneDisplay:
+      typeof data?.phoneDisplay === 'string' ? data.phoneDisplay : DEFAULT_CONFIG.phoneDisplay,
+    phoneHref: typeof data?.phoneHref === 'string' ? data.phoneHref : DEFAULT_CONFIG.phoneHref,
+    address: typeof data?.address === 'string' ? data.address : DEFAULT_CONFIG.address,
+    mapsLink: typeof data?.mapsLink === 'string' ? data.mapsLink : DEFAULT_CONFIG.mapsLink,
+    facebook: typeof data?.facebook === 'string' ? data.facebook : DEFAULT_CONFIG.facebook,
+    openingHoursText:
+      typeof data?.openingHoursText === 'string'
+        ? data.openingHoursText
+        : DEFAULT_CONFIG.openingHoursText,
+    jackpot: typeof data?.jackpot === 'string' ? data.jackpot : DEFAULT_CONFIG.jackpot,
+    highlight: typeof data?.highlight === 'string' ? data.highlight : DEFAULT_CONFIG.highlight,
+    updatedAt: typeof data?.updatedAt === 'string' ? data.updatedAt : DEFAULT_CONFIG.updatedAt,
+  };
+}
+
 export async function GET(request: NextRequest) {
-  // ✅ JWT-Session-Check für GET
   const token = request.cookies.get('session')?.value;
   const sessionUser = token ? verifySessionToken(token) : null;
 
@@ -47,10 +72,11 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const config = await redis.get<SiteConfig>('site-config');
-    return NextResponse.json(config || DEFAULT_CONFIG);
+    const rawData = await redis.get('site-config');
+    const config = validateConfig(rawData);
+    return NextResponse.json(config);
   } catch (error) {
-    console.error('[ADMIN CONFIG] Error fetching config:', error);
+    console.error('[ADMIN CONFIG] Error:', error);
     return NextResponse.json(DEFAULT_CONFIG);
   }
 }
@@ -60,13 +86,9 @@ export async function POST(request: NextRequest) {
   const { success } = await ratelimit.limit(ip);
 
   if (!success) {
-    return NextResponse.json(
-      { error: 'Zu viele Anfragen. Bitte warten Sie 60 Sekunden.' },
-      { status: 429 }
-    );
+    return NextResponse.json({ error: 'Zu viele Anfragen' }, { status: 429 });
   }
 
-  // ✅ JWT-Session-Check für POST
   const token = request.cookies.get('session')?.value;
   const sessionUser = token ? verifySessionToken(token) : null;
 
@@ -78,19 +100,12 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     if (body.jackpot && body.jackpot.length > 30) {
-      return NextResponse.json(
-        { error: 'Jackpot darf maximal 30 Zeichen haben.' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Jackpot zu lang' }, { status: 400 });
     }
     if (body.highlight && body.highlight.length > 100) {
-      return NextResponse.json(
-        { error: 'Highlight darf maximal 100 Zeichen haben.' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Highlight zu lang' }, { status: 400 });
     }
 
-    // ✅ XSS-Schutz
     const sanitized = {
       ...DEFAULT_CONFIG,
       ...body,
@@ -107,13 +122,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       config: sanitized,
-      message: 'Konfiguration erfolgreich gespeichert',
+      message: 'Konfiguration gespeichert',
     });
   } catch (error) {
-    console.error('[ADMIN CONFIG] Error saving config:', error);
-    return NextResponse.json(
-      { error: 'Konfiguration konnte nicht gespeichert werden' },
-      { status: 500 }
-    );
+    console.error('[ADMIN CONFIG] Error:', error);
+    return NextResponse.json({ error: 'Server-Fehler' }, { status: 500 });
   }
 }
