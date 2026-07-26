@@ -64,13 +64,13 @@ export default function Footer() {
               {/* ✅ PROAKTIV WIEDERHERGESTELLT: Diskreter, aber für Mitarbeiter leicht auffindbarer Login-Link */}
               <li className="pt-3 border-t border-gray-800 mt-3">
                 <Link
-                  href="/admin-login"
+                  href="/admin"
                   prefetch={true}
                   aria-current={isActiveLink('/intern') ? 'page' : undefined}
                   className={`text-gray-500 hover:text-pink-400 transition-colors text-xs flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded px-1 ${
                     isActiveLink('/intern') ? 'text-pink-400' : ''
                   }`}
-                  aria-label="Zum Admin-Login"
+                  aria-label="Zum Admin"
                 >
                   <svg
                     className="w-3.5 h-3.5"
@@ -86,7 +86,7 @@ export default function Footer() {
                       d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                     />
                   </svg>
-                  Admin-Login
+                  Admin
                 </Link>
               </li>
             </ul>
