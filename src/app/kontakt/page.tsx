@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import MobileActionBar from '@/components/MobileActionBar';
 import KontaktFormClient from '@/components/KontaktFormClient';
 
@@ -18,13 +16,10 @@ export const metadata: Metadata = {
 export default function KontaktPage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
-      <Header />
-
       <main className="flex-grow py-16">
         <KontaktFormClient />
       </main>
 
-      <Footer />
       <MobileActionBar />
     </div>
   );

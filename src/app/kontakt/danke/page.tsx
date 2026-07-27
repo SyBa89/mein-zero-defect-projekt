@@ -1,5 +1,3 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import MobileActionBar from '@/components/MobileActionBar';
 import Link from 'next/link';
 import type { Metadata } from 'next';
@@ -19,8 +17,6 @@ export default function DankePage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
       {/* ✅ Korrektur: currentPath wird als Prop übergeben */}
-      <Header currentPath="/kontakt/danke" />
-
       <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         <div className="max-w-2xl w-full bg-white p-8 sm:p-12 rounded-3xl shadow-xl border border-gray-100 text-center">
           <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6 transition-all duration-700 ease-out hover:scale-105">
@@ -188,7 +184,6 @@ export default function DankePage() {
         </div>
       </main>
 
-      <Footer />
       <MobileActionBar />
     </div>
   );

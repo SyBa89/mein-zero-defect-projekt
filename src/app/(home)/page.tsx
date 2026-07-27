@@ -1,7 +1,5 @@
-import Header from '@/components/Header';
 import JackpotBanner from '@/components/JackpotBanner';
 import DynamicSections from '@/components/DynamicSections';
-import Footer from '@/components/Footer';
 import MobileActionBar from '@/components/MobileActionBar';
 import CookieNotice from '@/components/CookieNotice';
 import HeroSection from '@/components/HeroSection';
@@ -111,7 +109,6 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
-      <Header currentPath="/" />
       <JackpotBanner />
       <main>
         <div className="sr-only">
@@ -135,7 +132,6 @@ export default function HomePage() {
         <CTASection />
         <LegalNotice />
       </main>
-      <Footer />
       <MobileActionBar />
       <CookieNotice />
     </div>
