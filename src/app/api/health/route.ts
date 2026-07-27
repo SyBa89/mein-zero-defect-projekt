@@ -1,4 +1,4 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { Ratelimit } from '@upstash/ratelimit';
 import { env } from '@/lib/env';
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
       timestamp: new Date().toISOString(),
       services: { redis: 'connected', api: 'operational' },
     });
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     return NextResponse.json(
       {
         status: 'degraded',

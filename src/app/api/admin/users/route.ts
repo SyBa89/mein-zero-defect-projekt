@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { Ratelimit } from '@upstash/ratelimit';
 import { env } from '@/lib/env';
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
     const users = await getUsers();
     const safeUsers = users.map(({ passwordHash: _ph, ...rest }) => rest);
     return NextResponse.json(safeUsers);
-  } catch (error: unknown) {
+  } catch (_error: unknown) {
     return NextResponse.json({ error: 'Fehler beim Laden' }, { status: 500 });
   }
 }
@@ -87,14 +87,14 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { action } = body;
 
-    // â”€â”€â”€ LOGIN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── LOGIN ─────────────────────────────────────────────────────
     if (action === 'login') {
       const { username, password } = body;
       const users = await getUsers();
       const user = users.find((u) => u.username === username);
 
       if (!user || !(await verifyPassword(password, user.passwordHash))) {
-        return NextResponse.json({ error: 'UngÃ¼ltige Anmeldedaten' }, { status: 401 });
+        return NextResponse.json({ error: 'Ungültige Anmeldedaten' }, { status: 401 });
       }
 
       user.lastLogin = new Date().toISOString();
@@ -123,14 +123,14 @@ export async function POST(request: NextRequest) {
       return response;
     }
 
-    // â”€â”€â”€ LOGOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── LOGOUT ────────────────────────────────────────────────────
     if (action === 'logout') {
       const response = NextResponse.json({ success: true, message: 'Erfolgreich abgemeldet' });
       response.cookies.delete('session');
       return response;
     }
 
-    // â”€â”€â”€ PASSWORT Ã„NDERN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── PASSWORT ÄNDERN ──────────────────────────────────────────
     if (action === 'change-password') {
       const sessionUser = getSessionUser(request);
       if (!sessionUser) {
@@ -155,15 +155,15 @@ export async function POST(request: NextRequest) {
       user.passwordHash = await hashPassword(newPassword);
       await saveUsers(users);
 
-      return NextResponse.json({ success: true, message: 'Passwort erfolgreich geÃ¤ndert' });
+      return NextResponse.json({ success: true, message: 'Passwort erfolgreich geändert' });
     }
 
-    // â”€â”€â”€ BENUTZER ERSTELLEN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── BENUTZER ERSTELLEN ───────────────────────────────────────
     if (action === 'create') {
       const sessionUser = getSessionUser(request);
       if (!sessionUser || !hasPermission(sessionUser.role, 'all')) {
         return NextResponse.json(
-          { error: 'Nur Admins kÃ¶nnen Benutzer erstellen' },
+          { error: 'Nur Admins können Benutzer erstellen' },
           { status: 403 }
         );
       }
