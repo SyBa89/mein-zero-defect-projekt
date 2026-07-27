@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
   // CSP-Header mit Nonce
   response.headers.set(
     'Content-Security-Policy',
-    `default-src 'self'; script-src 'self' 'unsafe-inline' 'nonce-${nonce}'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://*.upstash.io https://*.resend.com;`
+    `default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://*.upstash.io https://*.resend.com;`
   );
 
   return response;
