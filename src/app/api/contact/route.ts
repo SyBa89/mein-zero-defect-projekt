@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (error) {
-      console.error('[KONTAKT] Resend-Fehler:', error);
+      console.error('[ERROR]', error);
       return NextResponse.json(
         {
           success: false,
@@ -105,8 +105,8 @@ export async function POST(request: NextRequest) {
 
     console.log('[KONTAKT] E-Mail erfolgreich gesendet:', data);
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('[KONTAKT] Server-Fehler:', error);
+  } catch (error: unknown) {
+    console.error('[ERROR]', error);
     return NextResponse.json(
       { success: false, error: 'Ein interner Fehler ist aufgetreten.' },
       { status: 500 }

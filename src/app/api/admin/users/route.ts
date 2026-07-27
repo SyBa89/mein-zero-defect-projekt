@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
     const users = await getUsers();
     const safeUsers = users.map(({ passwordHash, ...rest }) => rest);
     return NextResponse.json(safeUsers);
-  } catch (error) {
+  } catch (error: unknown) {
     return NextResponse.json({ error: 'Fehler beim Laden' }, { status: 500 });
   }
 }
@@ -205,8 +205,8 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ error: 'Unbekannte Aktion' }, { status: 400 });
-  } catch (error) {
-    console.error('[USER API] Error:', error);
+  } catch (error: unknown) {
+    console.error('[ERROR]', error);
     return NextResponse.json({ error: 'Server-Fehler' }, { status: 500 });
   }
 }

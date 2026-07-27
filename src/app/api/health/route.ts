@@ -1,38 +1,40 @@
 import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
+import { Ratelimit } from '@upstash/ratelimit';
+import { env } from '@/lib/env';
 
-export async function GET() {
-  const redisUrl = process.env.KV_REST_API_URL;
-  const redisToken = process.env.KV_REST_API_TOKEN;
+export const dynamic = 'force-dynamic';
 
-  // ✅ GOLDSTANDARD: Defensive Prüfung fehlender Konfiguration
-  if (!redisUrl || !redisToken) {
+const redis = new Redis({
+  url: env.KV_REST_API_URL,
+  token: env.KV_REST_API_TOKEN,
+});
+
+const ratelimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.slidingWindow(10, '1 m'),
+  prefix: 'health-check',
+});
+
+export async function GET(request: Request) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
     return NextResponse.json(
-      {
-        status: 'degraded',
-        timestamp: new Date().toISOString(),
-        services: { redis: 'not_configured', api: 'operational' },
-      },
-      { status: 503 }
+      { error: 'Zu viele Anfragen. Bitte warten Sie 60 Sekunden.' },
+      { status: 429 }
     );
   }
 
   try {
-    const redis = new Redis({ url: redisUrl, token: redisToken });
-
-    // Aktiver Ping zur Datenbank
     await redis.ping();
-
-    return NextResponse.json(
-      {
-        status: 'ok',
-        timestamp: new Date().toISOString(),
-        services: { redis: 'connected', api: 'operational' },
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    // Graceful Degradation: Server läuft, aber DB ist nicht erreichbar
+    return NextResponse.json({
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+      services: { redis: 'connected', api: 'operational' },
+    });
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         status: 'degraded',

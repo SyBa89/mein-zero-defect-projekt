@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { revalidateTag, revalidatePath } from 'next/cache';
 import { SiteConfig } from '@/lib/site-config';
@@ -87,6 +87,7 @@ export async function GET(request: NextRequest) {
           return NextResponse.json(config);
         }
       } catch (redisError: unknown) {
+        // ✅ Korrekt: redisError verwenden
         const message = redisError instanceof Error ? redisError.message : 'Unknown Redis error';
         console.error('[CONFIG] Redis read error:', message);
       }
@@ -96,6 +97,7 @@ export async function GET(request: NextRequest) {
     console.log('[CONFIG] Returning static config (fallback)');
     return NextResponse.json(STATIC_CONFIG);
   } catch (error: unknown) {
+    // ✅ Korrekt: error verwenden
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('[CONFIG] GET error:', message);
     return NextResponse.json(STATIC_CONFIG);
@@ -139,6 +141,7 @@ export async function POST(request: NextRequest) {
         revalidatePath('/');
         console.log('[CONFIG] Saved to Redis');
       } catch (redisError: unknown) {
+        // ✅ Korrekt: redisError verwenden
         const message = redisError instanceof Error ? redisError.message : 'Unknown Redis error';
         console.error('[CONFIG] Redis write error:', message);
       }
@@ -150,6 +153,7 @@ export async function POST(request: NextRequest) {
       message: redis ? 'Konfiguration gespeichert (Redis)' : 'Konfiguration gespeichert (statisch)',
     });
   } catch (error: unknown) {
+    // ✅ Korrekt: error verwenden
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('[CONFIG] POST error:', message);
     return NextResponse.json({ error: 'Server-Fehler' }, { status: 500 });

@@ -1,17 +1,14 @@
 import Header from '@/components/Header';
 import JackpotBanner from '@/components/JackpotBanner';
+import DynamicSections from '@/components/DynamicSections';
 import Footer from '@/components/Footer';
 import MobileActionBar from '@/components/MobileActionBar';
-import FAQ from '@/components/FAQ';
-import Reviews from '@/components/Reviews';
 import CookieNotice from '@/components/CookieNotice';
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import OpeningHoursSection from '@/components/OpeningHoursSection';
 import ServicesSection from '@/components/ServicesSection';
 import HermesSection from '@/components/HermesSection';
-import DailyHighlightsSection from '@/components/DailyHighlightsSection';
-import BrandsSection from '@/components/BrandsSection';
 import ProductsSection from '@/components/ProductsSection';
 import CTASection from '@/components/CTASection';
 import AboutSection from '@/components/AboutSection';
@@ -21,24 +18,25 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: `${KIOSK_CONFIG.name} | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar`,
-  description: `${KIOSK_CONFIG.name} in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. ★★★★★ 5,0 Sterne bei Google.`,
+  description: `${KIOSK_CONFIG.name} in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am BÃ¼rgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. â˜…â˜…â˜…â˜…â˜… 5,0 Sterne bei Google.`,
   keywords: [
     'Kiosk Erftstadt',
     'Kiosk Liblar',
     'Hermes Paketshop Erftstadt',
     KIOSK_CONFIG.name,
-    'Bürgerplatz Liblar',
+    'BÃ¼rgerplatz Liblar',
     'Kiosk 50374',
     'Paketshop Erftstadt',
-    'Kiosk in der Nähe',
-    'Paketshop in der Nähe',
+    'Kiosk in der NÃ¤he',
+    'Paketshop in der NÃ¤he',
     'Lotto Erftstadt',
   ],
   metadataBase: new URL(KIOSK_CONFIG.url),
   alternates: { canonical: '/' },
   openGraph: {
     title: `${KIOSK_CONFIG.name} | Erftstadt-Liblar`,
-    description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
+    description:
+      'Ihr Kiosk und Hermes Paketshop am BÃ¼rgerplatz. â˜…â˜…â˜…â˜…â˜… 5,0 Sterne bei Google.',
     type: 'website',
     locale: 'de_DE',
     url: KIOSK_CONFIG.url,
@@ -48,14 +46,15 @@ export const metadata: Metadata = {
         url: '/images/fassade.png',
         width: 1200,
         height: 630,
-        alt: `${KIOSK_CONFIG.name} Fassade am Bürgerplatz in Erftstadt-Liblar`,
+        alt: `${KIOSK_CONFIG.name} Fassade am BÃ¼rgerplatz in Erftstadt-Liblar`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${KIOSK_CONFIG.name} | Erftstadt-Liblar`,
-    description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
+    description:
+      'Ihr Kiosk und Hermes Paketshop am BÃ¼rgerplatz. â˜…â˜…â˜…â˜…â˜… 5,0 Sterne bei Google.',
     images: ['/images/fassade.png'],
   },
   robots: {
@@ -79,10 +78,10 @@ const schemaOrg = {
   url: KIOSK_CONFIG.url,
   logo: `${KIOSK_CONFIG.url}/images/logo.png`,
   image: `${KIOSK_CONFIG.url}/images/fassade.png`,
-  description: `Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. ★★★★★ 5,0 Sterne bei Google.`,
+  description: `Ihr Kiosk und Hermes Paketshop am BÃ¼rgerplatz in Erftstadt-Liblar. â˜…â˜…â˜…â˜…â˜… 5,0 Sterne bei Google.`,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Theodor-Heuss-Straße 35',
+    streetAddress: 'Theodor-Heuss-StraÃŸe 35',
     postalCode: '50374',
     addressLocality: 'Erftstadt',
     addressRegion: 'NRW',
@@ -90,7 +89,7 @@ const schemaOrg = {
   },
   geo: { '@type': 'GeoCoordinates', latitude: 50.806945, longitude: 6.823683 },
   telephone: '+4922359291160',
-  priceRange: '€',
+  priceRange: 'â‚¬',
   currenciesAccepted: 'EUR',
   paymentAccepted: 'Cash, Credit Card, Debit Card',
   openingHours: ['Mo,Tu,We,Th,Fr 07:30-19:00', 'Sa 07:30-14:30'],
@@ -128,12 +127,11 @@ export default function HomePage() {
         <OpeningHoursSection />
         <ServicesSection />
         <HermesSection />
-        <DailyHighlightsSection />
-        <BrandsSection />
+
         <ProductsSection />
-        <FAQ />
-        <Reviews />
+
         <AboutSection />
+        <DynamicSections />
         <CTASection />
         <LegalNotice />
       </main>
