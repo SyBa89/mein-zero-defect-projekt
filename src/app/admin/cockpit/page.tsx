@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -12,7 +12,7 @@ export default function AdminCockpit() {
   const [debugInfo, setDebugInfo] = useState('');
   const router = useRouter();
 
-  const loadConfig = async () => {
+  const loadConfig = useCallback(async () => {
     try {
       setDebugInfo('Lade Config...');
       const response = await fetch('/api/admin/config', {
@@ -30,13 +30,13 @@ export default function AdminCockpit() {
         setDebugInfo(`Config Error: ${response.status} - ${errorData}`);
         setError(`Config-Fehler: ${response.status}`);
       }
-    } catch (err: any) {
-      setDebugInfo(`Config Fetch Error: ${err.message}`);
+    } catch (_err) {
+      setDebugInfo('Config Fetch Error');
       setError('Config konnte nicht geladen werden');
     }
-  };
+  }, []);
 
-  const checkSession = async () => {
+  const checkSession = useCallback(async () => {
     try {
       setDebugInfo('Prüfe Session...');
       const response = await fetch('/api/admin/users', {
@@ -53,18 +53,18 @@ export default function AdminCockpit() {
         setError('Nicht angemeldet');
         setTimeout(() => router.push('/admin'), 2000);
       }
-    } catch (err: any) {
-      setDebugInfo(`Session Error: ${err.message}`);
+    } catch (_err) {
+      setDebugInfo('Session Error');
       setError('Session-Check fehlgeschlagen');
       setTimeout(() => router.push('/admin'), 2000);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [router, loadConfig]);
 
   useEffect(() => {
     checkSession();
-  }, []);
+  }, [checkSession]);
 
   const handleLogout = async () => {
     try {
@@ -75,7 +75,7 @@ export default function AdminCockpit() {
         body: JSON.stringify({ action: 'logout' }),
       });
       router.push('/admin');
-    } catch (err) {
+    } catch (_err) {
       router.push('/admin');
     }
   };
@@ -97,7 +97,7 @@ export default function AdminCockpit() {
       } else {
         alert('❌ Fehler: ' + data.error);
       }
-    } catch (err) {
+    } catch (_err) {
       alert('❌ Verbindungsfehler!');
     }
   };

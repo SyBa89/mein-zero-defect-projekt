@@ -1,16 +1,40 @@
-import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
-import prettierConfig from "eslint-config-prettier";
+// FINALE ESLint-CONFIG – KEINE DUPLIKATE!
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
 
-export default [
-  ...nextCoreWebVitals,
-  prettierConfig,
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
   {
     rules: {
-      // Deaktiviere die hyper-strikte Regel, die valide Hydration/Fetching-Patterns fälschlich flaggt
-      "react-hooks/set-state-in-effect": "off",
+      '@typescript-eslint/no-explicit-any': 'off',
+      'react-hooks/set-state-in-effect': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
+      'react-hooks/exhaustive-deps': 'warn',
+      '@typescript-eslint/no-unused-vars': ['error', {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+      }],
+      'no-undef': 'off',
     },
   },
-  {
-    ignores: ["node_modules/", ".next/", "out/", "public/", "next-env.d.ts"],
-  },
-];
+  globalIgnores([
+    '.next/',
+    'out/',
+    'build/',
+    'coverage/',
+    'node_modules/',
+    'next-env.d.ts',
+    'postcss.config.cjs',
+    'scripts/',
+    '*.config.js',
+    '*.config.mjs',
+    '*.config.cjs',
+    '*.log',
+    '*.backup*',
+  ]),
+]);
+
+export default eslintConfig;

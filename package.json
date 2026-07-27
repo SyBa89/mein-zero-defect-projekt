@@ -5,8 +5,8 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "\u003e=22.0.0",
-    "npm": "\u003e=10.0.0"
+    "node": ">=22.0.0",
+    "npm": ">=10.0.0"
   },
   "packageManager": "npm@10.9.0",
   "scripts": {
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.2.12",
+    "@next/eslint-plugin-next": "^16.2.12",
     "@playwright/test": "^1.62.0",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
@@ -59,9 +60,10 @@
     "@vitest/ui": "^4.1.10",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.39.5",
-    "eslint-config-next": "^16.2.11",
+    "eslint-config-next": "^16.2.12",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.8.0",
     "husky": "^9.0.0",
     "lighthouse": "^13.4.1",
     "lint-staged": "^15.2.0",

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function middleware(_request: NextRequest) {
   // Nonce für CSP generieren
   const array = new Uint8Array(32);
   crypto.getRandomValues(array);
