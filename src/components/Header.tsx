@@ -120,15 +120,16 @@ export default function Header({ currentPath }: HeaderProps) {
               priority
               quality={90}
             />
-            {/* ✅ SVG-Gradient als img – kein CSS, kein doppelter display, 100 % Firefox-kompatibel */}
-            <img
+            {/* ✅ SVG-Gradient als Next.js Image – optimiert für LCP */}
+            <Image
               src={logoSvg}
               alt="Kiosk Lollipop"
+              width={200}
+              height={30}
               style={{
                 display: 'inline-block',
-                width: '200px',
-                height: '30px',
               }}
+              unoptimized
             />
           </Link>
 
