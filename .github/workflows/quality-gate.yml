@@ -9,25 +9,40 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Code herunterladen
         uses: actions/checkout@v4
-      
+
       - name: Node.js installieren
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
-      
+
       - name: Abhängigkeiten installieren
         run: npm ci
-      
+
       - name: TypeScript-Check
         run: npx tsc --noEmit
-      
+        env:
+          KV_REST_API_URL: ${{ secrets.KV_REST_API_URL || 'dummy-url' }}
+          KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN || 'dummy-token' }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET || 'dummy-secret' }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD || 'dummy-password' }}
+
       - name: ESLint-Check
         run: npx eslint . --ext .ts,.tsx,.js,.jsx --max-warnings 0
-      
+        env:
+          KV_REST_API_URL: ${{ secrets.KV_REST_API_URL || 'dummy-url' }}
+          KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN || 'dummy-token' }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET || 'dummy-secret' }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD || 'dummy-password' }}
+
       - name: Build-Test
         run: npm run build --if-present
+        env:
+          KV_REST_API_URL: ${{ secrets.KV_REST_API_URL || 'dummy-url' }}
+          KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN || 'dummy-token' }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET || 'dummy-secret' }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD || 'dummy-password' }}
