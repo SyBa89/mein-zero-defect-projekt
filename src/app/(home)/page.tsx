@@ -103,6 +103,7 @@ const schemaOrg = {
   },
 };
 
+// ✅ ZERO-DEFECT: Server Component (KEINE Event-Handler, KEIN <main>)
 export default function HomePage() {
   return (
     <>
@@ -115,7 +116,7 @@ export default function HomePage() {
       {/* ✅ Dynamischer Jackpot-Banner (Admin-editierbar) */}
       <JackpotBanner />
 
-      {/* ✅ Kein <main> hier - das ist bereits in layout.tsx (semantisch korrekt!) */}
+      {/* ✅ KEIN <main> hier - das ist bereits in layout.tsx (HTML5-konform!) */}
       <HeroSection />
       <FeaturesSection />
       <OpeningHoursSection />

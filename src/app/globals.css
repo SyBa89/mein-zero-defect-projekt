@@ -2,46 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ✅ ZERO-DEFECT: Skip-Link Accessibility (CSS-only, kein JS nötig) */
-.skip-link {
-  position: absolute;
-  top: -50px;
-  left: 6px;
-  background: #db2777;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  z-index: 9999;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(219, 39, 119, 0.4);
-  transition: top 0.25s ease-in-out, box-shadow 0.2s ease;
+/* ✅ ZERO-DEFECT: Skip-Link Accessibility (CSS-only mit !important) */
+/* MUSS außerhalb der @layer sein damit Tailwind es nicht überschreibt */
+a.skip-link {
+  position: absolute !important;
+  top: -100px !important;
+  left: 6px !important;
+  background: #db2777 !important;
+  color: white !important;
+  padding: 12px 24px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  z-index: 9999 !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px rgba(219, 39, 119, 0.4) !important;
+  transition: top 0.25s ease-in-out, box-shadow 0.2s ease !important;
+  white-space: nowrap !important;
 }
 
-.skip-link:focus {
-  top: 12px;
-  outline: 3px solid white;
-  outline-offset: 2px;
-  box-shadow: 0 6px 20px rgba(219, 39, 119, 0.6);
+a.skip-link:focus {
+  top: 12px !important;
+  outline: 3px solid white !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 6px 20px rgba(219, 39, 119, 0.6) !important;
 }
 
 @layer base {
   :root {
-    /* Professionelle, augenfreundliche Farben */
-    --background: 250 251 253; /* Sehr helles Blau-Grau */
-    --foreground: 15 23 42;    /* Dunkles Slate */
-    --card: 255 255 255;       /* Weiß */
+    --background: 250 251 253;
+    --foreground: 15 23 42;
+    --card: 255 255 255;
     --card-foreground: 15 23 42;
-    --primary: 236 72 153;     /* Pink */
+    --primary: 236 72 153;
     --primary-foreground: 255 255 255;
-    --secondary: 139 92 246;   /* Purple */
+    --secondary: 139 92 246;
     --secondary-foreground: 255 255 255;
-    --muted: 241 245 249;      /* Slate 100 */
+    --muted: 241 245 249;
     --muted-foreground: 71 85 105;
-    --accent: 251 191 36;      /* Amber */
+    --accent: 251 191 36;
     --accent-foreground: 15 23 42;
-    --border: 226 232 240;     /* Slate 200 */
+    --border: 226 232 240;
     --ring: 236 72 153;
     --radius: 0.75rem;
   }
@@ -55,24 +56,20 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
   }
 
-  /* Better focus styles */
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-primary;
   }
 }
 
 @layer components {
-  /* Card component */
   .card {
     @apply bg-[rgb(var(--card))] text-[rgb(var(--card-foreground))] rounded-xl shadow-sm border border-[rgb(var(--border))];
   }
 
-  /* Button base */
   .btn {
     @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--ring))] disabled:pointer-events-none disabled:opacity-50;
   }
@@ -91,12 +88,10 @@
 }
 
 @layer utilities {
-  /* Gradient text */
   .gradient-text {
     @apply bg-gradient-to-r from-[rgb(var(--primary))] to-[rgb(var(--secondary))] bg-clip-text text-transparent;
   }
 
-  /* Glass effect */
   .glass {
     @apply bg-white/80 backdrop-blur-md border border-white/20;
   }
