@@ -28,14 +28,14 @@ export const metadata: Metadata = {
     template: '%s | Kiosk Lollipop',
   },
   description:
-    'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. Mo-Fr 07:30-19:00, Sa 07:30-14:30. Getränke, Snacks, Lotto und Paketversand.',
+    'Ihr lokaler Kiosk und Hermes Paketshop am BÃ¼rgerplatz in Erftstadt-Liblar. Mo-Fr 07:30-19:00, Sa 07:30-14:30. GetrÃ¤nke, Snacks, Lotto und Paketversand.',
   keywords: [
     'Kiosk Erftstadt',
     'Hermes Liblar',
     'Paketshop 50374',
     'Lotto Erftstadt',
     'Kiosk Lollipop',
-    'Bürgerplatz',
+    'BÃ¼rgerplatz',
   ],
   authors: [{ name: 'Kiosk Lollipop' }],
   creator: 'Kiosk Lollipop',
@@ -45,8 +45,10 @@ export const metadata: Metadata = {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
       { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: [{ url: '/icon.svg', sizes: '180x180', type: 'image/svg+xml' }],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
     shortcut: '/favicon.ico',
   },
   appleWebApp: {
@@ -68,7 +70,7 @@ export const metadata: Metadata = {
     url: 'https://mein-zero-defect-projekt.vercel.app',
     siteName: 'Kiosk Lollipop',
     title: 'Kiosk Lollipop | Erftstadt-Liblar',
-    description: 'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar.',
+    description: 'Ihr lokaler Kiosk und Hermes Paketshop am BÃ¼rgerplatz in Erftstadt-Liblar.',
     images: [
       {
         url: '/images/fassade.png',
@@ -82,7 +84,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Kiosk Lollipop | Erftstadt-Liblar',
-    description: 'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar.',
+    description: 'Ihr lokaler Kiosk und Hermes Paketshop am BÃ¼rgerplatz in Erftstadt-Liblar.',
     images: ['/images/fassade.png'],
   },
   robots: {
@@ -106,7 +108,7 @@ export default function RootLayout({
   return (
     <html lang="de" dir="ltr" className={inter.variable}>
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased selection:bg-pink-200 selection:text-pink-900">
-        {/* ✅ Accessibility: Skip-Link (CSS-only, kein JavaScript - funktioniert in Server Components) */}
+        {/* âœ… Accessibility: Skip-Link (CSS-only, kein JavaScript - funktioniert in Server Components) */}
         <a href="#main-content" className="skip-link">
           Zum Hauptinhalt springen
         </a>
@@ -114,7 +116,7 @@ export default function RootLayout({
         <EmergencyBanner />
         <Header />
 
-        {/* ✅ EINZIGES <main> pro Seite (semantisch korrekt) */}
+        {/* âœ… EINZIGES <main> pro Seite (semantisch korrekt) */}
         <main id="main-content" aria-label="Hauptinhalt der Webseite">
           {children}
         </main>
