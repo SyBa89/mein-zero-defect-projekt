@@ -15,6 +15,7 @@ import Reviews from '@/components/Reviews';
 import { KIOSK_CONFIG } from '@/lib/config';
 import type { Metadata } from 'next';
 
+// ✅ ZERO-DEFECT: Umfassende SEO-Metadaten
 export const metadata: Metadata = {
   title: `${KIOSK_CONFIG.name} | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar`,
   description: `${KIOSK_CONFIG.name} in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. ★★★★★ 5,0 Sterne bei Google.`,
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: `${KIOSK_CONFIG.name} | Erftstadt-Liblar`,
-    description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
+    description: 'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar.',
     images: ['/images/fassade.png'],
   },
   robots: {
@@ -67,6 +68,7 @@ export const metadata: Metadata = {
   },
 };
 
+// ✅ ZERO-DEFECT: Schema.org für maximale SEO-Relevanz
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': 'ConvenienceStore',
@@ -104,20 +106,25 @@ const schemaOrg = {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 selection:bg-pink-200 selection:text-pink-900">
+      {/* ✅ SEO: Schema.org für strukturierte Daten */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
+
+      {/* ✅ Accessibility: Skip-Link (nur bei Tastatur-Fokus sichtbar) */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-pink-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:ring-2 focus:ring-white"
+      >
+        Zum Hauptinhalt springen
+      </a>
+
+      {/* ✅ Dynamischer Jackpot-Banner (Admin-editierbar) */}
       <JackpotBanner />
-      <main id="main-content">
-        <div className="sr-only">
-          <a
-            href="#main-content"
-            className="focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-pink-600 focus:text-white focus:px-4 focus:py-2 focus:rounded"
-          >
-            Zum Hauptinhalt springen
-          </a>
-        </div>
+
+      {/* ✅ Hauptinhalt mit ARIA-Label für Screenreader */}
+      <main id="main-content" aria-label="Hauptinhalt der Webseite">
         <HeroSection />
         <FeaturesSection />
         <OpeningHoursSection />
@@ -126,14 +133,20 @@ export default function HomePage() {
         <ProductsSection />
         <AboutSection />
 
-        {/* ✅ Reviews ist Server Component - direkt hier gerendert */}
+        {/* ✅ Reviews ist Server Component - direkt hier gerendert für beste Performance */}
         <Reviews />
 
+        {/* ✅ Dynamische Sections (Lazy Loaded für Performance) */}
         <DynamicSections />
+
         <CTASection />
         <LegalNotice />
       </main>
+
+      {/* ✅ Mobile Action Bar (nur auf Mobile sichtbar) */}
       <MobileActionBar />
+
+      {/* ✅ Cookie Notice (nur wenn nicht zugestimmt) */}
       <CookieNotice />
     </div>
   );
