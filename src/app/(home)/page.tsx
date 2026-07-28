@@ -1,4 +1,4 @@
-import JackpotBanner from '@/components/JackpotBanner';
+﻿import JackpotBanner from '@/components/JackpotBanner';
 import DynamicSections from '@/components/DynamicSections';
 import MobileActionBar from '@/components/MobileActionBar';
 import CookieNotice from '@/components/CookieNotice';
@@ -11,30 +11,30 @@ import ProductsSection from '@/components/ProductsSection';
 import CTASection from '@/components/CTASection';
 import AboutSection from '@/components/AboutSection';
 import LegalNotice from '@/components/LegalNotice';
+import Reviews from '@/components/Reviews';
 import { KIOSK_CONFIG } from '@/lib/config';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: `${KIOSK_CONFIG.name} | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar`,
-  description: `${KIOSK_CONFIG.name} in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am BÃ¼rgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. â˜…â˜…â˜…â˜…â˜… 5,0 Sterne bei Google.`,
+  description: `${KIOSK_CONFIG.name} in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. ★★★★★ 5,0 Sterne bei Google.`,
   keywords: [
     'Kiosk Erftstadt',
     'Kiosk Liblar',
     'Hermes Paketshop Erftstadt',
     KIOSK_CONFIG.name,
-    'BÃ¼rgerplatz Liblar',
+    'Bürgerplatz Liblar',
     'Kiosk 50374',
     'Paketshop Erftstadt',
-    'Kiosk in der NÃ¤he',
-    'Paketshop in der NÃ¤he',
+    'Kiosk in der Nähe',
+    'Paketshop in der Nähe',
     'Lotto Erftstadt',
   ],
   metadataBase: new URL(KIOSK_CONFIG.url),
   alternates: { canonical: '/' },
   openGraph: {
     title: `${KIOSK_CONFIG.name} | Erftstadt-Liblar`,
-    description:
-      'Ihr Kiosk und Hermes Paketshop am BÃ¼rgerplatz. â˜…â˜…â˜…â˜…â˜… 5,0 Sterne bei Google.',
+    description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
     type: 'website',
     locale: 'de_DE',
     url: KIOSK_CONFIG.url,
@@ -44,15 +44,14 @@ export const metadata: Metadata = {
         url: '/images/fassade.png',
         width: 1200,
         height: 630,
-        alt: `${KIOSK_CONFIG.name} Fassade am BÃ¼rgerplatz in Erftstadt-Liblar`,
+        alt: `${KIOSK_CONFIG.name} Fassade am Bürgerplatz in Erftstadt-Liblar`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${KIOSK_CONFIG.name} | Erftstadt-Liblar`,
-    description:
-      'Ihr Kiosk und Hermes Paketshop am BÃ¼rgerplatz. â˜…â˜…â˜…â˜…â˜… 5,0 Sterne bei Google.',
+    description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
     images: ['/images/fassade.png'],
   },
   robots: {
@@ -76,10 +75,10 @@ const schemaOrg = {
   url: KIOSK_CONFIG.url,
   logo: `${KIOSK_CONFIG.url}/images/logo.png`,
   image: `${KIOSK_CONFIG.url}/images/fassade.png`,
-  description: `Ihr Kiosk und Hermes Paketshop am BÃ¼rgerplatz in Erftstadt-Liblar. â˜…â˜…â˜…â˜…â˜… 5,0 Sterne bei Google.`,
+  description: `Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. ★★★★★ 5,0 Sterne bei Google.`,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Theodor-Heuss-StraÃŸe 35',
+    streetAddress: 'Theodor-Heuss-Straße 35',
     postalCode: '50374',
     addressLocality: 'Erftstadt',
     addressRegion: 'NRW',
@@ -87,7 +86,7 @@ const schemaOrg = {
   },
   geo: { '@type': 'GeoCoordinates', latitude: 50.806945, longitude: 6.823683 },
   telephone: '+4922359291160',
-  priceRange: 'â‚¬',
+  priceRange: '€',
   currenciesAccepted: 'EUR',
   paymentAccepted: 'Cash, Credit Card, Debit Card',
   openingHours: ['Mo,Tu,We,Th,Fr 07:30-19:00', 'Sa 07:30-14:30'],
@@ -110,7 +109,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
       <JackpotBanner />
-      <main>
+      <main id="main-content">
         <div className="sr-only">
           <a
             href="#main-content"
@@ -124,10 +123,12 @@ export default function HomePage() {
         <OpeningHoursSection />
         <ServicesSection />
         <HermesSection />
-
         <ProductsSection />
-
         <AboutSection />
+
+        {/* ✅ Reviews ist Server Component - direkt hier gerendert */}
+        <Reviews />
+
         <DynamicSections />
         <CTASection />
         <LegalNotice />

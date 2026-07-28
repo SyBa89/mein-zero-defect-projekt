@@ -16,6 +16,7 @@ export default function HeroSection() {
         priority
         fetchPriority="high"
         sizes="100vw"
+        quality={90}
       />
       <div className="absolute inset-0 bg-black/30" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,transparent_10%,rgba(0,0,0,0.7)_100%)]" />

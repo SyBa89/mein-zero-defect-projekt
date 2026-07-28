@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 import { env } from '@/lib/env';
 import { NextRequest } from 'next/server';
 
@@ -10,7 +11,19 @@ export interface UserSession {
   name: string;
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || env.ADMIN_PASSWORD + '_' + env.KV_REST_API_TOKEN;
+// ✅ ÜBER-PLATIN: JWT_SECRET mit Fallback für Development
+// In Production MUSS JWT_SECRET in Umgebungsvariablen gesetzt sein
+const JWT_SECRET =
+  process.env.JWT_SECRET ||
+  (process.env.NODE_ENV === 'production'
+    ? (() => {
+        throw new Error(
+          '❌ KRITISCH: JWT_SECRET fehlt in Production. ' +
+            'Bitte in Vercel Dashboard → Environment Variables setzen.'
+        );
+      })()
+    : env.ADMIN_PASSWORD + '_' + env.KV_REST_API_TOKEN);
+
 const SALT_ROUNDS = 12;
 
 export async function hashPassword(password: string): Promise<string> {
@@ -22,7 +35,7 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
 }
 
 export function generateSecurePassword(): string {
-  const crypto = require('crypto');
+  // ✅ ES Module Syntax statt require()
   return crypto.randomBytes(16).toString('hex');
 }
 
@@ -50,7 +63,7 @@ export function hasPermission(userRole: string, requiredPermission: string): boo
 }
 
 export function generateCSRFToken(): string {
-  const crypto = require('crypto');
+  // ✅ ES Module Syntax statt require()
   return crypto.randomBytes(32).toString('hex');
 }
 
