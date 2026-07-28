@@ -12,19 +12,26 @@ export interface UserSession {
 }
 
 // ✅ ÜBER-PLATIN: JWT_SECRET mit Fallback für Development
-// In Production MUSS JWT_SECRET in Umgebungsvariablen gesetzt sein
-const JWT_SECRET =
-  process.env.JWT_SECRET ||
-  (process.env.NODE_ENV === 'production'
-    ? (() => {
-        throw new Error(
-          '❌ KRITISCH: JWT_SECRET fehlt in Production. ' +
-            'Bitte in Vercel Dashboard → Environment Variables setzen.'
-        );
-      })()
-    : // ✅ FIX: Expliziter Fallback falls KV_REST_API_TOKEN undefined ist (Build-Time)
-      env.ADMIN_PASSWORD + '_' + (env.KV_REST_API_TOKEN || 'dev-fallback-token'));
+function getJwtSecret(): string {
+  // 1. Explizite Umgebungsvariable hat höchste Priorität
+  if (process.env.JWT_SECRET) {
+    return process.env.JWT_SECRET;
+  }
 
+  // 2. Production ohne JWT_SECRET = kritischer Fehler
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      '❌ KRITISCH: JWT_SECRET fehlt in Production. ' +
+        'Bitte in Vercel Dashboard → Environment Variables setzen.'
+    );
+  }
+
+  // 3. Development: Fallback aus Admin-Passwort + Redis-Token
+  const token = env.KV_REST_API_TOKEN || 'dev-fallback-token';
+  return env.ADMIN_PASSWORD + '_' + token;
+}
+
+const JWT_SECRET = getJwtSecret();
 const SALT_ROUNDS = 12;
 
 export async function hashPassword(password: string): Promise<string> {
@@ -36,7 +43,6 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
 }
 
 export function generateSecurePassword(): string {
-  // ✅ ES Module Syntax statt require()
   return crypto.randomBytes(16).toString('hex');
 }
 
@@ -64,7 +70,6 @@ export function hasPermission(userRole: string, requiredPermission: string): boo
 }
 
 export function generateCSRFToken(): string {
-  // ✅ ES Module Syntax statt require()
   return crypto.randomBytes(32).toString('hex');
 }
 

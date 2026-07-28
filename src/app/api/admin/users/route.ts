@@ -12,18 +12,33 @@ import {
   hasPermission,
 } from '@/lib/auth';
 
-const redis = new Redis({
-  url: env.KV_REST_API_URL,
-  token: env.KV_REST_API_TOKEN,
-});
+// ✅ LAZY FACTORY: Redis und Ratelimit werden erst zur Laufzeit erstellt
+function getRedisClient(): Redis | null {
+  const url = env.KV_REST_API_URL;
+  const token = env.KV_REST_API_TOKEN;
 
-const ratelimit = new Ratelimit({
-  redis: redis,
-  limiter: Ratelimit.slidingWindow(5, '1 m'),
-  prefix: 'admin-users',
-});
+  if (!url || !token) {
+    console.warn('[ADMIN-USERS] Redis not configured');
+    return null;
+  }
 
-async function initializeDefaultAdmin(): Promise<User[]> {
+  try {
+    return new Redis({ url, token });
+  } catch (error) {
+    console.error('[ADMIN-USERS] Redis init error:', error);
+    return null;
+  }
+}
+
+function getRatelimit(redis: Redis): Ratelimit {
+  return new Ratelimit({
+    redis: redis,
+    limiter: Ratelimit.slidingWindow(5, '1 m'),
+    prefix: 'admin-users',
+  });
+}
+
+async function initializeDefaultAdmin(redis: Redis): Promise<User[]> {
   const existingUsers = await redis.get<User[]>('users');
   if (existingUsers && existingUsers.length > 0) {
     return existingUsers;
@@ -42,16 +57,16 @@ async function initializeDefaultAdmin(): Promise<User[]> {
   return [defaultAdmin];
 }
 
-async function getUsers(): Promise<User[]> {
+async function getUsers(redis: Redis): Promise<User[]> {
   try {
     const users = await redis.get<User[]>('users');
-    return users || (await initializeDefaultAdmin());
+    return users || (await initializeDefaultAdmin(redis));
   } catch {
-    return await initializeDefaultAdmin();
+    return await initializeDefaultAdmin(redis);
   }
 }
 
-async function saveUsers(users: User[]): Promise<void> {
+async function saveUsers(redis: Redis, users: User[]): Promise<void> {
   await redis.set('users', users);
 }
 
@@ -62,13 +77,18 @@ function getSessionUser(request: NextRequest): any {
 }
 
 export async function GET(request: NextRequest) {
+  const redis = getRedisClient();
+  if (!redis) {
+    return NextResponse.json({ error: 'Server nicht konfiguriert' }, { status: 500 });
+  }
+
   const sessionUser = getSessionUser(request);
   if (!sessionUser || !hasPermission(sessionUser.role, 'view-users')) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
-    const users = await getUsers();
+    const users = await getUsers(redis);
     const safeUsers = users.map(({ passwordHash: _ph, ...rest }) => rest);
     return NextResponse.json(safeUsers);
   } catch (_error: unknown) {
@@ -77,6 +97,12 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const redis = getRedisClient();
+  if (!redis) {
+    return NextResponse.json({ error: 'Server nicht konfiguriert' }, { status: 500 });
+  }
+
+  const ratelimit = getRatelimit(redis);
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
   const { success } = await ratelimit.limit(ip);
   if (!success) {
@@ -90,7 +116,7 @@ export async function POST(request: NextRequest) {
     // ─── LOGIN ─────────────────────────────────────────────────────
     if (action === 'login') {
       const { username, password } = body;
-      const users = await getUsers();
+      const users = await getUsers(redis);
       const user = users.find((u) => u.username === username);
 
       if (!user || !(await verifyPassword(password, user.passwordHash))) {
@@ -98,7 +124,7 @@ export async function POST(request: NextRequest) {
       }
 
       user.lastLogin = new Date().toISOString();
-      await saveUsers(users);
+      await saveUsers(redis, users);
 
       const token = createSessionToken({
         id: user.id,
@@ -145,7 +171,7 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      const users = await getUsers();
+      const users = await getUsers(redis);
       const user = users.find((u) => u.id === sessionUser.id);
 
       if (!user || !(await verifyPassword(oldPassword, user.passwordHash))) {
@@ -153,7 +179,7 @@ export async function POST(request: NextRequest) {
       }
 
       user.passwordHash = await hashPassword(newPassword);
-      await saveUsers(users);
+      await saveUsers(redis, users);
 
       return NextResponse.json({ success: true, message: 'Passwort erfolgreich geändert' });
     }
@@ -173,7 +199,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Alle Felder erforderlich' }, { status: 400 });
       }
 
-      const users = await getUsers();
+      const users = await getUsers(redis);
       if (users.some((u) => u.username === username)) {
         return NextResponse.json({ error: 'Benutzername bereits vergeben' }, { status: 400 });
       }
@@ -189,7 +215,7 @@ export async function POST(request: NextRequest) {
       };
 
       users.push(newUser);
-      await saveUsers(users);
+      await saveUsers(redis, users);
 
       return NextResponse.json({
         success: true,
@@ -206,7 +232,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ error: 'Unbekannte Aktion' }, { status: 400 });
   } catch (error: unknown) {
-    console.error('[ERROR]', error);
+    console.error('[ADMIN-USERS] Error:', error);
     return NextResponse.json({ error: 'Server-Fehler' }, { status: 500 });
   }
 }
