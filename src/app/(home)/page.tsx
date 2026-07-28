@@ -112,10 +112,37 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
 
-      {/* ✅ Accessibility: Skip-Link (nur bei Tastatur-Fokus sichtbar) */}
+      {/* ✅ Accessibility: Skip-Link (nur bei Tab-Fokus sichtbar - ROBUST mit Inline-Styles) */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-pink-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:ring-2 focus:ring-white"
+        className="fixed top-0 left-0 z-50 px-4 py-2 bg-pink-600 text-white rounded-lg shadow-lg focus:translate-y-2 focus:outline-none focus:ring-2 focus:ring-white"
+        style={{
+          clip: 'rect(0 0 0 0)',
+          clipPath: 'inset(50%)',
+          height: '1px',
+          overflow: 'hidden',
+          position: 'absolute',
+          whiteSpace: 'nowrap',
+          width: '1px',
+        }}
+        onFocus={(e) => {
+          e.currentTarget.style.clip = 'auto';
+          e.currentTarget.style.clipPath = 'none';
+          e.currentTarget.style.height = 'auto';
+          e.currentTarget.style.width = 'auto';
+          e.currentTarget.style.overflow = 'visible';
+          e.currentTarget.style.position = 'fixed';
+          e.currentTarget.style.top = '1rem';
+          e.currentTarget.style.left = '1rem';
+        }}
+        onBlur={(e) => {
+          e.currentTarget.style.clip = 'rect(0 0 0 0)';
+          e.currentTarget.style.clipPath = 'inset(50%)';
+          e.currentTarget.style.height = '1px';
+          e.currentTarget.style.width = '1px';
+          e.currentTarget.style.overflow = 'hidden';
+          e.currentTarget.style.position = 'absolute';
+        }}
       >
         Zum Hauptinhalt springen
       </a>
