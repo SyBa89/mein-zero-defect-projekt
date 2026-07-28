@@ -22,7 +22,8 @@ const JWT_SECRET =
             'Bitte in Vercel Dashboard → Environment Variables setzen.'
         );
       })()
-    : env.ADMIN_PASSWORD + '_' + env.KV_REST_API_TOKEN);
+    : // ✅ FIX: Expliziter Fallback falls KV_REST_API_TOKEN undefined ist (Build-Time)
+      env.ADMIN_PASSWORD + '_' + (env.KV_REST_API_TOKEN || 'dev-fallback-token'));
 
 const SALT_ROUNDS = 12;
 
