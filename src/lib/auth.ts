@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import { env } from '@/lib/env';
 import { NextRequest } from 'next/server';
 
 export interface UserSession {
@@ -27,9 +26,9 @@ function getJwtSecret(): string {
     );
   }
 
-  // 3. Development: Fallback aus Admin-Passwort + Redis-Token (mit explizitem Fallback)
-  const adminPassword: string = env.ADMIN_PASSWORD ?? 'dev-admin-password';
-  const redisToken: string = env.KV_REST_API_TOKEN ?? 'dev-redis-fallback';
+  // 3. Development: Fallback aus Admin-Passwort + Redis-Token
+  const adminPassword: string = process.env.ADMIN_PASSWORD || 'lollipop2024';
+  const redisToken: string = process.env.KV_REST_API_TOKEN || 'dev-redis-fallback';
 
   return `${adminPassword}_${redisToken}`;
 }

@@ -1,14 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { Ratelimit } from '@upstash/ratelimit';
-import { env } from '@/lib/env';
 
 export const dynamic = 'force-dynamic';
 
 // ✅ LAZY FACTORY
 function getRedisClient(): Redis | null {
-  const url = env.KV_REST_API_URL;
-  const token = env.KV_REST_API_TOKEN;
+  const url = process.env.KV_REST_API_URL;
+  const token = process.env.KV_REST_API_TOKEN;
 
   if (!url || !token) {
     console.warn('[HEALTH] Redis not configured');
@@ -31,7 +30,7 @@ function getRatelimit(redis: Redis): Ratelimit {
   });
 }
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const redis = getRedisClient();
 
   if (!redis) {

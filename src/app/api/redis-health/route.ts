@@ -1,48 +1,61 @@
 import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
-import { Ratelimit } from '@upstash/ratelimit';
-import { env } from '@/lib/env';
 
 export const dynamic = 'force-dynamic';
 
-const redis = new Redis({
-  url: env.KV_REST_API_URL,
-  token: env.KV_REST_API_TOKEN,
-});
+// ✅ LAZY FACTORY
+function getRedisClient(): Redis | null {
+  const url = process.env.KV_REST_API_URL;
+  const token = process.env.KV_REST_API_TOKEN;
 
-const ratelimit = new Ratelimit({
-  redis: redis,
-  limiter: Ratelimit.slidingWindow(10, '1 m'),
-  prefix: 'redis-health',
-});
+  if (!url || !token) {
+    console.warn('[REDIS-HEALTH] Redis not configured');
+    return null;
+  }
 
-export async function GET(request: Request) {
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
-  const { success } = await ratelimit.limit(ip);
+  try {
+    return new Redis({ url, token });
+  } catch (error) {
+    console.error('[REDIS-HEALTH] Redis init error:', error);
+    return null;
+  }
+}
 
-  if (!success) {
+export async function GET() {
+  const redis = getRedisClient();
+
+  if (!redis) {
     return NextResponse.json(
-      { error: 'Zu viele Anfragen. Bitte warten Sie 60 Sekunden.' },
-      { status: 429 }
+      {
+        status: 'error',
+        message: 'Redis not configured',
+        timestamp: new Date().toISOString(),
+      },
+      { status: 503 }
     );
   }
 
   try {
-    const start = Date.now();
-    await redis.ping();
-    const latency = Date.now() - start;
+    const startTime = Date.now();
+    const pong = await redis.ping();
+    const latency = Date.now() - startTime;
+
     return NextResponse.json({
       status: 'ok',
-      message: 'Redis connection successful',
+      pong: pong,
       latency: `${latency}ms`,
-      ping: 'PONG',
+      timestamp: new Date().toISOString(),
     });
-  } catch (error) {
+  } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('[REDIS-HEALTH] Ping failed:', message);
+
     return NextResponse.json(
       {
         status: 'error',
-        message: message,
+        message: 'Redis ping failed',
+        error: message,
+        timestamp: new Date().toISOString(),
       },
       { status: 500 }
     );
