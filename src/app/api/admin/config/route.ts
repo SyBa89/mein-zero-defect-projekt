@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { revalidateTag, revalidatePath } from 'next/cache';
 import { SiteConfig } from '@/lib/site-config';
@@ -89,8 +89,9 @@ export async function GET(request: NextRequest) {
     if (redis) {
       try {
         const rawData = await redis.get('site-config');
+        const parsedData = typeof rawData === 'string' ? JSON.parse(rawData) : rawData;
         if (rawData) {
-          const config = validateConfig(rawData);
+          const config = validateConfig(parsedData);
           return NextResponse.json(config);
         }
       } catch (redisError: unknown) {
@@ -143,7 +144,7 @@ export async function POST(request: NextRequest) {
     // Speichern in Redis (wenn verfügbar)
     if (redis) {
       try {
-        await redis.set('site-config', sanitized);
+        await redis.set('site-config', JSON.stringify(sanitized));
         revalidateTag('config');
         revalidatePath('/');
         console.log('[CONFIG] Saved to Redis');
