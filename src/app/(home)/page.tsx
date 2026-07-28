@@ -105,76 +105,39 @@ const schemaOrg = {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 selection:bg-pink-200 selection:text-pink-900">
+    <>
       {/* ✅ SEO: Schema.org für strukturierte Daten */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
 
-      {/* ✅ Accessibility: Skip-Link (nur bei Tab-Fokus sichtbar - ROBUST mit Inline-Styles) */}
-      <a
-        href="#main-content"
-        className="fixed top-0 left-0 z-50 px-4 py-2 bg-pink-600 text-white rounded-lg shadow-lg focus:translate-y-2 focus:outline-none focus:ring-2 focus:ring-white"
-        style={{
-          clip: 'rect(0 0 0 0)',
-          clipPath: 'inset(50%)',
-          height: '1px',
-          overflow: 'hidden',
-          position: 'absolute',
-          whiteSpace: 'nowrap',
-          width: '1px',
-        }}
-        onFocus={(e) => {
-          e.currentTarget.style.clip = 'auto';
-          e.currentTarget.style.clipPath = 'none';
-          e.currentTarget.style.height = 'auto';
-          e.currentTarget.style.width = 'auto';
-          e.currentTarget.style.overflow = 'visible';
-          e.currentTarget.style.position = 'fixed';
-          e.currentTarget.style.top = '1rem';
-          e.currentTarget.style.left = '1rem';
-        }}
-        onBlur={(e) => {
-          e.currentTarget.style.clip = 'rect(0 0 0 0)';
-          e.currentTarget.style.clipPath = 'inset(50%)';
-          e.currentTarget.style.height = '1px';
-          e.currentTarget.style.width = '1px';
-          e.currentTarget.style.overflow = 'hidden';
-          e.currentTarget.style.position = 'absolute';
-        }}
-      >
-        Zum Hauptinhalt springen
-      </a>
-
       {/* ✅ Dynamischer Jackpot-Banner (Admin-editierbar) */}
       <JackpotBanner />
 
-      {/* ✅ Hauptinhalt mit ARIA-Label für Screenreader */}
-      <main id="main-content" aria-label="Hauptinhalt der Webseite">
-        <HeroSection />
-        <FeaturesSection />
-        <OpeningHoursSection />
-        <ServicesSection />
-        <HermesSection />
-        <ProductsSection />
-        <AboutSection />
+      {/* ✅ Kein <main> hier - das ist bereits in layout.tsx (semantisch korrekt!) */}
+      <HeroSection />
+      <FeaturesSection />
+      <OpeningHoursSection />
+      <ServicesSection />
+      <HermesSection />
+      <ProductsSection />
+      <AboutSection />
 
-        {/* ✅ Reviews ist Server Component - direkt hier gerendert für beste Performance */}
-        <Reviews />
+      {/* ✅ Reviews ist Server Component - direkt hier gerendert für beste Performance */}
+      <Reviews />
 
-        {/* ✅ Dynamische Sections (Lazy Loaded für Performance) */}
-        <DynamicSections />
+      {/* ✅ Dynamische Sections (Lazy Loaded für Performance) */}
+      <DynamicSections />
 
-        <CTASection />
-        <LegalNotice />
-      </main>
+      <CTASection />
+      <LegalNotice />
 
       {/* ✅ Mobile Action Bar (nur auf Mobile sichtbar) */}
       <MobileActionBar />
 
       {/* ✅ Cookie Notice (nur wenn nicht zugestimmt) */}
       <CookieNotice />
-    </div>
+    </>
   );
 }

@@ -105,9 +105,19 @@ export default function RootLayout({
   return (
     <html lang="de" dir="ltr" className={inter.variable}>
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased selection:bg-pink-200 selection:text-pink-900">
+        {/* ✅ Accessibility: Skip-Link (CSS-only, kein JavaScript - funktioniert in Server Components) */}
+        <a href="#main-content" className="skip-link">
+          Zum Hauptinhalt springen
+        </a>
+
         <EmergencyBanner />
         <Header />
-        <main>{children}</main>
+
+        {/* ✅ EINZIGES <main> pro Seite (semantisch korrekt) */}
+        <main id="main-content" aria-label="Hauptinhalt der Webseite">
+          {children}
+        </main>
+
         <Footer />
         <Analytics />
         <SpeedInsights />
