@@ -11,11 +11,12 @@ export interface UserSession {
   name: string;
 }
 
-// ✅ ÜBER-PLATIN: JWT_SECRET mit Fallback für Development
+// ✅ ROBUST: JWT_SECRET Resolution mit expliziten Typen
 function getJwtSecret(): string {
   // 1. Explizite Umgebungsvariable hat höchste Priorität
-  if (process.env.JWT_SECRET) {
-    return process.env.JWT_SECRET;
+  const explicitSecret = process.env.JWT_SECRET;
+  if (explicitSecret && explicitSecret.length > 0) {
+    return explicitSecret;
   }
 
   // 2. Production ohne JWT_SECRET = kritischer Fehler
@@ -26,12 +27,14 @@ function getJwtSecret(): string {
     );
   }
 
-  // 3. Development: Fallback aus Admin-Passwort + Redis-Token
-  const token = env.KV_REST_API_TOKEN || 'dev-fallback-token';
-  return env.ADMIN_PASSWORD + '_' + token;
+  // 3. Development: Fallback aus Admin-Passwort + Redis-Token (mit explizitem Fallback)
+  const adminPassword: string = env.ADMIN_PASSWORD ?? 'dev-admin-password';
+  const redisToken: string = env.KV_REST_API_TOKEN ?? 'dev-redis-fallback';
+
+  return `${adminPassword}_${redisToken}`;
 }
 
-const JWT_SECRET = getJwtSecret();
+const JWT_SECRET: string = getJwtSecret();
 const SALT_ROUNDS = 12;
 
 export async function hashPassword(password: string): Promise<string> {

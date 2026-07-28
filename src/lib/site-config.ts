@@ -33,18 +33,38 @@ export const DEFAULT_CONFIG: SiteConfig = {
   updatedAt: new Date().toISOString(),
 };
 
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL!,
-  token: process.env.KV_REST_API_TOKEN!,
-});
+// ✅ LAZY FACTORY: Redis wird erst zur Laufzeit erstellt (nicht beim Build)
+function getRedisClient(): Redis | null {
+  const url = process.env.KV_REST_API_URL;
+  const token = process.env.KV_REST_API_TOKEN;
+
+  if (!url || !token) {
+    console.warn('[SITE-CONFIG] Redis not configured - using DEFAULT_CONFIG');
+    return null;
+  }
+
+  try {
+    return new Redis({ url, token });
+  } catch (error) {
+    console.error('[SITE-CONFIG] Redis init error:', error);
+    return null;
+  }
+}
 
 export const getSiteConfig = unstable_cache(
   async (): Promise<SiteConfig> => {
+    const redis = getRedisClient();
+
+    if (!redis) {
+      console.log('[SITE-CONFIG] Returning DEFAULT_CONFIG (Redis not available)');
+      return DEFAULT_CONFIG;
+    }
+
     try {
       const config = await redis.get<SiteConfig>('site-config');
       return config || DEFAULT_CONFIG;
     } catch (error) {
-      console.error('[getSiteConfig] Error fetching config from Redis:', error);
+      console.error('[SITE-CONFIG] Error fetching config from Redis:', error);
       return DEFAULT_CONFIG;
     }
   },
