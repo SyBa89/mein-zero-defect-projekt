@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // ✅ Strict Mode für bessere Error-Detection in Development
   reactStrictMode: true,
 
+  // ✅ Image Optimization - maximale Performance (kompatibel mit 15.0.3+)
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
@@ -9,11 +11,13 @@ const nextConfig = {
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,
     unoptimized: false,
-    qualities: [75, 80, 85, 90, 100],
+    // ✅ 'qualities' entfernt - nicht unterstützt in 15.0.3
   },
 
+  // ✅ Compression für schnellere Ladezeiten
   compress: true,
 
+  // ✅ Redirects für bessere UX
   async redirects() {
     return [
       {
@@ -24,16 +28,19 @@ const nextConfig = {
     ];
   },
 
+  // ✅ Experimental Features (nur stabile)
   experimental: {
     staleTimes: {
       dynamic: 30,
     },
   },
 
+  // ✅ TypeScript Configuration
   typescript: {
     ignoreBuildErrors: false,
   },
 
+  // ✅ ESLint Configuration
   eslint: {
     ignoreDuringBuilds: false,
   },
