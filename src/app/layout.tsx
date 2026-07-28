@@ -4,15 +4,15 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import EmergencyBanner from '@/components/EmergencyBanner';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
-// ✅ ZERO-DEFECT: Optimierte Schriftart-Ladung mit 'swap' für sofortige Textanzeige (kein FOIT)
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
 });
 
-// ✅ ZERO-DEFECT: Viewport für maximale Mobile-Kompatibilität und PWA-Support
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -21,7 +21,6 @@ export const viewport: Viewport = {
   colorScheme: 'light',
 };
 
-// ✅ ZERO-DEFECT: Umfassende, mehrschichtige SEO- und Social-Media-Metadaten
 export const metadata: Metadata = {
   metadataBase: new URL('https://mein-zero-defect-projekt.vercel.app'),
   title: {
@@ -104,11 +103,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" dir="ltr" className={inter.variable} data-scroll-behavior="smooth">
+    <html lang="de" dir="ltr" className={inter.variable}>
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased selection:bg-pink-200 selection:text-pink-900">
         <EmergencyBanner />
-        {children}
-        {/* ✅ PHASE 2: Analytics + Performance Monitoring */}
+        <Header />
+        <main>{children}</main>
+        <Footer />
         <Analytics />
         <SpeedInsights />
       </body>
