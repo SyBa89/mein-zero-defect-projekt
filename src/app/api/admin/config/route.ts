@@ -1,27 +1,31 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { revalidateTag, revalidatePath } from 'next/cache';
 import { SiteConfig } from '@/lib/site-config';
-import { env } from '@/lib/env';
 import { verifySessionToken, hasPermission } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// ─── Redis-Client mit Fehlerbehandlung ──────────────────────────────
-let redis: Redis | null = null;
-try {
-  if (env.KV_REST_API_URL && env.KV_REST_API_TOKEN) {
-    redis = new Redis({
-      url: env.KV_REST_API_URL,
-      token: env.KV_REST_API_TOKEN,
-    });
-    console.log('[CONFIG] Redis initialized successfully');
-  } else {
+// ✅ LAZY FACTORY: Redis wird erst zur Laufzeit erstellt (nicht beim Build)
+function getRedisClient(): Redis | null {
+  const url = process.env.KV_REST_API_URL;
+  const token = process.env.KV_REST_API_TOKEN;
+
+  if (!url || !token) {
     console.warn('[CONFIG] Redis credentials missing – using static config');
+    return null;
   }
-} catch (error: unknown) {
-  console.error('[CONFIG] Redis init error:', error);
+
+  try {
+    const redis = new Redis({ url, token });
+    console.log('[CONFIG] Redis initialized successfully');
+    return redis;
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('[CONFIG] Redis init error:', message);
+    return null;
+  }
 }
 
 const STATIC_CONFIG: SiteConfig = {
@@ -35,36 +39,37 @@ const STATIC_CONFIG: SiteConfig = {
   mapsLink: 'https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683',
   facebook: 'https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/',
   openingHoursText: 'Mo-Fr 07:30-19:00, Sa 07:30-14:30',
-  jackpot: '45.000.000',
-  highlight: '🎉 Test-Highlight!',
+  jackpot: '', // ✅ LEER - Admin kann es im Cockpit setzen
+  highlight: '', // ✅ LEER - Admin kann es im Cockpit setzen
   updatedAt: new Date().toISOString(),
 };
 
-function safeString(value: any): string {
+function safeString(value: unknown): string {
   if (typeof value === 'string') return value;
   if (typeof value === 'number') return String(value);
   return '';
 }
 
-function safeBoolean(value: any): boolean {
+function safeBoolean(value: unknown): boolean {
   return typeof value === 'boolean' ? value : false;
 }
 
-function validateConfig(data: any): SiteConfig {
+function validateConfig(data: unknown): SiteConfig {
+  const obj = data as Record<string, unknown> | null;
   return {
-    isClosed: safeBoolean(data?.isClosed),
-    bannerText: safeString(data?.bannerText),
-    emergencyMessage: safeString(data?.emergencyMessage),
-    name: safeString(data?.name) || STATIC_CONFIG.name,
-    phoneDisplay: safeString(data?.phoneDisplay) || STATIC_CONFIG.phoneDisplay,
-    phoneHref: safeString(data?.phoneHref) || STATIC_CONFIG.phoneHref,
-    address: safeString(data?.address) || STATIC_CONFIG.address,
-    mapsLink: safeString(data?.mapsLink) || STATIC_CONFIG.mapsLink,
-    facebook: safeString(data?.facebook) || STATIC_CONFIG.facebook,
-    openingHoursText: safeString(data?.openingHoursText) || STATIC_CONFIG.openingHoursText,
-    jackpot: safeString(data?.jackpot) || STATIC_CONFIG.jackpot,
-    highlight: safeString(data?.highlight) || STATIC_CONFIG.highlight,
-    updatedAt: safeString(data?.updatedAt) || STATIC_CONFIG.updatedAt,
+    isClosed: safeBoolean(obj?.isClosed),
+    bannerText: safeString(obj?.bannerText),
+    emergencyMessage: safeString(obj?.emergencyMessage),
+    name: safeString(obj?.name) || STATIC_CONFIG.name,
+    phoneDisplay: safeString(obj?.phoneDisplay) || STATIC_CONFIG.phoneDisplay,
+    phoneHref: safeString(obj?.phoneHref) || STATIC_CONFIG.phoneHref,
+    address: safeString(obj?.address) || STATIC_CONFIG.address,
+    mapsLink: safeString(obj?.mapsLink) || STATIC_CONFIG.mapsLink,
+    facebook: safeString(obj?.facebook) || STATIC_CONFIG.facebook,
+    openingHoursText: safeString(obj?.openingHoursText) || STATIC_CONFIG.openingHoursText,
+    jackpot: safeString(obj?.jackpot) || STATIC_CONFIG.jackpot,
+    highlight: safeString(obj?.highlight) || STATIC_CONFIG.highlight,
+    updatedAt: safeString(obj?.updatedAt) || STATIC_CONFIG.updatedAt,
   };
 }
 
@@ -77,6 +82,8 @@ export async function GET(request: NextRequest) {
     if (!sessionUser || !hasPermission(sessionUser.role, 'edit-config')) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    const redis = getRedisClient();
 
     // Versuche Redis – fallback auf static config
     if (redis) {
@@ -130,6 +137,8 @@ export async function POST(request: NextRequest) {
       highlight: safeString(body.highlight) || STATIC_CONFIG.highlight,
       updatedAt: new Date().toISOString(),
     };
+
+    const redis = getRedisClient();
 
     // Speichern in Redis (wenn verfügbar)
     if (redis) {
