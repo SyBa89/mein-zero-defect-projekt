@@ -100,7 +100,15 @@ export default function CookieBanner() {
                     Immer aktiv
                   </span>
                 </div>
-                <input type="checkbox" checked disabled className="mt-1 w-5 h-5" />
+                <input
+                  type="checkbox"
+                  id="cookie-necessary"
+                  name="cookie-necessary"
+                  checked
+                  disabled
+                  className="mt-1 w-5 h-5"
+                  aria-label="Notwendige Cookies"
+                />
               </div>
               <div className="flex items-start justify-between p-3 bg-gray-50 rounded-lg">
                 <div className="flex-1">
@@ -111,9 +119,12 @@ export default function CookieBanner() {
                 </div>
                 <input
                   type="checkbox"
+                  id="cookie-analytics"
+                  name="cookie-analytics"
                   checked={consent.analytics}
                   onChange={(e) => setConsent({ ...consent, analytics: e.target.checked })}
                   className="mt-1 w-5 h-5 text-pink-600 cursor-pointer"
+                  aria-label="Analytics Cookies"
                 />
               </div>
               <div className="flex items-start justify-between p-3 bg-gray-50 rounded-lg">
@@ -123,9 +134,12 @@ export default function CookieBanner() {
                 </div>
                 <input
                   type="checkbox"
+                  id="cookie-marketing"
+                  name="cookie-marketing"
                   checked={consent.marketing}
                   onChange={(e) => setConsent({ ...consent, marketing: e.target.checked })}
                   className="mt-1 w-5 h-5 text-pink-600 cursor-pointer"
+                  aria-label="Marketing Cookies"
                 />
               </div>
             </div>

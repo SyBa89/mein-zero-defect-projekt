@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, useRef, ReactNode } from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
 
@@ -13,10 +13,6 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-/**
- * Synchronously get initial theme from localStorage
- * Runs DURING render to prevent flicker (WCAG 2.3.1)
- */
 function getInitialTheme(): Theme {
   if (typeof window === 'undefined') return 'system';
   try {
@@ -28,10 +24,6 @@ function getInitialTheme(): Theme {
   return 'system';
 }
 
-/**
- * Synchronously get resolved theme from DOM class (set by inline script)
- * Prevents the light→dark flash on first load
- */
 function getInitialResolvedTheme(): 'light' | 'dark' {
   if (typeof window === 'undefined') return 'light';
   if (document.documentElement.classList.contains('dark')) return 'dark';
@@ -40,10 +32,12 @@ function getInitialResolvedTheme(): 'light' | 'dark' {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  // LAZY INITIALIZATION - synchronous during first render (prevents flicker)
   const [theme, setThemeState] = useState<Theme>(getInitialTheme);
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>(getInitialResolvedTheme);
   const [mounted, setMounted] = useState(false);
+
+  // Ref to track current resolved theme without triggering dependency warnings
+  const resolvedRef = useRef<'light' | 'dark'>(resolvedTheme);
 
   useEffect(() => {
     setMounted(true);
@@ -60,7 +54,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       resolved = theme;
     }
 
-    if (resolved !== resolvedTheme) {
+    // Use ref to avoid dependency warning
+    if (resolved !== resolvedRef.current) {
+      resolvedRef.current = resolved;
       setResolvedTheme(resolved);
     }
     document.documentElement.classList.toggle('dark', resolved === 'dark');
@@ -80,8 +76,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = () => {
       const newResolved = mediaQuery.matches ? 'dark' : 'light';
-      setResolvedTheme(newResolved);
-      document.documentElement.classList.toggle('dark', newResolved === 'dark');
+      if (newResolved !== resolvedRef.current) {
+        resolvedRef.current = newResolved;
+        setResolvedTheme(newResolved);
+        document.documentElement.classList.toggle('dark', newResolved === 'dark');
+      }
     };
 
     mediaQuery.addEventListener('change', handleChange);
@@ -89,7 +88,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme]);
 
   const setTheme = (newTheme: Theme) => setThemeState(newTheme);
-  const toggleTheme = () => setThemeState(resolvedTheme === 'light' ? 'dark' : 'light');
+  const toggleTheme = () => setThemeState(resolvedRef.current === 'light' ? 'dark' : 'light');
 
   return (
     <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme, toggleTheme }}>

@@ -211,13 +211,7 @@ a.text-gray-600:hover {
   color: rgb(229, 231, 235) !important;
 }
 
-/* Pink/Purple Gradients bleiben (Brand Colors) */
-.dark .from-pink-600,
-.dark .to-purple-600,
-.dark .from-pink-500,
-.dark .to-purple-500 {
-  /* Keine Änderung - Brand Colors bleiben */
-}
+/* Brand colors preserved - no changes needed in dark mode */
 
 /* Opening Hours Section */
 .dark .bg-pink-50 {
@@ -441,11 +435,6 @@ a.text-gray-600:hover {
   }
 }
 /* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════ */
-/* ADMIN-COCKPIT DARK MODE OVERRIDES                                */
-/* Input-Felder, Textareas, Selects im Admin-Bereich                */
-/* ═══════════════════════════════════════════════════════════════ */
-
 /* Admin Input Fields */
 .dark input[type="text"],
 .dark input[type="number"],
@@ -500,5 +489,130 @@ a.text-gray-600:hover {
 .dark .admin-section {
   background-color: rgb(31, 41, 55) !important;
   border-color: rgb(55, 65, 81) !important;
+}
+/* ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════ */
+/* FEATURES SECTION DARK MODE FIX                                   */
+/* Weiß-auf-Weiß Problem beheben (z.B. "Warum Kunden zu uns kommen") */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* Text-white im Dark Mode: stattdessen hellgrau für bessere Lesbarkeit */
+.dark .text-white {
+  color: rgb(243, 244, 246) !important;
+}
+
+/* Aber Brand-Buttons sollen weiß bleiben (Pink/Purple Background) */
+.dark .bg-gradient-to-r.from-pink-600.to-purple-600 .text-white,
+.dark .bg-pink-600 .text-white,
+.dark .bg-purple-600 .text-white,
+.dark button.text-white,
+.dark a.text-white[href^="tel"],
+.dark a.text-white[href^="/kontakt"] {
+  color: rgb(255, 255, 255) !important;
+}
+
+/* Feature Cards im Dark Mode - Text soll lesbar sein */
+.dark .bg-white .text-gray-900 {
+  color: rgb(243, 244, 246) !important;
+}
+
+.dark .bg-white .text-gray-700,
+.dark .bg-white .text-gray-600 {
+  color: rgb(209, 213, 219) !important;
+}
+
+/* Spezifisch: "Warum Kunden zu uns kommen" Section */
+.dark section .text-gray-900 {
+  color: rgb(243, 244, 246) !important;
+}
+
+.dark section .text-gray-700 {
+  color: rgb(209, 213, 219) !important;
+}
+
+.dark section .text-gray-600 {
+  color: rgb(156, 163, 175) !important;
+}
+
+/* Card-like Containers im Dark Mode */
+.dark .bg-white.rounded-xl,
+.dark .bg-white.rounded-2xl,
+.dark .bg-white.p-6,
+.dark .bg-white.p-8 {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(55, 65, 81) !important;
+}
+/* ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════ */
+/* ADMIN-COCKPIT DARK MODE OVERRIDES v2 - ROBUST                    */
+/* Alle Input-Felder, Textareas, Selects für Admin + Public Forms   */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* ALLE Input Types im Dark Mode */
+.dark input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+.dark textarea,
+.dark select {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(75, 85, 99) !important;
+  color: rgb(243, 244, 246) !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: rgb(156, 163, 175) !important;
+  opacity: 1 !important;
+}
+
+/* Input Focus States */
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  outline-color: rgb(236, 72, 153) !important;
+  border-color: rgb(236, 72, 153) !important;
+  background-color: rgb(17, 24, 39) !important;
+}
+
+/* Checkbox Styling */
+.dark input[type="checkbox"] {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(75, 85, 99) !important;
+  accent-color: rgb(236, 72, 153) !important;
+}
+
+.dark input[type="checkbox"]:checked {
+  background-color: rgb(236, 72, 153) !important;
+  border-color: rgb(236, 72, 153) !important;
+}
+
+/* Radio Buttons */
+.dark input[type="radio"] {
+  accent-color: rgb(236, 72, 153) !important;
+}
+
+/* Labels im Dark Mode */
+.dark label {
+  color: rgb(229, 231, 235) !important;
+}
+
+/* Help text / small descriptions */
+.dark .text-gray-500,
+.dark .text-gray-600 {
+  color: rgb(156, 163, 175) !important;
+}
+
+/* Fieldsets + Admin Cards */
+.dark fieldset,
+.dark .admin-card,
+.dark .admin-section,
+.dark [class*="admin"] {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(55, 65, 81) !important;
+}
+
+/* Save Button in Admin */
+.dark button[type="submit"],
+.dark .bg-gradient-to-r.from-pink-600.to-purple-600 {
+  background: linear-gradient(to right, rgb(236, 72, 153), rgb(147, 51, 234)) !important;
+  color: rgb(255, 255, 255) !important;
 }
 /* ═══════════════════════════════════════════════════════════════ */
