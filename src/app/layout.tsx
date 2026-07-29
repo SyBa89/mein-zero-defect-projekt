@@ -7,6 +7,8 @@ import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
 import ConditionalAnalytics from '@/components/ConditionalAnalytics';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { ToastProvider } from '@/contexts/ToastContext';
+import ToastContainer from '@/components/ToastContainer';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -111,7 +113,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" dir="ltr" className={inter.variable} suppressHydrationWarning>
-      {/* FOUC Prevention: Inline Script setzt dark class VOR dem Render */}
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -130,22 +131,24 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased selection:bg-pink-200 dark:selection:bg-pink-800 selection:text-pink-900 dark:selection:text-pink-100 transition-colors duration-300">
         <ThemeProvider>
-          {/* Accessibility: Skip-Link (CSS-only, kein JavaScript) */}
-          <a href="#main-content" className="skip-link">
-            Zum Hauptinhalt springen
-          </a>
+          <ToastProvider>
+            <a href="#main-content" className="skip-link">
+              Zum Hauptinhalt springen
+            </a>
 
-          <EmergencyBanner />
-          <Header />
+            <EmergencyBanner />
+            <Header />
 
-          {/* EINZIGES main pro Seite (semantisch korrekt) */}
-          <main id="main-content" aria-label="Hauptinhalt der Webseite">
-            {children}
-          </main>
+            <main id="main-content" aria-label="Hauptinhalt der Webseite">
+              {children}
+            </main>
 
-          <Footer />
-          <CookieBanner />
-          <ConditionalAnalytics />
+            <Footer />
+            <CookieBanner />
+            <ConditionalAnalytics />
+
+            <ToastContainer />
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>
