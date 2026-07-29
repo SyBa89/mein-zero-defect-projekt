@@ -811,3 +811,353 @@ a.text-gray-600:hover {
   color: rgb(17, 24, 39) !important;
 }
 /* ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════ */
+/* MAXIMUM PERFEKTION FOUNDATION LAYER v1                           */
+/* Global Transitions + Shadow Hierarchy + Focus States              */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* ── GLOBAL SMOOTH TRANSITIONS (alle interaktiven Elemente) ── */
+a, button, input, textarea, select,
+.transition-all, [class*="hover:"], [class*="focus:"] {
+  transition-property: color, background-color, border-color, 
+                       text-decoration-color, fill, stroke, 
+                       opacity, box-shadow, transform, filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* ── BUTTON PRESS FEEDBACK (scale on active) ── */
+button:not(:disabled):active,
+a.button:active,
+.button-press:active {
+  transform: scale(0.98);
+  transition-duration: 100ms;
+}
+
+/* ── SHADOW HIERARCHY (konsistent für Light + Dark) ── */
+.shadow-xs {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.03);
+}
+
+.dark .shadow-xs {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.2);
+}
+
+.shadow-subtle {
+  box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.04), 
+              0 1px 2px -1px rgb(0 0 0 / 0.03);
+}
+
+.dark .shadow-subtle {
+  box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.3), 
+              0 1px 2px -1px rgb(0 0 0 / 0.2);
+}
+
+/* ── HOVER ELEVATION (Cards heben sich beim Hover) ── */
+.hover-lift-sm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px -2px rgb(0 0 0 / 0.08), 
+              0 2px 4px -2px rgb(0 0 0 / 0.04);
+}
+
+.dark .hover-lift-sm:hover {
+  box-shadow: 0 4px 8px -2px rgb(0 0 0 / 0.4), 
+              0 2px 4px -2px rgb(0 0 0 / 0.3);
+}
+
+.hover-lift-md:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px -4px rgb(0 0 0 / 0.1), 
+              0 4px 8px -4px rgb(0 0 0 / 0.05);
+}
+
+.dark .hover-lift-md:hover {
+  box-shadow: 0 8px 16px -4px rgb(0 0 0 / 0.5), 
+              0 4px 8px -4px rgb(0 0 0 / 0.4);
+}
+
+/* ── FOCUS RINGS (Pink Accent - Brand Color) ── */
+*:focus-visible {
+  outline: 2px solid rgb(236 72 153 / 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.dark *:focus-visible {
+  outline: 2px solid rgb(236 72 153 / 0.6);
+}
+
+/* ── SMOOTH SCROLL (aber respektiert prefers-reduced-motion) ── */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ── SELECTION STYLING (Brand Colors) ── */
+::selection {
+  background-color: rgb(236 72 153 / 0.2);
+  color: rgb(15 23 42);
+}
+
+.dark ::selection {
+  background-color: rgb(236 72 153 / 0.3);
+  color: rgb(243 244 246);
+}
+/* ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════ */
+/* MAXIMUM PERFEKTION TYPOGRAPHY LAYER v1                           */
+/* Verbesserte Heading-Hierarchie + Line-Height + Spacing            */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* ── HEADING HIERARCHY (Letter-Spacing + Weight) ── */
+h1, .h1 {
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+h2, .h2 {
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h3, .h3 {
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+h4, .h4 {
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+/* ── BODY TEXT OPTIMIZATION (Lesbarkeit) ── */
+p, .prose {
+  line-height: 1.7;
+  letter-spacing: 0.005em;
+}
+
+/* ── SECTION SPACING (konsistent) ── */
+.section-spacing {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+/* ── RESPONSIVE TYPOGRAPHY (fluid sizes mit clamp) ── */
+.text-fluid-sm {
+  font-size: clamp(0.875rem, 0.8rem + 0.2vw, 1rem);
+}
+
+.text-fluid-base {
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+}
+
+.text-fluid-lg {
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem);
+}
+
+.text-fluid-xl {
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
+}
+
+.text-fluid-2xl {
+  font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+}
+
+.text-fluid-3xl {
+  font-size: clamp(2.5rem, 2rem + 3vw, 4rem);
+}
+
+/* ── PARAGRAPH SPACING (bessere Lesbarkeit) ── */
+.prose p + p {
+  margin-top: 1.25em;
+}
+
+.prose h2 + p,
+.prose h3 + p {
+  margin-top: 0.75em;
+}
+/* ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════ */
+/* MAXIMUM PERFEKTION PREMIUM DETAILS v1                            */
+/* Glassmorphism + Gradient Borders + Scroll Animations              */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* ── GLASSMORPHISM CARDS (subtle, nicht übertrieben) ── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+}
+
+.dark .glass-card {
+  background: rgba(31, 41, 55, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ── GRADIENT BORDERS (für CTAs und Special Cards) ── */
+.gradient-border {
+  position: relative;
+  background: white;
+  border-radius: 0.75rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgb(236 72 153), rgb(168 85 247));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.dark .gradient-border {
+  background: rgb(31, 41, 55);
+}
+
+/* ── SCROLL REVEAL ANIMATIONS (fade-in on scroll) ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── SUBTLE BACKGROUND PATTERNS (Dots/Grid) ── */
+.bg-dots {
+  background-image: radial-gradient(circle, rgb(226 232 240 / 0.5) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .bg-dots {
+  background-image: radial-gradient(circle, rgb(71 85 105 / 0.3) 1px, transparent 1px);
+}
+
+.bg-grid {
+  background-image: 
+    linear-gradient(rgb(226 232 240 / 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(226 232 240 / 0.3) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.dark .bg-grid {
+  background-image: 
+    linear-gradient(rgb(71 85 105 / 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(71 85 105 / 0.2) 1px, transparent 1px);
+}
+
+/* ── ANIMATED GRADIENT TEXT (für Hero Headlines) ── */
+.gradient-text-animated {
+  background: linear-gradient(
+    90deg,
+    rgb(236 72 153),
+    rgb(168 85 247),
+    rgb(236 72 153)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* ── PULSE GLOW (für CTAs) ── */
+.pulse-glow {
+  position: relative;
+}
+
+.pulse-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgb(236 72 153), rgb(168 85 247));
+  opacity: 0;
+  filter: blur(20px);
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.pulse-glow:hover::after {
+  opacity: 0.4;
+}
+
+/* ── SMOOTH PAGE TRANSITIONS ── */
+.page-enter {
+  animation: pageEnter 0.4s ease-out;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── CARD HOVER GLOW (subtle brand color glow) ── */
+.card-glow {
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+.card-glow:hover {
+  box-shadow: 0 0 40px -10px rgb(236 72 153 / 0.2);
+}
+
+.dark .card-glow:hover {
+  box-shadow: 0 0 40px -10px rgb(236 72 153 / 0.3);
+}
+/* ═══════════════════════════════════════════════════════════════ */
