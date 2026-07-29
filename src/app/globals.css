@@ -616,3 +616,198 @@ a.text-gray-600:hover {
   color: rgb(255, 255, 255) !important;
 }
 /* ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════ */
+/* UNIVERSAL DARK MODE CONTRAST FIX v4 - FINAL (Admin-Link bleibt) */
+/* Behebt ALLE Weiß-auf-Weiß Probleme global                        */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* ── FEATURE CARDS (Warum Kunden zu uns kommen) ── */
+.dark .bg-white.shadow-md,
+.dark .bg-white.shadow-lg,
+.dark .bg-white.shadow-xl,
+.dark .bg-white.rounded-xl,
+.dark .bg-white.rounded-2xl,
+.dark .bg-white.rounded-3xl,
+.dark .bg-white.p-4,
+.dark .bg-white.p-6,
+.dark .bg-white.p-8,
+.dark .bg-white[class*="border"] {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(55, 65, 81) !important;
+  color: rgb(243, 244, 246) !important;
+}
+
+/* Feature Card Texte (alle Grautöne lesbar machen) */
+.dark .bg-white h1,
+.dark .bg-white h2,
+.dark .bg-white h3,
+.dark .bg-white h4,
+.dark .bg-white h5,
+.dark .bg-white h6 {
+  color: rgb(243, 244, 246) !important;
+}
+
+.dark .bg-white p,
+.dark .bg-white span,
+.dark .bg-white div,
+.dark .bg-white li {
+  color: rgb(229, 231, 235) !important;
+}
+
+/* Icons in Feature Cards */
+.dark .bg-white .text-4xl,
+.dark .bg-white .text-5xl,
+.dark .bg-white .text-6xl {
+  filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.4));
+}
+
+/* ── ÖFFNUNGSZEITEN SECTION ── */
+.dark .bg-pink-50,
+.dark .bg-purple-50,
+.dark .bg-blue-50,
+.dark .bg-green-50,
+.dark .bg-yellow-50 {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(55, 65, 81) !important;
+}
+
+/* "(heute)" Badge - besser lesbar */
+.dark .text-xs,
+.dark .text-sm,
+.dark .text-gray-500,
+.dark .text-gray-400 {
+  color: rgb(209, 213, 219) !important;
+}
+
+/* Heutiger Tag hervorgehoben */
+.dark .bg-pink-100,
+.dark .bg-pink-200,
+.dark [class*="today"],
+.dark [class*="heute"] {
+  background-color: rgb(236, 72, 153) !important;
+  color: rgb(255, 255, 255) !important;
+}
+
+/* ── ADMIN LOGIN PAGE (Debug-Text sichtbar machen) ── */
+.dark .text-gray-300,
+.dark .text-gray-200,
+.dark [class*="debug"],
+.dark [class*="Debug"] {
+  color: rgb(229, 231, 235) !important;
+}
+
+/* Admin Login Buttons sichtbar */
+.dark button[disabled],
+.dark .bg-gray-300,
+.dark .bg-gray-400 {
+  background-color: rgb(75, 85, 99) !important;
+  color: rgb(209, 213, 219) !important;
+  border-color: rgb(107, 114, 128) !important;
+}
+
+/* ── ADMIN COCKPIT - Inputs UND Container ── */
+.dark .admin-card,
+.dark .admin-section,
+.dark [class*="jackpot"],
+.dark [class*="Jackpot"],
+.dark [class*="highlight"],
+.dark [class*="Highlight"],
+.dark [class*="banner"],
+.dark [class*="Banner"] {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(75, 85, 99) !important;
+  color: rgb(243, 244, 246) !important;
+}
+
+/* ── FOOTER LINKS (ALLE sichtbar machen, Admin-Link BLEIBT!) ── */
+.dark footer a,
+.dark footer .text-gray-400,
+.dark footer .text-gray-500,
+.dark footer .text-gray-600 {
+  color: rgb(229, 231, 235) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.dark footer a:hover {
+  color: rgb(236, 72, 153) !important;
+  text-decoration: underline !important;
+}
+
+/* Admin-Link im Footer - SPEZIELL SICHTBAR (bleibt erhalten!) */
+.dark footer a[href*="admin"],
+.dark footer a[href="/admin"] {
+  color: rgb(251, 191, 36) !important; /* Amber/Gold - deutlich sichtbar */
+  font-weight: 600 !important;
+  background-color: rgba(251, 191, 36, 0.1) !important;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+}
+
+.dark footer a[href*="admin"]:hover,
+.dark footer a[href="/admin"]:hover {
+  color: rgb(253, 224, 71) !important;
+  background-color: rgba(251, 191, 36, 0.2) !important;
+  border-color: rgba(251, 191, 36, 0.5) !important;
+}
+
+/* Schloss-Icon beim Admin-Link sichtbar */
+.dark footer a[href*="admin"] svg,
+.dark footer a[href="/admin"] svg {
+  color: rgb(251, 191, 36) !important;
+  fill: currentColor !important;
+}
+
+/* Footer andere Icons sichtbar */
+.dark footer svg {
+  color: rgb(229, 231, 235) !important;
+  fill: currentColor !important;
+}
+
+/* Admin-Link Icon Override (damit es amber bleibt) */
+.dark footer a[href*="admin"] svg,
+.dark footer a[href="/admin"] svg {
+  color: rgb(251, 191, 36) !important;
+}
+
+/* ── UNIVERSAL: Alle bg-white Elemente die nicht Buttons sind ── */
+.dark *:not(button):not(a):not(input):not(textarea):not(select).bg-white {
+  background-color: rgb(31, 41, 55) !important;
+}
+
+/* ── UNIVERSAL: Alle text-white Elemente auf hellem Background ── */
+.dark .bg-white .text-white,
+.dark .bg-gray-50 .text-white,
+.dark .bg-pink-50 .text-white,
+.dark .bg-purple-50 .text-white {
+  color: rgb(243, 244, 246) !important;
+}
+
+/* ── SECTION TITLES (h1, h2, h3) immer sichtbar ── */
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: rgb(243, 244, 246) !important;
+}
+
+/* ── SECTION BACKGROUNDS ── */
+.dark section.bg-white,
+.dark section.bg-gray-50,
+.dark div.bg-white,
+.dark div.bg-gray-50 {
+  background-color: rgb(17, 24, 39) !important;
+}
+
+/* ── GRADIENT BACKGROUNDS bleiben sichtbar ── */
+.dark .bg-gradient-to-r,
+.dark .bg-gradient-to-br,
+.dark .bg-gradient-to-l {
+  /* Gradient bleibt - keine Änderung */
+}
+
+/* ── EXCEPTION: Buttons mit bg-white sollen weiß bleiben ── */
+.dark button.bg-white,
+.dark a.bg-white:not([href*="admin"]) {
+  background-color: rgb(255, 255, 255) !important;
+  color: rgb(17, 24, 39) !important;
+}
+/* ═══════════════════════════════════════════════════════════════ */
