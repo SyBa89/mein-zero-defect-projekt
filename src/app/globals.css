@@ -441,3 +441,64 @@ a.text-gray-600:hover {
   }
 }
 /* ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════ */
+/* ADMIN-COCKPIT DARK MODE OVERRIDES                                */
+/* Input-Felder, Textareas, Selects im Admin-Bereich                */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* Admin Input Fields */
+.dark input[type="text"],
+.dark input[type="number"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="tel"],
+.dark input[type="url"],
+.dark textarea {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(75, 85, 99) !important;
+  color: rgb(243, 244, 246) !important;
+}
+
+.dark input[type="text"]::placeholder,
+.dark input[type="number"]::placeholder,
+.dark input[type="email"]::placeholder,
+.dark input[type="password"]::placeholder,
+.dark input[type="tel"]::placeholder,
+.dark input[type="url"]::placeholder,
+.dark textarea::placeholder {
+  color: rgb(156, 163, 175) !important;
+}
+
+/* Admin Input Focus State */
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  outline-color: rgb(236, 72, 153) !important;
+  border-color: rgb(236, 72, 153) !important;
+  background-color: rgb(17, 24, 39) !important;
+}
+
+/* Admin Checkboxes */
+.dark input[type="checkbox"] {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(75, 85, 99) !important;
+}
+
+.dark input[type="checkbox"]:checked {
+  background-color: rgb(236, 72, 153) !important;
+  border-color: rgb(236, 72, 153) !important;
+}
+
+/* Admin Labels */
+.dark label {
+  color: rgb(229, 231, 235) !important;
+}
+
+/* Admin Fieldset/Card backgrounds */
+.dark fieldset,
+.dark .admin-card,
+.dark .admin-section {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(55, 65, 81) !important;
+}
+/* ═══════════════════════════════════════════════════════════════ */
