@@ -167,3 +167,109 @@ a.text-gray-600:hover {
     scroll-behavior: auto !important;
   }
 }
+/* ═══════════════════════════════════════════════════════════════ */
+/* DARK MODE SECTION OVERRIDES                                      */
+/* Automatische Dark-Mode-Anpassung für alle Homepage-Sections       */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* Hero Section Background */
+.dark .bg-gradient-to-br {
+  background-image: linear-gradient(to bottom right, rgb(17, 24, 39), rgb(31, 41, 55), rgb(17, 24, 39)) !important;
+}
+
+/* Cards & Containers */
+.dark .bg-white {
+  background-color: rgb(31, 41, 55) !important;
+}
+
+.dark .bg-gray-50 {
+  background-color: rgb(17, 24, 39) !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: rgb(31, 41, 55) !important;
+}
+
+.dark .border-gray-200 {
+  border-color: rgb(55, 65, 81) !important;
+}
+
+.dark .border-gray-100 {
+  border-color: rgb(55, 65, 81) !important;
+}
+
+/* Text Colors */
+.dark .text-gray-900 {
+  color: rgb(243, 244, 246) !important;
+}
+
+.dark .text-gray-700 {
+  color: rgb(209, 213, 219) !important;
+}
+
+.dark .text-gray-800 {
+  color: rgb(229, 231, 235) !important;
+}
+
+/* Pink/Purple Gradients bleiben (Brand Colors) */
+.dark .from-pink-600,
+.dark .to-purple-600,
+.dark .from-pink-500,
+.dark .to-purple-500 {
+  /* Keine Änderung - Brand Colors bleiben */
+}
+
+/* Opening Hours Section */
+.dark .bg-pink-50 {
+  background-color: rgb(55, 65, 81) !important;
+}
+
+/* Reviews Cards */
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-lg {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* FAQ Section */
+.dark details {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(55, 65, 81) !important;
+}
+
+.dark details[open] {
+  background-color: rgb(55, 65, 81) !important;
+}
+
+/* Footer */
+.dark footer {
+  background-color: rgb(17, 24, 39) !important;
+  border-color: rgb(55, 65, 81) !important;
+}
+
+/* Forms & Inputs */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(75, 85, 99) !important;
+  color: rgb(243, 244, 246) !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: rgb(156, 163, 175) !important;
+}
+
+/* Backdrop Blur */
+.dark .backdrop-blur-md {
+  background-color: rgba(17, 24, 39, 0.95) !important;
+}
+
+/* Smooth Transitions for Theme Switch */
+.dark * {
+  transition-property: background-color, border-color, color;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* ═══════════════════════════════════════════════════════════════ */
