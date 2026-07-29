@@ -1,4 +1,4 @@
-import { unstable_cache } from 'next/cache';
+﻿import { unstable_cache } from 'next/cache';
 import { Redis } from '@upstash/redis';
 
 export interface SiteConfig {
@@ -24,7 +24,7 @@ export const DEFAULT_CONFIG: SiteConfig = {
   name: 'Kiosk Lollipop',
   phoneDisplay: '02235 9291160',
   phoneHref: 'tel:+4922359291160',
-  address: 'Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar',
+  address: 'Theodor-Heuss-StraÃŸe 35, 50374 Erftstadt-Liblar',
   mapsLink: 'https://www.google.com/maps/dir/?api=1&destination=50.806945,6.823683',
   facebook: 'https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/',
   openingHoursText: 'Mo-Fr 07:30-19:00, Sa 07:30-14:30',
@@ -33,7 +33,7 @@ export const DEFAULT_CONFIG: SiteConfig = {
   updatedAt: new Date().toISOString(),
 };
 
-// LAZY FACTORY: Redis wird erst zur Laufzeit erstellt (nicht beim Build)
+// âœ… LAZY FACTORY: Redis wird erst zur Laufzeit erstellt (nicht beim Build)
 function getRedisClient(): Redis | null {
   const url = process.env.KV_REST_API_URL;
   const token = process.env.KV_REST_API_TOKEN;
@@ -81,3 +81,4 @@ export interface User {
   createdAt: string;
   lastLogin?: string;
 }
+
