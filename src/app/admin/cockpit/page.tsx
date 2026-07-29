@@ -1,15 +1,52 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
+// Typedef for the site configuration used by the Admin Cockpit
+interface SiteConfig {
+  isClosed: boolean;
+  emergencyMessage: string;
+  openingHoursText: string;
+  jackpot: string;
+  highlight: string;
+  updatedAt: string; // ISO timestamp
+  bannerText?: string;
+  name?: string;
+  phoneDisplay?: string;
+  phoneHref?: string;
+  address?: string;
+  facebook?: string;
+  holidays?: any[];
+}
+
+// Default config prevents null-accesses during prerender / initial render
+const defaultConfig: SiteConfig = {
+  isClosed: false,
+  emergencyMessage: '',
+  openingHoursText: 'Mo-Fr 07:30-19:00',
+  jackpot: '',
+  highlight: '',
+  updatedAt: new Date().toISOString(),
+  bannerText: '',
+  name: 'Kiosk Lollipop',
+  phoneDisplay: '02235 9291160',
+  phoneHref: 'tel:+4922359291160',
+  address: 'Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar',
+  facebook: 'https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/',
+  holidays: [],
+};
+
 export default function AdminCockpit() {
   const [user, setUser] = useState<any>(null);
-  const [config, setConfig] = useState<any>(null);
+  const [config, setConfig] = useState<SiteConfig>(defaultConfig);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [debugInfo, setDebugInfo] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
   const router = useRouter();
 
   const loadConfig = useCallback(async () => {
@@ -23,7 +60,8 @@ export default function AdminCockpit() {
 
       if (response.ok) {
         const data = await response.json();
-        setConfig(data);
+        // merge with defaults to ensure all fields exist
+        setConfig(prev => ({ ...(prev ?? defaultConfig), ...(data ?? {}) }));
         setDebugInfo('Config geladen!');
       } else {
         const errorData = await response.text();
@@ -84,6 +122,7 @@ export default function AdminCockpit() {
     if (!config) return;
 
     try {
+      setIsSaving(true);
       const response = await fetch('/api/admin/config', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -94,11 +133,15 @@ export default function AdminCockpit() {
       const data = await response.json();
       if (data.success) {
         alert('✅ Konfiguration erfolgreich gespeichert!');
+        // keep config in sync with server response if provided
+        if (data.config) setConfig(prev => ({ ...(prev ?? defaultConfig), ...(data.config || {}) }));
       } else {
         alert('❌ Fehler: ' + data.error);
       }
     } catch (_err) {
       alert('❌ Verbindungsfehler!');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -140,21 +183,6 @@ export default function AdminCockpit() {
     );
   }
 
-  if (!config) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-600">Lade Konfiguration...</p>
-          {debugInfo && (
-            <div className="mt-4 p-3 bg-gray-100 rounded-xl text-xs font-mono text-gray-700">
-              <strong>Debug:</strong> {debugInfo}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white shadow">
@@ -181,9 +209,10 @@ export default function AdminCockpit() {
               </button>
               <button
                 onClick={handleSave}
-                className="px-6 py-2 text-sm font-medium text-white bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg hover:from-pink-700 hover:to-purple-700"
+                disabled={isSaving}
+                className={`px-6 py-2 text-sm font-medium text-white rounded-lg ${isSaving ? 'bg-gray-400' : 'bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700'}`}
               >
-                💾 Speichern
+                {isSaving ? 'Speichere...' : '💾 Speichern'}
               </button>
             </div>
           </div>
@@ -198,15 +227,15 @@ export default function AdminCockpit() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={config?.isClosed ?? false}
-                  onChange={(e) => setConfig(prev => ({ ...(prev ?? {}), isClosed: e.target.checked }))}
+                  checked={config.isClosed}
+                  onChange={(e) => setConfig(prev => ({ ...(prev ?? defaultConfig), isClosed: e.target.checked }))}
                   className="w-5 h-5 text-pink-600 rounded"
                 />
                 <span className="font-medium text-gray-900">Kiosk als geschlossen markieren</span>
               </label>
               <textarea
-                value={config?.emergencyMessage ?? ''}
-                onChange={(e) => setConfig(prev => ({ ...(prev ?? {}), emergencyMessage: e.target.value }))}
+                value={config.emergencyMessage}
+                onChange={(e) => setConfig(prev => ({ ...(prev ?? defaultConfig), emergencyMessage: e.target.value }))}
                 rows={3}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 placeholder="Notfall-Nachricht"
@@ -217,8 +246,8 @@ export default function AdminCockpit() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">🕒 Öffnungszeiten</h2>
             <textarea
-              value={config?.openingHoursText ?? ''}
-              onChange={(e) => setConfig(prev => ({ ...(prev ?? {}), openingHoursText: e.target.value }))}
+              value={config.openingHoursText}
+              onChange={(e) => setConfig(prev => ({ ...(prev ?? defaultConfig), openingHoursText: e.target.value }))}
               rows={4}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               placeholder="Mo-Fr 07:30-19:00"
@@ -229,8 +258,8 @@ export default function AdminCockpit() {
             <h2 className="text-xl font-bold text-gray-900 mb-4">🎰 Lotto Jackpot</h2>
             <input
               type="text"
-              value={config?.jackpot ?? ''}
-              onChange={(e) => setConfig(prev => ({ ...(prev ?? {}), jackpot: e.target.value }))}
+              value={config.jackpot}
+              onChange={(e) => setConfig(prev => ({ ...(prev ?? defaultConfig), jackpot: e.target.value }))}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               placeholder="45.000.000"
               maxLength={30}
@@ -241,8 +270,8 @@ export default function AdminCockpit() {
             <h2 className="text-xl font-bold text-gray-900 mb-4">⭐ Tages-Highlight</h2>
             <input
               type="text"
-              value={config?.highlight ?? ''}
-              onChange={(e) => setConfig(prev => ({ ...(prev ?? {}), highlight: e.target.value }))}
+              value={config.highlight}
+              onChange={(e) => setConfig(prev => ({ ...(prev ?? defaultConfig), highlight: e.target.value }))}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               placeholder="🎉 Heute: Lotto Jackpot!"
               maxLength={100}
@@ -251,7 +280,7 @@ export default function AdminCockpit() {
         </div>
 
         <div className="mt-6 text-center text-sm text-gray-500">
-          Letzte Aktualisierung: {new Date(config?.updatedAt ?? Date.now()).toLocaleString('de-DE')}
+          Letzte Aktualisierung: {new Date(config.updatedAt ?? Date.now()).toLocaleString('de-DE')}
         </div>
       </div>
     </div>
