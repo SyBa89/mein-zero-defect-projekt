@@ -198,15 +198,15 @@ export default function AdminCockpit() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={config.isClosed || false}
-                  onChange={(e) => setConfig({ ...config, isClosed: e.target.checked })}
+                  checked={config?.isClosed ?? false}
+                  onChange={(e) => setConfig(prev => ({ ...(prev ?? {}), isClosed: e.target.checked }))}
                   className="w-5 h-5 text-pink-600 rounded"
                 />
                 <span className="font-medium text-gray-900">Kiosk als geschlossen markieren</span>
               </label>
               <textarea
-                value={config.emergencyMessage || ''}
-                onChange={(e) => setConfig({ ...config, emergencyMessage: e.target.value })}
+                value={config?.emergencyMessage ?? ''}
+                onChange={(e) => setConfig(prev => ({ ...(prev ?? {}), emergencyMessage: e.target.value }))}
                 rows={3}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                 placeholder="Notfall-Nachricht"
@@ -217,8 +217,8 @@ export default function AdminCockpit() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">🕒 Öffnungszeiten</h2>
             <textarea
-              value={config.openingHoursText || ''}
-              onChange={(e) => setConfig({ ...config, openingHoursText: e.target.value })}
+              value={config?.openingHoursText ?? ''}
+              onChange={(e) => setConfig(prev => ({ ...(prev ?? {}), openingHoursText: e.target.value }))}
               rows={4}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               placeholder="Mo-Fr 07:30-19:00"
@@ -229,8 +229,8 @@ export default function AdminCockpit() {
             <h2 className="text-xl font-bold text-gray-900 mb-4">🎰 Lotto Jackpot</h2>
             <input
               type="text"
-              value={config.jackpot || ''}
-              onChange={(e) => setConfig({ ...config, jackpot: e.target.value })}
+              value={config?.jackpot ?? ''}
+              onChange={(e) => setConfig(prev => ({ ...(prev ?? {}), jackpot: e.target.value }))}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               placeholder="45.000.000"
               maxLength={30}
@@ -241,8 +241,8 @@ export default function AdminCockpit() {
             <h2 className="text-xl font-bold text-gray-900 mb-4">⭐ Tages-Highlight</h2>
             <input
               type="text"
-              value={config.highlight || ''}
-              onChange={(e) => setConfig({ ...config, highlight: e.target.value })}
+              value={config?.highlight ?? ''}
+              onChange={(e) => setConfig(prev => ({ ...(prev ?? {}), highlight: e.target.value }))}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               placeholder="🎉 Heute: Lotto Jackpot!"
               maxLength={100}
@@ -251,7 +251,7 @@ export default function AdminCockpit() {
         </div>
 
         <div className="mt-6 text-center text-sm text-gray-500">
-          Letzte Aktualisierung: {new Date(config.updatedAt).toLocaleString('de-DE')}
+          Letzte Aktualisierung: {new Date(config?.updatedAt ?? Date.now()).toLocaleString('de-DE')}
         </div>
       </div>
     </div>
