@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import EmergencyBanner from '@/components/EmergencyBanner';
@@ -148,6 +149,7 @@ export default function RootLayout({
             <ConditionalAnalytics />
 
             <ToastContainer />
+            <ServiceWorkerRegistration />
           </ToastProvider>
         </ThemeProvider>
       </body>

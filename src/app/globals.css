@@ -798,12 +798,6 @@ a.text-gray-600:hover {
 }
 
 /* ── GRADIENT BACKGROUNDS bleiben sichtbar ── */
-.dark .bg-gradient-to-r,
-.dark .bg-gradient-to-br,
-.dark .bg-gradient-to-l {
-  /* Gradient bleibt - keine Änderung */
-}
-
 /* ── EXCEPTION: Buttons mit bg-white sollen weiß bleiben ── */
 .dark button.bg-white,
 .dark a.bg-white:not([href*="admin"]) {
@@ -1031,6 +1025,7 @@ p, .prose {
   border-radius: inherit;
   background: linear-gradient(135deg, rgb(236 72 153), rgb(168 85 247));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;

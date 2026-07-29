@@ -1,11 +1,16 @@
 {
-  "name": "Kiosk Lollipop",
-  "short_name": "Kiosk",
-  "description": "Ihr Kiosk und Hermes Paketshop in Erftstadt-Liblar",
+  "name": "Kiosk Lollipop - Erftstadt-Liblar",
+  "short_name": "Kiosk Lollipop",
+  "description": "Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. Lotto, Getränke, Snacks, Pakete.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#F9FAFB",
   "theme_color": "#db2777",
+  "orientation": "portrait",
+  "categories": ["shopping", "lifestyle"],
+  "lang": "de-DE",
+  "dir": "ltr",
+  "scope": "/",
   "icons": [
     {
       "src": "/icon-192.png",
@@ -17,17 +22,29 @@
       "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any"
     }
   ],
-  "orientation": "portrait",
-  "categories": ["business", "shopping"],
-  "lang": "de-DE",
-  "dir": "ltr"
+  "shortcuts": [
+    {
+      "name": "Öffnungszeiten",
+      "short_name": "Öffnungszeiten",
+      "description": "Aktuelle Öffnungszeiten ansehen",
+      "url": "/#oeffnungszeiten",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Kontakt",
+      "short_name": "Kontakt",
+      "description": "Kontaktformular öffnen",
+      "url": "/kontakt",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
 }

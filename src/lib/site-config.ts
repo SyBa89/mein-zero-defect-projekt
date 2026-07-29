@@ -1,6 +1,15 @@
 import { unstable_cache } from 'next/cache';
 import { Redis } from '@upstash/redis';
 
+// ── Holiday Override Interface (muss VOR SiteConfig stehen) ──
+export interface HolidayOverride {
+  date: string; // ISO Format: "2026-12-25"
+  name: string; // z.B. "Weihnachten"
+  isClosed: boolean; // true = geschlossen, false = spezielle Öffnungszeiten
+  hours?: string; // Optional: z.B. "10:00-14:00"
+}
+
+// ── SiteConfig Interface ──
 export interface SiteConfig {
   isClosed: boolean;
   bannerText: string;
@@ -15,6 +24,7 @@ export interface SiteConfig {
   jackpot?: string;
   highlight?: string;
   updatedAt: string;
+  holidays?: HolidayOverride[];
 }
 
 export const DEFAULT_CONFIG: SiteConfig = {
@@ -31,6 +41,7 @@ export const DEFAULT_CONFIG: SiteConfig = {
   jackpot: '',
   highlight: '',
   updatedAt: new Date().toISOString(),
+  holidays: [],
 };
 
 // LAZY FACTORY: Redis wird erst zur Laufzeit erstellt (nicht beim Build)
