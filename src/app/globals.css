@@ -273,3 +273,156 @@ a.text-gray-600:hover {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════ */
+/* MICRO-INTERACTIONS - Apple-Level Premium Effects                */
+/* Hover Lift, Button Press, Glow Effects, Smooth Animations       */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* Hover Lift Effect - Cards heben sich 4px */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Button Press Feedback - Scale 0.98 on click */
+.button-press {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button-press:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Glow Effect - Pink/Purple Shadow on hover */
+.glow-hover {
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glow-hover:hover {
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.4);
+}
+
+.glow-hover-purple:hover {
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+}
+
+/* Smooth Fade-In Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Staggered Animation Delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+
+/* Loading Skeleton Pulse */
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton {
+  animation: skeleton-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background: linear-gradient(
+    90deg,
+    rgb(243, 244, 246) 0%,
+    rgb(229, 231, 235) 50%,
+    rgb(243, 244, 246) 100%
+  );
+  background-size: 200% 100%;
+}
+
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgb(31, 41, 55) 0%,
+    rgb(55, 65, 81) 50%,
+    rgb(31, 41, 55) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* Smooth Image Hover Zoom */
+.image-zoom {
+  overflow: hidden;
+}
+
+.image-zoom img {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.image-zoom:hover img {
+  transform: scale(1.05);
+}
+
+/* Underline Animation for Links */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgb(236, 72, 153), rgb(168, 85, 247));
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Reduced Motion - Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .hover-lift,
+  .button-press,
+  .glow-hover,
+  .animate-fade-in-up,
+  .skeleton,
+  .image-zoom img,
+  .link-underline::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .hover-lift:hover {
+    transform: none;
+  }
+  
+  .button-press:active {
+    transform: none;
+  }
+  
+  .image-zoom:hover img {
+    transform: none;
+  }
+}
+/* ═══════════════════════════════════════════════════════════════ */
