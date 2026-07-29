@@ -1,4 +1,4 @@
-﻿import JackpotBanner from '@/components/JackpotBanner';
+import JackpotBanner from '@/components/JackpotBanner';
 import DynamicSections from '@/components/DynamicSections';
 import MobileActionBar from '@/components/MobileActionBar';
 import CookieNotice from '@/components/CookieNotice';

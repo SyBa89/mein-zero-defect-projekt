@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
 import ConditionalAnalytics from '@/components/ConditionalAnalytics';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -17,8 +18,11 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#db2777',
-  colorScheme: 'light',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#db2777' },
+    { media: '(prefers-color-scheme: dark)', color: '#1f2937' },
+  ],
+  colorScheme: 'light dark',
 };
 
 export const metadata: Metadata = {
@@ -106,24 +110,43 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" dir="ltr" className={inter.variable}>
-      <body className="min-h-screen bg-gray-50 text-gray-900 antialiased selection:bg-pink-200 selection:text-pink-900">
-        {/* Accessibility: Skip-Link (CSS-only, kein JavaScript) */}
-        <a href="#main-content" className="skip-link">
-          Zum Hauptinhalt springen
-        </a>
+    <html lang="de" dir="ltr" className={inter.variable} suppressHydrationWarning>
+      {/* FOUC Prevention: Inline Script setzt dark class VOR dem Render */}
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('theme-preference');
+                  var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var isDark = stored === 'dark' || (stored !== 'light' && systemDark);
+                  if (isDark) document.documentElement.classList.add('dark');
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased selection:bg-pink-200 dark:selection:bg-pink-800 selection:text-pink-900 dark:selection:text-pink-100 transition-colors duration-300">
+        <ThemeProvider>
+          {/* Accessibility: Skip-Link (CSS-only, kein JavaScript) */}
+          <a href="#main-content" className="skip-link">
+            Zum Hauptinhalt springen
+          </a>
 
-        <EmergencyBanner />
-        <Header />
+          <EmergencyBanner />
+          <Header />
 
-        {/* EINZIGES main pro Seite (semantisch korrekt) */}
-        <main id="main-content" aria-label="Hauptinhalt der Webseite">
-          {children}
-        </main>
+          {/* EINZIGES main pro Seite (semantisch korrekt) */}
+          <main id="main-content" aria-label="Hauptinhalt der Webseite">
+            {children}
+          </main>
 
-        <Footer />
-        <CookieBanner />
-        <ConditionalAnalytics />
+          <Footer />
+          <CookieBanner />
+          <ConditionalAnalytics />
+        </ThemeProvider>
       </body>
     </html>
   );

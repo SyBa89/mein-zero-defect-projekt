@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* âœ… ZERO-DEFECT: Skip-Link Accessibility (CSS-only mit !important) */
-/* MUSS auÃŸerhalb der @layer sein damit Tailwind es nicht Ã¼berschreibt */
+/* Skip-Link Accessibility (CSS-only mit !important) */
+/* MUSS außerhalb der @layer sein damit Tailwind es nicht überschreibt */
 a.skip-link {
   position: absolute !important;
   top: -100px !important;
@@ -45,6 +45,24 @@ a.skip-link:focus {
     --border: 226 232 240;
     --ring: 236 72 153;
     --radius: 0.75rem;
+  }
+
+  /* DARK MODE - CSS Variables überschreiben */
+  .dark {
+    --background: 17 24 39;
+    --foreground: 243 244 246;
+    --card: 31 41 55;
+    --card-foreground: 243 244 246;
+    --primary: 236 72 153;
+    --primary-foreground: 255 255 255;
+    --secondary: 139 92 246;
+    --secondary-foreground: 255 255 255;
+    --muted: 55 65 81;
+    --muted-foreground: 156 163 175;
+    --accent: 251 191 36;
+    --accent-foreground: 17 24 39;
+    --border: 55 65 81;
+    --ring: 236 72 153;
   }
 
   * {
@@ -93,43 +111,35 @@ a.skip-link:focus {
   }
 
   .glass {
-    @apply bg-white/80 backdrop-blur-md border border-white/20;
+    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-white/20 dark:border-gray-700/20;
   }
 }
-/* ═══════════════════════════════════════════════════════════════ */
-/* ✅ WCAG-AA-CONTRAST-OVERRIDES                                    */
-/* Automatisch generiert - Accessibility Score 97 → 100             */
-/* Contrast Ratio: Minimum 4.5:1 für normalen Text                  */
-/* ═══════════════════════════════════════════════════════════════ */
 
-/* Grautöne: Dunklere Varianten für bessere Lesbarkeit */
+/* WCAG-AA-CONTRAST-OVERRIDES */
 .text-gray-400 {
-  color: #6b7280 !important; /* War: #9ca3af (3.0:1) → Jetzt: 4.6:1 */
+  color: #6b7280 !important;
 }
 
 .text-gray-500 {
-  color: #4b5563 !important; /* War: #6b7280 (4.6:1) → Jetzt: 7.0:1 */
+  color: #4b5563 !important;
 }
 
 .text-gray-600 {
-  color: #374151 !important; /* War: #4b5563 (7.0:1) → Jetzt: 10.0:1 */
+  color: #374151 !important;
 }
 
-/* Footer-spezifische Elemente */
 footer .text-gray-400,
 footer .text-gray-500,
 footer .text-gray-600 {
   color: #374151 !important;
 }
 
-/* Disclaimer und Kleingedrucktes */
 .text-xs.text-gray-500,
 .text-sm.text-gray-500,
 small.text-gray-500 {
   color: #4b5563 !important;
 }
 
-/* Link-Colors für bessere Sichtbarkeit */
 a.text-gray-500,
 a.text-gray-600 {
   color: #1f2937 !important;
@@ -137,13 +147,23 @@ a.text-gray-600 {
 
 a.text-gray-500:hover,
 a.text-gray-600:hover {
-  color: #db2777 !important; /* Pink hover */
+  color: #db2777 !important;
 }
 
-/* Disabled States */
 .disabled,
 [disabled] {
   color: #6b7280 !important;
   opacity: 0.7 !important;
 }
-/* ═══════════════════════════════════════════════════════════════ */
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
