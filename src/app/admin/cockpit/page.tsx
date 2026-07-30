@@ -81,7 +81,14 @@ export default function AdminCockpit() {
       setDebugInfo(`Session API Status: ${response.status}`);
 
       if (response.ok) {
-        setUser({ name: 'Admin', role: 'admin' });
+        setUser({
+          id:
+            typeof crypto !== 'undefined' && 'randomUUID' in crypto
+              ? (crypto as any).randomUUID()
+              : Date.now().toString(),
+          name: 'Admin',
+          role: 'admin',
+        });
         await loadConfig();
       } else {
         setError('Nicht angemeldet');
