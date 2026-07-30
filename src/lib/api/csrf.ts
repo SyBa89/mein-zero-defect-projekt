@@ -1,7 +1,7 @@
 // src/lib/api/csrf.ts
 import { randomBytes } from 'crypto';
 
-export function generateCSRFToken(): string {
+export function _generateCSRFToken(): string {
   return randomBytes(32).toString('hex');
 }
 

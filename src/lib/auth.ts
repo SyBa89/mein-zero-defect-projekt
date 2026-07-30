@@ -71,7 +71,7 @@ export function hasPermission(userRole: string, requiredPermission: string): boo
   return userPermissions.includes('all') || userPermissions.includes(requiredPermission);
 }
 
-export function generateCSRFToken(): string {
+export function _generateCSRFToken(): string {
   return crypto.randomBytes(32).toString('hex');
 }
 
