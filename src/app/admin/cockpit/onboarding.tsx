@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 
@@ -24,24 +24,24 @@ export default function OnboardingGuide() {
 
   const steps = [
     {
-      icon: '🚨',
+      icon: 'ðŸš¨',
       title: 'Notfall-Banner',
-      description: 'Markiere den Kiosk als geschlossen bei Krankheit, Urlaub oder Notfällen.',
+      description: 'Markiere den Kiosk als geschlossen bei Krankheit, Urlaub oder NotfÃ¤llen.',
     },
     {
-      icon: '🎰',
+      icon: 'ðŸŽ°',
       title: 'Lotto Jackpot',
       description: 'Trage den aktuellen Lotto-Jackpot ein (z.B. 45.000.000).',
     },
     {
-      icon: '⭐',
+      icon: 'â­',
       title: 'Tages-Highlight',
       description: 'Bewirb Sonderaktionen wie "Frische Brezeln" oder "Neue Zeitschriften".',
     },
     {
-      icon: '📅',
-      title: 'Öffnungszeiten',
-      description: 'Passe die Öffnungszeiten an. Diese werden automatisch angezeigt.',
+      icon: 'ðŸ“…',
+      title: 'Ã–ffnungszeiten',
+      description: 'Passe die Ã–ffnungszeiten an. Diese werden automatisch angezeigt.',
     },
   ];
 
@@ -52,19 +52,24 @@ export default function OnboardingGuide() {
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-1">
-            👋 Willkommen im Admin-Cockpit!
+            ðŸ‘‹ Willkommen im Admin-Cockpit!
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Kurze Einführung ({activeStep + 1}/{steps.length})
+            Kurze EinfÃ¼hrung ({activeStep + 1}/{steps.length})
           </p>
         </div>
         <button
           onClick={dismiss}
           className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-          aria-label="Einführung schließen"
+          aria-label="EinfÃ¼hrung schlieÃŸen"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
       </div>
@@ -104,21 +109,21 @@ export default function OnboardingGuide() {
             disabled={activeStep === 0}
             className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            Zurück
+            ZurÃ¼ck
           </button>
           {activeStep < steps.length - 1 ? (
             <button
               onClick={() => setActiveStep(activeStep + 1)}
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Weiter →
+              Weiter â†’
             </button>
           ) : (
             <button
               onClick={dismiss}
               className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg hover:shadow-lg transition-all"
             >
-              Los geht's! 🚀
+              Los geht&apos;s! ðŸš€
             </button>
           )}
         </div>
