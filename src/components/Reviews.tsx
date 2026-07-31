@@ -1,4 +1,3 @@
-import { KIOSK_CONFIG } from '@/lib/config';
 
 export default function Reviews() {
   return (
