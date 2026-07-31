@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Link from 'next/link';
 import { KIOSK_CONFIG } from '@/lib/config';
 
@@ -121,7 +121,7 @@ export default function Footer() {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span aria-hidden="true">📍</span>
-                  <span>{KIOSK_CONFIG.address}</span>
+                  <span><a href="https://www.google.com/maps/search/?api=1&query=Theodor-Heuss-Stra%C3%9Fe+35+50374+Erftstadt" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors underline underline-offset-2">{KIOSK_CONFIG.address}</a></span>
                 </li>
                 <li>
                   <a
@@ -199,3 +199,4 @@ export default function Footer() {
     </footer>
   );
 }
+

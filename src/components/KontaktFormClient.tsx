@@ -168,7 +168,7 @@ export default function KontaktFormClient() {
                 </a>
               </li>
               <li>
-                <Link href="/" className="flex items-start gap-4 group">
+                <a href="https://www.google.com/maps/search/?api=1&query=Theodor-Heuss-Stra%C3%9Fe+35+50374+Erftstadt" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
                   <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 group-hover:bg-pink-200 transition-colors">
                     <svg
                       className="w-5 h-5 text-pink-600"
@@ -197,8 +197,9 @@ export default function KontaktFormClient() {
                       <br />
                       50374 Erftstadt
                     </p>
+                    <p className="text-xs text-pink-600 mt-1 group-hover:underline">Auf Google Maps anzeigen →</p>
                   </div>
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -447,4 +448,5 @@ export default function KontaktFormClient() {
     </div>
   );
 }
+
 

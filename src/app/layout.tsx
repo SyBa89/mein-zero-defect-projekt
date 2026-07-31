@@ -1,5 +1,6 @@
-import type { Metadata, Viewport } from 'next';
+﻿import type { Metadata, Viewport } from 'next';
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
+import LocalBusinessSchema from '@/components/LocalBusinessSchema';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import EmergencyBanner from '@/components/EmergencyBanner';
@@ -150,9 +151,11 @@ export default function RootLayout({
 
             <ToastContainer />
             <ServiceWorkerRegistration />
+        <LocalBusinessSchema />
           </ToastProvider>
         </ThemeProvider>
       </body>
     </html>
   );
 }
+
