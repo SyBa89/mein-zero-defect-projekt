@@ -1,5 +1,5 @@
-﻿import Link from 'next/link';
 'use client';
+import Link from 'next/link';
 import { KIOSK_CONFIG } from '@/lib/config';
 
 export default function Footer() {

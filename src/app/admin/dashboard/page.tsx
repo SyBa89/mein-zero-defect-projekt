@@ -1,5 +1,5 @@
-// src/app/admin/dashboard/page.tsx
 'use client';
+// src/app/admin/dashboard/page.tsx
 
 import { useAuth } from '@/hooks/useAuth';
 import { useState, useEffect } from 'react';
