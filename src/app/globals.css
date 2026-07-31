@@ -1374,3 +1374,77 @@ table th {
   color: var(--text-primary) !important;
 }
 /* ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════ */
+/* ZERO-DEFECT DARK-MODE OVERRIDES                            */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* Admin-Cockpit spezifische Fixes */
+.dark .admin-card,
+.dark [class*="jackpot"],
+.dark [class*="highlight"],
+.dark [class*="banner"] {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(75, 85, 99) !important;
+}
+
+.dark .admin-card h2,
+.dark .admin-card h3,
+.dark .admin-card label {
+  color: rgb(243, 244, 246) !important;
+}
+
+.dark .admin-card input,
+.dark .admin-card textarea,
+.dark .admin-card select {
+  background-color: rgb(17, 24, 39) !important;
+  border-color: rgb(75, 85, 99) !important;
+  color: rgb(243, 244, 246) !important;
+}
+
+.dark .admin-card input::placeholder,
+.dark .admin-card textarea::placeholder {
+  color: rgb(156, 163, 175) !important;
+}
+
+/* Feature Cards Dark Mode */
+.dark .bg-white.rounded-2xl.shadow-lg {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(75, 85, 99) !important;
+}
+
+.dark .text-gray-900 {
+  color: rgb(243, 244, 246) !important;
+}
+
+.dark .text-gray-700 {
+  color: rgb(209, 213, 219) !important;
+}
+
+.dark .text-gray-600 {
+  color: rgb(156, 163, 175) !important;
+}
+
+/* Öffnungszeiten Badge */
+.dark .bg-pink-50 {
+  background-color: rgb(131, 24, 67) !important;
+}
+
+.dark .text-pink-600 {
+  color: rgb(244, 114, 182) !important;
+}
+
+/* Footer Dark Mode */
+.dark footer {
+  background-color: rgb(17, 24, 39) !important;
+  border-color: rgb(55, 65, 81) !important;
+}
+
+.dark footer .text-gray-400 {
+  color: rgb(209, 213, 219) !important;
+}
+
+/* Cookie Banner Dark Mode */
+.dark .fixed.bottom-0 {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(75, 85, 99) !important;
+}

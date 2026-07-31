@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
@@ -282,7 +282,7 @@ export default function AdminCockpit() {
             />
           </div>
 
-          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl shadow-sm border border-yellow-200 p-6">
+          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-2xl shadow-sm border border-yellow-200 dark:border-yellow-700 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">🎰 Lotto Jackpot</h2>
             <input
               type="text"
@@ -296,7 +296,7 @@ export default function AdminCockpit() {
             />
           </div>
 
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-sm border border-blue-200 p-6">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl shadow-sm border border-blue-200 dark:border-blue-700 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">⭐ Tages-Highlight</h2>
             <input
               type="text"

@@ -1,4 +1,4 @@
-﻿import { getSiteConfig } from '@/lib/site-config';
+import { getSiteConfig } from '@/lib/site-config';
 
 interface ParsedHours {
   day: string;
@@ -136,7 +136,7 @@ export default async function OpeningHoursSection() {
                   <td className="px-8 py-6 text-left font-bold text-gray-900 text-lg">
                     {item.day}
                     {item.isToday && (
-                      <span className="ml-3 text-xs font-normal text-pink-600">(heute)</span>
+                      <span className="ml-3 text-xs font-normal text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-900/30 px-2 py-1 rounded-full">(heute)</span>
                     )}
                   </td>
                   <td className="px-8 py-6 text-right font-black text-xl">

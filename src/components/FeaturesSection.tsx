@@ -55,7 +55,7 @@ export default function FeaturesSection() {
               >
                 {item.icon}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">{item.title}</h3>
               <p className="text-gray-700 text-base leading-relaxed">{item.desc}</p>
             </div>
           ))}
