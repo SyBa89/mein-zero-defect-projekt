@@ -1,7 +1,6 @@
 /**
  * ZERO-DEFECT AGENCY FRAMEWORK
  * Dieses Interface definiert den "Vertrag", den jeder neue Kunde erfüllen muss.
- * Wenn du einen neuen Kunden onboardest, müssen alle diese Felder ausgefüllt werden.
  */
 export type BusinessType = 'kiosk' | 'restaurant' | 'dentist' | 'lawyer' | 'retail' | 'handyman';
 
@@ -9,7 +8,7 @@ export interface ClientConfig {
   brand: {
     name: string;
     slogan: string;
-    legalName: string; // Für das Impressum
+    legalName: string;
     primaryColor: 'pink' | 'blue' | 'green' | 'orange' | 'purple' | 'red';
   };
   contact: {
@@ -21,11 +20,22 @@ export interface ClientConfig {
   };
   business: {
     type: BusinessType;
-    isSmallBusiness: boolean; // Triggert §19 UStG Hinweis im Impressum
+    isSmallBusiness: boolean;
     vatId?: string;
   };
   seo: {
     description: string;
     keywords: string[];
   };
+  hero: {
+    headline: string;
+    subheadline: string;
+    primaryCta: { label: string; href: string };
+    secondaryCta: { label: string; href: string };
+  };
+  features: Array<{
+    icon: string;
+    title: string;
+    description: string;
+  }>;
 }
