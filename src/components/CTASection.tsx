@@ -1,41 +1,29 @@
-﻿import Image from 'next/image';
-import Link from 'next/link';
-import { KIOSK_CONFIG } from '@/lib/config';
+import { CLIENT_CONFIG } from '@/lib/client.config';
 
 export default function CTASection() {
+  const { contact } = CLIENT_CONFIG;
+  const phoneFormatted = contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2');
+
   return (
-    <section className="relative py-24 bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 text-white overflow-hidden">
-      <Image
-        src="/images/fassade.png"
-        alt="Hintergrund Kiosk Lollipop"
-        fill
-        className="object-cover opacity-10 mix-blend-overlay"
-        sizes="100vw"
-        quality={75}
-        loading="lazy"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight drop-shadow-lg">
+    <section className="py-20 px-4 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-6">
           Besuchen Sie uns!
         </h2>
-        <p className="text-2xl text-pink-100 mb-4 font-light">{KIOSK_CONFIG.address}</p>
-        <p className="text-lg text-gray-300 mb-10">Wir freuen uns auf Ihren Besuch!</p>
-        <div className="flex flex-col sm:flex-row justify-center gap-5">
+        <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">
+          {contact.address.street}, {contact.address.zip} {contact.address.city}
+        </p>
+        <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+          Wir freuen uns auf Ihren Besuch!
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a
-            href={KIOSK_CONFIG.mapsLink}
+            href={contact.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Exakte Route mit Google Maps planen"
-            className="inline-flex items-center justify-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-white/20 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold text-lg rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -51,16 +39,22 @@ export default function CTASection() {
             </svg>
             Exakte Route planen
           </a>
-          <Link
-            href="/kontakt"
-            className="inline-flex items-center justify-center bg-pink-600 hover:bg-pink-500 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-pink-500/40 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95"
+          <a
+            href={`tel:${contact.phone}`}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-bold text-lg rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-gray-200 dark:border-gray-700"
           >
-            Kontaktformular
-          </Link>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+            {phoneFormatted}
+          </a>
         </div>
       </div>
     </section>
   );
 }
-
-

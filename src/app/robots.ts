@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next';
-import { KIOSK_CONFIG } from '@/lib/config';
+import { CLIENT_CONFIG } from '@/lib/client.config';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = KIOSK_CONFIG.url.replace(/\/$/, '');
+  const baseUrl = CLIENT_CONFIG.url.replace(/\/$/, '');
 
   return {
     rules: [
@@ -11,7 +11,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/admin', '/api', '/onboarding'],
       },
-      // GEO: Explizite Erlaubnis für KI-Crawler (ChatGPT, Perplexity, Claude)
       {
         userAgent: 'GPTBot',
         allow: '/',

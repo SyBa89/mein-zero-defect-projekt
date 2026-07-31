@@ -1,6 +1,7 @@
 import { ClientConfig } from './types';
 
 export const CLIENT_CONFIG: ClientConfig = {
+  url: 'https://mein-zero-defect-projekt.vercel.app',
   brand: {
     name: 'Kiosk Lollipop',
     slogan: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz',

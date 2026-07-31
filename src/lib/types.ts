@@ -1,25 +1,25 @@
-/**
- * ZERO-DEFECT AGENCY FRAMEWORK
- * Dieses Interface definiert den "Vertrag", den jeder neue Kunde erfüllen muss.
- */
-export type BusinessType = 'kiosk' | 'restaurant' | 'dentist' | 'lawyer' | 'retail' | 'handyman';
-
 export interface ClientConfig {
+  url: string;
   brand: {
     name: string;
     slogan: string;
     legalName: string;
-    primaryColor: 'pink' | 'blue' | 'green' | 'orange' | 'purple' | 'red';
+    primaryColor: 'pink' | 'blue' | 'green' | 'orange' | 'purple';
   };
   contact: {
-    address: { street: string; zip: string; city: string; country: string };
+    address: {
+      street: string;
+      zip: string;
+      city: string;
+      country: string;
+    };
     phone: string;
     email: string;
     googlePlaceId: string;
     mapsUrl: string;
   };
   business: {
-    type: BusinessType;
+    type: 'kiosk' | 'restaurant' | 'retail' | 'service';
     isSmallBusiness: boolean;
     vatId?: string;
   };

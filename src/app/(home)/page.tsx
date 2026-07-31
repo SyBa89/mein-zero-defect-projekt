@@ -1,7 +1,7 @@
+import { Metadata } from 'next';
+import { CLIENT_CONFIG } from '@/lib/client.config';
 import JackpotBanner from '@/components/JackpotBanner';
 import DynamicSections from '@/components/DynamicSections';
-import MobileActionBar from '@/components/MobileActionBar';
-import CookieNotice from '@/components/CookieNotice';
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import OpeningHoursSection from '@/components/OpeningHoursSection';
@@ -12,153 +12,89 @@ import CTASection from '@/components/CTASection';
 import AboutSection from '@/components/AboutSection';
 import LegalNotice from '@/components/LegalNotice';
 import Reviews from '@/components/Reviews';
-import { KIOSK_CONFIG } from '@/lib/config';
-import type { Metadata } from 'next';
 
-// ✅ ZERO-DEFECT: Umfassende SEO-Metadaten
 export const metadata: Metadata = {
-  title: `${KIOSK_CONFIG.name} | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar`,
-  description: `${KIOSK_CONFIG.name} in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. Ihr lokaler Nachbar mit echtem Service.`,
-  keywords: [
-    'Kiosk Erftstadt',
-    'Kiosk Liblar',
-    'Hermes Paketshop Erftstadt',
-    KIOSK_CONFIG.name,
-    'Bürgerplatz Liblar',
-    'Kiosk 50374',
-    'Paketshop Erftstadt',
-    'Kiosk in der Nähe',
-    'Paketshop in der Nähe',
-    'Lotto Erftstadt',
-  ],
-  metadataBase: new URL(KIOSK_CONFIG.url),
-  alternates: { canonical: '/' },
-  openGraph: {
-    title: `${KIOSK_CONFIG.name} | Erftstadt-Liblar`,
-    description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Ihr lokaler Nachbar mit echtem Service.',
-    type: 'website',
-    locale: 'de_DE',
-    url: KIOSK_CONFIG.url,
-    siteName: KIOSK_CONFIG.name,
-    images: [
-      {
-        url: '/images/fassade.png',
-        width: 1200,
-        height: 630,
-        alt: `${KIOSK_CONFIG.name} Fassade am Bürgerplatz in Erftstadt-Liblar`,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${KIOSK_CONFIG.name} | Erftstadt-Liblar`,
-    description: 'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar.',
-    images: ['/images/fassade.png'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+  title: `${CLIENT_CONFIG.brand.name} | ${CLIENT_CONFIG.brand.slogan}`,
+  description: CLIENT_CONFIG.seo.description,
+  keywords: CLIENT_CONFIG.seo.keywords,
 };
 
-// ✅ ZERO-DEFECT: Schema.org für maximale SEO-Relevanz
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': 'ConvenienceStore',
-  '@id': `${KIOSK_CONFIG.url}/#store`,
-  name: KIOSK_CONFIG.name,
-  url: KIOSK_CONFIG.url,
-  logo: `${KIOSK_CONFIG.url}/images/logo.png`,
-  image: `${KIOSK_CONFIG.url}/images/fassade.png`,
-  description: `Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. Ihr lokaler Nachbar mit echtem Service.`,
+  '@id': `${CLIENT_CONFIG.url}/#store`,
+  name: CLIENT_CONFIG.brand.name,
+  url: CLIENT_CONFIG.url,
+  logo: `${CLIENT_CONFIG.url}/images/logo.png`,
+  image: `${CLIENT_CONFIG.url}/images/fassade.png`,
+  description: CLIENT_CONFIG.seo.description,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Theodor-Heuss-Straße 35',
-    postalCode: '50374',
-    addressLocality: 'Erftstadt',
+    streetAddress: CLIENT_CONFIG.contact.address.street,
+    postalCode: CLIENT_CONFIG.contact.address.zip,
+    addressLocality: CLIENT_CONFIG.contact.address.city,
     addressRegion: 'NRW',
-    addressCountry: 'DE',
+    addressCountry: CLIENT_CONFIG.contact.address.country,
   },
   geo: { '@type': 'GeoCoordinates', latitude: 50.806945, longitude: 6.823683 },
-  telephone: '+4922359291160',
+  telephone: CLIENT_CONFIG.contact.phone,
   priceRange: '€',
   currenciesAccepted: 'EUR',
   paymentAccepted: 'Cash, Credit Card, Debit Card',
   openingHours: ['Mo,Tu,We,Th,Fr 07:30-19:00', 'Sa 07:30-14:30'],
-  sameAs: [KIOSK_CONFIG.facebook],
-  // TODO: Füge echte Bewertungen hinzu, sobald verfügbar
-  // aggregateRating: {
-  //   '@type': 'AggregateRating',
-  //   ratingValue: '5.0',
-  //   bestRating: '5',
-  //   worstRating: '1',
-  //   ratingCount: '60',
-  //   reviewCount: '60',
-  // },
 };
 
-  // ✅ GEO: FAQPage Schema für KI-Suchmaschinen (ChatGPT, Perplexity)
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'Wo genau befindet sich der Kiosk Lollipop?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Wir befinden uns direkt am Bürgerplatz in der Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar, in unmittelbarer Nähe zum Bahnhof.',
-        },
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Wo genau befindet sich der Kiosk Lollipop?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `Wir befinden uns direkt am Bürgerplatz in der ${CLIENT_CONFIG.contact.address.street}, ${CLIENT_CONFIG.contact.address.zip} ${CLIENT_CONFIG.contact.address.city}, in unmittelbarer Nähe zum Bahnhof.`,
       },
-      {
-        '@type': 'Question',
-        name: 'Kann ich bei Ihnen Pakete mit Hermes versenden und abholen?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Ja, wir sind ein offizieller Hermes Paketshop. Sie können bei uns Pakete versenden, abholen und Retouren abgeben.',
-        },
+    },
+    {
+      '@type': 'Question',
+      name: 'Kann ich bei Ihnen Pakete mit Hermes versenden und abholen?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Ja, wir sind ein offizieller Hermes Paketshop. Sie können bei uns Pakete versenden, abholen und Retouren abgeben.',
       },
-      {
-        '@type': 'Question',
-        name: 'Welche Zahlungsmethoden akzeptieren Sie?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Wir akzeptieren Bar, EC-Karte, Kontaktlos, Apple Pay und Google Pay.',
-        },
+    },
+    {
+      '@type': 'Question',
+      name: 'Welche Zahlungsmethoden akzeptieren Sie?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Wir akzeptieren Bar, EC-Karte, Kontaktlos, Apple Pay und Google Pay.',
       },
-      {
-        '@type': 'Question',
-        name: 'Haben Sie an Sonn- und Feiertagen geöffnet?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'An Sonntagen ist der Kiosk geschlossen. An Feiertagen passen wir unsere Öffnungszeiten an, was Sie unserem Notfall-Banner oder den aktuellen Öffnungszeiten auf der Startseite entnehmen können.',
-        },
+    },
+    {
+      '@type': 'Question',
+      name: 'Haben Sie an Sonn- und Feiertagen geöffnet?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'An Sonntagen ist der Kiosk geschlossen. An Feiertagen passen wir unsere Öffnungszeiten an, was Sie unserem Notfall-Banner oder den aktuellen Öffnungszeiten auf der Startseite entnehmen können.',
       },
-    ],
-  };
+    },
+  ],
+};
 
-// ✅ ZERO-DEFECT: Server Component (KEINE Event-Handler, KEIN <main>)
 export default function HomePage() {
   return (
     <>
-      {/* ✅ SEO: Schema.org für strukturierte Daten */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-
-      {/* ✅ Dynamischer Jackpot-Banner (Admin-editierbar) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <JackpotBanner />
-
-      {/* ✅ KEIN <main> hier - das ist bereits in layout.tsx (HTML5-konform!) */}
       <HeroSection />
       <FeaturesSection />
       <OpeningHoursSection />
@@ -166,22 +102,10 @@ export default function HomePage() {
       <HermesSection />
       <ProductsSection />
       <AboutSection />
-
-      {/* ✅ Reviews ist Server Component - direkt hier gerendert für beste Performance */}
       <Reviews />
-
-      {/* ✅ Dynamische Sections (Lazy Loaded für Performance) */}
       <DynamicSections />
-
       <CTASection />
       <LegalNotice />
-
-      {/* ✅ Mobile Action Bar (nur auf Mobile sichtbar) */}
-      <MobileActionBar />
-
-      {/* ✅ Cookie Notice (nur wenn nicht zugestimmt) */}
-      <CookieNotice />
     </>
   );
 }
-

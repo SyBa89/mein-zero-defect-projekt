@@ -1,29 +1,26 @@
-import { KIOSK_CONFIG } from '@/lib/config';
+import { CLIENT_CONFIG } from '@/lib/client.config';
 
 export default function AboutSection() {
+  const { brand, contact } = CLIENT_CONFIG;
+
   return (
-    <section id="ueber-uns" className="py-20 bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-black text-gray-900 mb-10 text-center tracking-tight">
+    <section className="py-20 px-4 bg-gray-50 dark:bg-gray-800">
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-6">
           Über uns
         </h2>
-        <div className="bg-white p-10 rounded-3xl border border-pink-100 shadow-lg">
-          <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            <strong className="text-gray-900">{KIOSK_CONFIG.name}</strong> ist Ihr freundlicher
-            Nachbarschaftskiosk und Hermes Paketshop am Bürgerplatz im Herzen von Erftstadt-Liblar.
-            Wir befinden uns in der {KIOSK_CONFIG.address}, in der Nähe des Bahnhofs und weiterer
-            lokaler Geschäfte.
-          </p>
-          <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            Ob Sie morgens Ihre Zeitung holen, mittags einen schnellen Snack brauchen, Pakete
-            versenden oder abends noch Getränke für den Feierabend kaufen möchten - wir sind für Sie
-            da.
-          </p>
-          <p className="text-lg text-gray-700 leading-relaxed">
-            Als offizieller Hermes Paketshop bieten wir Ihnen zusätzlich alle Dienstleistungen rund
-            um Paketversand, -abholung und Retouren. Schnell, freundlich und zu fairen Preisen.
-          </p>
-        </div>
+        <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+          {brand.name} ist Ihr freundlicher Nachbarschaftskiosk und Hermes Paketshop am Bürgerplatz
+          im Herzen von {contact.address.city}. Wir befinden uns in der {contact.address.street},{' '}
+          {contact.address.zip} {contact.address.city}, in der Nähe des Bahnhofs und weiterer
+          lokaler Geschäfte.
+        </p>
+        <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+          Ob Sie morgens Ihre Zeitung holen, mittags einen schnellen Snack brauchen, Pakete
+          versenden oder abends noch Getränke für den Feierabend kaufen möchten - wir sind für Sie
+          da. Als offizieller Hermes Paketshop bieten wir Ihnen zusätzlich alle Dienstleistungen
+          rund um Paketversand, -abholung und Retouren. Schnell, freundlich und zu fairen Preisen.
+        </p>
       </div>
     </section>
   );
