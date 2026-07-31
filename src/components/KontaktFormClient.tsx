@@ -1,7 +1,6 @@
 ﻿'use client';
 
 import { useState, useRef, FormEvent, useEffect } from 'react';
-import Link from 'next/link';
 
 export default function KontaktFormClient() {
   const [formData, setFormData] = useState({
@@ -448,5 +447,6 @@ export default function KontaktFormClient() {
     </div>
   );
 }
+
 
 
