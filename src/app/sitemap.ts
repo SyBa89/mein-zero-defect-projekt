@@ -5,17 +5,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Bereinigte Basis-URL aus der zentralen Konfiguration (kein trailing slash)
   const baseUrl = KIOSK_CONFIG.url.replace(/\/$/, '');
 
-  // Statische Seiten des Projekts
+  // Alle öffentlichen Seiten des Projekts
   const staticPages = [
-    '', // Startseite
-    '/about',
-    '/kontakt',
+    '',             // Startseite (höchste Priorität)
+    '/kontakt',     // Kontaktseite
+    '/about',       // Über uns
+    '/impressum',   // Wichtig für Google Trust-Signal
+    '/datenschutz', // Wichtig für Google Trust-Signal
   ];
 
   return staticPages.map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
-    changeFrequency: path === '' ? 'daily' : 'weekly',
-    priority: path === '' ? 1.0 : 0.8,
+    // Startseite täglich, Rest wöchentlich, Rechtliches monatlich
+    changeFrequency: path === '' ? 'daily' : path.startsWith('/impressum') || path.startsWith('/datenschutz') ? 'monthly' : 'weekly',
+    priority: path === '' ? 1.0 : path === '/kontakt' ? 0.9 : 0.8,
   }));
 }
