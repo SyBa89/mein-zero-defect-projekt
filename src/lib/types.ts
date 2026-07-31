@@ -38,4 +38,25 @@ export interface ClientConfig {
     title: string;
     description: string;
   }>;
+  sections: {
+    showHermes: boolean;
+    showProducts: boolean;
+    showJackpot: boolean;
+  };
+  header: {
+    logo?: string;
+    showLogo: boolean;
+  };
+  hermes: {
+    enabled: boolean;
+    description: string;
+  };
+  products: {
+    categories: Array<{
+      icon: string;
+      title: string;
+      description: string;
+      ageRestriction?: string;
+    }>;
+  };
 }

@@ -1,77 +1,38 @@
-﻿export default function ProductsSection() {
-  const products = [
-    {
-      icon: '🥤',
-      bg: 'bg-blue-100',
-      title: 'Über 100 Getränke',
-      desc: 'Kalte und warme Getränke, Softdrinks, Säfte, Wasser, Bier und mehr. Immer frisch und gekühlt!',
-      warn: '⚠️ Alkoholische Getränke nur an Personen ab 18 Jahren',
-    },
-    {
-      icon: '🍫',
-      bg: 'bg-yellow-100',
-      title: 'Süße Versuchungen',
-      desc: 'Wie früher! Große Auswahl an Schokolade, Chips, Gummibärchen, Riegeln und allen beliebten Snacks.',
-    },
-    {
-      icon: '📰',
-      bg: 'bg-green-100',
-      title: 'Über 500 Zeitschriften',
-      desc: 'Tageszeitungen, Magazine, Illustrierte und Fachzeitschriften. Für jeden das Richtige!',
-    },
-    {
-      icon: '🚬',
-      bg: 'bg-red-100',
-      title: 'Tabakwaren',
-      desc: 'Zigaretten, Zigarren, Tabak und Zubehör aller gängigen Marken. Alles vorrätig!',
-      warn: '⚠️ Nur an Personen ab 18 Jahren',
-    },
-    {
-      icon: '🎫',
-      bg: 'bg-purple-100',
-      title: 'Lotterie & Glücksspiel',
-      desc: 'Lotto 6aus49, Eurojackpot, Rubbellose und weitere Lotterieprodukte.',
-      warn: '⚠️ Die Teilnahme ist erst ab 18 Jahren erlaubt. Glücksspiel kann süchtig machen.',
-    },
-    {
-      icon: '📱',
-      bg: 'bg-indigo-100',
-      title: 'Handy-Guthaben',
-      desc: 'Aufladung für alle Mobilfunkanbieter: Telekom, Vodafone, O2, Aldi Talk und viele mehr.',
-    },
-    {
-      icon: '📝',
-      bg: 'bg-teal-100',
-      title: 'Schreibwaren',
-      desc: 'Stifte, Hefte, Briefumschläge und alles für Schule, Büro und Zuhause.',
-    },
-  ];
+import { CLIENT_CONFIG } from '@/lib/client.config';
+
+export default function ProductsSection() {
+  const { products, sections } = CLIENT_CONFIG;
+
+  if (!sections.showProducts || products.categories.length === 0) {
+    return null;
+  }
 
   return (
-    <section id="produkte" className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-black text-gray-900 mb-14 text-center tracking-tight">
-          Unser Sortiment
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {products.map((item, i) => (
+    <section className="py-20 px-4 bg-white dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-4">
+            Unser Sortiment
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.categories.map((category, index) => (
             <div
-              key={i}
-              className="bg-gray-50 p-8 rounded-3xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              key={index}
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all"
             >
-              <div
-                className={`w-14 h-14 ${item.bg} rounded-2xl flex items-center justify-center mb-5`}
-              >
-                <span className="text-3xl" aria-hidden="true">
-                  {item.icon}
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
-              <p className="text-gray-700 mb-2 leading-relaxed">{item.desc}</p>
-              {item.warn && (
-                <p className="text-xs text-red-600 font-bold mt-3 flex items-center gap-1">
-                  {item.warn}
-                </p>
+              <div className="text-5xl mb-4">{category.icon}</div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+                {category.title}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">{category.description}</p>
+              {category.ageRestriction && (
+                <div className="mt-4 px-4 py-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                  <p className="text-sm text-yellow-800 dark:text-yellow-200 font-medium">
+                    ⚠️ {category.ageRestriction}
+                  </p>
+                </div>
               )}
             </div>
           ))}

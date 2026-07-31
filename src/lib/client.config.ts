@@ -69,4 +69,64 @@ export const CLIENT_CONFIG: ClientConfig = {
         'Seit 2020 für Liblar da. Wir kennen unsere Kunden und beraten mit Herz und Verstand.',
     },
   ],
+  sections: {
+    showHermes: true,
+    showProducts: true,
+    showJackpot: true,
+  },
+  header: {
+    showLogo: false,
+  },
+  hermes: {
+    enabled: true,
+    description: 'Wir sind Ihr offizieller Hermes Paketshop in Erftstadt-Liblar!',
+  },
+  products: {
+    categories: [
+      {
+        icon: '🥤',
+        title: 'Über 100 Getränke',
+        description:
+          'Kalte und warme Getränke, Softdrinks, Säfte, Wasser, Bier und mehr. Immer frisch und gekühlt!',
+        ageRestriction: 'Alkoholische Getränke nur an Personen ab 18 Jahren',
+      },
+      {
+        icon: '🍫',
+        title: 'Süße Versuchungen',
+        description:
+          'Wie früher! Große Auswahl an Schokolade, Chips, Gummibärchen, Riegeln und allen beliebten Snacks.',
+      },
+      {
+        icon: '📰',
+        title: 'Über 500 Zeitschriften',
+        description:
+          'Tageszeitungen, Magazine, Illustrierte und Fachzeitschriften. Für jeden das Richtige!',
+      },
+      {
+        icon: '🚬',
+        title: 'Tabakwaren',
+        description:
+          'Zigaretten, Zigarren, Tabak und Zubehör aller gängigen Marken. Alles vorrätig!',
+        ageRestriction: 'Nur an Personen ab 18 Jahren',
+      },
+      {
+        icon: '🎫',
+        title: 'Lotterie & Glücksspiel',
+        description: 'Lotto 6aus49, Eurojackpot, Rubbellose und weitere Lotterieprodukte.',
+        ageRestriction:
+          'Die Teilnahme ist erst ab 18 Jahren erlaubt. Glücksspiel kann süchtig machen.',
+      },
+      {
+        icon: '📱',
+        title: 'Handy-Guthaben',
+        description:
+          'Aufladung für alle Mobilfunkanbieter: Telekom, Vodafone, O2, Aldi Talk und viele mehr.',
+      },
+      {
+        icon: '📝',
+        title: 'Schreibwaren',
+        description: 'Stifte, Hefte, Briefumschläge und alles für Schule, Büro und Zuhause.',
+      },
+    ],
+  },
 };

@@ -1,53 +1,96 @@
-﻿import PackageCalculator from './PackageCalculator';
+import { CLIENT_CONFIG } from '@/lib/client.config';
 
 export default function HermesSection() {
+  const { hermes, sections } = CLIENT_CONFIG;
+
+  if (!sections.showHermes || !hermes.enabled) {
+    return null;
+  }
+
   return (
-    <section className="py-20 bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="bg-white/70 backdrop-blur-sm p-10 rounded-[2rem] border border-yellow-200/50 shadow-xl">
-          <div className="text-6xl mb-5" aria-hidden="true">
-            📦
-          </div>
-          <h2 className="text-4xl font-black text-gray-900 mb-4 tracking-tight">
+    <section className="py-20 px-4 bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <div className="text-6xl mb-4">📦</div>
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-4">
             Hermes Paketshop
           </h2>
-          <p className="text-lg text-gray-700 mb-8 font-light">
-            Wir sind Ihr offizieller Hermes Paketshop in Erftstadt-Liblar!
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            {hermes.description}
           </p>
-          <PackageCalculator />
-          <details className="bg-white rounded-2xl p-6 mb-8 text-left shadow-sm border border-gray-100">
-            <summary className="font-bold text-gray-900 cursor-pointer hover:text-pink-600 transition-colors text-lg">
-              📋 Alle Paketgrößen im Detail anzeigen
-            </summary>
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-              <div className="border border-gray-200 rounded-xl p-4 text-center bg-gray-50">
-                <span className="block font-black text-pink-600 text-lg mb-1">S-Paket</span>
-                <span className="text-gray-700">Max. 31,5 × 23,5 × 3,5 cm</span>
-              </div>
-              <div className="border border-pink-200 rounded-xl p-4 text-center bg-pink-50">
-                <span className="block font-black text-pink-600 text-lg mb-1">M-Paket</span>
-                <span className="text-gray-700">Max. 50 × 30 × 10 cm</span>
-              </div>
-              <div className="border border-gray-200 rounded-xl p-4 text-center bg-gray-50">
-                <span className="block font-black text-pink-600 text-lg mb-1">L-Paket</span>
-                <span className="text-gray-700">Max. 120 × 60 × 60 cm</span>
-              </div>
-            </div>
-          </details>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="font-bold text-gray-900 mb-2 text-lg">
-                📮 Pakete abholen & versenden
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Linke Spalte: Paketgrößen-Rechner */}
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                📏 Finde deine Paketgröße
               </h3>
-              <p className="text-sm text-gray-700">
-                Holen Sie Ihre Pakete bequem ab oder versenden Sie diese direkt bei uns.
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Gib die Maße deines Pakets ein (in cm). Die Reihenfolge ist egal.
               </p>
+              <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Länge
+                    </label>
+                    <input
+                      type="number"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      placeholder="0"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Breite
+                    </label>
+                    <input
+                      type="number"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      placeholder="0"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Höhe
+                    </label>
+                    <input
+                      type="number"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+                <button className="w-full px-6 py-3 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-bold rounded-lg transition-all">
+                  Jetzt prüfen
+                </button>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  *Unverbindliche Richtwerte basierend auf Standard-Hermes-Maßen. Verbindliche
+                  Preise und Maße direkt im Markt oder auf hermes.de.
+                </p>
+              </div>
             </div>
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h3 className="font-bold text-gray-900 mb-2 text-lg">↩️ Retouren & 🏷️ Etiketten</h3>
-              <p className="text-sm text-gray-700">
-                Geben Sie Retouren einfach ab oder lassen Sie sich vor Ort ein Etikett erstellen.
-              </p>
+
+            {/* Rechte Spalte: Services */}
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                  📮 Pakete abholen & versenden
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Holen Sie Ihre Pakete bequem ab oder versenden Sie diese direkt bei uns.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                  ↩️ Retouren & 🏷️ Etiketten
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Geben Sie Retouren einfach ab oder lassen Sie sich vor Ort ein Etikett erstellen.
+                </p>
+              </div>
             </div>
           </div>
         </div>
