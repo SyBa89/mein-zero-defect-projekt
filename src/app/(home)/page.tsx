@@ -104,6 +104,46 @@ const schemaOrg = {
   // },
 };
 
+  // ✅ GEO: FAQPage Schema für KI-Suchmaschinen (ChatGPT, Perplexity)
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Wo genau befindet sich der Kiosk Lollipop?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Wir befinden uns direkt am Bürgerplatz in der Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar, in unmittelbarer Nähe zum Bahnhof.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Kann ich bei Ihnen Pakete mit Hermes versenden und abholen?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Ja, wir sind ein offizieller Hermes Paketshop. Sie können bei uns Pakete versenden, abholen und Retouren abgeben.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Welche Zahlungsmethoden akzeptieren Sie?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Wir akzeptieren Bar, EC-Karte, Kontaktlos, Apple Pay und Google Pay.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Haben Sie an Sonn- und Feiertagen geöffnet?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'An Sonntagen ist der Kiosk geschlossen. An Feiertagen passen wir unsere Öffnungszeiten an, was Sie unserem Notfall-Banner oder den aktuellen Öffnungszeiten auf der Startseite entnehmen können.',
+        },
+      },
+    ],
+  };
+
 // ✅ ZERO-DEFECT: Server Component (KEINE Event-Handler, KEIN <main>)
 export default function HomePage() {
   return (
@@ -113,6 +153,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       {/* ✅ Dynamischer Jackpot-Banner (Admin-editierbar) */}
       <JackpotBanner />
