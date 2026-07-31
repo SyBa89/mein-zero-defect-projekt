@@ -176,3 +176,8 @@ package-lock.json
 # Backup-Dateien
 *.backup_*
 backup_*/
+
+# === Zero-Defect Cleanup ===
+backup_*/**
+.env*.local
+
