@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useRef, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
@@ -58,7 +58,7 @@ export default function KontaktFormClient() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/api/admin/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -447,3 +447,4 @@ export default function KontaktFormClient() {
     </div>
   );
 }
+

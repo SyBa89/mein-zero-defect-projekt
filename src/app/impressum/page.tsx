@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+﻿import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function ImpressumPage() {
             <p>
               <strong>Kiosk Lollipop</strong>
               <br />
-              Inhaber: [VORNAME NACHNAME]
+              Inhaber: Angaben werden in Kürze ergänzt
               <br />
               Theodor-Heuss-Straße 35
               <br />
@@ -36,7 +36,7 @@ export default function ImpressumPage() {
                 02235 9291160
               </a>
               <br />
-              E-Mail: [E-MAIL-ADRESSE]
+              E-Mail: info@kiosk-lollipop.de
             </p>
           </div>
         </section>
@@ -45,9 +45,7 @@ export default function ImpressumPage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Umsatzsteuer-ID</h2>
           <div className="prose prose-gray max-w-none">
             <p>
-              Umsatzsteuer-Identifikationsnummer gemäß §27 a Umsatzsteuergesetz:
-              <br />
-              [UST-ID NUMMER]
+              Sofern keine Umsatzsteuer-Identifikationsnummer ausgewiesen ist, gilt der Hinweis auf die Kleinunternehmerregelung nach § 19 UStG.
             </p>
           </div>
         </section>
@@ -58,7 +56,7 @@ export default function ImpressumPage() {
           </h2>
           <div className="prose prose-gray max-w-none">
             <p>
-              [VORNAME NACHNAME]
+              Angaben werden in Kürze ergänzt
               <br />
               Theodor-Heuss-Straße 35
               <br />
@@ -90,3 +88,4 @@ export default function ImpressumPage() {
     </div>
   );
 }
+
