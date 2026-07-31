@@ -1,6 +1,5 @@
-'use client';
+﻿'use client';
 
-import Link from 'next/link';
 
 export default function GlobalError({
   error: _error,
@@ -53,3 +52,4 @@ export default function GlobalError({
     </html>
   );
 }
+

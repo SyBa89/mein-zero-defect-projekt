@@ -1,5 +1,4 @@
-import MobileActionBar from '@/components/MobileActionBar';
-import Link from 'next/link';
+﻿import MobileActionBar from '@/components/MobileActionBar';
 import type { Metadata } from 'next';
 
 // ✅ ZERO-DEFECT: SEO-Metadaten mit explizitem NOINDEX für Danke-Seiten
@@ -188,3 +187,4 @@ export default function DankePage() {
     </div>
   );
 }
+

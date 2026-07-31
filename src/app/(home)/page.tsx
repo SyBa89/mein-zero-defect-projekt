@@ -1,4 +1,4 @@
-import JackpotBanner from '@/components/JackpotBanner';
+﻿import JackpotBanner from '@/components/JackpotBanner';
 import DynamicSections from '@/components/DynamicSections';
 import MobileActionBar from '@/components/MobileActionBar';
 import CookieNotice from '@/components/CookieNotice';
@@ -93,14 +93,15 @@ const schemaOrg = {
   paymentAccepted: 'Cash, Credit Card, Debit Card',
   openingHours: ['Mo,Tu,We,Th,Fr 07:30-19:00', 'Sa 07:30-14:30'],
   sameAs: [KIOSK_CONFIG.facebook],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    bestRating: '5',
-    worstRating: '1',
-    ratingCount: '60',
-    reviewCount: '60',
-  },
+  // TODO: Füge echte Bewertungen hinzu, sobald verfügbar
+  // aggregateRating: {
+  //   '@type': 'AggregateRating',
+  //   ratingValue: '5.0',
+  //   bestRating: '5',
+  //   worstRating: '1',
+  //   ratingCount: '60',
+  //   reviewCount: '60',
+  // },
 };
 
 // ✅ ZERO-DEFECT: Server Component (KEINE Event-Handler, KEIN <main>)
@@ -142,3 +143,4 @@ export default function HomePage() {
     </>
   );
 }
+
