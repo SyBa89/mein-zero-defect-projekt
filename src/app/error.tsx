@@ -1,4 +1,5 @@
-﻿'use client';
+﻿import Link from 'next/link';
+'use client';
 
 import { useEffect } from 'react';
 
@@ -54,4 +55,5 @@ export default function Error({
     </div>
   );
 }
+
 

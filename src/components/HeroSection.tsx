@@ -1,4 +1,5 @@
 ﻿import Image from 'next/image';
+import Link from 'next/link';
 import { KIOSK_CONFIG } from '@/lib/config';
 
 export default function HeroSection() {
@@ -107,4 +108,5 @@ export default function HeroSection() {
     </section>
   );
 }
+
 

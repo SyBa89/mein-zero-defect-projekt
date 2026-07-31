@@ -1,4 +1,5 @@
-﻿
+﻿import Link from 'next/link';
+
 export default function NotFound() {
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-20 bg-gradient-to-br from-pink-50 via-white to-purple-50">
@@ -35,4 +36,5 @@ export default function NotFound() {
     </div>
   );
 }
+
 

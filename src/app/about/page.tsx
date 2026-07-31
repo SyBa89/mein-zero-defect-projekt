@@ -1,4 +1,5 @@
-﻿import type { Metadata } from 'next';
+﻿import Link from 'next/link';
+import type { Metadata } from 'next';
 
 // ✅ ZERO-DEFECT: Umfassende SEO-Metadaten für korrekte Indexierung und Social Sharing
 export const metadata: Metadata = {
@@ -298,4 +299,5 @@ export default function AboutPage() {
     </div>
   );
 }
+
 

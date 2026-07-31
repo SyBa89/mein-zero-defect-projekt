@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 
 // Navigation zentralisiert
@@ -237,4 +238,5 @@ export default function Header({ currentPath }: HeaderProps) {
     </header>
   );
 }
+
 

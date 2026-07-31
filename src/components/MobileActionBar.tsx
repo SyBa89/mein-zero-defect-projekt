@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { KIOSK_CONFIG } from '@/lib/config';
 
 // ✅ ZERO-DEFECT: Koordinaten aus KIOSK_CONFIG extrahieren
@@ -117,4 +118,5 @@ export default function MobileActionBar() {
     </div>
   );
 }
+
 
