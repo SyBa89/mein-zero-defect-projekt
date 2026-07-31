@@ -1,123 +1,36 @@
-import { Review, getReviews } from '@/lib/reviews';
+import { KIOSK_CONFIG } from '@/lib/config';
 
-const StarIcon = ({ filled }: { filled: boolean }) => (
-  <svg
-    className={`w-5 h-5 ${filled ? 'text-yellow-400 fill-current' : 'text-gray-300 fill-current'}`}
-    viewBox="0 0 20 20"
-    aria-hidden="true"
-  >
-    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-  </svg>
-);
-
-const VerifiedIcon = () => (
-  <svg className="w-4 h-4 text-blue-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12.545 10.239v3.821h5.445c-.712 2.315-2.647 3.972-5.445 3.972a6.033 6.033 0 110-12.064c1.498 0 2.866.549 3.921 1.453l2.814-2.814A9.969 9.969 0 0012.545 2C7.021 2 2.543 6.477 2.543 12s4.478 10 10.002 10c8.396 0 10.249-7.85 9.426-11.748l-9.426-.013z" />
-  </svg>
-);
-
-const WriteReviewIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-    />
-  </svg>
-);
-
-const ReviewJsonLd = ({ reviews }: { reviews: Review[] }) => {
-  if (reviews.length === 0) return null;
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: reviews.map((review, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      item: {
-        '@type': 'Review',
-        author: { '@type': 'Person', name: review.name },
-        datePublished: review.isoDate,
-        reviewBody: review.text,
-        reviewRating: { '@type': 'Rating', ratingValue: review.rating, bestRating: '5' },
-        publisher: { '@type': 'Organization', name: review.source },
-      },
-    })),
-  };
+export default function Reviews() {
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-    />
-  );
-};
-
-export default async function Reviews() {
-  const reviews = await getReviews();
-  if (reviews.length === 0) return null;
-
-  return (
-    <section className="py-16 sm:py-20 bg-white" aria-labelledby="reviews-heading">
-      <ReviewJsonLd reviews={reviews} />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2
-          id="reviews-heading"
-          className="text-3xl md:text-4xl font-black text-gray-900 mb-12 text-center tracking-tight"
-        >
-          Das sagen unsere Kunden
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {reviews.map((review) => (
-            <article
-              key={review.id}
-              className="bg-gray-50 p-8 rounded-3xl border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full"
-            >
-              <div className="flex mb-4" aria-label={`${review.rating} von 5 Sternen`} role="img">
-                {[...Array(5)].map((_, i) => (
-                  <StarIcon key={i} filled={i < review.rating} />
-                ))}
-              </div>
-              <blockquote className="text-gray-700 text-base leading-relaxed mb-6 flex-grow">
-                &ldquo;{review.text}&rdquo;
-              </blockquote>
-              <footer className="flex items-center justify-between border-t border-gray-200 pt-4 mt-auto">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-sm flex-shrink-0">
-                    {review.name.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <cite className="not-italic font-bold text-gray-900 text-sm block">
-                      {review.name}
-                    </cite>
-                    <time className="text-xs text-gray-500" dateTime={review.isoDate}>
-                      {review.displayDate}
-                    </time>
-                  </div>
-                </div>
-                <div
-                  className="flex items-center gap-1.5 bg-white px-2.5 py-1.5 rounded-full border border-gray-200 shadow-sm"
-                  title={`Verifizierte Bewertung von ${review.source}`}
-                >
-                  <VerifiedIcon />
-                  <span className="text-[10px] font-black text-gray-600 uppercase tracking-wide">
-                    {review.source}
-                  </span>
-                </div>
-              </footer>
-            </article>
-          ))}
-        </div>
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4 font-medium">Auch Sie waren bei uns zufrieden?</p>
+    <section className="py-20 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
+      <div className="max-w-4xl mx-auto px-4 text-center">
+        <div className="bg-white rounded-3xl shadow-2xl p-12 border border-gray-100">
+          <div className="mb-6 flex justify-center">
+            <svg className="w-16 h-16" viewBox="0 0 48 48">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-6">
+            Warst du auch bei uns zufrieden?
+          </h2>
+          <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+            Wir freuen uns über jede ehrliche Bewertung! Dein Feedback hilft uns, 
+            besser zu werden und anderen Nachbarn in Liblar, uns zu finden.
+          </p>
           <a
             href="https://search.google.com/local/writereview?placeid=ChIJeWG_xdsXv0cRInW4W6rog_0"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-pink-600 font-bold hover:text-pink-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded-lg px-4 py-2 hover:bg-pink-50"
+            className="inline-flex items-center gap-3 px-10 py-5 bg-white border-2 border-gray-200 hover:border-pink-500 text-gray-800 font-bold text-lg rounded-2xl shadow-lg transition-all hover:scale-105 hover:shadow-xl"
           >
-            <WriteReviewIcon /> Bewertung auf Google schreiben
+            ⭐⭐⭐⭐⭐ Jetzt auf Google bewerten
           </a>
+          <p className="text-sm text-gray-500 mt-6">
+            ⚡ Dauert nur 30 Sekunden • Unterstütze deinen lokalen Kiosk am Bürgerplatz
+          </p>
         </div>
       </div>
     </section>

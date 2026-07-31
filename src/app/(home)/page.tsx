@@ -1,4 +1,4 @@
-﻿import JackpotBanner from '@/components/JackpotBanner';
+import JackpotBanner from '@/components/JackpotBanner';
 import DynamicSections from '@/components/DynamicSections';
 import MobileActionBar from '@/components/MobileActionBar';
 import CookieNotice from '@/components/CookieNotice';
@@ -18,7 +18,7 @@ import type { Metadata } from 'next';
 // ✅ ZERO-DEFECT: Umfassende SEO-Metadaten
 export const metadata: Metadata = {
   title: `${KIOSK_CONFIG.name} | Ihr Kiosk & Hermes Paketshop in Erftstadt-Liblar`,
-  description: `${KIOSK_CONFIG.name} in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. ★★★★★ 5,0 Sterne bei Google.`,
+  description: `${KIOSK_CONFIG.name} in Erftstadt-Liblar - Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Mo-Fr 07:30-19:00, Sa 07:30-14:30. Ihr lokaler Nachbar mit echtem Service.`,
   keywords: [
     'Kiosk Erftstadt',
     'Kiosk Liblar',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
   openGraph: {
     title: `${KIOSK_CONFIG.name} | Erftstadt-Liblar`,
-    description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. ★★★★★ 5,0 Sterne bei Google.',
+    description: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz. Ihr lokaler Nachbar mit echtem Service.',
     type: 'website',
     locale: 'de_DE',
     url: KIOSK_CONFIG.url,
@@ -77,7 +77,7 @@ const schemaOrg = {
   url: KIOSK_CONFIG.url,
   logo: `${KIOSK_CONFIG.url}/images/logo.png`,
   image: `${KIOSK_CONFIG.url}/images/fassade.png`,
-  description: `Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. ★★★★★ 5,0 Sterne bei Google.`,
+  description: `Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. Ihr lokaler Nachbar mit echtem Service.`,
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Theodor-Heuss-Straße 35',
