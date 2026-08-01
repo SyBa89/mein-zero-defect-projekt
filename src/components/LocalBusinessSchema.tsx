@@ -1,94 +1,41 @@
 'use client';
+
 import { CLIENT_CONFIG } from '@/lib/client.config';
-('use client');
 
-import { useEffect } from 'react';
-
-/**
- * LocalBusiness JSON-LD Schema für Google
- * Hilft dem Kiosk, in lokalen Suchergebnissen ("Kiosk Erftstadt",
- * "Hermes Paketshop Liblar") besser gefunden zu werden.
- *
- * TODO: Ersetze latitude/longitude durch echte Koordinaten von
- * Theodor-Heuss-Straße 35, 50374 Erftstadt (z.B. via Google Maps rechtsklick).
- */
 export default function LocalBusinessSchema() {
-  useEffect(() => {
-    // Nur auf Client rendern, um Hydration-Mismatches zu vermeiden
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'ConvenienceStore',
-      name: CLIENT_CONFIG.brand.name,
-      alternateName: 'Kiosk Lollipop Erftstadt-Liblar',
-      description:
-        'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. Getränke, Snacks, Zeitschriften, Lotto, Tabakwaren und Paketversand.',
-      image: 'https://mein-zero-defect-projekt.vercel.app/images/fassade.png',
-      url: 'https://mein-zero-defect-projekt.vercel.app',
-      telephone: '+4922359291160',
-      email: 'info@kiosk-lollipop.de',
-      priceRange: '€',
-      paymentAccepted: ['Bar', 'EC-Karte', 'Kontaktlos', 'Apple Pay', 'Google Pay'],
-      currenciesAccepted: 'EUR',
-      openingHours: ['Mo-Fr 07:30-19:00', 'Sa 07:30-14:30'],
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: CLIENT_CONFIG.contact.address.street,
-        addressLocality: CLIENT_CONFIG.contact.address.city,
-        postalCode: '50374',
-        addressCountry: 'DE',
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: '50.804000',
-        longitude: '6.793000',
-      },
-      sameAs: [
-        // TODO: Hier echte Social-Media-Links eintragen, z.B.:
-        // 'https://www.facebook.com/kiosklollipop',
-        // 'https://www.instagram.com/kiosklollipop'
-      ],
-      hasOfferCatalog: {
-        '@type': 'OfferCatalog',
-        name: 'Dienstleistungen',
-        itemListElement: [
-          {
-            '@type': 'Offer',
-            itemOffered: {
-              '@type': 'Service',
-              name: 'Hermes Paketshop',
-              description: 'Paketversand, -abholung und Retouren',
-            },
-          },
-          {
-            '@type': 'Offer',
-            itemOffered: {
-              '@type': 'Service',
-              name: 'Lotto-Annahmestelle',
-              description: 'Lotto 6aus49, Eurojackpot, Rubbellose',
-            },
-          },
-          {
-            '@type': 'Offer',
-            itemOffered: {
-              '@type': 'Service',
-              name: 'Handy-Guthaben Aufladung',
-              description: 'Aufladung für alle Mobilfunkanbieter',
-            },
-          },
-        ],
-      },
-    });
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'ConvenienceStore',
+    '@id': `${CLIENT_CONFIG.url}/#store`,
+    name: CLIENT_CONFIG.brand.name,
+    url: CLIENT_CONFIG.url,
+    logo: `${CLIENT_CONFIG.url}/images/logo.png`,
+    image: `${CLIENT_CONFIG.url}/images/fassade.png`,
+    description: CLIENT_CONFIG.seo.description,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: CLIENT_CONFIG.contact.address.street,
+      postalCode: CLIENT_CONFIG.contact.address.zip,
+      addressLocality: CLIENT_CONFIG.contact.address.city,
+      addressRegion: 'NRW',
+      addressCountry: CLIENT_CONFIG.contact.address.country,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 50.806945,
+      longitude: 6.823683,
+    },
+    telephone: CLIENT_CONFIG.contact.phone,
+    priceRange: '€',
+    currenciesAccepted: 'EUR',
+    paymentAccepted: 'Cash, Credit Card, Debit Card',
+    openingHours: ['Mo,Tu,We,Th,Fr 07:30-19:00', 'Sa 07:30-14:30'],
+  };
 
-    script.setAttribute('id', 'local-business-schema');
-    document.head.appendChild(script);
-
-    return () => {
-      const existing = document.getElementById('local-business-schema');
-      if (existing) existing.remove();
-    };
-  }, []);
-
-  return null;
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
 }
