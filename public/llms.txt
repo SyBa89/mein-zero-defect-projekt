@@ -1,69 +1,4 @@
-# Kiosk Lollipop
-
-> Ihr lokaler Kiosk und offizieller Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. Seit 2020 für das Viertel da.
-
-## Über uns
-
-Kiosk Lollipop ist mehr als nur ein Kiosk. Wir sind Ihr Nachbar mit echtem Service – direkt am Bürgerplatz in Liblar, in unmittelbarer Nähe zum Bahnhof.
-
-**Adresse:** Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar
-**Telefon:** 02235 9291160
-**E-Mail:** info@kiosk-lollipop.de
-
-## Öffnungszeiten
-
-- Montag - Freitag: 07:30 - 19:00 Uhr
-- Samstag: 07:30 - 14:30 Uhr
-- Sonntag: Geschlossen
-
-An Feiertagen anpassen wir unsere Öffnungszeiten. Aktuelle Informationen finden Sie auf unserer Startseite.
-
-## Unsere Services
-
-### Hermes Paketshop
-Wir sind ein offizieller Hermes Paketshop. Sie können bei uns:
-- Pakete versenden (alle Hermes-Größen: Päckchen S/M, Paket S/M/L/XL)
-- Pakete abholen
-- Retouren abgeben
-- Etiketten vor Ort erstellen lassen
-
-### Lotto & Glücksspiel
-- Lotto 6aus49
-- Eurojackpot
-- Rubbellose
-- Alle aktuellen Jackpots finden Sie auf unserer Startseite
-
-### Weitere Services
-- Handy-Guthaben aufladen (alle Anbieter: Telekom, Vodafone, O2, Aldi Talk, etc.)
-- Geld abheben (EC-Karte)
-- Druckservice (Kopien & Ausdrucke)
-- Heiße Getränke (Kaffee & Tee to go)
-- Handy-Ladestation
-
-### Sortiment
-- Über 100 Getränke (kalt und warm, Softdrinks, Säfte, Wasser, Bier)
-- Große Auswahl an Süßigkeiten und Snacks
-- Über 500 Zeitschriften und Tageszeitungen
-- Tabakwaren aller gängigen Marken
-- Schreibwaren
-
-## Zahlungsmethoden
-
-Wir akzeptieren: Bar, EC-Karte, Kontaktlos, Apple Pay, Google Pay.
-
-## Barrierefreiheit
-
-Unser Laden ist stufenfrei zugänglich und rollstuhlgerecht.
-
-## Parken
-
-- Kurze Haltezone direkt vor dem Laden
-- Öffentliche Parkplätze am Bürgerplatz
-
-## Jugendschutz
-
-Tabakwaren und alkoholische Getränke werden nur an Personen ab 18 Jahren abgegeben.
-
+...
 ## Rechtliches
 
 Wir sind ein Kleinunternehmen gemäß § 19 UStG und weisen daher keine Umsatzsteuer aus.
@@ -74,6 +9,8 @@ Wir sind ein Kleinunternehmen gemäß § 19 UStG und weisen daher keine Umsatzst
 - Kontakt: https://mein-zero-defect-projekt.vercel.app/kontakt
 - Impressum: https://mein-zero-defect-projekt.vercel.app/impressum
 - Datenschutz: https://mein-zero-defect-projekt.vercel.app/datenschutz
+- Sitemap (XML): https://mein-zero-defect-projekt.vercel.app/sitemap.xml
+- Robots (TXT): https://mein-zero-defect-projekt.vercel.app/robots.txt
 
 ---
 

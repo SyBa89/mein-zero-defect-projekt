@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false, // 🛡️ Security: Versteckt Next.js Version
 
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -11,10 +12,13 @@ const nextConfig = {
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     unoptimized: false,
-    qualities: [75, 80, 85, 90, 100], // ✅ Aktiviert für maximale Optimierung
+    // ❌ ENTFERNT: 'qualities' ist in Next.js 15 keine valide Config-Option mehr!
   },
 
   compress: true,
+
+  // 🛡️ Verhindert Bundling-Fehler bei nativen/spezifischen Server-Modulen
+  serverExternalPackages: ['@upstash/redis', 'jsonwebtoken', 'bcryptjs'],
 
   async redirects() {
     return [
@@ -30,6 +34,8 @@ const nextConfig = {
     staleTimes: {
       dynamic: 30,
     },
+    // 🚀 Next.js 15 Performance Boost
+    reactCompiler: true, 
   },
 
   typescript: {
