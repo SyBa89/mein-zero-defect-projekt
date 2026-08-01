@@ -5,7 +5,10 @@ import { CLIENT_CONFIG } from '@/lib/client.config';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const { brand, contact } = CLIENT_CONFIG;
+  const { brand, contact, features } = CLIENT_CONFIG;
+
+  // White-Label: Wir nehmen die ersten 4 Features für die Services-Spalte
+  const footerServices = features?.slice(0, 4) || [];
 
   return (
     <footer className="bg-gray-900 text-gray-300 mt-auto">
@@ -37,16 +40,22 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Spalte 3: Services */}
+          {/* Spalte 3: Services (Dynamisch aus Config) */}
           <div>
             <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
               Services
             </h4>
             <ul className="space-y-2 text-sm">
-              <li>📦 Hermes Paketshop</li>
-              <li>🎫 Lotto & Rubbellose</li>
-              <li>📱 Handy-Guthaben</li>
-              <li>💳 Geld abheben</li>
+              {footerServices.length > 0 ? (
+                footerServices.map((service, index) => (
+                  <li key={index} className="flex items-center gap-2">
+                    <span aria-hidden="true">{service.icon}</span>
+                    <span>{service.title}</span>
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-500">Keine Services definiert</li>
+              )}
             </ul>
           </div>
 
@@ -57,7 +66,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
-                <span>📍</span>
+                <span aria-hidden="true">📍</span>
                 <a
                   href={contact.mapsUrl}
                   target="_blank"
@@ -68,13 +77,13 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-start gap-2">
-                <span>📞</span>
+                <span aria-hidden="true">📞</span>
                 <a href={`tel:${contact.phone}`} className="hover:text-pink-400 transition-colors">
                   {contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2')}
                 </a>
               </li>
               <li className="flex items-start gap-2">
-                <span>✉️</span>
+                <span aria-hidden="true">✉️</span>
                 <a
                   href={`mailto:${contact.email}`}
                   className="hover:text-pink-400 transition-colors"
