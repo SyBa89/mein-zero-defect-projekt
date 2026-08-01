@@ -1,3 +1,4 @@
+'use client';
 import { CLIENT_CONFIG } from '@/lib/client.config';
 ('use client');
 
