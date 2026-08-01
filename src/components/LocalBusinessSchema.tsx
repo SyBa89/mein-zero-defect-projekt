@@ -1,13 +1,14 @@
-﻿'use client';
+import { CLIENT_CONFIG } from '@/lib/client.config';
+('use client');
 
 import { useEffect } from 'react';
 
 /**
  * LocalBusiness JSON-LD Schema für Google
- * Hilft dem Kiosk, in lokalen Suchergebnissen ("Kiosk Erftstadt", 
+ * Hilft dem Kiosk, in lokalen Suchergebnissen ("Kiosk Erftstadt",
  * "Hermes Paketshop Liblar") besser gefunden zu werden.
- * 
- * TODO: Ersetze latitude/longitude durch echte Koordinaten von 
+ *
+ * TODO: Ersetze latitude/longitude durch echte Koordinaten von
  * Theodor-Heuss-Straße 35, 50374 Erftstadt (z.B. via Google Maps rechtsklick).
  */
 export default function LocalBusinessSchema() {
@@ -18,9 +19,10 @@ export default function LocalBusinessSchema() {
     script.text = JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'ConvenienceStore',
-      name: 'Kiosk Lollipop',
+      name: CLIENT_CONFIG.brand.name,
       alternateName: 'Kiosk Lollipop Erftstadt-Liblar',
-      description: 'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. Getränke, Snacks, Zeitschriften, Lotto, Tabakwaren und Paketversand.',
+      description:
+        'Ihr lokaler Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar. Getränke, Snacks, Zeitschriften, Lotto, Tabakwaren und Paketversand.',
       image: 'https://mein-zero-defect-projekt.vercel.app/images/fassade.png',
       url: 'https://mein-zero-defect-projekt.vercel.app',
       telephone: '+4922359291160',
@@ -28,21 +30,18 @@ export default function LocalBusinessSchema() {
       priceRange: '€',
       paymentAccepted: ['Bar', 'EC-Karte', 'Kontaktlos', 'Apple Pay', 'Google Pay'],
       currenciesAccepted: 'EUR',
-      openingHours: [
-        'Mo-Fr 07:30-19:00',
-        'Sa 07:30-14:30'
-      ],
+      openingHours: ['Mo-Fr 07:30-19:00', 'Sa 07:30-14:30'],
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Theodor-Heuss-Straße 35',
-        addressLocality: 'Erftstadt-Liblar',
+        streetAddress: CLIENT_CONFIG.contact.address.street,
+        addressLocality: CLIENT_CONFIG.contact.address.city,
         postalCode: '50374',
-        addressCountry: 'DE'
+        addressCountry: 'DE',
       },
       geo: {
         '@type': 'GeoCoordinates',
         latitude: '50.804000',
-        longitude: '6.793000'
+        longitude: '6.793000',
       },
       sameAs: [
         // TODO: Hier echte Social-Media-Links eintragen, z.B.:
@@ -58,32 +57,32 @@ export default function LocalBusinessSchema() {
             itemOffered: {
               '@type': 'Service',
               name: 'Hermes Paketshop',
-              description: 'Paketversand, -abholung und Retouren'
-            }
+              description: 'Paketversand, -abholung und Retouren',
+            },
           },
           {
             '@type': 'Offer',
             itemOffered: {
               '@type': 'Service',
               name: 'Lotto-Annahmestelle',
-              description: 'Lotto 6aus49, Eurojackpot, Rubbellose'
-            }
+              description: 'Lotto 6aus49, Eurojackpot, Rubbellose',
+            },
           },
           {
             '@type': 'Offer',
             itemOffered: {
               '@type': 'Service',
               name: 'Handy-Guthaben Aufladung',
-              description: 'Aufladung für alle Mobilfunkanbieter'
-            }
-          }
-        ]
-      }
+              description: 'Aufladung für alle Mobilfunkanbieter',
+            },
+          },
+        ],
+      },
     });
-    
+
     script.setAttribute('id', 'local-business-schema');
     document.head.appendChild(script);
-    
+
     return () => {
       const existing = document.getElementById('local-business-schema');
       if (existing) existing.remove();
