@@ -50,18 +50,18 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'Wo genau befindet sich der Kiosk Lollipop?',
+      name: 'Wo genau befindet sich ' + CLIENT_CONFIG.brand.name + '?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: `Wir befinden uns direkt am Bürgerplatz in der ${CLIENT_CONFIG.contact.address.street}, ${CLIENT_CONFIG.contact.address.zip} ${CLIENT_CONFIG.contact.address.city}, in unmittelbarer Nähe zum Bahnhof.`,
+        text: `Wir befinden uns in der ${CLIENT_CONFIG.contact.address.street}, ${CLIENT_CONFIG.contact.address.zip} ${CLIENT_CONFIG.contact.address.city}.`,
       },
     },
     {
       '@type': 'Question',
-      name: 'Kann ich bei Ihnen Pakete mit Hermes versenden und abholen?',
+      name: 'Kann ich bei Ihnen Pakete versenden und abholen?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Ja, wir sind ein offizieller Hermes Paketshop. Sie können bei uns Pakete versenden, abholen und Retouren abgeben.',
+        text: 'Ja, wir sind ein Paketshop. Sie können bei uns Pakete versenden, abholen und Retouren abgeben.',
       },
     },
     {
@@ -77,7 +77,10 @@ const faqSchema = {
       name: 'Haben Sie an Sonn- und Feiertagen geöffnet?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'An Sonntagen ist der Kiosk geschlossen. An Feiertagen passen wir unsere Öffnungszeiten an, was Sie unserem Notfall-Banner oder den aktuellen Öffnungszeiten auf der Startseite entnehmen können.',
+        text:
+          'An Sonntagen ist ' +
+          CLIENT_CONFIG.brand.name +
+          ' geschlossen. An Feiertagen passen wir unsere Öffnungszeiten an, was Sie unserem Notfall-Banner oder den aktuellen Öffnungszeiten auf der Startseite entnehmen können.',
       },
     },
   ],
