@@ -35,7 +35,7 @@ const nextConfig = {
       dynamic: 30,
     },
     // 🚀 Next.js 15 Performance Boost
-    reactCompiler: true, 
+     
   },
 
   typescript: {
