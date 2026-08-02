@@ -1,13 +1,20 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { CLIENT_CONFIG } from '@/lib/client.config';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  // ✅ ZERO-DEFECT: Hydration-sicheres Jahr (Server rendert null, Client setzt Jahr)
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
   const { brand, contact, features } = CLIENT_CONFIG;
 
-  // White-Label: Wir nehmen die ersten 4 Features für die Services-Spalte
+  // ✅ ZERO-DEFECT: White-Label - Erste 4 Features für Services-Spalte
   const footerServices = features?.slice(0, 4) || [];
 
   return (
@@ -98,7 +105,7 @@ export default function Footer() {
         {/* Footer Bottom */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-xs text-gray-500">
-            © {currentYear} {brand.name}. Alle Rechte vorbehalten.
+            © {currentYear ?? new Date().getFullYear()} {brand.name}. Alle Rechte vorbehalten.
           </p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
