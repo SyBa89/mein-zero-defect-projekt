@@ -34,14 +34,14 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   
-  // ✅ ZERO-DEFECT: Experimental Features (bereits aktiv)
+  // ✅ ZERO-DEFECT: Experimental Features
   experimental: {
     staleTimes: {
       dynamic: 30,
     },
   },
   
-  // ✅ ZERO-DEFECT: Security Headers für 100/100 Lighthouse Best Practices
+  // ✅ ZERO-DEFECT: Security Headers (100/100 Lighthouse Best Practices)
   async headers() {
     return [
       {
@@ -60,6 +60,7 @@ const nextConfig = {
             value: 'origin-when-cross-origin',
           },
           {
+            // ✅ ZERO-DEFECT FIX: interest-cohort entfernt (Chrome deprecated)
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
           },
@@ -74,7 +75,7 @@ const nextConfig = {
         ],
       },
       {
-        // ✅ ZERO-DEFECT: Cache-Header für statische Assets
+        // ✅ ZERO-DEFECT: Cache-Header für statische Assets (1 Jahr)
         source: '/:all*(svg|jpg|jpeg|png|webp|avif|ico|woff|woff2|ttf|otf)',
         locale: false,
         headers: [

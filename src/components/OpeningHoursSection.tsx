@@ -1,4 +1,7 @@
-﻿import { getSiteConfig } from '@/lib/site-config';
+﻿'use client';
+
+import { useEffect, useState } from 'react';
+import { getSiteConfigClient } from '@/lib/site-config-client';
 
 interface ParsedHours {
   day: string;
@@ -8,9 +11,7 @@ interface ParsedHours {
 }
 
 // ✅ ZERO-DEFECT: Parse "Mo-Fr 07:30-19:00, Sa 07:30-14:30" in strukturierte Daten
-function parseOpeningHours(text: string): ParsedHours[] {
-  const todayIndex = new Date().getDay(); // 0 = Sonntag, 1 = Montag, ..., 6 = Samstag
-
+function parseOpeningHours(text: string, todayIndex: number): ParsedHours[] {
   const dayMap: Record<string, number> = {
     Mo: 1,
     Di: 2,
@@ -45,7 +46,6 @@ function parseOpeningHours(text: string): ParsedHours[] {
   const parts = text.split(',').map((p) => p.trim());
 
   parts.forEach((part) => {
-    // Regex: "Mo-Fr 07:30-19:00" oder "Sa 07:30-14:30"
     const match = part.match(
       /([A-Za-z]{2})(?:\s*-\s*([A-Za-z]{2}))?\s+(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/
     );
@@ -59,14 +59,12 @@ function parseOpeningHours(text: string): ParsedHours[] {
 
     if (startIndex === undefined || endIndex === undefined) return;
 
-    // Alle Tage im Range setzen (mit Wrap-around für So-Mo)
     if (startIndex <= endIndex) {
       for (let i = startIndex; i <= endIndex; i++) {
         result[i].hours = hoursText;
         result[i].isOpen = true;
       }
     } else {
-      // Wrap-around (z.B. Sa-Mo)
       for (let i = startIndex; i < 7; i++) {
         result[i].hours = hoursText;
         result[i].isOpen = true;
@@ -81,10 +79,52 @@ function parseOpeningHours(text: string): ParsedHours[] {
   return result;
 }
 
-export default async function OpeningHoursSection() {
-  const config = await getSiteConfig();
-  const parsedHours = parseOpeningHours(config.openingHoursText);
+export default function OpeningHoursSection() {
+  // ✅ ZERO-DEFECT: Hydration-sicherer State (Server rendert -1, Client updated)
+  const [todayIndex, setTodayIndex] = useState<number>(-1);
+  const [config, setConfig] = useState<{
+    openingHoursText: string;
+    isClosed: boolean;
+    emergencyMessage?: string;
+  } | null>(null);
 
+  useEffect(() => {
+    // Client-seitig: korrekte lokale Zeit setzen
+    setTodayIndex(new Date().getDay());
+
+    // Config laden (Client-seitig via API statt Redis direkt)
+    getSiteConfigClient().then(setConfig);
+  }, []);
+
+  // Während SSR/Hydration: Zeige leere Tabelle (vermeidet Mismatch)
+  if (!config || todayIndex === -1) {
+    return (
+      <section
+        className="relative py-20 bg-gradient-to-br from-pink-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden"
+        aria-labelledby="opening-hours-heading"
+      >
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-32 -right-32 w-96 h-96 bg-pink-200/40 dark:bg-pink-900/20 rounded-full blur-3xl" />
+          <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-purple-200/40 dark:bg-purple-900/20 rounded-full blur-3xl" />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2
+            id="opening-hours-heading"
+            className="text-4xl font-black text-gray-900 dark:text-gray-100 mb-10 text-center tracking-tight"
+          >
+            Öffnungszeiten
+          </h2>
+          <div className="glass-card rounded-3xl overflow-hidden shadow-2xl">
+            <div className="p-12 text-center text-gray-500 dark:text-gray-400">
+              Lade Öffnungszeiten...
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const parsedHours = parseOpeningHours(config.openingHoursText, todayIndex);
   const todayInfo = parsedHours.find((h) => h.isToday);
   const isShopClosed = config.isClosed;
 
