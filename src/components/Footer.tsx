@@ -105,7 +105,10 @@ export default function Footer() {
         {/* Footer Bottom */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-xs text-gray-500">
-            © {currentYear ?? new Date().getFullYear()} {brand.name}. Alle Rechte vorbehalten.
+            ©{' '}
+            {currentYear
+              ? `${currentYear} ${brand.name}. Alle Rechte vorbehalten.`
+              : `${brand.name}. Alle Rechte vorbehalten.`}
           </p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
