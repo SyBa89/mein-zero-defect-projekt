@@ -1,51 +1,55 @@
 ﻿import Link from 'next/link';
 import type { Metadata } from 'next';
+import { CLIENT_CONFIG } from '@/lib/client.config';
 
-// ✅ ZERO-DEFECT: Umfassende SEO-Metadaten für korrekte Indexierung und Social Sharing
-export const metadata: Metadata = {
-  title: 'Über das Projekt | Zero-Defect OS & Kiosk Lollipop',
-  description:
-    'Erfahre mehr über die technische Exzellenz, den Zero-Defect-Ansatz und den modernen Technologie-Stack hinter der Kiosk Lollipop Webseite.',
-  keywords: [
-    'Zero-Defect',
-    'Webentwicklung',
-    'Next.js',
-    'Kiosk Lollipop',
-    'Softwarequalität',
-    'Barrierefreiheit',
-  ],
-  openGraph: {
-    title: 'Über das Projekt | Zero-Defect OS',
-    description:
-      'Technische Exzellenz ohne Kompromisse. Der Technologie-Stack hinter Kiosk Lollipop.',
-    type: 'website',
-    locale: 'de_DE',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Über das Projekt | Zero-Defect OS',
-    description:
-      'Technische Exzellenz ohne Kompromisse. Der Technologie-Stack hinter Kiosk Lollipop.',
-  },
-};
+// ✅ ZERO-DEFECT: Dynamische SEO-Metadaten für White-Label-Fähigkeit
+export async function generateMetadata(): Promise<Metadata> {
+  const { brand } = CLIENT_CONFIG;
 
-// ✅ Schema.org WebPage für maximale SEO-Relevanz
-const schemaOrg = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: 'Über das Projekt | Zero-Defect OS & Kiosk Lollipop',
-  description:
-    'Erfahre mehr über die technische Exzellenz, den Zero-Defect-Ansatz und den Technologie-Stack.',
-  isPartOf: {
-    '@type': 'WebSite',
-    name: 'Kiosk Lollipop',
-    url: 'https://mein-zero-defect-projekt.vercel.app',
-  },
-};
+  return {
+    title: `Über das Projekt | Zero-Defect OS & ${brand.name}`,
+    description: `Erfahre mehr über die technische Exzellenz, den Zero-Defect-Ansatz und den modernen Technologie-Stack hinter der ${brand.name} Webseite.`,
+    keywords: [
+      'Zero-Defect',
+      'Webentwicklung',
+      'Next.js',
+      brand.name,
+      'Softwarequalität',
+      'Barrierefreiheit',
+    ],
+    openGraph: {
+      title: `Über das Projekt | Zero-Defect OS`,
+      description: `Technische Exzellenz ohne Kompromisse. Der Technologie-Stack hinter ${brand.name}.`,
+      type: 'website',
+      locale: 'de_DE',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Über das Projekt | Zero-Defect OS`,
+      description: `Technische Exzellenz ohne Kompromisse. Der Technologie-Stack hinter ${brand.name}.`,
+    },
+  };
+}
 
 export default function AboutPage() {
+  const { brand, url } = CLIENT_CONFIG;
+
+  // ✅ Schema.org WebPage für maximale SEO-Relevanz (dynamisch)
+  const schemaOrg = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `Über das Projekt | Zero-Defect OS & ${brand.name}`,
+    description:
+      'Erfahre mehr über die technische Exzellenz, den Zero-Defect-Ansatz und den Technologie-Stack.',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: brand.name,
+      url: url,
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
@@ -56,7 +60,7 @@ export default function AboutPage() {
         <div className="mb-12">
           <Link
             href="/"
-            className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-pink-600 transition-colors duration-200 mb-6 group"
+            className="inline-flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-200 mb-6 group"
           >
             <svg
               className="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform duration-200"
@@ -74,13 +78,13 @@ export default function AboutPage() {
             Zurück zur Startseite
           </Link>
 
-          <h1 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight mb-4 text-center">
+          <h1 className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-gray-100 tracking-tight mb-4 text-center">
             Über{' '}
             <span className="text-transparent bg-clip-text bg-pink-600 hover:bg-purple-600 md:bg-gradient-to-r from-pink-600 to-purple-600">
               Zero-Defect OS
             </span>
           </h1>
-          <p className="text-xl text-gray-600 text-center max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-300 text-center max-w-2xl mx-auto leading-relaxed">
             Professionelle Webentwicklung ohne Kompromisse. Gebaut für Stabilität, Geschwindigkeit
             und Vertrauen.
           </p>
@@ -89,8 +93,8 @@ export default function AboutPage() {
         {/* Content Sections */}
         <div className="space-y-8">
           {/* Mission Section */}
-          <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 sm:p-10 transition-shadow duration-300 hover:shadow-md">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
+          <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 sm:p-10 transition-shadow duration-300 hover:shadow-md">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-3">
               <svg
                 className="w-6 h-6 text-pink-600"
                 fill="none"
@@ -107,24 +111,24 @@ export default function AboutPage() {
               </svg>
               Unsere Mission
             </h2>
-            <div className="space-y-4 text-gray-700 leading-relaxed text-lg">
+            <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
               <p>
                 Zero-Defect OS steht für professionelle Webentwicklung ohne Kompromisse. Wir
                 glauben, dass Qualität kein Zufall ist, sondern das Ergebnis konsequenter
                 Automatisierung, strenger Guardrails und moderner Technologien.
               </p>
               <p>
-                Dieser Ansatz wurde für den{' '}
-                <strong className="text-gray-900">Kiosk Lollipop</strong> umgesetzt, um eine
-                Webseite zu schaffen, die nicht nur ästhetisch überzeugt, sondern auch technisch
-                unzerstörbar, barrierefrei und blitzschnell ist.
+                Dieser Ansatz wurde für{' '}
+                <strong className="text-gray-900 dark:text-gray-100">{brand.name}</strong>{' '}
+                umgesetzt, um eine Webseite zu schaffen, die nicht nur ästhetisch überzeugt, sondern
+                auch technisch unzerstörbar, barrierefrei und blitzschnell ist.
               </p>
             </div>
           </section>
 
           {/* Tech Stack Section */}
-          <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 sm:p-10 transition-shadow duration-300 hover:shadow-md">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 sm:p-10 transition-shadow duration-300 hover:shadow-md">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-3">
               <svg
                 className="w-6 h-6 text-pink-600"
                 fill="none"
@@ -143,7 +147,7 @@ export default function AboutPage() {
             </h2>
             <ul className="space-y-6">
               <li className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600">
+                <div className="flex-shrink-0 w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
@@ -154,15 +158,17 @@ export default function AboutPage() {
                   </svg>
                 </div>
                 <div>
-                  <strong className="text-gray-900 text-lg block mb-1">Next.js (App Router)</strong>
-                  <span className="text-gray-600">
+                  <strong className="text-gray-900 dark:text-gray-100 text-lg block mb-1">
+                    Next.js (App Router)
+                  </strong>
+                  <span className="text-gray-600 dark:text-gray-400">
                     Modernes React-Framework mit Server-Side Rendering, optimierten Core Web Vitals
                     und nahtlosem Routing.
                   </span>
                 </div>
               </li>
               <li className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-600">
+                <div className="flex-shrink-0 w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
@@ -173,15 +179,17 @@ export default function AboutPage() {
                   </svg>
                 </div>
                 <div>
-                  <strong className="text-gray-900 text-lg block mb-1">TypeScript</strong>
-                  <span className="text-gray-600">
+                  <strong className="text-gray-900 dark:text-gray-100 text-lg block mb-1">
+                    TypeScript
+                  </strong>
+                  <span className="text-gray-600 dark:text-gray-400">
                     Strikte Typsicherheit für robuste, wartbare Anwendungen. Eliminiert ganze
                     Klassen von Laufzeitfehlern.
                   </span>
                 </div>
               </li>
               <li className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-cyan-50 rounded-lg flex items-center justify-center text-cyan-600">
+                <div className="flex-shrink-0 w-10 h-10 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg flex items-center justify-center text-cyan-600 dark:text-cyan-400">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
@@ -192,15 +200,17 @@ export default function AboutPage() {
                   </svg>
                 </div>
                 <div>
-                  <strong className="text-gray-900 text-lg block mb-1">Tailwind CSS</strong>
-                  <span className="text-gray-600">
+                  <strong className="text-gray-900 dark:text-gray-100 text-lg block mb-1">
+                    Tailwind CSS
+                  </strong>
+                  <span className="text-gray-600 dark:text-gray-400">
                     Utility-First CSS für konsistentes, responsives und extrem performantes Design
                     ohne überflüssiges CSS.
                   </span>
                 </div>
               </li>
               <li className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center text-green-600">
+                <div className="flex-shrink-0 w-10 h-10 bg-green-50 dark:bg-green-900/20 rounded-lg flex items-center justify-center text-green-600 dark:text-green-400">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
@@ -211,8 +221,10 @@ export default function AboutPage() {
                   </svg>
                 </div>
                 <div>
-                  <strong className="text-gray-900 text-lg block mb-1">CI/CD & Linting</strong>
-                  <span className="text-gray-600">
+                  <strong className="text-gray-900 dark:text-gray-100 text-lg block mb-1">
+                    CI/CD & Linting
+                  </strong>
+                  <span className="text-gray-600 dark:text-gray-400">
                     Automatische Quality Gates (ESLint, Prettier) bei jedem Commit, um Fehler an der
                     Quelle zu stoppen.
                   </span>
@@ -222,8 +234,8 @@ export default function AboutPage() {
           </section>
 
           {/* Zero-Defect Principle Section */}
-          <section className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl border border-pink-100 p-8 sm:p-10">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <section className="bg-gradient-to-br from-pink-50 to-purple-50 dark:from-gray-800 dark:to-gray-800 rounded-2xl border border-pink-100 dark:border-gray-700 p-8 sm:p-10">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-3">
               <svg
                 className="w-6 h-6 text-pink-600"
                 fill="none"
@@ -240,7 +252,7 @@ export default function AboutPage() {
               </svg>
               Das Zero-Defect Prinzip in der Praxis
             </h2>
-            <p className="text-gray-700 leading-relaxed mb-6 text-lg">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-lg">
               Unser Ansatz ist keine leere Marketing-Phrase, sondern gelebter Standard:
             </p>
             <ul className="grid sm:grid-cols-2 gap-4">
@@ -252,10 +264,10 @@ export default function AboutPage() {
               ].map((item, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-3 bg-white/60 p-4 rounded-xl border border-pink-100/50"
+                  className="flex items-start gap-3 bg-white/60 dark:bg-gray-700/60 p-4 rounded-xl border border-pink-100/50 dark:border-gray-600"
                 >
                   <svg
-                    className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"
+                    className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -268,7 +280,7 @@ export default function AboutPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="text-gray-800 font-medium">{item}</span>
+                  <span className="text-gray-800 dark:text-gray-200 font-medium">{item}</span>
                 </li>
               ))}
             </ul>
@@ -276,14 +288,14 @@ export default function AboutPage() {
 
           {/* CTA Section */}
           <section className="text-center pt-8 pb-4">
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
               Überzeugt von diesem Ansatz? Erlebe das Ergebnis live.
             </p>
             <Link
               href="/"
-              className="inline-flex items-center justify-center px-8 py-4 bg-gray-900 hover:bg-gray-800 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex items-center justify-center px-8 py-4 bg-gray-900 dark:bg-gray-700 hover:bg-gray-800 dark:hover:bg-gray-600 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
             >
-              Zurück zum Kiosk Lollipop
+              Zurück zu {brand.name}
               <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -299,5 +311,3 @@ export default function AboutPage() {
     </div>
   );
 }
-
-
