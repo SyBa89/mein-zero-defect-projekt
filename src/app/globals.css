@@ -2,67 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Skip-Link Accessibility (CSS-only mit !important) */
-/* MUSS außerhalb der @layer sein damit Tailwind es nicht überschreibt */
-a.skip-link {
-  position: absolute !important;
-  top: -100px !important;
-  left: 6px !important;
-  background: #db2777 !important;
-  color: white !important;
-  padding: 12px 24px !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  font-size: 14px !important;
-  z-index: 9999 !important;
-  text-decoration: none !important;
-  box-shadow: 0 4px 12px rgba(219, 39, 119, 0.4) !important;
-  transition: top 0.25s ease-in-out, box-shadow 0.2s ease !important;
-  white-space: nowrap !important;
-}
-
-a.skip-link:focus {
-  top: 12px !important;
-  outline: 3px solid white !important;
-  outline-offset: 2px !important;
-  box-shadow: 0 6px 20px rgba(219, 39, 119, 0.6) !important;
-}
+/* ═══════════════════════════════════════════════════════════════════════
+   ✅ ZERO-DEFECT THEME SYSTEM - Dynamische Farben aus CLIENT_CONFIG
+   ═══════════════════════════════════════════════════════════════════════ */
 
 @layer base {
   :root {
-    --background: 250 251 253;
-    --foreground: 15 23 42;
-    --card: 255 255 255;
-    --card-foreground: 15 23 42;
-    --primary: 236 72 153;
-    --primary-foreground: 255 255 255;
-    --secondary: 139 92 246;
-    --secondary-foreground: 255 255 255;
-    --muted: 241 245 249;
-    --muted-foreground: 71 85 105;
-    --accent: 251 191 36;
-    --accent-foreground: 15 23 42;
-    --border: 226 232 240;
-    --ring: 236 72 153;
+    /* ── Core Colors (werden von ThemeProvider überschrieben) ── */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    
+    /* ── Theme Colors (Standard: Pink - wird dynamisch gesetzt) ── */
+    --primary: 330 81% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 263 70% 58%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 45 93% 47%;
+    --accent-foreground: 222.2 84% 4.9%;
+    
+    /* ── Utility Colors ── */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --border: 214.3 31.8% 91.4%;
+    --ring: 330 81% 60%;
     --radius: 0.75rem;
+    
+    /* ── Theme Meta ── */
+    --theme-color: #ec4899;
   }
 
-  /* DARK MODE - CSS Variables überschreiben */
   .dark {
-    --background: 17 24 39;
-    --foreground: 243 244 246;
-    --card: 31 41 55;
-    --card-foreground: 243 244 246;
-    --primary: 236 72 153;
-    --primary-foreground: 255 255 255;
-    --secondary: 139 92 246;
-    --secondary-foreground: 255 255 255;
-    --muted: 55 65 81;
-    --muted-foreground: 156 163 175;
-    --accent: 251 191 36;
-    --accent-foreground: 17 24 39;
-    --border: 55 65 81;
-    --ring: 236 72 153;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    
+    --primary: 330 81% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 263 70% 58%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 45 93% 47%;
+    --accent-foreground: 210 40% 98%;
+    
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --border: 217.2 32.6% 17.5%;
+    --ring: 330 81% 60%;
   }
 
   * {
@@ -70,7 +57,7 @@ a.skip-link:focus {
   }
 
   body {
-    @apply bg-[rgb(var(--background))] text-[rgb(var(--foreground))] antialiased;
+    @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
@@ -79,35 +66,35 @@ a.skip-link:focus {
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary;
+    @apply outline-2 outline-offset-2 outline-ring;
   }
 }
 
 @layer components {
   .card {
-    @apply bg-[rgb(var(--card))] text-[rgb(var(--card-foreground))] rounded-xl shadow-sm border border-[rgb(var(--border))];
+    @apply bg-card text-card-foreground rounded-xl shadow-sm border border-border;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--ring))] disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
   }
 
   .btn-primary {
-    @apply btn bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] hover:bg-[rgb(var(--primary))]/90 shadow-md hover:shadow-lg;
+    @apply btn bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg;
   }
 
   .btn-secondary {
-    @apply btn bg-[rgb(var(--secondary))] text-[rgb(var(--secondary-foreground))] hover:bg-[rgb(var(--secondary))]/90;
+    @apply btn bg-secondary text-secondary-foreground hover:bg-secondary/90;
   }
 
   .btn-ghost {
-    @apply btn hover:bg-[rgb(var(--muted))] text-[rgb(var(--foreground))];
+    @apply btn hover:bg-muted text-foreground;
   }
 }
 
 @layer utilities {
   .gradient-text {
-    @apply bg-gradient-to-r from-[rgb(var(--primary))] to-[rgb(var(--secondary))] bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
   }
 
   .glass {
@@ -115,18 +102,39 @@ a.skip-link:focus {
   }
 }
 
-/* WCAG-AA-CONTRAST-OVERRIDES */
-.text-gray-400 {
-  color: #6b7280 !important;
+/* ═══════════════════════════════════════════════════════════════════════
+   ✅ SKIP-LINK ACCESSIBILITY (WCAG-konform, theme-aware)
+   ═══════════════════════════════════════════════════════════════════════ */
+a.skip-link {
+  position: absolute !important;
+  top: -100px !important;
+  left: 6px !important;
+  background: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  padding: 12px 24px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  z-index: 9999 !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.4) !important;
+  transition: top 0.25s ease-in-out, box-shadow 0.2s ease !important;
+  white-space: nowrap !important;
 }
 
-.text-gray-500 {
-  color: #4b5563 !important;
+a.skip-link:focus {
+  top: 12px !important;
+  outline: 3px solid white !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 6px 20px hsl(var(--primary) / 0.6) !important;
 }
 
-.text-gray-600 {
-  color: #374151 !important;
-}
+/* ═══════════════════════════════════════════════════════════════════════
+   ✅ WCAG-AA CONTRAST OVERRIDES (Theme-aware)
+   ═══════════════════════════════════════════════════════════════════════ */
+.text-gray-400 { color: #6b7280 !important; }
+.text-gray-500 { color: #4b5563 !important; }
+.text-gray-600 { color: #374151 !important; }
 
 footer .text-gray-400,
 footer .text-gray-500,
@@ -147,7 +155,7 @@ a.text-gray-600 {
 
 a.text-gray-500:hover,
 a.text-gray-600:hover {
-  color: #db2777 !important;
+  color: hsl(var(--primary)) !important;
 }
 
 .disabled,
@@ -156,7 +164,9 @@ a.text-gray-600:hover {
   opacity: 0.7 !important;
 }
 
-/* Reduced Motion Support */
+/* ═══════════════════════════════════════════════════════════════════════
+   ✅ REDUCED MOTION SUPPORT (Accessibility)
+   ═══════════════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -167,461 +177,10 @@ a.text-gray-600:hover {
     scroll-behavior: auto !important;
   }
 }
-/* ═══════════════════════════════════════════════════════════════ */
-/* DARK MODE SECTION OVERRIDES                                      */
-/* Automatische Dark-Mode-Anpassung für alle Homepage-Sections       */
-/* ═══════════════════════════════════════════════════════════════ */
 
-/* Hero Section Background */
-.dark .bg-gradient-to-br {
-  background-image: linear-gradient(to bottom right, rgb(17, 24, 39), rgb(31, 41, 55), rgb(17, 24, 39)) !important;
-}
-
-/* Cards & Containers */
-.dark .bg-white {
-  background-color: rgb(31, 41, 55) !important;
-}
-
-.dark .bg-gray-50 {
-  background-color: rgb(17, 24, 39) !important;
-}
-
-.dark .bg-gray-100 {
-  background-color: rgb(31, 41, 55) !important;
-}
-
-.dark .border-gray-200 {
-  border-color: rgb(55, 65, 81) !important;
-}
-
-.dark .border-gray-100 {
-  border-color: rgb(55, 65, 81) !important;
-}
-
-/* Text Colors */
-.dark .text-gray-900 {
-  color: rgb(243, 244, 246) !important;
-}
-
-.dark .text-gray-700 {
-  color: rgb(209, 213, 219) !important;
-}
-
-.dark .text-gray-800 {
-  color: rgb(229, 231, 235) !important;
-}
-
-/* Brand colors preserved - no changes needed in dark mode */
-
-/* Opening Hours Section */
-.dark .bg-pink-50 {
-  background-color: rgb(55, 65, 81) !important;
-}
-
-/* Reviews Cards */
-.dark .shadow-sm,
-.dark .shadow-md,
-.dark .shadow-lg {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* FAQ Section */
-.dark details {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(55, 65, 81) !important;
-}
-
-.dark details[open] {
-  background-color: rgb(55, 65, 81) !important;
-}
-
-/* Footer */
-.dark footer {
-  background-color: rgb(17, 24, 39) !important;
-  border-color: rgb(55, 65, 81) !important;
-}
-
-/* Forms & Inputs */
-.dark input,
-.dark textarea,
-.dark select {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(75, 85, 99) !important;
-  color: rgb(243, 244, 246) !important;
-}
-
-.dark input::placeholder,
-.dark textarea::placeholder {
-  color: rgb(156, 163, 175) !important;
-}
-
-/* Backdrop Blur */
-.dark .backdrop-blur-md {
-  background-color: rgba(17, 24, 39, 0.95) !important;
-}
-
-/* Smooth Transitions for Theme Switch */
-.dark * {
-  transition-property: background-color, border-color, color;
-  transition-duration: 300ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-/* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════ */
-/* MICRO-INTERACTIONS - Apple-Level Premium Effects                */
-/* Hover Lift, Button Press, Glow Effects, Smooth Animations       */
-/* ═══════════════════════════════════════════════════════════════ */
-
-/* Hover Lift Effect - Cards heben sich 4px */
-.hover-lift {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-}
-
-/* Button Press Feedback - Scale 0.98 on click */
-.button-press {
-  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.button-press:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Glow Effect - Pink/Purple Shadow on hover */
-.glow-hover {
-  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glow-hover:hover {
-  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.4);
-}
-
-.glow-hover-purple:hover {
-  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
-}
-
-/* Smooth Fade-In Animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Staggered Animation Delays */
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-
-/* Loading Skeleton Pulse */
-@keyframes skeleton-pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.skeleton {
-  animation: skeleton-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  background: linear-gradient(
-    90deg,
-    rgb(243, 244, 246) 0%,
-    rgb(229, 231, 235) 50%,
-    rgb(243, 244, 246) 100%
-  );
-  background-size: 200% 100%;
-}
-
-.dark .skeleton {
-  background: linear-gradient(
-    90deg,
-    rgb(31, 41, 55) 0%,
-    rgb(55, 65, 81) 50%,
-    rgb(31, 41, 55) 100%
-  );
-  background-size: 200% 100%;
-}
-
-/* Smooth Image Hover Zoom */
-.image-zoom {
-  overflow: hidden;
-}
-
-.image-zoom img {
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.image-zoom:hover img {
-  transform: scale(1.05);
-}
-
-/* Underline Animation for Links */
-.link-underline {
-  position: relative;
-  text-decoration: none;
-}
-
-.link-underline::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, rgb(236, 72, 153), rgb(168, 85, 247));
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.link-underline:hover::after {
-  width: 100%;
-}
-
-/* Reduced Motion - Accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .hover-lift,
-  .button-press,
-  .glow-hover,
-  .animate-fade-in-up,
-  .skeleton,
-  .image-zoom img,
-  .link-underline::after {
-    animation: none !important;
-    transition: none !important;
-  }
-  
-  .hover-lift:hover {
-    transform: none;
-  }
-  
-  .button-press:active {
-    transform: none;
-  }
-  
-  .image-zoom:hover img {
-    transform: none;
-  }
-}
-/* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════ */
-/* TOAST SLIDE-UP ANIMATION                                         */
-/* ═══════════════════════════════════════════════════════════════ */
-
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-/* ═══════════════════════════════════════════════════════════════ */
-/* Admin Input Fields */
-.dark input[type="text"],
-.dark input[type="number"],
-.dark input[type="email"],
-.dark input[type="password"],
-.dark input[type="tel"],
-.dark input[type="url"],
-.dark textarea {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(75, 85, 99) !important;
-  color: rgb(243, 244, 246) !important;
-}
-
-.dark input[type="text"]::placeholder,
-.dark input[type="number"]::placeholder,
-.dark input[type="email"]::placeholder,
-.dark input[type="password"]::placeholder,
-.dark input[type="tel"]::placeholder,
-.dark input[type="url"]::placeholder,
-.dark textarea::placeholder {
-  color: rgb(156, 163, 175) !important;
-}
-
-/* Admin Input Focus State */
-.dark input:focus,
-.dark textarea:focus,
-.dark select:focus {
-  outline-color: rgb(236, 72, 153) !important;
-  border-color: rgb(236, 72, 153) !important;
-  background-color: rgb(17, 24, 39) !important;
-}
-
-/* Admin Checkboxes */
-.dark input[type="checkbox"] {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(75, 85, 99) !important;
-}
-
-.dark input[type="checkbox"]:checked {
-  background-color: rgb(236, 72, 153) !important;
-  border-color: rgb(236, 72, 153) !important;
-}
-
-/* Admin Labels */
-.dark label {
-  color: rgb(229, 231, 235) !important;
-}
-
-/* Admin Fieldset/Card backgrounds */
-.dark fieldset,
-.dark .admin-card,
-.dark .admin-section {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(55, 65, 81) !important;
-}
-/* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════ */
-/* FEATURES SECTION DARK MODE FIX                                   */
-/* Weiß-auf-Weiß Problem beheben (z.B. "Warum Kunden zu uns kommen") */
-/* ═══════════════════════════════════════════════════════════════ */
-
-/* Text-white im Dark Mode: stattdessen hellgrau für bessere Lesbarkeit */
-.dark .text-white {
-  color: rgb(243, 244, 246) !important;
-}
-
-/* Aber Brand-Buttons sollen weiß bleiben (Pink/Purple Background) */
-.dark .bg-gradient-to-r.from-pink-600.to-purple-600 .text-white,
-.dark .bg-pink-600 .text-white,
-.dark .bg-purple-600 .text-white,
-.dark button.text-white,
-.dark a.text-white[href^="tel"],
-.dark a.text-white[href^="/kontakt"] {
-  color: rgb(255, 255, 255) !important;
-}
-
-/* Feature Cards im Dark Mode - Text soll lesbar sein */
-.dark .bg-white .text-gray-900 {
-  color: rgb(243, 244, 246) !important;
-}
-
-.dark .bg-white .text-gray-700,
-.dark .bg-white .text-gray-600 {
-  color: rgb(209, 213, 219) !important;
-}
-
-/* Spezifisch: "Warum Kunden zu uns kommen" Section */
-.dark section .text-gray-900 {
-  color: rgb(243, 244, 246) !important;
-}
-
-.dark section .text-gray-700 {
-  color: rgb(209, 213, 219) !important;
-}
-
-.dark section .text-gray-600 {
-  color: rgb(156, 163, 175) !important;
-}
-
-/* Card-like Containers im Dark Mode */
-.dark .bg-white.rounded-xl,
-.dark .bg-white.rounded-2xl,
-.dark .bg-white.p-6,
-.dark .bg-white.p-8 {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(55, 65, 81) !important;
-}
-/* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════ */
-/* ADMIN-COCKPIT DARK MODE OVERRIDES v2 - ROBUST                    */
-/* Alle Input-Felder, Textareas, Selects für Admin + Public Forms   */
-/* ═══════════════════════════════════════════════════════════════ */
-
-/* ALLE Input Types im Dark Mode */
-.dark input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
-.dark textarea,
-.dark select {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(75, 85, 99) !important;
-  color: rgb(243, 244, 246) !important;
-}
-
-.dark input::placeholder,
-.dark textarea::placeholder {
-  color: rgb(156, 163, 175) !important;
-  opacity: 1 !important;
-}
-
-/* Input Focus States */
-.dark input:focus,
-.dark textarea:focus,
-.dark select:focus {
-  outline-color: rgb(236, 72, 153) !important;
-  border-color: rgb(236, 72, 153) !important;
-  background-color: rgb(17, 24, 39) !important;
-}
-
-/* Checkbox Styling */
-.dark input[type="checkbox"] {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(75, 85, 99) !important;
-  accent-color: rgb(236, 72, 153) !important;
-}
-
-.dark input[type="checkbox"]:checked {
-  background-color: rgb(236, 72, 153) !important;
-  border-color: rgb(236, 72, 153) !important;
-}
-
-/* Radio Buttons */
-.dark input[type="radio"] {
-  accent-color: rgb(236, 72, 153) !important;
-}
-
-/* Labels im Dark Mode */
-.dark label {
-  color: rgb(229, 231, 235) !important;
-}
-
-/* Help text / small descriptions */
-.dark .text-gray-500,
-.dark .text-gray-600 {
-  color: rgb(156, 163, 175) !important;
-}
-
-/* Fieldsets + Admin Cards */
-.dark fieldset,
-.dark .admin-card,
-.dark .admin-section,
-.dark [class*="admin"] {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(55, 65, 81) !important;
-}
-
-/* Save Button in Admin */
-.dark button[type="submit"],
-.dark .bg-gradient-to-r.from-pink-600.to-purple-600 {
-  background: linear-gradient(to right, rgb(236, 72, 153), rgb(147, 51, 234)) !important;
-  color: rgb(255, 255, 255) !important;
-}
-/* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════ */
-/* UNIVERSAL DARK MODE CONTRAST FIX v4 - FINAL (Admin-Link bleibt) */
-/* Behebt ALLE Weiß-auf-Weiß Probleme global                        */
-/* ═══════════════════════════════════════════════════════════════ */
-
-/* ── FEATURE CARDS (Warum Kunden zu uns kommen) ── */
+/* ═══════════════════════════════════════════════════════════════════════
+   ✅ DARK MODE FIXES (Theme-aware)
+   ═══════════════════════════════════════════════════════════════════════ */
 .dark .bg-white.shadow-md,
 .dark .bg-white.shadow-lg,
 .dark .bg-white.shadow-xl,
@@ -637,7 +196,6 @@ a.text-gray-600:hover {
   color: rgb(243, 244, 246) !important;
 }
 
-/* Feature Card Texte (alle Grautöne lesbar machen) */
 .dark .bg-white h1,
 .dark .bg-white h2,
 .dark .bg-white h3,
@@ -654,14 +212,12 @@ a.text-gray-600:hover {
   color: rgb(229, 231, 235) !important;
 }
 
-/* Icons in Feature Cards */
 .dark .bg-white .text-4xl,
 .dark .bg-white .text-5xl,
 .dark .bg-white .text-6xl {
-  filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.4));
+  filter: drop-shadow(0 0 8px hsl(var(--primary) / 0.4));
 }
 
-/* ── ÖFFNUNGSZEITEN SECTION ── */
 .dark .bg-pink-50,
 .dark .bg-purple-50,
 .dark .bg-blue-50,
@@ -671,7 +227,6 @@ a.text-gray-600:hover {
   border-color: rgb(55, 65, 81) !important;
 }
 
-/* "(heute)" Badge - besser lesbar */
 .dark .text-xs,
 .dark .text-sm,
 .dark .text-gray-500,
@@ -679,16 +234,14 @@ a.text-gray-600:hover {
   color: rgb(209, 213, 219) !important;
 }
 
-/* Heutiger Tag hervorgehoben */
 .dark .bg-pink-100,
 .dark .bg-pink-200,
 .dark [class*="today"],
 .dark [class*="heute"] {
-  background-color: rgb(236, 72, 153) !important;
+  background-color: hsl(var(--primary)) !important;
   color: rgb(255, 255, 255) !important;
 }
 
-/* ── ADMIN LOGIN PAGE (Debug-Text sichtbar machen) ── */
 .dark .text-gray-300,
 .dark .text-gray-200,
 .dark [class*="debug"],
@@ -696,7 +249,6 @@ a.text-gray-600:hover {
   color: rgb(229, 231, 235) !important;
 }
 
-/* Admin Login Buttons sichtbar */
 .dark button[disabled],
 .dark .bg-gray-300,
 .dark .bg-gray-400 {
@@ -705,7 +257,6 @@ a.text-gray-600:hover {
   border-color: rgb(107, 114, 128) !important;
 }
 
-/* ── ADMIN COCKPIT - Inputs UND Container ── */
 .dark .admin-card,
 .dark .admin-section,
 .dark [class*="jackpot"],
@@ -719,7 +270,6 @@ a.text-gray-600:hover {
   color: rgb(243, 244, 246) !important;
 }
 
-/* ── FOOTER LINKS (ALLE sichtbar machen, Admin-Link BLEIBT!) ── */
 .dark footer a,
 .dark footer .text-gray-400,
 .dark footer .text-gray-500,
@@ -730,14 +280,13 @@ a.text-gray-600:hover {
 }
 
 .dark footer a:hover {
-  color: rgb(236, 72, 153) !important;
+  color: hsl(var(--primary)) !important;
   text-decoration: underline !important;
 }
 
-/* Admin-Link im Footer - SPEZIELL SICHTBAR (bleibt erhalten!) */
 .dark footer a[href*="admin"],
 .dark footer a[href="/admin"] {
-  color: rgb(251, 191, 36) !important; /* Amber/Gold - deutlich sichtbar */
+  color: rgb(251, 191, 36) !important;
   font-weight: 600 !important;
   background-color: rgba(251, 191, 36, 0.1) !important;
   padding: 4px 8px !important;
@@ -752,31 +301,21 @@ a.text-gray-600:hover {
   border-color: rgba(251, 191, 36, 0.5) !important;
 }
 
-/* Schloss-Icon beim Admin-Link sichtbar */
 .dark footer a[href*="admin"] svg,
 .dark footer a[href="/admin"] svg {
   color: rgb(251, 191, 36) !important;
   fill: currentColor !important;
 }
 
-/* Footer andere Icons sichtbar */
 .dark footer svg {
   color: rgb(229, 231, 235) !important;
   fill: currentColor !important;
 }
 
-/* Admin-Link Icon Override (damit es amber bleibt) */
-.dark footer a[href*="admin"] svg,
-.dark footer a[href="/admin"] svg {
-  color: rgb(251, 191, 36) !important;
-}
-
-/* ── UNIVERSAL: Alle bg-white Elemente die nicht Buttons sind ── */
 .dark *:not(button):not(a):not(input):not(textarea):not(select).bg-white {
   background-color: rgb(31, 41, 55) !important;
 }
 
-/* ── UNIVERSAL: Alle text-white Elemente auf hellem Background ── */
 .dark .bg-white .text-white,
 .dark .bg-gray-50 .text-white,
 .dark .bg-pink-50 .text-white,
@@ -784,12 +323,10 @@ a.text-gray-600:hover {
   color: rgb(243, 244, 246) !important;
 }
 
-/* ── SECTION TITLES (h1, h2, h3) immer sichtbar ── */
 .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
   color: rgb(243, 244, 246) !important;
 }
 
-/* ── SECTION BACKGROUNDS ── */
 .dark section.bg-white,
 .dark section.bg-gray-50,
 .dark div.bg-white,
@@ -797,20 +334,15 @@ a.text-gray-600:hover {
   background-color: rgb(17, 24, 39) !important;
 }
 
-/* ── GRADIENT BACKGROUNDS bleiben sichtbar ── */
-/* ── EXCEPTION: Buttons mit bg-white sollen weiß bleiben ── */
 .dark button.bg-white,
 .dark a.bg-white:not([href*="admin"]) {
   background-color: rgb(255, 255, 255) !important;
   color: rgb(17, 24, 39) !important;
 }
-/* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════ */
-/* MAXIMUM PERFEKTION FOUNDATION LAYER v1                           */
-/* Global Transitions + Shadow Hierarchy + Focus States              */
-/* ═══════════════════════════════════════════════════════════════ */
 
-/* ── GLOBAL SMOOTH TRANSITIONS (alle interaktiven Elemente) ── */
+/* ═══════════════════════════════════════════════════════════════════════
+   ✅ GLOBAL SMOOTH TRANSITIONS (Theme-aware)
+   ═══════════════════════════════════════════════════════════════════════ */
 a, button, input, textarea, select,
 .transition-all, [class*="hover:"], [class*="focus:"] {
   transition-property: color, background-color, border-color, 
@@ -820,7 +352,6 @@ a, button, input, textarea, select,
   transition-duration: 200ms;
 }
 
-/* ── BUTTON PRESS FEEDBACK (scale on active) ── */
 button:not(:disabled):active,
 a.button:active,
 .button-press:active {
@@ -828,7 +359,6 @@ a.button:active,
   transition-duration: 100ms;
 }
 
-/* ── SHADOW HIERARCHY (konsistent für Light + Dark) ── */
 .shadow-xs {
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.03);
 }
@@ -847,7 +377,6 @@ a.button:active,
               0 1px 2px -1px rgb(0 0 0 / 0.2);
 }
 
-/* ── HOVER ELEVATION (Cards heben sich beim Hover) ── */
 .hover-lift-sm:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px -2px rgb(0 0 0 / 0.08), 
@@ -870,41 +399,35 @@ a.button:active,
               0 4px 8px -4px rgb(0 0 0 / 0.4);
 }
 
-/* ── FOCUS RINGS (Pink Accent - Brand Color) ── */
 *:focus-visible {
-  outline: 2px solid rgb(236 72 153 / 0.5);
+  outline: 2px solid hsl(var(--primary) / 0.5);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 .dark *:focus-visible {
-  outline: 2px solid rgb(236 72 153 / 0.6);
+  outline: 2px solid hsl(var(--primary) / 0.6);
 }
 
-/* ── SMOOTH SCROLL (aber respektiert prefers-reduced-motion) ── */
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
   }
 }
 
-/* ── SELECTION STYLING (Brand Colors) ── */
 ::selection {
-  background-color: rgb(236 72 153 / 0.2);
+  background-color: hsl(var(--primary) / 0.2);
   color: rgb(15 23 42);
 }
 
 .dark ::selection {
-  background-color: rgb(236 72 153 / 0.3);
+  background-color: hsl(var(--primary) / 0.3);
   color: rgb(243 244 246);
 }
-/* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════ */
-/* MAXIMUM PERFEKTION TYPOGRAPHY LAYER v1                           */
-/* Verbesserte Heading-Hierarchie + Line-Height + Spacing            */
-/* ═══════════════════════════════════════════════════════════════ */
 
-/* ── HEADING HIERARCHY (Letter-Spacing + Weight) ── */
+/* ═══════════════════════════════════════════════════════════════════════
+   ✅ TYPOGRAPHY & SPACING
+   ═══════════════════════════════════════════════════════════════════════ */
 h1, .h1 {
   letter-spacing: -0.025em;
   line-height: 1.1;
@@ -929,13 +452,11 @@ h4, .h4 {
   font-weight: 600;
 }
 
-/* ── BODY TEXT OPTIMIZATION (Lesbarkeit) ── */
 p, .prose {
   line-height: 1.7;
   letter-spacing: 0.005em;
 }
 
-/* ── SECTION SPACING (konsistent) ── */
 .section-spacing {
   padding-top: 4rem;
   padding-bottom: 4rem;
@@ -955,47 +476,20 @@ p, .prose {
   }
 }
 
-/* ── RESPONSIVE TYPOGRAPHY (fluid sizes mit clamp) ── */
-.text-fluid-sm {
-  font-size: clamp(0.875rem, 0.8rem + 0.2vw, 1rem);
-}
+.text-fluid-sm { font-size: clamp(0.875rem, 0.8rem + 0.2vw, 1rem); }
+.text-fluid-base { font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); }
+.text-fluid-lg { font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); }
+.text-fluid-xl { font-size: clamp(1.5rem, 1.25rem + 1vw, 2.25rem); }
+.text-fluid-2xl { font-size: clamp(2rem, 1.5rem + 2vw, 3rem); }
+.text-fluid-3xl { font-size: clamp(2.5rem, 2rem + 3vw, 4rem); }
 
-.text-fluid-base {
-  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-}
-
-.text-fluid-lg {
-  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem);
-}
-
-.text-fluid-xl {
-  font-size: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
-}
-
-.text-fluid-2xl {
-  font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
-}
-
-.text-fluid-3xl {
-  font-size: clamp(2.5rem, 2rem + 3vw, 4rem);
-}
-
-/* ── PARAGRAPH SPACING (bessere Lesbarkeit) ── */
-.prose p + p {
-  margin-top: 1.25em;
-}
-
+.prose p + p { margin-top: 1.25em; }
 .prose h2 + p,
-.prose h3 + p {
-  margin-top: 0.75em;
-}
-/* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════ */
-/* MAXIMUM PERFEKTION PREMIUM DETAILS v1                            */
-/* Glassmorphism + Gradient Borders + Scroll Animations              */
-/* ═══════════════════════════════════════════════════════════════ */
+.prose h3 + p { margin-top: 0.75em; }
 
-/* ── GLASSMORPHISM CARDS (subtle, nicht übertrieben) ── */
+/* ═══════════════════════════════════════════════════════════════════════
+   ✅ GLASSMORPHISM & EFFECTS (Theme-aware)
+   ═══════════════════════════════════════════════════════════════════════ */
 .glass-card {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
@@ -1010,7 +504,6 @@ p, .prose {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
-/* ── GRADIENT BORDERS (für CTAs und Special Cards) ── */
 .gradient-border {
   position: relative;
   background: white;
@@ -1023,7 +516,7 @@ p, .prose {
   inset: 0;
   padding: 2px;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgb(236 72 153), rgb(168 85 247));
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -1035,7 +528,6 @@ p, .prose {
   background: rgb(31, 41, 55);
 }
 
-/* ── SCROLL REVEAL ANIMATIONS (fade-in on scroll) ── */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -1058,7 +550,6 @@ p, .prose {
   transform: translateY(0);
 }
 
-/* ── SUBTLE BACKGROUND PATTERNS (Dots/Grid) ── */
 .bg-dots {
   background-image: radial-gradient(circle, rgb(226 232 240 / 0.5) 1px, transparent 1px);
   background-size: 24px 24px;
@@ -1081,13 +572,12 @@ p, .prose {
     linear-gradient(90deg, rgb(71 85 105 / 0.2) 1px, transparent 1px);
 }
 
-/* ── ANIMATED GRADIENT TEXT (für Hero Headlines) ── */
 .gradient-text-animated {
   background: linear-gradient(
     90deg,
-    rgb(236 72 153),
-    rgb(168 85 247),
-    rgb(236 72 153)
+    hsl(var(--primary)),
+    hsl(var(--secondary)),
+    hsl(var(--primary))
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -1097,15 +587,10 @@ p, .prose {
 }
 
 @keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% center;
-  }
-  50% {
-    background-position: 100% center;
-  }
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
 }
 
-/* ── PULSE GLOW (für CTAs) ── */
 .pulse-glow {
   position: relative;
 }
@@ -1115,7 +600,7 @@ p, .prose {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgb(236 72 153), rgb(168 85 247));
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
   opacity: 0;
   filter: blur(20px);
   transition: opacity 0.3s ease;
@@ -1126,7 +611,6 @@ p, .prose {
   opacity: 0.4;
 }
 
-/* ── SMOOTH PAGE TRANSITIONS ── */
 .page-enter {
   animation: pageEnter 0.4s ease-out;
 }
@@ -1142,62 +626,52 @@ p, .prose {
   }
 }
 
-/* ── CARD HOVER GLOW (subtle brand color glow) ── */
 .card-glow {
   position: relative;
   transition: box-shadow 0.3s ease;
 }
 
 .card-glow:hover {
-  box-shadow: 0 0 40px -10px rgb(236 72 153 / 0.2);
+  box-shadow: 0 0 40px -10px hsl(var(--primary) / 0.2);
 }
 
 .dark .card-glow:hover {
-  box-shadow: 0 0 40px -10px rgb(236 72 153 / 0.3);
+  box-shadow: 0 0 40px -10px hsl(var(--primary) / 0.3);
 }
-/* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════ */
-/* KONTRAST-RESCUE THEME SYSTEM v1                                  */
-/* CSS Custom Properties für konsistente Light/Dark Mode Farben      */
-/* Löst Phantom-Links + Font-Weight + Badge-Kontraste                */
-/* ═══════════════════════════════════════════════════════════════ */
 
-/* ── LIGHT MODE (Default) ── */
+/* ═══════════════════════════════════════════════════════════════════════
+   ✅ FOOTER & ADMIN STYLING (Theme-aware)
+   ═══════════════════════════════════════════════════════════════════════ */
 :root {
-  /* Footer Colors - Light Mode: Dunkler Footer bleibt dunkel für Kontrast */
   --footer-bg: #111827;
   --footer-text: #F9FAFB;
   --footer-link: #E5E7EB;
-  --footer-link-hover: #EC4899;
+  --footer-link-hover: hsl(var(--primary));
   --footer-admin-link: #FCD34D;
   --footer-admin-bg: rgba(252, 211, 77, 0.1);
   --footer-admin-border: rgba(252, 211, 77, 0.3);
   
-  /* Typography - Lesbarkeit maximiert */
   --text-primary: #111827;
   --text-secondary: #374151;
   --text-muted: #6B7280;
   --font-weight-body: 450;
   --font-weight-light: 400;
   
-  /* Badges */
   --badge-success-bg: #10B981;
   --badge-success-text: #FFFFFF;
   --badge-success-border: #047857;
   
-  /* Admin Cockpit */
   --admin-input-bg: #FFFFFF;
   --admin-input-text: #111827;
   --admin-input-border: #D1D5DB;
   --admin-input-placeholder: #6B7280;
 }
 
-/* ── DARK MODE ── */
 .dark {
   --footer-bg: #000000;
   --footer-text: #F9FAFB;
   --footer-link: #D1D5DB;
-  --footer-link-hover: #F472B6;
+  --footer-link-hover: hsl(var(--primary));
   --footer-admin-link: #FCD34D;
   --footer-admin-bg: rgba(252, 211, 77, 0.15);
   --footer-admin-border: rgba(252, 211, 77, 0.4);
@@ -1218,7 +692,6 @@ p, .prose {
   --admin-input-placeholder: #9CA3AF;
 }
 
-/* ── FIX 1: FOOTER LINKS - Keine Phantom-Links mehr! ── */
 footer,
 footer * {
   color: var(--footer-text) !important;
@@ -1234,7 +707,6 @@ footer a:hover {
   color: var(--footer-link-hover) !important;
 }
 
-/* Admin-Link im Footer - speziell gestylt (sichtbar in beiden Modi) */
 footer a[href*="admin"],
 footer a[href="/admin"] {
   color: var(--footer-admin-link) !important;
@@ -1255,17 +727,14 @@ footer a[href="/admin"] svg {
   color: var(--footer-admin-link) !important;
 }
 
-/* Footer Background - konsistent dunkel in beiden Modi (für Kontrast) */
 footer {
   background-color: var(--footer-bg) !important;
 }
 
-/* ── FIX 2: FONT-WEIGHT - Lesbarkeit maximiert ── */
 body {
   font-weight: var(--font-weight-body) !important;
 }
 
-/* USP-Liste und Feature-Beschreibungen - niemals zu dünn */
 p,
 .prose p,
 .feature-description,
@@ -1274,36 +743,31 @@ p,
   color: var(--text-primary);
 }
 
-/* Disclaimer - NICHT mehr italic, dafür halbfett + größer */
 .disclaimer,
 .text-xs.italic,
 [class*="disclaimer"] {
   font-style: normal !important;
   font-weight: 500 !important;
-  font-size: 0.875rem !important; /* 14px statt 12px */
+  font-size: 0.875rem !important;
   line-height: 1.5 !important;
   color: var(--text-secondary) !important;
 }
 
-/* Kleine Hilfetexte - lesbar in beiden Modi */
 .text-sm,
 .text-xs {
   color: var(--text-secondary) !important;
 }
 
-/* Muted text - aber immer noch lesbar */
 .text-gray-500,
 .text-gray-600 {
   color: var(--text-muted) !important;
 }
 
-/* Überschriften - kräftig für bessere Hierarchie */
 h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary) !important;
   font-weight: 700 !important;
 }
 
-/* ── FIX 3: ÖFFNUNGSZEITEN BADGE - Border für Sichtbarkeit ── */
 .badge-success,
 .bg-green-500,
 .bg-green-600,
@@ -1319,7 +783,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600 !important;
 }
 
-/* Spezifisch für "Heute geöffnet" Badge mit Checkmark */
 .badge-success svg,
 .bg-green-500 svg,
 .bg-green-600 svg {
@@ -1327,7 +790,6 @@ h1, h2, h3, h4, h5, h6 {
   fill: currentColor !important;
 }
 
-/* ── FIX 4: ADMIN COCKPIT INPUTS - Keine weißen Platzhalter ── */
 input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
 textarea,
 select {
@@ -1342,22 +804,19 @@ textarea::placeholder {
   opacity: 1 !important;
 }
 
-/* Input Focus States - konsistent */
 input:focus,
 textarea:focus,
 select:focus {
-  outline-color: rgb(236 72 153) !important;
-  border-color: rgb(236 72 153) !important;
-  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+  outline-color: hsl(var(--primary)) !important;
+  border-color: hsl(var(--primary)) !important;
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1) !important;
 }
 
-/* Labels - immer lesbar */
 label {
   color: var(--text-primary) !important;
   font-weight: 500 !important;
 }
 
-/* ── ZEBRA-STREIFEN TABELLE (Öffnungszeiten) ── */
 .opening-hours-table tr:nth-child(even),
 table tr:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.02) !important;
@@ -1368,83 +827,7 @@ table tr:nth-child(even) {
   background-color: rgba(255, 255, 255, 0.02) !important;
 }
 
-/* Tabellen-Text - immer lesbar */
 table td,
 table th {
   color: var(--text-primary) !important;
-}
-/* ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════ */
-/* ZERO-DEFECT DARK-MODE OVERRIDES                            */
-/* ═══════════════════════════════════════════════════════════ */
-
-/* Admin-Cockpit spezifische Fixes */
-.dark .admin-card,
-.dark [class*="jackpot"],
-.dark [class*="highlight"],
-.dark [class*="banner"] {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(75, 85, 99) !important;
-}
-
-.dark .admin-card h2,
-.dark .admin-card h3,
-.dark .admin-card label {
-  color: rgb(243, 244, 246) !important;
-}
-
-.dark .admin-card input,
-.dark .admin-card textarea,
-.dark .admin-card select {
-  background-color: rgb(17, 24, 39) !important;
-  border-color: rgb(75, 85, 99) !important;
-  color: rgb(243, 244, 246) !important;
-}
-
-.dark .admin-card input::placeholder,
-.dark .admin-card textarea::placeholder {
-  color: rgb(156, 163, 175) !important;
-}
-
-/* Feature Cards Dark Mode */
-.dark .bg-white.rounded-2xl.shadow-lg {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(75, 85, 99) !important;
-}
-
-.dark .text-gray-900 {
-  color: rgb(243, 244, 246) !important;
-}
-
-.dark .text-gray-700 {
-  color: rgb(209, 213, 219) !important;
-}
-
-.dark .text-gray-600 {
-  color: rgb(156, 163, 175) !important;
-}
-
-/* Öffnungszeiten Badge */
-.dark .bg-pink-50 {
-  background-color: rgb(131, 24, 67) !important;
-}
-
-.dark .text-pink-600 {
-  color: rgb(244, 114, 182) !important;
-}
-
-/* Footer Dark Mode */
-.dark footer {
-  background-color: rgb(17, 24, 39) !important;
-  border-color: rgb(55, 65, 81) !important;
-}
-
-.dark footer .text-gray-400 {
-  color: rgb(209, 213, 219) !important;
-}
-
-/* Cookie Banner Dark Mode */
-.dark .fixed.bottom-0 {
-  background-color: rgb(31, 41, 55) !important;
-  border-color: rgb(75, 85, 99) !important;
 }

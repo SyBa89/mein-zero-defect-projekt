@@ -7,10 +7,18 @@ import Footer from '@/components/Footer';
 import MobileActionBar from '@/components/MobileActionBar';
 import CookieBanner from '@/components/CookieBanner';
 import LocalBusinessSchema from '@/components/LocalBusinessSchema';
+import ThemeProvider from '@/components/ThemeProvider';
+import { COLOR_PALETTES, getThemeColor } from '@/lib/theme';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
 
 // ✅ Dynamische Metadata aus CLIENT_CONFIG
+const themeColor = getThemeColor(CLIENT_CONFIG.brand.primaryColor);
+const palette = COLOR_PALETTES[themeColor];
+
 export const metadata: Metadata = {
   metadataBase: new URL(
     CLIENT_CONFIG.contact.mapsUrl || 'https://mein-zero-defect-projekt.vercel.app'
@@ -62,23 +70,28 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   manifest: '/manifest.json',
+  other: {
+    'msapplication-TileColor': palette.meta.msTileColor,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de" suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#ec4899" />
+        <meta name="theme-color" content={palette.meta.themeColor} />
       </head>
-      <body className={inter.className}>
-        <LocalBusinessSchema />
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </div>
-        <MobileActionBar />
-        <CookieBanner />
+      <body className={`${inter.className} ${inter.variable}`}>
+        <ThemeProvider>
+          <LocalBusinessSchema />
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </div>
+          <MobileActionBar />
+          <CookieBanner />
+        </ThemeProvider>
       </body>
     </html>
   );
