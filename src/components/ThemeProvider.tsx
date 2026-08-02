@@ -2,43 +2,41 @@
 
 import { useEffect } from 'react';
 import { CLIENT_CONFIG } from '@/lib/client.config';
-import { generateThemeStyles, getThemeColor } from '@/lib/theme';
+import { COLOR_PALETTES, getThemeColor } from '@/lib/theme';
 
 /**
  * ✅ ZERO-DEFECT: ThemeProvider
  *
- * Injiziert die CSS Variables basierend auf CLIENT_CONFIG.brand.primaryColor
- * beim ersten Render. Verhindert Flash of Unstyled Content (FOUC).
+ * Injiziert CSS Variables basierend auf CLIENT_CONFIG.brand.primaryColor.
+ * Nutzt useEffect um Hydration-Mismatches zu vermeiden.
  */
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const themeColor = getThemeColor(CLIENT_CONFIG.brand.primaryColor);
+  const palette = COLOR_PALETTES[themeColor];
 
   useEffect(() => {
     // ✅ Setze Theme-Color Meta-Tag dynamisch
     const themeMetaTag = document.querySelector('meta[name="theme-color"]');
     if (themeMetaTag) {
-      const palette = require('@/lib/theme').COLOR_PALETTES[themeColor];
       themeMetaTag.setAttribute('content', palette.meta.themeColor);
     }
 
     // ✅ Setze MS Tile Color für Windows
     const msTileMeta = document.querySelector('meta[name="msapplication-TileColor"]');
     if (msTileMeta) {
-      const palette = require('@/lib/theme').COLOR_PALETTES[themeColor];
       msTileMeta.setAttribute('content', palette.meta.msTileColor);
     }
 
-    // ✅ Füge data-theme Attribut zum HTML-Element hinzu (für Analytics/Debugging)
+    // ✅ Setze CSS Variables für Theme-Farben
+    document.documentElement.style.setProperty('--primary', palette.light.primary);
+    document.documentElement.style.setProperty('--secondary', palette.light.secondary);
+    document.documentElement.style.setProperty('--accent', palette.light.accent);
+    document.documentElement.style.setProperty('--ring', palette.light.ring);
+    document.documentElement.style.setProperty('--theme-color', palette.meta.themeColor);
+
+    // ✅ Füge data-theme Attribut hinzu (für Analytics/Debugging)
     document.documentElement.setAttribute('data-theme', themeColor);
-  }, [themeColor]);
+  }, [themeColor, palette]);
 
-  // ✅ Generiere Inline-Styles für sofortige Anwendung (kein FOUC)
-  const themeStyles = generateThemeStyles(themeColor, false);
-
-  return (
-    <>
-      <style dangerouslySetInnerHTML={{ __html: themeStyles }} />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }
