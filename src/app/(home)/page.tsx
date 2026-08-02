@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+﻿import { Metadata } from 'next';
 import { CLIENT_CONFIG } from '@/lib/client.config';
 import JackpotBanner from '@/components/JackpotBanner';
 import DynamicSections from '@/components/DynamicSections';
@@ -12,6 +12,7 @@ import CTASection from '@/components/CTASection';
 import AboutSection from '@/components/AboutSection';
 import LegalNotice from '@/components/LegalNotice';
 import Reviews from '@/components/Reviews';
+import FAQ from '@/components/FAQ';
 
 export const metadata: Metadata = {
   title: `${CLIENT_CONFIG.brand.name} | ${CLIENT_CONFIG.brand.slogan}`,
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
   keywords: CLIENT_CONFIG.seo.keywords,
 };
 
+// ✅ ZERO-DEFECT: Schema.org für Local Business (dynamisch aus Config)
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': 'ConvenienceStore',
@@ -44,59 +46,15 @@ const schemaOrg = {
   openingHours: ['Mo,Tu,We,Th,Fr 07:30-19:00', 'Sa 07:30-14:30'],
 };
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'Wo genau befindet sich ' + CLIENT_CONFIG.brand.name + '?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: `Wir befinden uns in der ${CLIENT_CONFIG.contact.address.street}, ${CLIENT_CONFIG.contact.address.zip} ${CLIENT_CONFIG.contact.address.city}.`,
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Kann ich bei Ihnen Pakete versenden und abholen?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Ja, wir sind ein Paketshop. Sie können bei uns Pakete versenden, abholen und Retouren abgeben.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Welche Zahlungsmethoden akzeptieren Sie?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Wir akzeptieren Bar, EC-Karte, Kontaktlos, Apple Pay und Google Pay.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Haben Sie an Sonn- und Feiertagen geöffnet?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text:
-          'An Sonntagen ist ' +
-          CLIENT_CONFIG.brand.name +
-          ' geschlossen. An Feiertagen passen wir unsere Öffnungszeiten an, was Sie unserem Notfall-Banner oder den aktuellen Öffnungszeiten auf der Startseite entnehmen können.',
-      },
-    },
-  ],
-};
-
 export default function HomePage() {
   return (
     <>
+      {/* ✅ SEO: Schema.org für Local Business (FAQ-Schema kommt jetzt von FAQ-Komponente) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+
       <JackpotBanner />
       <HeroSection />
       <FeaturesSection />
@@ -106,6 +64,7 @@ export default function HomePage() {
       <ProductsSection />
       <AboutSection />
       <Reviews />
+      <FAQ />
       <DynamicSections />
       <CTASection />
       <LegalNotice />
