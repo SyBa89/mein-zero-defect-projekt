@@ -1,25 +1,65 @@
 import { ClientConfig } from './types';
 
+// ✅ ZERO-DEFECT: Separate Konstanten für dynamische FAQ-Referenzen
+const brand = {
+  name: 'Kiosk Lollipop',
+  slogan: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz',
+  legalName: 'Kiosk Lollipop (Inhaber: Angaben werden ergänzt)',
+  primaryColor: 'pink' as const,
+};
+
+const contact = {
+  address: {
+    street: 'Theodor-Heuss-Straße 35',
+    zip: '50374',
+    city: 'Erftstadt-Liblar',
+    country: 'DE',
+  },
+  phone: '+4922359291160',
+  email: 'info@kiosk-lollipop.de',
+  googlePlaceId: 'ChIJeWG_xdsXv0cRInW4W6rog_0',
+  mapsUrl: 'https://maps.google.com/?cid=123456789',
+};
+
+const features = [
+  {
+    icon: '📦',
+    title: 'Hermes Paketshop',
+    description:
+      'Komplett-Service für Paketversand, Abholung und Retouren. Schnell und zuverlässig.',
+  },
+  {
+    icon: '🕒',
+    title: 'Lange Öffnungszeiten',
+    description: 'Mo-Fr bis 19:00 Uhr, Sa bis 14:30 Uhr. Wir sind da, wenn Sie uns brauchen.',
+  },
+  {
+    icon: '📍',
+    title: 'Zentrale Lage',
+    description: 'Direkt am Bürgerplatz in Liblar. Gut zu Fuß oder mit dem Auto erreichbar.',
+  },
+  {
+    icon: '🅿️',
+    title: 'Parkplätze vor der Tür',
+    description: 'Kurze Haltezone direkt vor dem Laden und öffentliche Parkplätze in der Nähe.',
+  },
+  {
+    icon: '💳',
+    title: 'Moderne Zahlung',
+    description: 'Bar, EC-Karte, Kontaktlos, Apple Pay und Google Pay. Sie zahlen, wie Sie wollen.',
+  },
+  {
+    icon: '🤝',
+    title: 'Persönlicher Service',
+    description:
+      'Seit 2020 für Liblar da. Wir kennen unsere Kunden und beraten mit Herz und Verstand.',
+  },
+];
+
 export const CLIENT_CONFIG: ClientConfig = {
   url: 'https://mein-zero-defect-projekt.vercel.app',
-  brand: {
-    name: 'Kiosk Lollipop',
-    slogan: 'Ihr Kiosk und Hermes Paketshop am Bürgerplatz',
-    legalName: 'Kiosk Lollipop (Inhaber: Angaben werden ergänzt)',
-    primaryColor: 'pink',
-  },
-  contact: {
-    address: {
-      street: 'Theodor-Heuss-Straße 35',
-      zip: '50374',
-      city: 'Erftstadt-Liblar',
-      country: 'DE',
-    },
-    phone: '+4922359291160',
-    email: 'info@kiosk-lollipop.de',
-    googlePlaceId: 'ChIJeWG_xdsXv0cRInW4W6rog_0',
-    mapsUrl: 'https://maps.google.com/?cid=123456789',
-  },
+  brand,
+  contact,
   business: {
     type: 'kiosk',
     isSmallBusiness: true,
@@ -34,41 +74,7 @@ export const CLIENT_CONFIG: ClientConfig = {
     primaryCta: { label: '02235 9291160', href: 'tel:+4922359291160' },
     secondaryCta: { label: 'Jetzt besuchen', href: '/kontakt' },
   },
-  features: [
-    {
-      icon: '📦',
-      title: 'Hermes Paketshop',
-      description:
-        'Komplett-Service für Paketversand, Abholung und Retouren. Schnell und zuverlässig.',
-    },
-    {
-      icon: '🕒',
-      title: 'Lange Öffnungszeiten',
-      description: 'Mo-Fr bis 19:00 Uhr, Sa bis 14:30 Uhr. Wir sind da, wenn Sie uns brauchen.',
-    },
-    {
-      icon: '📍',
-      title: 'Zentrale Lage',
-      description: 'Direkt am Bürgerplatz in Liblar. Gut zu Fuß oder mit dem Auto erreichbar.',
-    },
-    {
-      icon: '🅿️',
-      title: 'Parkplätze vor der Tür',
-      description: 'Kurze Haltezone direkt vor dem Laden und öffentliche Parkplätze in der Nähe.',
-    },
-    {
-      icon: '💳',
-      title: 'Moderne Zahlung',
-      description:
-        'Bar, EC-Karte, Kontaktlos, Apple Pay und Google Pay. Sie zahlen, wie Sie wollen.',
-    },
-    {
-      icon: '🤝',
-      title: 'Persönlicher Service',
-      description:
-        'Seit 2020 für Liblar da. Wir kennen unsere Kunden und beraten mit Herz und Verstand.',
-    },
-  ],
+  features,
   extraServices: [
     { icon: '💰', title: 'Geld abheben', sub: 'EC-Karte' },
     { icon: '🖨️', title: 'Druckservice', sub: 'Kopien & Ausdrucke' },
@@ -135,4 +141,25 @@ export const CLIENT_CONFIG: ClientConfig = {
       },
     ],
   },
+  faq: [
+    {
+      question: `Wo genau befindet sich ${brand.name}?`,
+      answer: `Wir befinden uns direkt in der ${contact.address.street}, ${contact.address.zip} ${contact.address.city}, in unmittelbarer Nähe zum Bahnhof.`,
+    },
+    {
+      question: 'Kann ich bei Ihnen Pakete versenden und abholen?',
+      answer:
+        'Ja, wir sind ein offizieller Hermes Paketshop. Sie können bei uns Pakete versenden, abholen und Retouren einfach abgeben.',
+    },
+    {
+      question: 'Welche Zahlungsmethoden akzeptieren Sie?',
+      answer:
+        'Sie können bei uns bar, mit EC-Karte, kontaktlos sowie mit Apple Pay und Google Pay bezahlen.',
+    },
+    {
+      question: 'Wie sind Ihre Öffnungszeiten?',
+      answer:
+        'Unsere regulären Öffnungszeiten sind Mo-Fr von 07:30 bis 19:00 Uhr und samstags von 07:30 bis 14:30 Uhr. An Sonn- und Feiertagen haben wir geschlossen.',
+    },
+  ],
 };

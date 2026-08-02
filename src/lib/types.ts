@@ -64,4 +64,8 @@ export interface ClientConfig {
       ageRestriction?: string;
     }>;
   };
+  faq: Array<{
+    question: string;
+    answer: string;
+  }>;
 }

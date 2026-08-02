@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback, useId, useRef, useEffect } from 'react';
+import { CLIENT_CONFIG } from '@/lib/client.config';
 
 // ✅ ZERO-DEFECT: Explizite Typisierung für maximale Sicherheit
 interface FaqItem {
@@ -8,37 +9,15 @@ interface FaqItem {
   answer: string;
 }
 
-const faqData: FaqItem[] = [
-  {
-    question: 'Wo genau befindet sich der Kiosk Lollipop?',
-    answer:
-      'Wir befinden uns direkt am Bürgerplatz in der Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar, in unmittelbarer Nähe zum Bahnhof.',
-  },
-  {
-    question: 'Kann ich bei Ihnen Pakete mit Hermes versenden und abholen?',
-    answer:
-      'Ja, wir sind ein offizieller Hermes Paketshop. Sie können bei uns Pakete versenden, abholen und Retouren einfach abgeben.',
-  },
-  {
-    question: 'Welche Zahlungsmethoden akzeptieren Sie?',
-    answer:
-      'Sie können bei uns bar, mit EC-Karte, kontaktlos sowie mit Apple Pay und Google Pay bezahlen.',
-  },
-  {
-    question: 'Haben Sie an Sonn- und Feiertagen geöffnet?',
-    answer:
-      'Nein, an Sonn- und Feiertagen haben wir geschlossen. Unsere regulären Öffnungszeiten sind Mo-Fr von 07:30 bis 19:00 Uhr und samstags von 07:30 bis 14:30 Uhr.',
-  },
-];
-
 export default function FAQ() {
+  const faqData: FaqItem[] = CLIENT_CONFIG.faq;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const answerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // ✅ ZERO-DEFECT: Eindeutige IDs für SSR-Konsistenz
   const id = useId();
 
-  // ✅ ZERO-DEFECT: Memoisierte Schema.org-Daten
+  // ✅ ZERO-DEFECT: Memoisierte Schema.org-Daten (dynamisch aus Config)
   const faqSchema = useMemo(
     () => ({
       '@context': 'https://schema.org',
@@ -52,7 +31,7 @@ export default function FAQ() {
         },
       })),
     }),
-    [] // faqData ist statisch, aber könnte als Abhängigkeit hinzugefügt werden
+    [faqData]
   );
 
   // ✅ ZERO-DEFECT: Memoisierte Toggle-Funktion
@@ -63,7 +42,6 @@ export default function FAQ() {
 
       // ✅ ZERO-DEFECT: Fokus auf die Antwort setzen, wenn geöffnet
       if (newIndex !== null && answerRefs.current[newIndex]) {
-        // Kleiner Delay, damit die Animation abgeschlossen ist
         setTimeout(() => {
           answerRefs.current[newIndex]?.focus();
         }, 150);
@@ -77,7 +55,6 @@ export default function FAQ() {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && openIndex !== null) {
         setOpenIndex(null);
-        // Fokus auf den zuletzt geöffneten Button zurücksetzen
         const lastButton = document.querySelector(`[data-faq-button="${openIndex}"]`);
         if (lastButton instanceof HTMLElement) {
           lastButton.focus();
@@ -89,9 +66,14 @@ export default function FAQ() {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [openIndex]);
 
+  // ✅ ZERO-DEFECT: Fallback, wenn keine FAQ-Daten vorhanden sind
+  if (!faqData || faqData.length === 0) {
+    return null;
+  }
+
   return (
-    <section className="py-16 bg-gray-50" aria-labelledby="faq-heading">
-      {/* ✅ SEO: Schema.org für strukturierte Daten */}
+    <section className="py-16 bg-gray-50 dark:bg-gray-900" aria-labelledby="faq-heading">
+      {/* ✅ SEO: Schema.org für strukturierte Daten (dynamisch) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -100,7 +82,7 @@ export default function FAQ() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
           id="faq-heading"
-          className="text-3xl md:text-4xl font-black text-gray-900 mb-10 text-center tracking-tight"
+          className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-10 text-center tracking-tight"
         >
           Häufig gestellte Fragen
         </h2>
@@ -114,10 +96,10 @@ export default function FAQ() {
             return (
               <div
                 key={index}
-                className={`bg-white rounded-2xl border transition-all duration-300 ${
+                className={`bg-white dark:bg-gray-800 rounded-2xl border transition-all duration-300 ${
                   isOpen
-                    ? 'border-pink-300 shadow-lg shadow-pink-100/50'
-                    : 'border-gray-200 hover:border-pink-200'
+                    ? 'border-pink-300 dark:border-pink-500 shadow-lg shadow-pink-100/50 dark:shadow-pink-900/30'
+                    : 'border-gray-200 dark:border-gray-700 hover:border-pink-200 dark:hover:border-pink-700'
                 }`}
               >
                 <button
@@ -127,11 +109,13 @@ export default function FAQ() {
                   className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 rounded-2xl"
                   aria-expanded={isOpen}
                   aria-controls={answerId}
-                  aria-label={`${faq.question} ${isOpen ? 'ausklappen' : 'einklappen'}`}
+                  aria-label={`${faq.question} ${isOpen ? 'einklappen' : 'ausklappen'}`}
                 >
-                  <span className="text-lg font-bold text-gray-900 pr-4">{faq.question}</span>
+                  <span className="text-lg font-bold text-gray-900 dark:text-gray-100 pr-4">
+                    {faq.question}
+                  </span>
                   <span
-                    className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-pink-50 text-pink-600 transition-transform duration-300 ease-out ${
+                    className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 transition-transform duration-300 ease-out ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                     aria-hidden="true"
@@ -162,7 +146,7 @@ export default function FAQ() {
                         if (el) answerRefs.current[index] = el;
                       }}
                       tabIndex={isOpen ? 0 : -1}
-                      className="p-6 pt-0 text-gray-700 leading-relaxed border-t border-gray-100 mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded"
+                      className="p-6 pt-0 text-gray-700 dark:text-gray-300 leading-relaxed border-t border-gray-100 dark:border-gray-700 mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded"
                     >
                       {faq.answer}
                     </div>
