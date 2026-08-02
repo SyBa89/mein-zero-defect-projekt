@@ -1,4 +1,4 @@
-import { getSiteConfig } from '@/lib/site-config';
+﻿import { getSiteConfig } from '@/lib/site-config';
 
 interface ParsedHours {
   day: string;
@@ -89,29 +89,43 @@ export default async function OpeningHoursSection() {
   const isShopClosed = config.isClosed;
 
   return (
-    <section className="py-20 bg-white" aria-labelledby="opening-hours-heading">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      className="relative py-20 bg-gradient-to-br from-pink-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden"
+      aria-labelledby="opening-hours-heading"
+    >
+      {/* Dekorative Hintergrund-Blobs für Glassmorphismus-Effekt */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-pink-200/40 dark:bg-pink-900/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-purple-200/40 dark:bg-purple-900/20 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
           id="opening-hours-heading"
-          className="text-4xl font-black text-gray-900 mb-10 text-center tracking-tight"
+          className="text-4xl font-black text-gray-900 dark:text-gray-100 mb-10 text-center tracking-tight"
         >
           Öffnungszeiten
         </h2>
 
-        <div className="bg-gradient-to-br from-pink-50 to-white rounded-3xl border border-pink-100 overflow-hidden shadow-xl">
+        {/* ✅ ZERO-DEFECT: Glassmorphismus-Hauptcard */}
+        <div className="glass-card rounded-3xl overflow-hidden shadow-2xl">
           {/* ✅ Heute-Status: Geöffnet */}
           {!isShopClosed && todayInfo?.isOpen && (
-            <div className="bg-green-50 border-b border-green-200 px-8 py-3 text-center">
-              <span className="text-green-700 font-medium">
-                ✅ Heute geöffnet: {todayInfo.hours}
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-b border-green-200/50 dark:border-green-700/50 px-8 py-4 text-center backdrop-blur-sm">
+              <span className="text-green-700 dark:text-green-300 font-semibold text-lg inline-flex items-center gap-2">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                Heute geöffnet: {todayInfo.hours}
               </span>
             </div>
           )}
 
           {/* ✅ Heute-Status: Notfall-Modus aktiv */}
           {isShopClosed && (
-            <div className="bg-red-50 border-b border-red-200 px-8 py-3 text-center">
-              <span className="text-red-700 font-bold">
+            <div className="bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-900/30 dark:to-rose-900/30 border-b border-red-200/50 dark:border-red-700/50 px-8 py-4 text-center backdrop-blur-sm">
+              <span className="text-red-700 dark:text-red-300 font-bold text-lg inline-flex items-center gap-2">
                 🚨 Heute geschlossen – {config.emergencyMessage || 'Betriebsurlaub'}
               </span>
             </div>
@@ -119,37 +133,52 @@ export default async function OpeningHoursSection() {
 
           {/* ✅ Heute-Status: Normal geschlossen (z.B. Sonntag) */}
           {!isShopClosed && todayInfo && !todayInfo.isOpen && (
-            <div className="bg-yellow-50 border-b border-yellow-200 px-8 py-3 text-center">
-              <span className="text-yellow-700 font-medium">📅 Heute geschlossen</span>
+            <div className="bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/30 dark:to-amber-900/30 border-b border-yellow-200/50 dark:border-yellow-700/50 px-8 py-4 text-center backdrop-blur-sm">
+              <span className="text-yellow-700 dark:text-yellow-300 font-semibold text-lg inline-flex items-center gap-2">
+                📅 Heute geschlossen
+              </span>
             </div>
           )}
 
-          <table className="w-full" role="table">
-            <tbody className="divide-y divide-pink-100/50">
-              {parsedHours.map((item) => (
-                <tr
-                  key={item.day}
-                  className={`hover:bg-pink-100/50 transition-colors ${
-                    item.isToday ? 'bg-pink-50/80' : ''
-                  }`}
-                >
-                  <td className="px-8 py-6 text-left font-bold text-gray-900 text-lg">
-                    {item.day}
-                    {item.isToday && (
-                      <span className="ml-3 text-xs font-normal text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-900/30 px-2 py-1 rounded-full">(heute)</span>
-                    )}
-                  </td>
-                  <td className="px-8 py-6 text-right font-black text-xl">
-                    {item.isOpen ? (
-                      <span className="text-pink-600">{item.hours}</span>
-                    ) : (
-                      <span className="text-red-500">Geschlossen</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {/* ✅ ZERO-DEFECT: Tabelle mit Glassmorphismus */}
+          <div className="backdrop-blur-sm">
+            <table className="w-full" role="table">
+              <tbody className="divide-y divide-gray-200/30 dark:divide-gray-700/30">
+                {parsedHours.map((item) => (
+                  <tr
+                    key={item.day}
+                    className={`transition-all duration-300 hover:bg-white/40 dark:hover:bg-gray-800/40 ${
+                      item.isToday
+                        ? 'bg-gradient-to-r from-pink-50/80 to-purple-50/80 dark:from-pink-900/20 dark:to-purple-900/20 shadow-inner'
+                        : ''
+                    }`}
+                  >
+                    <td className="px-8 py-6 text-left font-bold text-gray-900 dark:text-gray-100 text-lg">
+                      <div className="flex items-center gap-3">
+                        {item.day}
+                        {item.isToday && (
+                          <span className="text-xs font-semibold text-pink-700 dark:text-pink-300 bg-gradient-to-r from-pink-100 to-purple-100 dark:from-pink-900/40 dark:to-purple-900/40 px-3 py-1 rounded-full border border-pink-200/50 dark:border-pink-700/50 shadow-sm">
+                            heute
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-8 py-6 text-right font-black text-xl">
+                      {item.isOpen ? (
+                        <span className="bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+                          {item.hours}
+                        </span>
+                      ) : (
+                        <span className="text-red-500 dark:text-red-400 font-semibold">
+                          Geschlossen
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
