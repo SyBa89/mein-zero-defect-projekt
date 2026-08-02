@@ -1,7 +1,8 @@
 /**
- * ✅ ZERO-DEFECT: Client-seitige Site-Config für Hydration-sichere Komponenten
+ * ✅ ZERO-DEFECT: Client-seitige Site-Config
  *
- * Nutzt die bestehende /api/config Route statt direktem Redis-Zugriff.
+ * Einfache, typsichere Implementierung ohne komplexe Caching-Logik.
+ * Garantiert: Rückgabe ist IMMER SiteConfig (nie null).
  */
 
 export interface SiteConfig {
@@ -12,45 +13,51 @@ export interface SiteConfig {
   highlight?: string;
 }
 
-// Default fallback für SSR/Hydration
+// ✅ Fallback-Konfiguration (garantiert vollständig)
 const DEFAULT_CONFIG: SiteConfig = {
   openingHoursText: 'Mo-Fr 07:30-19:00, Sa 07:30-14:30',
   isClosed: false,
+  emergencyMessage: undefined,
+  jackpot: undefined,
+  highlight: undefined,
 };
 
-// Einfacher In-Memory Cache (verhindert redundante API-Calls)
-let cachedConfig: SiteConfig | null = null;
-let cachePromise: Promise<SiteConfig> | null = null;
-
+/**
+ * ✅ ZERO-DEFECT: Lädt Site-Config clientseitig
+ *
+ * Gibt IMMER ein vollständiges SiteConfig-Objekt zurück.
+ * Bei Fehler: Fallback auf DEFAULT_CONFIG.
+ */
 export async function getSiteConfigClient(): Promise<SiteConfig> {
-  // Cache-Check
-  if (cachedConfig) return cachedConfig;
+  try {
+    const response = await fetch('/api/config', {
+      cache: 'force-cache',
+      next: { revalidate: 60 },
+    });
 
-  // Deduplicate: Nur einen Fetch parallel laufen lassen
-  if (cachePromise) return cachePromise;
-
-  cachePromise = (async () => {
-    try {
-      const response = await fetch('/api/config', {
-        cache: 'force-cache',
-        next: { revalidate: 60 }, // Revalidate alle 60 Sekunden
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-      cachedConfig = { ...DEFAULT_CONFIG, ...data };
-      return cachedConfig;
-    } catch (error) {
-      console.warn('getSiteConfigClient: Failed to fetch, using default', error);
-      cachedConfig = DEFAULT_CONFIG;
-      return cachedConfig;
-    } finally {
-      cachePromise = null;
+    if (!response.ok) {
+      console.warn(`getSiteConfigClient: HTTP ${response.status}, using default`);
+      return DEFAULT_CONFIG;
     }
-  })();
 
-  return cachePromise;
+    const data = await response.json();
+
+    // ✅ Explizites Merge: Jeder Feld hat Fallback auf Default
+    const result: SiteConfig = {
+      openingHoursText:
+        typeof data.openingHoursText === 'string'
+          ? data.openingHoursText
+          : DEFAULT_CONFIG.openingHoursText,
+      isClosed: typeof data.isClosed === 'boolean' ? data.isClosed : DEFAULT_CONFIG.isClosed,
+      emergencyMessage:
+        typeof data.emergencyMessage === 'string' ? data.emergencyMessage : undefined,
+      jackpot: typeof data.jackpot === 'string' ? data.jackpot : undefined,
+      highlight: typeof data.highlight === 'string' ? data.highlight : undefined,
+    };
+
+    return result;
+  } catch (error) {
+    console.warn('getSiteConfigClient: Fetch failed, using default', error);
+    return DEFAULT_CONFIG;
+  }
 }
