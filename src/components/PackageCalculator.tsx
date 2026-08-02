@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, KeyboardEvent } from 'react';
 
 // ✅ ARCHITEKTUR: Konstanten außerhalb der Komponente verhindern unnötige Re-Allokation bei jedem Render
 const HERMES_PACKAGES = [
@@ -27,6 +27,9 @@ const HERMES_PACKAGES = [
   },
 ];
 
+// ✅ ZERO-DEFECT: Eindeutige ID für aria-describedby (verhindert Duplikate)
+const RESULT_ID = 'package-result';
+
 export default function PackageCalculator() {
   const [length, setLength] = useState('');
   const [width, setWidth] = useState('');
@@ -34,8 +37,11 @@ export default function PackageCalculator() {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // ✅ UX: Akzeptiert Zahlen, ein Komma/Punkt und toleriert führende/anhängende Leerzeichen (z.B. beim Kopieren)
-  const validateInput = (value: string) => /^\s*\d*([.,]\d{0,2})?\s*$/.test(value);
+  // ✅ Derived State: Fehler-Status als Boolean
+  const hasError = Boolean(error);
+
+  // ✅ UX: Akzeptiert Zahlen, ein Komma/Punkt und toleriert führende/anhängende Leerzeichen
+  const validateInput = (value: string): boolean => /^\s*\d*([.,]\d{0,2})?\s*$/.test(value);
 
   const handleInputChange =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>
@@ -48,11 +54,19 @@ export default function PackageCalculator() {
       }
     };
 
+  // ✅ Enter-Taste triggert Berechnung (Accessibility + UX)
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      calculatePackageSize();
+    }
+  };
+
   const calculatePackageSize = () => {
     setError(null);
     setResult(null);
 
-    // ✅ BUSINESS: Ersetzt deutsches Komma durch Punkt und entfernt Leerzeichen für parseFloat
+    // ✅ BUSINESS: Ersetzt deutsches Komma durch Punkt und entfernt Leerzeichen
     const l = parseFloat(length.replace(',', '.').trim());
     const w = parseFloat(width.replace(',', '.').trim());
     const h = parseFloat(height.replace(',', '.').trim());
@@ -79,9 +93,7 @@ export default function PackageCalculator() {
       }
     }
 
-    setResult(
-      '❌ Paket zu groß für Standard-Versand. Bitte wenden Sie sich an uns für Sperrgut-Lösungen.'
-    );
+    setResult('❌ Leider zu groß für alle Hermes-Paketgrößen. Bitte im Markt nachfragen.');
   };
 
   const resetCalculator = () => {
@@ -92,24 +104,13 @@ export default function PackageCalculator() {
     setError(null);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      calculatePackageSize();
-    }
-  };
-
-  const hasError = !!error;
-  const resultId = 'calculator-result';
-
   return (
-    <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-gray-100">
-      <h3 className="text-xl font-black text-gray-900 mb-2 text-center flex items-center justify-center gap-2">
-        <span className="text-2xl" aria-hidden="true">
-          📏
-        </span>
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 md:p-8">
+      <h3 className="text-2xl font-black text-gray-900 dark:text-gray-100 mb-2 text-center flex items-center justify-center gap-2">
+        <span aria-hidden="true">📦</span>
         Finde deine Paketgröße
       </h3>
-      <p className="text-sm text-gray-600 mb-6 text-center">
+      <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 text-center">
         Gib die Maße deines Pakets ein (in cm). Die Reihenfolge ist egal.
       </p>
 
@@ -122,7 +123,7 @@ export default function PackageCalculator() {
           <div key={field.id}>
             <label
               htmlFor={field.id}
-              className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide"
+              className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wide"
             >
               {field.label}
             </label>
@@ -138,8 +139,8 @@ export default function PackageCalculator() {
               onKeyDown={handleKeyDown}
               placeholder="0"
               aria-invalid={hasError}
-              aria-describedby={resultId}
-              className="w-full px-3 py-3 text-center border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all font-bold text-gray-900 placeholder:text-gray-300"
+              aria-describedby={RESULT_ID}
+              className="w-full px-3 py-3 text-center border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-900 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all font-bold text-gray-900 dark:text-gray-100 placeholder:text-gray-300 dark:placeholder:text-gray-600"
             />
           </div>
         ))}
@@ -154,10 +155,9 @@ export default function PackageCalculator() {
         </button>
         <button
           onClick={resetCalculator}
-          className="px-5 py-3.5 border-2 border-gray-200 text-gray-600 font-bold rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
+          className="px-5 py-3.5 border-2 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
           aria-label="Eingaben zurücksetzen"
         >
-          {/* ✅ UI: Konsistentes SVG-Icon statt Unicode-Zeichen für perfekte Skalierung */}
           <svg
             className="w-5 h-5 mx-auto"
             fill="none"
@@ -177,29 +177,29 @@ export default function PackageCalculator() {
 
       {/* ✅ ACCESSIBILITY: aria-live sorgt dafür, dass Screenreader Änderungen sofort vorlesen */}
       <div
-        id={resultId}
+        id={RESULT_ID}
         aria-live="polite"
         aria-atomic="true"
         className="min-h-[4rem] flex items-center justify-center"
       >
         {hasError && (
-          <div className="w-full bg-red-50 text-red-800 px-4 py-3 rounded-xl font-semibold text-center border border-red-200 transition-all duration-300 ease-out flex items-center justify-center gap-2">
+          <div className="w-full bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200 px-4 py-3 rounded-xl font-semibold text-center border border-red-200 dark:border-red-800 transition-all duration-300 ease-out flex items-center justify-center gap-2">
             <span aria-hidden="true">⚠️</span> {error}
           </div>
         )}
         {result && !hasError && (
-          <div className="w-full bg-green-50 text-green-800 px-4 py-3 rounded-xl font-bold text-center border border-green-200 transition-all duration-300 ease-out flex items-center justify-center gap-2">
+          <div className="w-full bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 px-4 py-3 rounded-xl font-bold text-center border border-green-200 dark:border-green-800 transition-all duration-300 ease-out flex items-center justify-center gap-2">
             <span aria-hidden="true">✅</span> {result}
           </div>
         )}
         {!result && !hasError && (
-          <p className="text-sm text-gray-400 text-center font-medium transition-all duration-300 ease-out">
+          <p className="text-sm text-gray-400 dark:text-gray-500 text-center font-medium transition-all duration-300 ease-out">
             Das Ergebnis erscheint hier nach dem Prüfen.
           </p>
         )}
       </div>
 
-      <p className="text-xs text-gray-400 text-center mt-4 leading-relaxed">
+      <p className="text-xs text-gray-400 dark:text-gray-500 text-center mt-4 leading-relaxed">
         *Unverbindliche Richtwerte basierend auf Standard-Hermes-Maßen. Verbindliche Preise und Maße
         direkt im Markt oder auf hermes.de.
       </p>
