@@ -1,22 +1,35 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { CLIENT_CONFIG } from '@/lib/client.config';
 
-export const metadata: Metadata = {
-  title: 'Datenschutz – Kiosk Lollipop',
-  description: 'Datenschutzerklärung gemäß DSGVO',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { brand } = CLIENT_CONFIG;
+
+  return {
+    title: `Datenschutz – ${brand.name}`,
+    description: 'Datenschutzerklärung gemäß DSGVO',
+  };
+}
 
 export default function DatenschutzPage() {
+  const { brand, contact } = CLIENT_CONFIG;
+
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-4xl font-black text-gray-900 mb-8">Datenschutzerklärung</h1>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+      <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+        <h1 className="text-4xl font-black text-gray-900 dark:text-gray-100 mb-8">
+          Datenschutzerklärung
+        </h1>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Datenschutz auf einen Blick</h2>
-          <div className="prose prose-gray max-w-none">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Allgemeine Hinweise</h3>
-            <p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            1. Datenschutz auf einen Blick
+          </h2>
+          <div className="prose prose-gray dark:prose-invert max-w-none">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              Allgemeine Hinweise
+            </h3>
+            <p className="text-gray-700 dark:text-gray-300">
               Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren
               personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene
               Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
@@ -25,20 +38,42 @@ export default function DatenschutzPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Hosting</h2>
-          <div className="prose prose-gray max-w-none">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Vercel</h3>
-            <p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            2. Verantwortliche Stelle
+          </h2>
+          <div className="prose prose-gray dark:prose-invert max-w-none">
+            <p className="text-gray-700 dark:text-gray-300">
+              Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
+            </p>
+            <p className="text-gray-700 dark:text-gray-300">
+              <strong>{brand.name}</strong>
+              <br />
+              {contact.address.street}
+              <br />
+              {contact.address.zip} {contact.address.city}
+              <br />
+              Telefon: {contact.phone}
+              <br />
+              E-Mail: {contact.email}
+            </p>
+          </div>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">3. Hosting</h2>
+          <div className="prose prose-gray dark:prose-invert max-w-none">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Vercel</h3>
+            <p className="text-gray-700 dark:text-gray-300">
               Diese Website wird bei Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA
               gehostet. Wenn Sie unsere Website besuchen, werden verschiedene personenbezogene Daten
               erfasst, darunter Ihre IP-Adresse und Informationen darüber, welche Seiten Sie
               besuchen.
             </p>
-            <p>
+            <p className="text-gray-700 dark:text-gray-300">
               Weitere Informationen finden Sie in der Datenschutzerklärung von Vercel:{' '}
               <a
                 href="https://vercel.com/legal/privacy-policy"
-                className="text-pink-600 hover:underline"
+                className="text-pink-600 dark:text-pink-400 hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -49,18 +84,20 @@ export default function DatenschutzPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            3. Datenerfassung auf dieser Website
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            4. Datenerfassung auf dieser Website
           </h2>
-          <div className="prose prose-gray max-w-none">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Kontaktformular</h3>
-            <p>
+          <div className="prose prose-gray dark:prose-invert max-w-none">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              Kontaktformular
+            </h3>
+            <p className="text-gray-700 dark:text-gray-300">
               Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem
               Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks
               Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert.
               Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
             </p>
-            <p>
+            <p className="text-gray-700 dark:text-gray-300">
               Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO,
               sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur
               Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen
@@ -71,9 +108,11 @@ export default function DatenschutzPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Speicherdauer</h2>
-          <div className="prose prose-gray max-w-none">
-            <p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            5. Speicherdauer
+          </h2>
+          <div className="prose prose-gray dark:prose-invert max-w-none">
+            <p className="text-gray-700 dark:text-gray-300">
               Soweit innerhalb der DSGVO keine konkrete Speicherdauer genannt wird, verbleiben Ihre
               personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt oder
               Sie eine Löschung verlangen.
@@ -82,9 +121,11 @@ export default function DatenschutzPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Ihre Rechte</h2>
-          <div className="prose prose-gray max-w-none">
-            <p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            6. Ihre Rechte
+          </h2>
+          <div className="prose prose-gray dark:prose-invert max-w-none">
+            <p className="text-gray-700 dark:text-gray-300">
               Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Herkunft, Empfänger und
               Zweck Ihrer gespeicherten personenbezogenen Daten. Sie haben außerdem ein Recht, die
               Berichtigung oder Löschung dieser Daten zu verlangen.
@@ -92,8 +133,8 @@ export default function DatenschutzPage() {
           </div>
         </section>
 
-        <div className="mt-12 pt-8 border-t border-gray-200">
-          <Link href="/" className="text-pink-600 hover:underline font-semibold">
+        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <Link href="/" className="text-pink-600 dark:text-pink-400 hover:underline font-semibold">
             ← Zurück zur Startseite
           </Link>
         </div>
