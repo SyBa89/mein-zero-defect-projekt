@@ -11,14 +11,11 @@ import ThemeProvider from '@/components/ThemeProvider';
 import { COLOR_PALETTES, getThemeColor } from '@/lib/theme';
 
 // ✅ ZERO-DEFECT: Premium-Typografie - Geist Font (Vercel/Linear/Stripe Standard)
-// Variable Font mit preloading für maximale Performance
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
   display: 'swap',
   preload: true,
-  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-  adjustFontFallback: true,
 });
 
 const geistMono = Geist_Mono({
@@ -26,8 +23,6 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
   display: 'swap',
   preload: true,
-  fallback: ['ui-monospace', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-  adjustFontFallback: true,
 });
 
 // ✅ Dynamische Metadata aus CLIENT_CONFIG
@@ -96,7 +91,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta name="theme-color" content={palette.meta.themeColor} />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
+        suppressHydrationWarning
+      >
         <ThemeProvider>
           <LocalBusinessSchema />
           <div className="flex flex-col min-h-screen">
