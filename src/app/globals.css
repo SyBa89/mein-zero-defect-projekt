@@ -58,15 +58,18 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1, "cv11" 1;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   html {
     scroll-behavior: smooth;
   }
 
-  /* ✅ ZERO-DEFECT FIX: outline-ring existiert nicht als Tailwind-Klasse
-     → Direkte CSS-Definition für maximale Kompatibilität */
+  /* ✅ ZERO-DEFECT FIX: Direkte CSS-Definition für maximale Kompatibilität */
   :focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
