@@ -38,6 +38,11 @@ export interface ClientConfig {
     title: string;
     description: string;
   }>;
+  extraServices: Array<{
+    icon: string;
+    title: string;
+    sub: string;
+  }>;
   sections: {
     showHermes: boolean;
     showProducts: boolean;

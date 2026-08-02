@@ -1,10 +1,10 @@
 ﻿import { CLIENT_CONFIG } from '@/lib/client.config';
 
 export default function ServicesSection() {
-  const { services } = CLIENT_CONFIG;
+  const { extraServices } = CLIENT_CONFIG;
 
   // White-Label: Wenn keine Services definiert sind, zeige nichts
-  if (!services || services.length === 0) {
+  if (!extraServices || extraServices.length === 0) {
     return null;
   }
 
@@ -12,7 +12,7 @@ export default function ServicesSection() {
     <section className="py-16 bg-gray-50 dark:bg-gray-800 border-y border-gray-100 dark:border-gray-700">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {services.map((service, i) => (
+          {extraServices.map((service, i) => (
             <div
               key={i}
               className="text-center p-6 rounded-2xl bg-white dark:bg-gray-900 hover:bg-pink-50 dark:hover:bg-gray-800 transition-colors duration-300"

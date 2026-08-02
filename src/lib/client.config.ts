@@ -69,6 +69,12 @@ export const CLIENT_CONFIG: ClientConfig = {
         'Seit 2020 für Liblar da. Wir kennen unsere Kunden und beraten mit Herz und Verstand.',
     },
   ],
+  extraServices: [
+    { icon: '💰', title: 'Geld abheben', sub: 'EC-Karte' },
+    { icon: '🖨️', title: 'Druckservice', sub: 'Kopien & Ausdrucke' },
+    { icon: '☕', title: 'Heiße Getränke', sub: 'Kaffee & Tee to go' },
+    { icon: '🔌', title: 'Handy-Ladestation', sub: 'Smartphone aufladen' },
+  ],
   sections: {
     showHermes: true,
     showProducts: true,
