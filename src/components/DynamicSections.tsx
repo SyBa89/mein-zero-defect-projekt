@@ -2,14 +2,11 @@
 
 import dynamic from 'next/dynamic';
 
-// ✅ Lazy Loading für nicht-kritische Client Components
-const FAQ = dynamic(() => import('@/components/FAQ'), { ssr: false });
-const DailyHighlightsSection = dynamic(() => import('@/components/DailyHighlightsSection'), {
-  ssr: false,
-});
-const BrandsSection = dynamic(() => import('@/components/BrandsSection'), {
-  ssr: false,
-});
+// ✅ ZERO-DEFECT: Lazy Loading für nicht-kritische Client Components
+// WICHTIG: ssr: true (oder weglassen) für Hydration-Konsistenz
+const FAQ = dynamic(() => import('@/components/FAQ'));
+const DailyHighlightsSection = dynamic(() => import('@/components/DailyHighlightsSection'));
+const BrandsSection = dynamic(() => import('@/components/BrandsSection'));
 
 interface DynamicSectionsProps {
   children?: React.ReactNode;
