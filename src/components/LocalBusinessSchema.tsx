@@ -1,4 +1,4 @@
-'use client';
+// ❌ ENTFERNEN: 'use client';
 
 import { CLIENT_CONFIG } from '@/lib/client.config';
 
