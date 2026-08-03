@@ -12,7 +12,7 @@ import CTASection from '@/components/CTASection';
 import AboutSection from '@/components/AboutSection';
 import LegalNotice from '@/components/LegalNotice';
 import Reviews from '@/components/Reviews';
-import FAQ from '@/components/FAQ';
+// ❌ ENTFERNEN: import FAQ from '@/components/FAQ';
 
 export const metadata: Metadata = {
   title: `${CLIENT_CONFIG.brand.name} | ${CLIENT_CONFIG.brand.slogan}`,
@@ -20,17 +20,9 @@ export const metadata: Metadata = {
   keywords: CLIENT_CONFIG.seo.keywords,
 };
 
-// ❌ ENTFERNEN: const schemaOrg = { ... };
-
 export default function HomePage() {
   return (
     <>
-      {/* ❌ ENTFERNEN: Das doppelte Schema.org-Script */}
-      {/* <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
-      /> */}
-
       <JackpotBanner />
       <HeroSection />
       <FeaturesSection />
@@ -40,7 +32,7 @@ export default function HomePage() {
       <ProductsSection />
       <AboutSection />
       <Reviews />
-      <FAQ />
+      {/* ❌ ENTFERNEN: <FAQ /> - wird bereits in DynamicSections gerendert */}
       <DynamicSections />
       <CTASection />
       <LegalNotice />
