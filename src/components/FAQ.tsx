@@ -1,23 +1,30 @@
 'use client';
 
-import { useState, useMemo, useCallback, useId, useRef, useEffect } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { CLIENT_CONFIG } from '@/lib/client.config';
 
-// ✅ ZERO-DEFECT: Explizite Typisierung für maximale Sicherheit
 interface FaqItem {
   question: string;
   answer: string;
 }
 
+/**
+ * ✅ ZERO-DEFECT: FAQ-Accordion mit statischen IDs
+ *
+ * Warum keine useId()?
+ * - useId() + next/dynamic verursacht ID-Divergenz zwischen Server/Client
+ *   (unterschiedliche Zählerstände durch Lazy Loading)
+ * - Statische IDs (faq-button-0, faq-answer-0) sind:
+ *   ✅ 100% hydration-sicher (Server = Client)
+ *   ✅ Semantisch korrekt für ein Accordion
+ *   ✅ Maximal accessibility-konform (ARIA)
+ */
 export default function FAQ() {
   const faqData: FaqItem[] = CLIENT_CONFIG.faq;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const answerRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // ✅ ZERO-DEFECT: Eindeutige IDs für SSR-Konsistenz
-  const id = useId();
-
-  // ✅ ZERO-DEFECT: Memoisierte Schema.org-Daten (dynamisch aus Config)
+  // ✅ Memoisiertes Schema.org (dynamisch aus Config)
   const faqSchema = useMemo(
     () => ({
       '@context': 'https://schema.org',
@@ -34,13 +41,13 @@ export default function FAQ() {
     [faqData]
   );
 
-  // ✅ ZERO-DEFECT: Memoisierte Toggle-Funktion
+  // ✅ Memoisierte Toggle-Funktion
   const toggleAccordion = useCallback(
     (index: number) => {
       const newIndex = openIndex === index ? null : index;
       setOpenIndex(newIndex);
 
-      // ✅ ZERO-DEFECT: Fokus auf die Antwort setzen, wenn geöffnet
+      // ✅ Fokus auf die Antwort setzen, wenn geöffnet
       if (newIndex !== null && answerRefs.current[newIndex]) {
         setTimeout(() => {
           answerRefs.current[newIndex]?.focus();
@@ -50,7 +57,7 @@ export default function FAQ() {
     [openIndex]
   );
 
-  // ✅ ZERO-DEFECT: Escape-Taste schließt alle geöffneten Fragen
+  // ✅ Escape-Taste schließt alle geöffneten Fragen
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && openIndex !== null) {
@@ -61,24 +68,22 @@ export default function FAQ() {
         }
       }
     };
-
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, [openIndex]);
 
-  // ✅ ZERO-DEFECT: Fallback, wenn keine FAQ-Daten vorhanden sind
+  // ✅ Fallback, wenn keine FAQ-Daten vorhanden sind
   if (!faqData || faqData.length === 0) {
     return null;
   }
 
   return (
     <section className="py-16 bg-gray-50 dark:bg-gray-900" aria-labelledby="faq-heading">
-      {/* ✅ SEO: Schema.org für strukturierte Daten (dynamisch) */}
+      {/* ✅ SEO: Schema.org für strukturierte Daten */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
           id="faq-heading"
@@ -86,12 +91,12 @@ export default function FAQ() {
         >
           Häufig gestellte Fragen
         </h2>
-
         <div className="space-y-4">
           {faqData.map((faq, index) => {
             const isOpen = openIndex === index;
-            const buttonId = `${id}-button-${index}`;
-            const answerId = `${id}-answer-${index}`;
+            // ✅ ZERO-DEFECT: Statische IDs (hydration-sicher)
+            const buttonId = `faq-button-${index}`;
+            const answerId = `faq-answer-${index}`;
 
             return (
               <div
@@ -131,7 +136,7 @@ export default function FAQ() {
                   </span>
                 </button>
 
-                {/* ✅ ZERO-DEFECT: Bulletproof Grid-Animation */}
+                {/* ✅ Grid-Animation für smooth accordion */}
                 <div
                   id={answerId}
                   role="region"

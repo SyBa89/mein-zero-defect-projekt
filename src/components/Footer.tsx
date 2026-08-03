@@ -24,8 +24,8 @@ export default function Footer() {
           {/* Spalte 1: Brand */}
           <div className="md:col-span-1">
             <h3 className="text-white font-bold text-lg mb-4">{brand.name}</h3>
-            <p className="text-sm text-gray-400 mb-4">{brand.slogan}</p>
-            <p className="text-xs text-gray-500">Mo - Sa für Sie geöffnet.</p>
+            <p className="text-sm text-gray-300 mb-4">{brand.slogan}</p>
+            <p className="text-xs text-gray-400">Mo - Sa für Sie geöffnet.</p>
           </div>
 
           {/* Spalte 2: Rechtliches */}
@@ -35,12 +35,18 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/impressum" className="text-sm hover:text-pink-400 transition-colors">
+                <Link
+                  href="/impressum"
+                  className="text-sm text-gray-300 hover:text-pink-400 transition-colors"
+                >
                   Impressum
                 </Link>
               </li>
               <li>
-                <Link href="/datenschutz" className="text-sm hover:text-pink-400 transition-colors">
+                <Link
+                  href="/datenschutz"
+                  className="text-sm text-gray-300 hover:text-pink-400 transition-colors"
+                >
                   Datenschutz
                 </Link>
               </li>
@@ -55,13 +61,13 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               {footerServices.length > 0 ? (
                 footerServices.map((service, index) => (
-                  <li key={index} className="flex items-center gap-2">
+                  <li key={index} className="flex items-center gap-2 text-gray-300">
                     <span aria-hidden="true">{service.icon}</span>
                     <span>{service.title}</span>
                   </li>
                 ))
               ) : (
-                <li className="text-gray-500">Keine Services definiert</li>
+                <li className="text-gray-400">Keine Services definiert</li>
               )}
             </ul>
           </div>
@@ -78,14 +84,17 @@ export default function Footer() {
                   href={contact.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-pink-400 transition-colors"
+                  className="text-gray-300 hover:text-pink-400 transition-colors"
                 >
                   {contact.address.street}, {contact.address.zip} {contact.address.city}
                 </a>
               </li>
               <li className="flex items-start gap-2">
                 <span aria-hidden="true">📞</span>
-                <a href={`tel:${contact.phone}`} className="hover:text-pink-400 transition-colors">
+                <a
+                  href={`tel:${contact.phone}`}
+                  className="text-gray-300 hover:text-pink-400 transition-colors"
+                >
                   {contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2')}
                 </a>
               </li>
@@ -93,7 +102,7 @@ export default function Footer() {
                 <span aria-hidden="true">✉️</span>
                 <a
                   href={`mailto:${contact.email}`}
-                  className="hover:text-pink-400 transition-colors"
+                  className="text-gray-300 hover:text-pink-400 transition-colors"
                 >
                   {contact.email}
                 </a>
@@ -104,7 +113,7 @@ export default function Footer() {
 
         {/* Footer Bottom */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-400">
             ©{' '}
             {currentYear
               ? `${currentYear} ${brand.name}. Alle Rechte vorbehalten.`
@@ -112,7 +121,7 @@ export default function Footer() {
           </p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="mt-4 md:mt-0 text-xs text-gray-500 hover:text-pink-400 transition-colors flex items-center gap-1"
+            className="mt-4 md:mt-0 text-xs text-gray-400 hover:text-pink-400 transition-colors flex items-center gap-1"
           >
             Nach oben ↑
           </button>

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion, Variants } from 'framer-motion';
+import { m, useReducedMotion, Variants, LazyMotion, domAnimation } from 'framer-motion';
 import { ReactNode } from 'react';
 
 interface FadeInWhenVisibleProps {
@@ -13,13 +13,15 @@ interface FadeInWhenVisibleProps {
 }
 
 /**
- * ✅ ZERO-DEFECT: Universelle Scroll-Reveal Komponente
+ * ✅ ZERO-DEFECT MAXIMUM: Universelle Scroll-Reveal Komponente
  *
- * Features:
- * - Respektiert prefers-reduced-motion (Accessibility)
- * - GPU-acceleriert via transforms (performant)
- * - Once-Trigger (animiert nur beim ersten Sichtbarwerden)
- * - Konfigurierbare Richtung und Verzögerung
+ * Premium Features:
+ * - ✅ LazyMotion (reduziert Bundle um ~30 KiB)
+ * - ✅ `m` statt `motion` (strict mode für echtes Tree-Shaking)
+ * - ✅ Nur GPU-composited Properties (transform, opacity)
+ * - ✅ will-change: transform, opacity (Browser-Optimierung)
+ * - ✅ SSR-sicher durch konsistente DOM-Struktur
+ * - ✅ Accessibility (prefers-reduced-motion)
  */
 export default function FadeInWhenVisible({
   children,
@@ -31,12 +33,6 @@ export default function FadeInWhenVisible({
 }: FadeInWhenVisibleProps) {
   const prefersReducedMotion = useReducedMotion();
 
-  // ✅ Bei Reduced Motion: Sofort sichtbar, keine Animation
-  if (prefersReducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
-  // ✅ Richtungs-Varianten für elegante Bewegungsrichtungen
   const directionOffset = {
     up: { y: 30 },
     down: { y: -30 },
@@ -55,32 +51,31 @@ export default function FadeInWhenVisible({
       x: 0,
       y: 0,
       transition: {
-        duration,
-        delay,
-        ease: [0.25, 0.1, 0.25, 1] as const, // smooth cubic-bezier
+        duration: prefersReducedMotion ? 0 : duration,
+        delay: prefersReducedMotion ? 0 : delay,
+        ease: [0.25, 0.1, 0.25, 1] as const,
       },
     },
   };
 
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once, amount: 0.2 }}
-      variants={variants}
-      className={className}
-    >
-      {children}
-    </motion.div>
+    <LazyMotion features={domAnimation} strict>
+      <m.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once, amount: 0.2 }}
+        variants={variants}
+        className={className}
+        style={{ willChange: 'transform, opacity' }}
+      >
+        {children}
+      </m.div>
+    </LazyMotion>
   );
 }
 
 /**
- * ✅ ZERO-DEFECT: Stagger Container für Listen/Grids
- *
- * Nutze diese Komponente als Wrapper um eine Liste,
- * damit die Kind-Elemente nacheinander erscheinen.
- * Die Kind-Varianten werden in StaggerItem definiert.
+ * ✅ ZERO-DEFECT MAXIMUM: Stagger Container
  */
 export function StaggerContainer({
   children,
@@ -93,36 +88,35 @@ export function StaggerContainer({
 }) {
   const prefersReducedMotion = useReducedMotion();
 
-  if (prefersReducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: staggerDelay,
-        delayChildren: 0.1,
+        staggerChildren: prefersReducedMotion ? 0 : staggerDelay,
+        delayChildren: prefersReducedMotion ? 0 : 0.1,
       },
     },
   };
 
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={containerVariants}
-      className={className}
-    >
-      {children}
-    </motion.div>
+    <LazyMotion features={domAnimation} strict>
+      <m.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={containerVariants}
+        className={className}
+        style={{ willChange: 'opacity' }}
+      >
+        {children}
+      </m.div>
+    </LazyMotion>
   );
 }
 
 /**
- * ✅ ZERO-DEFECT: Stagger Item - nutze dies als Kind von StaggerContainer
+ * ✅ ZERO-DEFECT MAXIMUM: Stagger Item
  */
 export function StaggerItem({
   children,
@@ -133,32 +127,31 @@ export function StaggerItem({
 }) {
   const prefersReducedMotion = useReducedMotion();
 
-  if (prefersReducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: {
-            duration: 0.5,
-            ease: [0.25, 0.1, 0.25, 1] as const,
+    <LazyMotion features={domAnimation} strict>
+      <m.div
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+              duration: prefersReducedMotion ? 0 : 0.5,
+              ease: [0.25, 0.1, 0.25, 1] as const,
+            },
           },
-        },
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
+        }}
+        className={className}
+        style={{ willChange: 'transform, opacity' }}
+      >
+        {children}
+      </m.div>
+    </LazyMotion>
   );
 }
 
 /**
- * ✅ ZERO-DEFECT: Hover-Lift Komponente für Cards
+ * ✅ ZERO-DEFECT MAXIMUM: Hover-Lift
  */
 export function HoverLift({
   children,
@@ -171,20 +164,23 @@ export function HoverLift({
 }) {
   const prefersReducedMotion = useReducedMotion();
 
-  if (prefersReducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
-    <motion.div
-      whileHover={{
-        y: liftAmount,
-        transition: { duration: 0.2, ease: 'easeOut' },
-      }}
-      whileTap={{ scale: 0.98 }}
-      className={className}
-    >
-      {children}
-    </motion.div>
+    <LazyMotion features={domAnimation} strict>
+      <m.div
+        whileHover={
+          prefersReducedMotion
+            ? {}
+            : {
+                y: liftAmount,
+                transition: { duration: 0.2, ease: 'easeOut' },
+              }
+        }
+        whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
+        className={className}
+        style={{ willChange: 'transform' }}
+      >
+        {children}
+      </m.div>
+    </LazyMotion>
   );
 }
