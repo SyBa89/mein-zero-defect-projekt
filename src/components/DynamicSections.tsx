@@ -3,8 +3,8 @@
 import dynamic from 'next/dynamic';
 
 // ✅ ZERO-DEFECT: Lazy Loading für nicht-kritische Client Components
-// WICHTIG: ssr: true (oder weglassen) für Hydration-Konsistenz
-const FAQ = dynamic(() => import('@/components/FAQ'));
+// TEMPORÄR: FAQ auskommentiert für Hydration-Test
+// const FAQ = dynamic(() => import('@/components/FAQ'));
 const DailyHighlightsSection = dynamic(() => import('@/components/DailyHighlightsSection'));
 const BrandsSection = dynamic(() => import('@/components/BrandsSection'));
 
@@ -15,8 +15,8 @@ interface DynamicSectionsProps {
 export default function DynamicSections({ children }: DynamicSectionsProps) {
   return (
     <>
-      <FAQ />
-      {/* ✅ Reviews wird jetzt direkt in page.tsx gerendert (Server Component) */}
+      {/* TEMPORÄR: FAQ auskommentiert für Hydration-Test */}
+      {/* <FAQ /> */}
       <DailyHighlightsSection />
       <BrandsSection />
       {children}
