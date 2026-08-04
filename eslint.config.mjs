@@ -11,4 +11,4 @@
 // Next.js 15.5.22 macht Type-Checking bereits beim Build (TypeScript).
 // ======================================================================
 
-export default [];
+export default [{}];
