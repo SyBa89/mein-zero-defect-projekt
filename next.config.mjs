@@ -28,8 +28,7 @@ const nextConfig = {
 
   // ✅ ESLint während Build deaktivieren (Next.js 15.5.22 best practice)
   // TypeScript-Validierung läuft weiterhin separat
-  // IDE + pre-commit lint-staged laufen weiterhin
-  // Vercel-Build wird dadurch garantiert grün
+  // ESLint-Config ist minimal (leeres Array) → keine Crash-Gefahr
   eslint: {
     ignoreDuringBuilds: true,
   },
