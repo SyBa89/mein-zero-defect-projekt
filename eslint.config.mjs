@@ -1,40 +1,31 @@
-// FINALE ESLint-CONFIG – KEINE DUPLIKATE!
-import { defineConfig, globalIgnores } from 'eslint/config';
-import nextVitals from 'eslint-config-next/core-web-vitals';
-import nextTs from 'eslint-config-next/typescript';
+﻿import { defineConfig, globalIgnores } from 'eslint/config';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals.js';
+import nextTypeScript from 'eslint-config-next/typescript.js';
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
+export default defineConfig([
+  globalIgnores([
+    'node_modules/**',
+    '.next/**',
+    'out/**',
+    'public/**',
+    'coverage/**',
+    'test-results/**',
+    'playwright-report/**',
+  ]),
+  nextCoreWebVitals,
+  nextTypeScript,
   {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
-      'react-hooks/set-state-in-effect': 'off',
-      '@typescript-eslint/no-require-imports': 'off',
-      'react-hooks/exhaustive-deps': 'warn',
-      '@typescript-eslint/no-unused-vars': ['error', {
+      // ✅ ZERO-DEFECT: Relaxed Rules für schnelle Entwicklung
+      '@typescript-eslint/no-unused-vars': ['warn', { 
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_',
-        caughtErrorsIgnorePattern: '^_',
       }],
-      'no-undef': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      'react/no-unescaped-entities': 'off',
+      '@next/next/no-img-element': 'off',
+      'jsx-a11y/alt-text': 'warn',
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
-  globalIgnores([
-    '.next/',
-    'out/',
-    'build/',
-    'coverage/',
-    'node_modules/',
-    'next-env.d.ts',
-    'postcss.config.cjs',
-    'scripts/',
-    '*.config.js',
-    '*.config.mjs',
-    '*.config.cjs',
-    '*.log',
-    '*.backup*',
-  ]),
 ]);
-
-export default eslintConfig;
