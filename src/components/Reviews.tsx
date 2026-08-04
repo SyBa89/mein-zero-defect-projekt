@@ -4,7 +4,6 @@ import { CLIENT_CONFIG } from '@/lib/client.config';
 import { m, useReducedMotion, LazyMotion, domAnimation } from 'framer-motion';
 import FadeInWhenVisible, { HoverLift } from './motion/FadeInWhenVisible';
 
-// ✅ ZERO-DEFECT: Review-Daten mit typografischen Anführungszeichen (ESLint-konform)
 const REVIEWS = [
   {
     name: 'Thomas M.',
@@ -30,11 +29,9 @@ const REVIEWS = [
 ];
 
 export default function Reviews() {
-  // ✅ ZERO-DEFECT: Nur 'contact' wird verwendet (brand entfernt für ESLint-Konformität)
   const { contact } = CLIENT_CONFIG;
   const prefersReducedMotion = useReducedMotion();
 
-  // ✅ ZERO-DEFECT: Echte Google-Review-URL mit Place ID
   const googleReviewUrl = `https://search.google.com/local/writereview?placeid=${contact.googlePlaceId}`;
 
   return (
@@ -53,7 +50,6 @@ export default function Reviews() {
             </p>
           </FadeInWhenVisible>
 
-          {/* Google Reviews Card */}
           <FadeInWhenVisible direction="up" duration={0.8}>
             <HoverLift liftAmount={-8}>
               <m.div
@@ -62,7 +58,6 @@ export default function Reviews() {
                 transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
                 style={{ willChange: 'transform' }}
               >
-                {/* Google Logo & Rating */}
                 <div className="flex items-center justify-center gap-4 mb-6">
                   <div className="flex items-center gap-2">
                     <svg className="w-8 h-8" viewBox="0 0 24 24" aria-hidden="true">
@@ -89,9 +84,9 @@ export default function Reviews() {
                   </div>
                 </div>
 
-                {/* Rating Stars */}
+                {/* ✅ ZERO-DEFECT ARIA FIX: role="img" für korrekte Screen-Reader-Interpretation */}
                 <div className="flex items-center justify-center gap-2 mb-4">
-                  <div className="flex gap-1" aria-label="5 von 5 Sternen">
+                  <div className="flex gap-1" role="img" aria-label="5 von 5 Sternen">
                     {[...Array(5)].map((_, i) => (
                       <svg
                         key={i}
@@ -111,7 +106,6 @@ export default function Reviews() {
                   Basierend auf Google Bewertungen
                 </p>
 
-                {/* Sample Reviews mit typografischen Anführungszeichen */}
                 <div className="space-y-6 mb-8">
                   {REVIEWS.map((review) => (
                     <div
@@ -133,7 +127,6 @@ export default function Reviews() {
                         </div>
                       </div>
                       <p className="text-gray-700 dark:text-gray-300">
-                        {/* ✅ ZERO-DEFECT: Typografische Anführungszeichen (ESLint-konform) */}
                         <span aria-hidden="true">&ldquo;</span>
                         {review.text}
                         <span aria-hidden="true">&rdquo;</span>
@@ -142,7 +135,6 @@ export default function Reviews() {
                   ))}
                 </div>
 
-                {/* CTA Button - Rechtssicher, ehrlich, kein Fake-Rating */}
                 <a
                   href={googleReviewUrl}
                   target="_blank"
@@ -170,7 +162,6 @@ export default function Reviews() {
             </HoverLift>
           </FadeInWhenVisible>
 
-          {/* ✅ ZERO-DEFECT: Ehrlicher Trust-Indikator (UWG-konform) */}
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-8 max-w-2xl mx-auto">
             ⭐ Wir zeigen hier beispielhafte Kundenstimmen. Alle Bewertungen sind authentisch und
             können auf Google verifiziert werden.

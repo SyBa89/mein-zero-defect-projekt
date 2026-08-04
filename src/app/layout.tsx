@@ -1,4 +1,5 @@
-﻿import type { Metadata, Viewport } from 'next';
+﻿import React from 'react';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
@@ -10,7 +11,6 @@ import ThemeProvider from '@/components/ThemeProvider';
 import LocalBusinessSchema from '@/components/LocalBusinessSchema';
 import { CLIENT_CONFIG } from '@/lib/client.config';
 
-// ✅ ZERO-DEFECT: Premium Fonts (Geist = Vercel/Linear/Stripe Standard)
 const geistSans = Geist({
   subsets: ['latin'],
   variable: '--font-geist-sans',
@@ -29,7 +29,6 @@ const geistMono = Geist_Mono({
   adjustFontFallback: true,
 });
 
-// ✅ ZERO-DEFECT: Viewport für Mobile-Optimierung + PWA-Support
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -41,7 +40,6 @@ export const viewport: Viewport = {
   colorScheme: 'light dark',
 };
 
-// ✅ ZERO-DEFECT: Meta Description & SEO 100/100
 export const metadata: Metadata = {
   metadataBase: new URL(CLIENT_CONFIG.url),
   title: {
@@ -113,18 +111,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de" suppressHydrationWarning>
       <head>
-        {/* ✅ ZERO-DEFECT: Preconnect für Vercel Analytics (optional, aber empfohlen) */}
-        <link rel="preconnect" href="https://vercel.live" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://vercel.live" />
-
-        {/* ✅ ZERO-DEFECT: Preload Fonts (next/font handled das automatisch, aber explizit ist sauberer) */}
-        {/* Fonts werden automatisch von next/font vorgeladen - keine manuellen Links nötig */}
+        {/* ✅ ZERO-DEFECT: Nur benötigte Preconnects (vercel.live entfernt - unbenutzt) */}
+        {/* Fonts werden automatisch von next/font vorgeladen */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
         suppressHydrationWarning
       >
-        {/* ✅ ZERO-DEFECT: Skip-Link für Accessibility (WCAG 2.2 AA) */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-pink-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
