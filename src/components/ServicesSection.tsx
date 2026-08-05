@@ -13,7 +13,10 @@ export default function ServicesSection() {
 
   return (
     <FadeInWhenVisible direction="up" duration={0.8}>
-      <section className="py-16 bg-gray-50 dark:bg-gray-800 border-y border-gray-100 dark:border-gray-700">
+      <section
+        className="py-16 bg-gray-50 dark:bg-gray-800 border-y border-gray-100 dark:border-gray-700"
+        id="services"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6" staggerDelay={0.15}>
             {extraServices.map((service, i) => (

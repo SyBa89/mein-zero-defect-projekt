@@ -7,13 +7,13 @@ import { HoverLift } from './motion/FadeInWhenVisible';
 export default function ProductsSection() {
   const { products, sections } = CLIENT_CONFIG;
 
-  // ✅ ZERO-DEFECT: White-Label - Wenn keine Produkte definiert sind, zeige nichts
+  // âœ… ZERO-DEFECT: White-Label - Wenn keine Produkte definiert sind, zeige nichts
   if (!sections.showProducts || products.categories.length === 0) {
     return null;
   }
 
   return (
-    <section className="py-20 px-4 bg-white dark:bg-gray-900">
+    <section className="py-20 px-4 bg-white dark:bg-gray-900" id="products">
       <div className="max-w-7xl mx-auto">
         <FadeInWhenVisible direction="up" duration={0.8}>
           <div className="text-center mb-12">
@@ -36,7 +36,7 @@ export default function ProductsSection() {
                   {category.ageRestriction && (
                     <div className="mt-4 px-4 py-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
                       <p className="text-sm text-yellow-800 dark:text-yellow-200 font-medium">
-                        ⚠️ {category.ageRestriction}
+                        âš ï¸ {category.ageRestriction}
                       </p>
                     </div>
                   )}

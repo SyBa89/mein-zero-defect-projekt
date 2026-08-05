@@ -6,7 +6,7 @@ export default function FeaturesSection() {
   const { features } = CLIENT_CONFIG;
 
   return (
-    <section className="py-20 px-4 bg-white dark:bg-gray-900">
+    <section className="py-20 px-4 bg-white dark:bg-gray-900" id="features">
       <div className="max-w-7xl mx-auto">
         <FadeInWhenVisible direction="up" duration={0.8}>
           <div className="text-center mb-16">

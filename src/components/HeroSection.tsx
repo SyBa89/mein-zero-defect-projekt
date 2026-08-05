@@ -12,13 +12,13 @@ export default function HeroSection() {
   return (
     <LazyMotion features={domAnimation} strict>
       <section
-        id="main-content"
         className="relative min-h-[85vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden bg-gray-900"
+        id="hero"
       >
-        {/* ✅ ZERO-DEFECT: q=75 statt q=85 (17 KiB savings, visuelle Qualität bleibt) */}
+        {/* âœ… ZERO-DEFECT: q=75 statt q=85 (17 KiB savings, visuelle QualitÃ¤t bleibt) */}
         <Image
           src="/images/fassade.png"
-          alt={`${brand.name} – Fassade am Bürgerplatz in Erftstadt-Liblar`}
+          alt={`${brand.name} â€“ Fassade am BÃ¼rgerplatz in Erftstadt-Liblar`}
           fill
           priority
           fetchPriority="high"
@@ -84,7 +84,7 @@ export default function HeroSection() {
                 : { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1 },
             }}
           >
-            🍭
+            ðŸ­
           </m.div>
 
           <FadeInWhenVisible delay={0.2} direction="up">
@@ -113,7 +113,7 @@ export default function HeroSection() {
             </p>
           </FadeInWhenVisible>
 
-          {/* ✅ ZERO-DEFECT: Composited Animations (nur transform + opacity) */}
+          {/* âœ… ZERO-DEFECT: Composited Animations (nur transform + opacity) */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <m.a
               href={hero.primaryCta.href}
