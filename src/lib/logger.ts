@@ -1,4 +1,4 @@
-﻿export type LogArgs = unknown[];
+export type LogArgs = unknown[];
 
 function safeConsole(...args: unknown[]) {
   if (typeof console !== 'undefined' && console.log) console.log(...args);
@@ -12,7 +12,7 @@ export const logger = {
       } else {
         safeConsole(...args);
       }
-    } catch (_e) {
+    } catch {
       safeConsole(...args);
     }
   },
@@ -23,7 +23,7 @@ export const logger = {
       } else {
         safeConsole(...args);
       }
-    } catch (_e) {
+    } catch {
       safeConsole(...args);
     }
   },
@@ -34,7 +34,7 @@ export const logger = {
       } else {
         safeConsole(...args);
       }
-    } catch (_e) {
+    } catch {
       safeConsole(...args);
     }
   },
@@ -45,7 +45,7 @@ export const logger = {
       } else {
         safeConsole(...args);
       }
-    } catch (_e) {
+    } catch {
       safeConsole(...args);
     }
   },

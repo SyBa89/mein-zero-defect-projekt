@@ -10,7 +10,7 @@ import type { NextRequest } from 'next/server';
  *    Client-Bootstrap im Dev-Modus (Uncaught EvalError) und die Seite
  *    verliert Hydration, Effects und Interaktivität.
  */
-export function middleware(_request: NextRequest) {
+export function middleware(_req: NextRequest) {
   const response = NextResponse.next();
   const isDev = process.env.NODE_ENV === 'development';
 
