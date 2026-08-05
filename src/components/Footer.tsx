@@ -9,7 +9,7 @@ export default function Footer() {
   const [currentYear, setCurrentYear] = useState<number | null>(null);
 
   useEffect(() => {
-    setCurrentYear(2026);
+    setCurrentYear(new Date().getFullYear());
   }, []);
 
   const { brand, contact, features } = CLIENT_CONFIG;
