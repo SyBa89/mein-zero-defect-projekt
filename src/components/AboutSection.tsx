@@ -6,7 +6,7 @@ import FadeInWhenVisible from './motion/FadeInWhenVisible';
 export default function AboutSection() {
   const { brand, contact, hermes } = CLIENT_CONFIG;
 
-  // �o. ZERO-DEFECT: Dynamisch - Prüft, ob Hermes in der Config aktiviert ist
+  // ✅. ZERO-DEFECT: Dynamisch - Prüft, ob Hermes in der Config aktiviert ist
   const hasHermes = hermes?.enabled ?? false;
   const serviceText = hasHermes ? ' und Hermes Paketshop' : '';
 
@@ -15,7 +15,7 @@ export default function AboutSection() {
       <div className="max-w-4xl mx-auto text-center">
         <FadeInWhenVisible direction="up" duration={0.8}>
           <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-6">
-            �ober uns
+            Über uns
           </h2>
         </FadeInWhenVisible>
 
@@ -31,8 +31,8 @@ export default function AboutSection() {
         <FadeInWhenVisible direction="up" delay={0.4} duration={0.8}>
           <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
             Ob Sie morgens Ihre Zeitung holen, mittags einen schnellen Snack brauchen, Pakete
-            versenden oder abends noch Getränke für den Feierabend kaufen möchten �?" wir sind für
-            Sie da.{' '}
+            versenden oder abends noch Getränke für den Feierabend kaufen möchten – wir sind für Sie
+            da.{' '}
             {hasHermes &&
               'Als offizieller Hermes Paketshop bieten wir Ihnen zusätzlich alle Dienstleistungen rund um Paketversand, -abholung und Retouren. '}
             Schnell, freundlich und zu fairen Preisen.
