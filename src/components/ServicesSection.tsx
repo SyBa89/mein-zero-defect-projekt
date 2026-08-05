@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { CLIENT_CONFIG } from '@/lib/client.config';
 import FadeInWhenVisible, { StaggerContainer, StaggerItem } from './motion/FadeInWhenVisible';
