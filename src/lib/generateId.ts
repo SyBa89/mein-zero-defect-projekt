@@ -8,7 +8,7 @@ export function generateId(): string {
     if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
       return (crypto as any).randomUUID();
     }
-  } catch (_e) {
+  } catch {
     // ignore
   }
   return Date.now().toString();
