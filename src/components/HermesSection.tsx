@@ -1,12 +1,62 @@
 ﻿'use client';
 
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 import PackageCalculator from './PackageCalculator';
 import FadeInWhenVisible, { StaggerContainer, StaggerItem } from './motion/FadeInWhenVisible';
 import { HoverLift } from './motion/FadeInWhenVisible';
 
 export default function HermesSection() {
-  const { hermes, sections } = CLIENT_CONFIG;
+  const config = useConfig();
+  const { isLoading } = useConfigState();
+
+  // ✅ ZERO-DEFECT: Skeleton UI während Config lädt
+  if (isLoading) {
+    return (
+      <section
+        className="relative py-20 px-4 bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden"
+        aria-busy="true"
+        role="status"
+      >
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-20 -right-20 w-96 h-96 bg-orange-200/40 dark:bg-orange-900/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-yellow-200/40 dark:bg-yellow-900/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="text-6xl mb-4 inline-block" aria-hidden="true">
+              📦
+            </div>
+            <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-64 mx-auto mb-4 animate-pulse"></div>
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto animate-pulse"></div>
+          </div>
+
+          <div className="glass-card rounded-3xl p-8 md:p-10">
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded-2xl animate-pulse"></div>
+              </div>
+              <div className="space-y-6">
+                <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 border border-white/40 dark:border-gray-700/40">
+                  <div className="h-7 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4 animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
+                </div>
+                <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 border border-white/40 dark:border-gray-700/40">
+                  <div className="h-7 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4 animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span className="sr-only">Inhalt wird geladen...</span>
+      </section>
+    );
+  }
+
+  const { hermes, sections } = config;
 
   // ✅ ZERO-DEFECT: White-Label - Sektion wird nur gerendert, wenn Hermes aktiv ist
   if (!sections?.showHermes || !hermes?.enabled) {
