@@ -1,11 +1,12 @@
 ﻿import Link from 'next/link';
 import MobileActionBar from '@/components/MobileActionBar';
 import type { Metadata } from 'next';
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { getClientConfig } from '@/lib/config-loader';
+const config = getClientConfig();
 
 // ✅ ZERO-DEFECT: Dynamische SEO-Metadaten mit explizitem NOINDEX für Danke-Seiten
 export async function generateMetadata(): Promise<Metadata> {
-  const { brand } = CLIENT_CONFIG;
+  const { brand } = config;
 
   return {
     title: `Vielen Dank | ${brand.name}`,
@@ -18,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function DankePage() {
-  const { brand, contact } = CLIENT_CONFIG;
+  const { brand, contact } = config;
 
   // Formatierung der Telefonnummer für die Anzeige (z.B. +4922359291160 → 02235 9291160)
   const displayPhone = contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2');

@@ -1,14 +1,15 @@
 ﻿import { Metadata } from 'next';
 import Link from 'next/link';
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { getClientConfig } from '@/lib/config-loader';
+const config = getClientConfig();
 
 export const metadata: Metadata = {
   title: 'Impressum',
-  description: `Impressum von ${CLIENT_CONFIG.brand.name}`,
+  description: `Impressum von ${config.brand.name}`,
 };
 
 export default function ImpressumPage() {
-  const { brand, contact, business } = CLIENT_CONFIG;
+  const { brand, contact, business } = config;
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">

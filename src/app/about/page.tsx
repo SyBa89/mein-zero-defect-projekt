@@ -1,10 +1,11 @@
 ﻿import Link from 'next/link';
 import type { Metadata } from 'next';
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { getClientConfig } from '@/lib/config-loader';
+const config = getClientConfig();
 
 // ✅ ZERO-DEFECT: Dynamische SEO-Metadaten für White-Label-Fähigkeit
 export async function generateMetadata(): Promise<Metadata> {
-  const { brand } = CLIENT_CONFIG;
+  const { brand } = config;
 
   return {
     title: `Über das Projekt | Zero-Defect OS & ${brand.name}`,
@@ -32,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function AboutPage() {
-  const { brand, url } = CLIENT_CONFIG;
+  const { brand, url } = config;
 
   // ✅ Schema.org WebPage für maximale SEO-Relevanz (dynamisch)
   const schemaOrg = {
