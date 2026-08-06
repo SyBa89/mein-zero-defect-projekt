@@ -1,8 +1,31 @@
 ﻿import Link from 'next/link';
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { getClientConfig } from '@/lib/config-loader';
+
+const config = getClientConfig();
+
+// ✅ ZERO-DEFECT: Type definition with null support (PowerShell JSON compat)
+type NavItem = {
+  label: string;
+  href: string;
+  isExternal?: boolean | null;
+};
+
+// ✅ ZERO-DEFECT: Fallback Navigation für Backward-Compatibility
+const FALLBACK_NAV: NavItem[] = [
+  { label: 'Startseite', href: '/' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Sortiment', href: '/#products' },
+  { label: 'Kontakt', href: '/kontakt' },
+];
 
 export default function Header() {
-  const { brand, header } = CLIENT_CONFIG;
+  const { brand, header } = config;
+
+  const navigation: NavItem[] =
+    header.navigation && header.navigation.length > 0 ? header.navigation : FALLBACK_NAV;
+
+  const showAdminLink = header.showAdminLink !== false;
+  const adminLabel = header.adminLabel || 'Admin Cockpit';
 
   return (
     <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-30">
@@ -11,7 +34,6 @@ export default function Header() {
           {/* Logo/Name */}
           <Link href="/" className="flex items-center gap-3">
             {header.showLogo && header.logo && (
-              // eslint-disable-next-line @next/next/no-img-element
               <img src={header.logo} alt={brand.name} className="h-10 w-auto" />
             )}
             <div>
@@ -21,39 +43,27 @@ export default function Header() {
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <Link
-              href="/"
-              className="text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
-            >
-              Startseite
-            </Link>
-            <Link
-              href="/#services"
-              className="text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
-            >
-              Services
-            </Link>
-            <Link
-              href="/#products"
-              className="text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
-            >
-              Sortiment
-            </Link>
-            <Link
-              href="/kontakt"
-              className="text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
-            >
-              Kontakt
-            </Link>
+            {navigation.map((item, i) => (
+              <Link
+                key={i}
+                href={item.href}
+                {...(item.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className="text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Admin Link */}
-          <Link
-            href="/admin"
-            className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg transition-colors"
-          >
-            Admin Cockpit
-          </Link>
+          {showAdminLink && (
+            <Link
+              href="/admin"
+              className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg transition-colors"
+            >
+              {adminLabel}
+            </Link>
+          )}
         </div>
       </div>
     </header>

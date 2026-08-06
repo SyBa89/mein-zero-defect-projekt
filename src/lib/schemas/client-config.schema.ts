@@ -1,36 +1,31 @@
 ﻿import { z } from 'zod';
 
-// ═══════════════════════════════════════════════════════════════
-// ClientConfig Schema — Zod-Validierung für White-Label
-// ═══════════════════════════════════════════════════════════════
-
-// ─── Brand Schema ───────────────────────────────────────────
 const BrandSchema = z.object({
-  name: z.string().min(1, 'Brand name is required'),
-  slogan: z.string().min(1, 'Brand slogan is required'),
-  legalName: z.string().min(1, 'Legal name is required'),
+  name: z.string().min(1),
+  slogan: z.string().min(1),
+  legalName: z.string().min(1),
   primaryColor: z.enum(['pink', 'blue', 'green', 'orange', 'purple']),
 });
 
 const AddressSchema = z.object({
-  street: z.string().min(1, 'Street is required'),
-  zip: z.string().min(1, 'ZIP is required'),
-  city: z.string().min(1, 'City is required'),
-  country: z.string().length(2, 'Country must be ISO code (2 chars)'),
+  street: z.string().min(1),
+  zip: z.string().min(1),
+  city: z.string().min(1),
+  country: z.string().length(2),
 });
 
 const ContactSchema = z.object({
   address: AddressSchema,
-  phone: z.string().min(1, 'Phone is required'),
-  email: z.string().email('Invalid email format'),
-  googlePlaceId: z.string().optional(),
-  mapsUrl: z.string().url('Invalid maps URL').optional(),
+  phone: z.string().min(1),
+  email: z.string().email(),
+  googlePlaceId: z.string().nullish(),
+  mapsUrl: z.string().url().nullish(),
 });
 
 const BusinessSchema = z.object({
   type: z.enum(['kiosk', 'restaurant', 'retail', 'service', 'handwerk', 'arzt']),
   isSmallBusiness: z.boolean(),
-  vatId: z.string().optional(),
+  vatId: z.string().nullish(),
 });
 
 const SeoSchema = z.object({
@@ -68,9 +63,18 @@ const SectionsSchema = z.object({
   showJackpot: z.boolean(),
 });
 
+const NavigationItemSchema = z.object({
+  label: z.string().min(1),
+  href: z.string().min(1),
+  isExternal: z.boolean().nullish(),
+});
+
 const HeaderSchema = z.object({
-  logo: z.string().optional(),
+  logo: z.string().nullish(),
   showLogo: z.boolean(),
+  navigation: z.array(NavigationItemSchema).nullish(),
+  showAdminLink: z.boolean().nullish(),
+  adminLabel: z.string().nullish(),
 });
 
 const HermesSchema = z.object({
@@ -82,7 +86,7 @@ const ProductCategorySchema = z.object({
   icon: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
-  ageRestriction: z.string().optional(),
+  ageRestriction: z.string().nullish(),
 });
 
 const ProductsSchema = z.object({
@@ -94,7 +98,6 @@ const FaqSchema = z.object({
   answer: z.string().min(1),
 });
 
-// ✅ NEW: Review Schema for White-Label customer testimonials
 const ReviewSchema = z.object({
   name: z.string().min(1),
   initial: z.string().length(1),
@@ -103,11 +106,8 @@ const ReviewSchema = z.object({
   gradient: z.string().min(1),
 });
 
-// ═══════════════════════════════════════════════════════════════
-// MAIN CLIENT CONFIG SCHEMA
-// ═══════════════════════════════════════════════════════════════
 export const ClientConfigSchema = z.object({
-  url: z.string().url('Invalid URL'),
+  url: z.string().url(),
   brand: BrandSchema,
   contact: ContactSchema,
   business: BusinessSchema,
@@ -120,8 +120,8 @@ export const ClientConfigSchema = z.object({
   hermes: HermesSchema,
   products: ProductsSchema,
   faq: z.array(FaqSchema).min(1),
-  brands: z.array(z.string()).optional(),
-  reviews: z.array(ReviewSchema).optional(), // ✅ NEW: Customer testimonials
+  brands: z.array(z.string()).nullish(),
+  reviews: z.array(ReviewSchema).nullish(),
 });
 
 export type ClientConfig = z.infer<typeof ClientConfigSchema>;
@@ -133,11 +133,9 @@ export function validateClientConfig(data: unknown): ClientConfig {
     if (error instanceof z.ZodError) {
       console.error('ClientConfig validation failed:');
       error.issues.forEach(function (issue: z.ZodIssue) {
-        const pathStr = issue.path.join('.');
-        console.error('   ' + pathStr + ': ' + issue.message);
+        console.error('   ' + issue.path.join('.') + ': ' + issue.message);
       });
-      const errorMessage = 'Invalid ClientConfig: ' + error.issues.length + ' errors found.';
-      throw new Error(errorMessage);
+      throw new Error('Invalid ClientConfig: ' + error.issues.length + ' errors found.');
     }
     throw error;
   }

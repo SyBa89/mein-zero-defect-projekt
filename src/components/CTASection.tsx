@@ -95,7 +95,7 @@ export default function CTASection() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <HoverLift liftAmount={-4}>
                 <a
-                  href={contact.mapsUrl}
+                  href={contact.mapsUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold text-lg rounded-2xl shadow-lg hover:shadow-xl transition-colors backdrop-blur-sm bg-opacity-90"

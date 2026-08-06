@@ -98,6 +98,27 @@
     "showJackpot": true
   },
   "header": {
+    "adminLabel": "Admin Cockpit",
+    "navigation": [
+      {
+        "href": "/",
+        "label": "Startseite"
+      },
+      {
+        "href": "/#services",
+        "label": "Services"
+      },
+      {
+        "href": "/#products",
+        "label": "Sortiment"
+      },
+      {
+        "href": "/kontakt",
+        "label": "Kontakt"
+      }
+    ],
+    "showAdminLink": true,
+    "logo": null,
     "showLogo": false
   },
   "hermes": {
