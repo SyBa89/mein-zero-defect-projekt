@@ -1,12 +1,37 @@
 'use client';
 
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 import { m, useReducedMotion, LazyMotion, domAnimation } from 'framer-motion';
 import FadeInWhenVisible, { HoverLift } from './motion/FadeInWhenVisible';
 
 export default function CTASection() {
-  const { contact } = CLIENT_CONFIG;
+  const config = useConfig();
+  const { isLoading } = useConfigState();
   const prefersReducedMotion = useReducedMotion();
+
+  // ✅ ZERO-DEFECT: Skeleton UI während Config lädt
+  if (isLoading) {
+    return (
+      <section
+        className="relative py-20 px-4 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden"
+        aria-busy="true"
+        role="status"
+      >
+        <div className="relative max-w-4xl mx-auto text-center">
+          <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-64 mx-auto mb-6 animate-pulse"></div>
+          <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto mb-4 animate-pulse"></div>
+          <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mx-auto mb-8 animate-pulse"></div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="h-14 bg-gray-200 dark:bg-gray-700 rounded-2xl w-56 animate-pulse"></div>
+            <div className="h-14 bg-gray-200 dark:bg-gray-700 rounded-2xl w-56 animate-pulse"></div>
+          </div>
+        </div>
+        <span className="sr-only">Inhalt wird geladen...</span>
+      </section>
+    );
+  }
+
+  const { contact } = config;
   const phoneFormatted = contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2');
 
   return (
