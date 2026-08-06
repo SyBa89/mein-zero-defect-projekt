@@ -1,10 +1,11 @@
 'use client';
 
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 import { m, useReducedMotion, LazyMotion, domAnimation } from 'framer-motion';
 import FadeInWhenVisible, { HoverLift } from './motion/FadeInWhenVisible';
 
-const REVIEWS = [
+// ✅ ZERO-DEFECT: Fallback-Reviews wenn nicht in Config definiert (Backward-Compatibility)
+const FALLBACK_REVIEWS = [
   {
     name: 'Thomas M.',
     initial: 'T',
@@ -29,10 +30,74 @@ const REVIEWS = [
 ];
 
 export default function Reviews() {
-  const { contact } = CLIENT_CONFIG;
+  const config = useConfig();
+  const { isLoading } = useConfigState();
   const prefersReducedMotion = useReducedMotion();
 
-  const googleReviewUrl = `https://search.google.com/local/writereview?placeid=${contact.googlePlaceId}`;
+  // ✅ ZERO-DEFECT: Skeleton UI während Config lädt
+  if (isLoading) {
+    return (
+      <section
+        className="py-20 px-4 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden"
+        aria-busy="true"
+        role="status"
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto mb-6 animate-pulse"></div>
+          <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mx-auto mb-12 animate-pulse"></div>
+
+          <div className="glass-card rounded-3xl p-12 shadow-2xl">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-48 animate-pulse"></div>
+            </div>
+
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-8 h-8 bg-yellow-200 dark:bg-yellow-900/40 rounded animate-pulse"
+                  ></div>
+                ))}
+              </div>
+              <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-12 animate-pulse"></div>
+            </div>
+
+            <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mx-auto mb-8 animate-pulse"></div>
+
+            <div className="space-y-6 mb-8">
+              {[...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className="text-left bg-white/50 dark:bg-gray-800/50 rounded-2xl p-6 backdrop-blur-sm"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+                    <div className="flex-1">
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-32 mb-2 animate-pulse"></div>
+                      <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-24 animate-pulse"></div>
+                    </div>
+                  </div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
+                </div>
+              ))}
+            </div>
+
+            <div className="h-14 bg-gray-200 dark:bg-gray-700 rounded-2xl w-64 mx-auto animate-pulse"></div>
+          </div>
+
+          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto mt-8 animate-pulse"></div>
+        </div>
+        <span className="sr-only">Inhalt wird geladen...</span>
+      </section>
+    );
+  }
+
+  const { contact } = config;
+  const reviews = config.reviews && config.reviews.length > 0 ? config.reviews : FALLBACK_REVIEWS;
+  const googleReviewUrl = `https://search.google.com/local/writereview?placeid=${contact.googlePlaceId || ''}`;
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -107,7 +172,7 @@ export default function Reviews() {
                 </p>
 
                 <div className="space-y-6 mb-8">
-                  {REVIEWS.map((review) => (
+                  {reviews.map((review) => (
                     <div
                       key={review.name}
                       className="text-left bg-white/50 dark:bg-gray-800/50 rounded-2xl p-6 backdrop-blur-sm"
