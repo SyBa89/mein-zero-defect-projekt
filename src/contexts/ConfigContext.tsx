@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { validateClientConfig } from '../lib/schemas/client-config.schema';
 import type { ClientConfig } from '../lib/schemas/client-config.schema';
-import { CLIENT_CONFIG as FALLBACK_CONFIG } from '../lib/client.config';
 
 export type { ClientConfig };
 
@@ -22,16 +21,29 @@ const ConfigContext = createContext<ConfigContextType | undefined>(undefined);
 // ═══════════════════════════════════════════════════════════════
 // ConfigProvider — Wrappt die gesamte App
 // ═══════════════════════════════════════════════════════════════
+// ✅ ZERO-DEFECT: initialConfig Prop für Hydration-Safety
+//
+// Warum initialConfig?
+// - Server rendert mit getClientConfig() (kiosk.json)
+// - Client MUSS mit derselben Config hydraten (kein Mismatch!)
+// - initialConfig wird vom Server übergeben (layout.tsx)
+// - Danach optionaler Refresh vom /api/client-config für Live-Updates
 
-export function ConfigProvider({ children }: { children: React.ReactNode }) {
-  const [config, setConfig] = useState<ClientConfig>(FALLBACK_CONFIG);
-  const [isLoading, setIsLoading] = useState(true);
+interface ConfigProviderProps {
+  children: React.ReactNode;
+  initialConfig: ClientConfig; // ✅ REQUIRED: Server-rendered config
+}
+
+export function ConfigProvider({ children, initialConfig }: ConfigProviderProps) {
+  // ✅ ZERO-DEFECT: Initial state = Server state (kein Hydration-Mismatch!)
+  const [config, setConfig] = useState<ClientConfig>(initialConfig);
+  const [isLoading, setIsLoading] = useState(false); // ✅ false! Wir haben schon Config
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(function () {
     let mounted = true;
 
-    async function loadConfig() {
+    async function refreshConfig() {
       try {
         const response = await fetch('/api/client-config', {
           cache: 'force-cache',
@@ -47,20 +59,23 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
 
         if (mounted) {
           setConfig(validated);
-          setIsLoading(false);
         }
       } catch (err) {
         if (mounted) {
           const errorMessage = err instanceof Error ? err.message : String(err);
-          console.error('ConfigProvider: Failed to load config, using fallback:', errorMessage);
+          console.error('ConfigProvider: Failed to refresh config, keeping initial:', errorMessage);
           setError(err instanceof Error ? err : new Error(errorMessage));
-          setConfig(FALLBACK_CONFIG);
+          // ✅ KEIN Fallback auf client.config.ts - wir behalten initialConfig
+        }
+      } finally {
+        if (mounted) {
           setIsLoading(false);
         }
       }
     }
 
-    loadConfig();
+    // ✅ Optional refresh für Live-Updates (nicht kritisch für erste Render)
+    refreshConfig();
 
     return function cleanup() {
       mounted = false;

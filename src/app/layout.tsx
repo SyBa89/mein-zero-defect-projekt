@@ -11,6 +11,8 @@ import ThemeProvider from '@/components/ThemeProvider';
 import { ConfigProvider } from '@/contexts/ConfigContext';
 import LocalBusinessSchema from '@/components/LocalBusinessSchema';
 import { getClientConfig } from '@/lib/config-loader';
+
+// ✅ ZERO-DEFECT: Config einmal laden für Server + Client (Hydration-Safety!)
 const config = getClientConfig();
 
 const geistSans = Geist({
@@ -113,7 +115,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de" suppressHydrationWarning>
       <head>
-        {/* ✅ ZERO-DEFECT: Nur benötigte Preconnects (vercel.live entfernt - unbenutzt) */}
+        {/* ✅ ZERO-DEFECT: Nur benötigte Preconnects */}
         {/* Fonts werden automatisch von next/font vorgeladen */}
       </head>
       <body
@@ -127,7 +129,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Zum Hauptinhalt springen
         </a>
 
-        <ConfigProvider>
+        {/* ✅ ZERO-DEFECT: initialConfig Prop für Hydration-Safety */}
+        <ConfigProvider initialConfig={config}>
           <ThemeProvider>
             <LocalBusinessSchema />
             <div className="flex flex-col min-h-screen">
