@@ -1,12 +1,43 @@
-'use client';
+﻿'use client';
 
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 import FadeInWhenVisible from './motion/FadeInWhenVisible';
 
 export default function AboutSection() {
-  const { brand, contact, hermes } = CLIENT_CONFIG;
+  const config = useConfig();
+  const { isLoading } = useConfigState();
 
-  // ✅. ZERO-DEFECT: Dynamisch - Prüft, ob Hermes in der Config aktiviert ist
+  // ✅ ZERO-DEFECT: Skeleton UI während Config lädt
+  if (isLoading) {
+    return (
+      <section
+        className="py-20 px-4 bg-gray-50 dark:bg-gray-800"
+        id="about"
+        aria-busy="true"
+        role="status"
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-48 mx-auto mb-6 animate-pulse"></div>
+          <div className="space-y-3 mb-8">
+            <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-full animate-pulse"></div>
+            <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-full animate-pulse"></div>
+            <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-11/12 animate-pulse"></div>
+            <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-4/5 animate-pulse"></div>
+          </div>
+          <div className="space-y-3">
+            <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-full animate-pulse"></div>
+            <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-full animate-pulse"></div>
+            <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
+          </div>
+        </div>
+        <span className="sr-only">Inhalt wird geladen...</span>
+      </section>
+    );
+  }
+
+  const { brand, contact, hermes } = config;
+
+  // ✅ ZERO-DEFECT: Dynamisch - Prüft, ob Hermes in der Config aktiviert ist
   const hasHermes = hermes?.enabled ?? false;
   const serviceText = hasHermes ? ' und Hermes Paketshop' : '';
 
