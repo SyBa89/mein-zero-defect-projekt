@@ -1,11 +1,9 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-
-// ✅ ZERO-DEFECT: Lazy Loading für nicht-kritische Client Components
-const FAQ = dynamic(() => import('@/components/FAQ'));
-const DailyHighlightsSection = dynamic(() => import('@/components/DailyHighlightsSection'));
-const BrandsSection = dynamic(() => import('@/components/BrandsSection'));
+import React from 'react';
+import FAQ from '@/components/FAQ';
+import DailyHighlightsSection from '@/components/DailyHighlightsSection';
+import BrandsSection from '@/components/BrandsSection';
 
 interface DynamicSectionsProps {
   children?: React.ReactNode;
@@ -14,7 +12,7 @@ interface DynamicSectionsProps {
 export default function DynamicSections({ children }: DynamicSectionsProps) {
   return (
     <>
-      {/* ✅ ZERO-DEFECT: FAQ reaktiviert – Hydration-Fixes sind verifiziert */}
+      {/* ✅ ZERO-DEFECT: Statische Imports für bessere Performance */}
       <FAQ />
       <DailyHighlightsSection />
       <BrandsSection />
