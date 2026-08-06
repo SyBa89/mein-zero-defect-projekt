@@ -1,7 +1,8 @@
+/* global HTMLDivElement, KeyboardEvent, HTMLElement */
 'use client';
 
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 
 interface FaqItem {
   question: string;
@@ -20,9 +21,14 @@ interface FaqItem {
  *   ✅ Maximal accessibility-konform (ARIA)
  */
 export default function FAQ() {
-  const faqData: FaqItem[] = CLIENT_CONFIG.faq;
+  // ✅ ZERO-DEFECT: ALLE Hooks ZUERST (Rules of Hooks)
+  const config = useConfig();
+  const { isLoading } = useConfigState();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const answerRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // ✅ Data extraction (synchron, kein Hook)
+  const faqData: FaqItem[] = config.faq;
 
   // ✅ Memoisiertes Schema.org (dynamisch aus Config)
   const faqSchema = useMemo(
@@ -71,6 +77,47 @@ export default function FAQ() {
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, [openIndex]);
+
+  // ✅ ZERO-DEFECT: Loading-Check NACH allen Hooks (Rules of Hooks!)
+  if (isLoading) {
+    return (
+      <section
+        className="py-16 bg-gray-50 dark:bg-gray-900"
+        aria-busy="true"
+        role="status"
+        aria-labelledby="faq-heading-skeleton"
+      >
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2
+            id="faq-heading-skeleton"
+            className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-10 text-center tracking-tight"
+          >
+            Häufig gestellte Fragen
+          </h2>
+          <div className="space-y-4">
+            {[...Array(4)].map((_, index) => (
+              <div
+                key={index}
+                className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700"
+              >
+                <div className="w-full flex items-center justify-between p-6">
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 animate-pulse"></div>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-pink-50 dark:bg-pink-900/20 animate-pulse"></div>
+                </div>
+                {index === 0 && (
+                  <div className="p-6 pt-0 border-t border-gray-100 dark:border-gray-700 mt-2">
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2 animate-pulse"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+        <span className="sr-only">Inhalt wird geladen...</span>
+      </section>
+    );
+  }
 
   // ✅ Fallback, wenn keine FAQ-Daten vorhanden sind
   if (!faqData || faqData.length === 0) {
