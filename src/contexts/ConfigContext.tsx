@@ -33,7 +33,7 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
 
     async function loadConfig() {
       try {
-        const response = await fetch('/api/config', {
+        const response = await fetch('/api/client-config', {
           cache: 'force-cache',
           next: { revalidate: 60 },
         });
