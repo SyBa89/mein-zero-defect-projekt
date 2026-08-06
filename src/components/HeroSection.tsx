@@ -1,13 +1,41 @@
 'use client';
 
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 import { m, useReducedMotion, LazyMotion, domAnimation } from 'framer-motion';
 import Image from 'next/image';
 import FadeInWhenVisible from './motion/FadeInWhenVisible';
 
 export default function HeroSection() {
-  const { brand, hero } = CLIENT_CONFIG;
+  const config = useConfig();
+  const { isLoading } = useConfigState();
   const prefersReducedMotion = useReducedMotion();
+
+  // ✅ ZERO-DEFECT: Skeleton UI während Config lädt
+  if (isLoading) {
+    return (
+      <section
+        className="relative min-h-[85vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden bg-gray-900"
+        id="hero"
+        aria-busy="true"
+        role="status"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-purple-900/60 to-pink-900/70" />
+        <div className="relative max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8 py-20 z-10">
+          <div className="mb-6 text-7xl md:text-8xl inline-block animate-pulse">🍭</div>
+          <div className="h-6 bg-white/20 rounded w-48 mx-auto mb-3 animate-pulse"></div>
+          <div className="h-16 bg-white/20 rounded w-3/4 mx-auto mb-6 animate-pulse"></div>
+          <div className="h-6 bg-white/20 rounded w-2/3 mx-auto mb-12 animate-pulse"></div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="h-14 bg-white/20 rounded-2xl w-56 animate-pulse"></div>
+            <div className="h-14 bg-white/20 rounded-2xl w-56 animate-pulse"></div>
+          </div>
+        </div>
+        <span className="sr-only">Inhalt wird geladen...</span>
+      </section>
+    );
+  }
+
+  const { brand, hero } = config;
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -15,7 +43,7 @@ export default function HeroSection() {
         className="relative min-h-[85vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden bg-gray-900"
         id="hero"
       >
-        {/* ✅. ZERO-DEFECT: q=75 statt q=85 (17 KiB savings, visuelle Qualität bleibt) */}
+        {/* ✅ ZERO-DEFECT: q=75 statt q=85 (17 KiB savings, visuelle Qualität bleibt) */}
         <Image
           src="/images/fassade.png"
           alt={`${brand.name} – Fassade am Bürgerplatz in Erftstadt-Liblar`}
@@ -113,7 +141,7 @@ export default function HeroSection() {
             </p>
           </FadeInWhenVisible>
 
-          {/* ✅. ZERO-DEFECT: Composited Animations (nur transform + opacity) */}
+          {/* ✅ ZERO-DEFECT: Composited Animations (nur transform + opacity) */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <m.a
               href={hero.primaryCta.href}
