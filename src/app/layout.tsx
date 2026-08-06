@@ -8,6 +8,7 @@ import MobileActionBar from '@/components/MobileActionBar';
 import EmergencyBanner from '@/components/EmergencyBanner';
 import CookieBanner from '@/components/CookieBanner';
 import ThemeProvider from '@/components/ThemeProvider';
+import { ConfigProvider } from '@/contexts/ConfigContext';
 import LocalBusinessSchema from '@/components/LocalBusinessSchema';
 import { getClientConfig } from '@/lib/config-loader';
 const config = getClientConfig();
@@ -126,19 +127,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Zum Hauptinhalt springen
         </a>
 
-        <ThemeProvider>
-          <LocalBusinessSchema />
-          <div className="flex flex-col min-h-screen">
-            <EmergencyBanner />
-            <Header />
-            <main id="main-content" className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-          </div>
-          <MobileActionBar />
-          <CookieBanner />
-        </ThemeProvider>
+        <ConfigProvider>
+          <ThemeProvider>
+            <LocalBusinessSchema />
+            <div className="flex flex-col min-h-screen">
+              <EmergencyBanner />
+              <Header />
+              <main id="main-content" className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <MobileActionBar />
+            <CookieBanner />
+          </ThemeProvider>
+        </ConfigProvider>
       </body>
     </html>
   );
