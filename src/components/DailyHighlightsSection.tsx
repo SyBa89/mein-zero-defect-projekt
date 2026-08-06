@@ -1,11 +1,58 @@
 ﻿'use client';
 
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 import FadeInWhenVisible, { StaggerContainer, StaggerItem } from './motion/FadeInWhenVisible';
 import { HoverLift } from './motion/FadeInWhenVisible';
 
 export default function DailyHighlightsSection() {
-  const { features } = CLIENT_CONFIG;
+  const config = useConfig();
+  const { isLoading } = useConfigState();
+
+  // ✅ ZERO-DEFECT: Skeleton UI während Config lädt
+  if (isLoading) {
+    return (
+      <section
+        className="relative py-16 bg-gradient-to-br from-pink-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden"
+        aria-busy="true"
+        role="status"
+      >
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-32 -left-32 w-96 h-96 bg-pink-200/40 dark:bg-pink-900/20 rounded-full blur-3xl" />
+          <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-200/40 dark:bg-purple-900/20 rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="glass-card rounded-3xl shadow-2xl p-8 md:p-10">
+            <div className="flex items-center justify-center mb-8">
+              <span className="text-4xl mr-3" aria-hidden="true">
+                🔥
+              </span>
+              <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-64 animate-pulse"></div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={i}
+                  className="text-center p-6 bg-gray-100/60 dark:bg-gray-800/60 rounded-2xl backdrop-blur-sm border border-white/40 dark:border-gray-700/40 shadow-sm flex flex-col justify-center"
+                >
+                  <div className="text-4xl mb-3 animate-pulse" aria-hidden="true">
+                    ⏳
+                  </div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto animate-pulse"></div>
+                </div>
+              ))}
+            </div>
+
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mx-auto mt-8 animate-pulse"></div>
+          </div>
+        </div>
+        <span className="sr-only">Inhalt wird geladen...</span>
+      </section>
+    );
+  }
+
+  const { features } = config;
 
   // ✅ ZERO-DEFECT: White-Label - Nimm die ersten 4 Features als Highlights
   const items = features.slice(0, 4).map((f, i) => ({
