@@ -23,7 +23,7 @@
     "isSmallBusiness": true
   },
   "seo": {
-    "description": "Kiosk Lollipop in Erftstadt-Liblar: Hermes Paketshop, Lotto, Getränke & Snacks.",
+    "description": "Kiosk Lollipop in Erftstadt-Liblar: Hermes Paketshop, Lotto, Getränke \u0026 Snacks.",
     "keywords": ["Kiosk Erftstadt", "Hermes Liblar", "Lotto 50374"]
   },
   "hero": {
@@ -71,10 +71,26 @@
     }
   ],
   "extraServices": [
-    { "icon": "💰", "title": "Geld abheben", "sub": "EC-Karte" },
-    { "icon": "🖨️", "title": "Druckservice", "sub": "Kopien & Ausdrucke" },
-    { "icon": "☕", "title": "Heiße Getränke", "sub": "Kaffee & Tee to go" },
-    { "icon": "🔌", "title": "Handy-Ladestation", "sub": "Smartphone aufladen" }
+    {
+      "icon": "💰",
+      "title": "Geld abheben",
+      "sub": "EC-Karte"
+    },
+    {
+      "icon": "🖨️",
+      "title": "Druckservice",
+      "sub": "Kopien \u0026 Ausdrucke"
+    },
+    {
+      "icon": "☕",
+      "title": "Heiße Getränke",
+      "sub": "Kaffee \u0026 Tee to go"
+    },
+    {
+      "icon": "🔌",
+      "title": "Handy-Ladestation",
+      "sub": "Smartphone aufladen"
+    }
   ],
   "sections": {
     "showHermes": true,
@@ -114,7 +130,7 @@
       },
       {
         "icon": "🎫",
-        "title": "Lotterie & Glücksspiel",
+        "title": "Lotterie \u0026 Glücksspiel",
         "description": "Lotto 6aus49, Eurojackpot, Rubbellose und weitere Lotterieprodukte.",
         "ageRestriction": "Die Teilnahme ist erst ab 18 Jahren erlaubt. Glücksspiel kann süchtig machen."
       },
@@ -147,5 +163,13 @@
       "question": "Wie sind Ihre Öffnungszeiten?",
       "answer": "Unsere regulären Öffnungszeiten sind Mo-Fr von 07:30 bis 19:00 Uhr und samstags von 07:30 bis 14:30 Uhr. An Sonn- und Feiertagen haben wir geschlossen."
     }
+  ],
+  "brands": [
+    "🥤 Coca-Cola \u0026 Fanta",
+    "🍫 Milka \u0026 Ritter Sport",
+    "🚬 Marlboro \u0026 Camel",
+    "🎫 Lotto 6aus49 \u0026 Eurojackpot",
+    "📰 Express \u0026 Kölner Stadt-Anzeiger",
+    "📱 Vodafone \u0026 Telekom"
   ]
 }

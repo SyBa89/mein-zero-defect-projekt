@@ -3,8 +3,6 @@
 // ═══════════════════════════════════════════════════════════════
 // ClientConfig Schema — Zod-Validierung für White-Label
 // ═══════════════════════════════════════════════════════════════
-// Zweck: Runtime-Validation der Config-Dateien (kiosk.json, handwerk.json, arzt.json)
-// Fallback: Bei invaliden Configs wird client.config.ts verwendet
 
 // ─── Brand Schema ───────────────────────────────────────────
 const BrandSchema = z.object({
@@ -130,6 +128,7 @@ export const ClientConfigSchema = z.object({
   hermes: HermesSchema,
   products: ProductsSchema,
   faq: z.array(FaqSchema).min(1, 'At least one FAQ entry required'),
+  brands: z.array(z.string()).optional(), // ✅ NEW: Optional brands array for White-Label
 });
 
 // Type inference from schema (voll type-safe!)
@@ -143,7 +142,6 @@ export function validateClientConfig(data: unknown): ClientConfig {
     return ClientConfigSchema.parse(data);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      // String-Konkatenation statt Template-Literal (PowerShell-safe)
       console.error('ClientConfig validation failed:');
       error.issues.forEach(function (issue: z.ZodIssue) {
         const pathStr = issue.path.join('.');

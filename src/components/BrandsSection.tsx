@@ -1,5 +1,13 @@
-﻿export default function BrandsSection() {
-  const brands = [
+﻿'use client';
+
+import { useConfig, useConfigState } from '@/contexts/ConfigContext';
+
+export default function BrandsSection() {
+  const config = useConfig();
+  const { isLoading } = useConfigState();
+
+  // ✅ ZERO-DEFECT: Fallback brands wenn nicht in Config definiert
+  const fallbackBrands = [
     '🥤 Coca-Cola & Fanta',
     '🍫 Milka & Ritter Sport',
     '🚬 Marlboro & Camel',
@@ -7,6 +15,34 @@
     '📰 Express & Kölner Stadt-Anzeiger',
     '📱 Vodafone & Telekom',
   ];
+
+  // ✅ ZERO-DEFECT: Nutze brands aus Config oder Fallback
+  const brands = config.brands && config.brands.length > 0 ? config.brands : fallbackBrands;
+
+  // ✅ ZERO-DEFECT: Skeleton UI während Config lädt
+  if (isLoading) {
+    return (
+      <section className="py-16 bg-gray-50" aria-busy="true" role="status">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="h-10 bg-gray-200 rounded w-64 mx-auto mb-10 animate-pulse"></div>
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+            {[...Array(6)].map((_, i) => (
+              <span
+                key={i}
+                className="px-5 py-3 bg-white text-transparent rounded-full font-bold shadow-sm border border-pink-100 animate-pulse"
+              >
+                <span className="invisible">🥤 Placeholder Brand</span>
+              </span>
+            ))}
+          </div>
+        </div>
+        <span className="sr-only">Inhalt wird geladen...</span>
+      </section>
+    );
+  }
+
+  // ✅ ZERO-DEFECT: Guard - Wenn keine Brands, zeige nichts
+  if (brands.length === 0) return null;
 
   return (
     <section className="py-16 bg-gray-50">
