@@ -1,8 +1,9 @@
-import { MetadataRoute } from 'next';
-import { CLIENT_CONFIG } from '@/lib/client.config';
+﻿import { MetadataRoute } from 'next';
+import { getClientConfig } from '@/lib/config-loader';
+const config = getClientConfig();
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = CLIENT_CONFIG.url.replace(/\/$/, '');
+  const baseUrl = config.url.replace(/\/$/, '');
 
   return {
     rules: [
@@ -11,7 +12,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/admin', '/api', '/onboarding', '/_next'],
       },
-      // 🤖 KI-Bots explizit erlauben (GEO - Generative Engine Optimization)
+      // ðŸ¤– KI-Bots explizit erlauben (GEO - Generative Engine Optimization)
       { userAgent: 'GPTBot', allow: '/' },
       { userAgent: 'ChatGPT-User', allow: '/' },
       { userAgent: 'PerplexityBot', allow: '/' },

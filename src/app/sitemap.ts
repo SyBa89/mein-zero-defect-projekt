@@ -1,8 +1,9 @@
-import { MetadataRoute } from 'next';
-import { CLIENT_CONFIG } from '@/lib/client.config';
+﻿import { MetadataRoute } from 'next';
+import { getClientConfig } from '@/lib/config-loader';
+const config = getClientConfig();
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = CLIENT_CONFIG.url.replace(/\/$/, '');
+  const baseUrl = config.url.replace(/\/$/, '');
 
   const staticPages = ['', '/kontakt', '/about', '/impressum', '/datenschutz'];
 
