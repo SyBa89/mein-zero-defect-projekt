@@ -9,7 +9,8 @@ import EmergencyBanner from '@/components/EmergencyBanner';
 import CookieBanner from '@/components/CookieBanner';
 import ThemeProvider from '@/components/ThemeProvider';
 import LocalBusinessSchema from '@/components/LocalBusinessSchema';
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { getClientConfig } from '@/lib/config-loader';
+const config = getClientConfig();
 
 const geistSans = Geist({
   subsets: ['latin'],
@@ -41,39 +42,39 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(CLIENT_CONFIG.url),
+  metadataBase: new URL(config.url),
   title: {
-    default: `${CLIENT_CONFIG.brand.name} – ${CLIENT_CONFIG.brand.slogan}`,
-    template: `%s | ${CLIENT_CONFIG.brand.name}`,
+    default: `${config.brand.name} – ${config.brand.slogan}`,
+    template: `%s | ${config.brand.name}`,
   },
-  description: CLIENT_CONFIG.seo.description,
-  keywords: CLIENT_CONFIG.seo.keywords,
-  authors: [{ name: CLIENT_CONFIG.brand.name }],
-  creator: CLIENT_CONFIG.brand.name,
-  publisher: CLIENT_CONFIG.brand.name,
+  description: config.seo.description,
+  keywords: config.seo.keywords,
+  authors: [{ name: config.brand.name }],
+  creator: config.brand.name,
+  publisher: config.brand.name,
   alternates: {
-    canonical: CLIENT_CONFIG.url,
+    canonical: config.url,
   },
   openGraph: {
     type: 'website',
     locale: 'de_DE',
-    url: CLIENT_CONFIG.url,
-    title: `${CLIENT_CONFIG.brand.name} – ${CLIENT_CONFIG.brand.slogan}`,
-    description: CLIENT_CONFIG.seo.description,
-    siteName: CLIENT_CONFIG.brand.name,
+    url: config.url,
+    title: `${config.brand.name} – ${config.brand.slogan}`,
+    description: config.seo.description,
+    siteName: config.brand.name,
     images: [
       {
         url: '/images/og-image.png',
         width: 1200,
         height: 630,
-        alt: CLIENT_CONFIG.brand.name,
+        alt: config.brand.name,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${CLIENT_CONFIG.brand.name} – ${CLIENT_CONFIG.brand.slogan}`,
-    description: CLIENT_CONFIG.seo.description,
+    title: `${config.brand.name} – ${config.brand.slogan}`,
+    description: config.seo.description,
     images: ['/images/og-image.png'],
   },
   robots: {
@@ -98,7 +99,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: CLIENT_CONFIG.brand.name,
+    title: config.brand.name,
   },
   formatDetection: {
     telephone: true,
