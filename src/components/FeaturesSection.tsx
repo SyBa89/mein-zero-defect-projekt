@@ -1,9 +1,48 @@
-import { CLIENT_CONFIG } from '@/lib/client.config';
+'use client';
+
+import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 import { StaggerContainer, StaggerItem } from './motion/FadeInWhenVisible';
 import FadeInWhenVisible from './motion/FadeInWhenVisible';
 
 export default function FeaturesSection() {
-  const { features } = CLIENT_CONFIG;
+  const config = useConfig();
+  const { isLoading } = useConfigState();
+
+  // ✅ ZERO-DEFECT: Skeleton UI während Config lädt
+  if (isLoading) {
+    return (
+      <section
+        className="py-20 px-4 bg-white dark:bg-gray-900"
+        id="features"
+        aria-busy="true"
+        role="status"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto mb-4 animate-pulse"></div>
+            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mx-auto animate-pulse"></div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <div
+                key={index}
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-700"
+              >
+                <div className="text-5xl mb-4 animate-pulse">⏳</div>
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3 animate-pulse"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2 animate-pulse"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <span className="sr-only">Inhalt wird geladen...</span>
+      </section>
+    );
+  }
+
+  const { features } = config;
 
   return (
     <section className="py-20 px-4 bg-white dark:bg-gray-900" id="features">
