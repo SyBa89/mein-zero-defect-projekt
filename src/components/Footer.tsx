@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { useConfig } from '@/contexts/ConfigContext';
 
 export default function Footer() {
   // ✅ ZERO-DEFECT: Hydration-sicheres Jahr (Server rendert null, Client setzt Jahr)
@@ -12,7 +12,8 @@ export default function Footer() {
     setCurrentYear(new Date().getFullYear());
   }, []);
 
-  const { brand, contact, features } = CLIENT_CONFIG;
+  const config = useConfig();
+  const { brand, contact, features } = config;
 
   // ✅ ZERO-DEFECT: White-Label - Erste 4 Features für Services-Spalte
   const footerServices = features?.slice(0, 4) || [];
@@ -81,10 +82,11 @@ export default function Footer() {
               <li className="flex items-start gap-2">
                 <span aria-hidden="true">📍</span>
                 <a
-                  href={contact.mapsUrl}
+                  href={contact.mapsUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-pink-400 transition-colors"
+                  aria-label={`Adresse: ${contact.address.street}, ${contact.address.zip} ${contact.address.city}`}
                 >
                   {contact.address.street}, {contact.address.zip} {contact.address.city}
                 </a>
@@ -121,6 +123,7 @@ export default function Footer() {
           </p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Nach oben scrollen"
             className="mt-4 md:mt-0 text-xs text-gray-400 hover:text-pink-400 transition-colors flex items-center gap-1"
           >
             Nach oben ↑
