@@ -17,10 +17,34 @@ export const revalidate = 0;
 // 1. Lade configs/{CLIENT_TYPE}.json
 // 2. Validiere mit Zod
 // 3. Fallback auf client.config.ts
+//
+// ✅ Cache-Strategy (Conditional):
+// - Dev-Mode: no-store (Config-Switching muss funktionieren)
+// - Production: public, s-maxage=3600 (CDN-Cache für Performance)
 
 const CONFIGS_DIR = path.join(process.cwd(), 'configs');
 
+function getCacheHeaders(): Record<string, string> {
+  if (process.env.NODE_ENV === 'development') {
+    // ✅ Dev-Mode: Kein Cache (Config-Switching muss funktionieren)
+    return {
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      Pragma: 'no-cache',
+      Expires: '0',
+      'Content-Type': 'application/json; charset=utf-8',
+    };
+  }
+
+  // ✅ Production: CDN-Cache für Performance (1h fresh, 24h stale-while-revalidate)
+  return {
+    'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+    'Content-Type': 'application/json; charset=utf-8',
+  };
+}
+
 export async function GET() {
+  const headers = getCacheHeaders();
+
   try {
     const clientType = process.env.CLIENT_TYPE || 'kiosk';
     const configPath = path.join(CONFIGS_DIR, clientType + '.json');
@@ -31,12 +55,7 @@ export async function GET() {
         const parsedConfig = JSON.parse(rawConfig);
         const validated = validateClientConfig(parsedConfig);
 
-        return NextResponse.json(validated, {
-          headers: {
-            'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
-            'Content-Type': 'application/json; charset=utf-8',
-          },
-        });
+        return NextResponse.json(validated, { headers });
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : String(err);
         console.error('/api/client-config: Validation failed, using fallback:', errorMessage);
@@ -44,15 +63,10 @@ export async function GET() {
     }
 
     // Fallback to client.config.ts
-    return NextResponse.json(FALLBACK_CONFIG, {
-      headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-    });
+    return NextResponse.json(FALLBACK_CONFIG, { headers });
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     console.error('/api/client-config: Unexpected error:', errorMessage);
-    return NextResponse.json(FALLBACK_CONFIG);
+    return NextResponse.json(FALLBACK_CONFIG, { headers });
   }
 }

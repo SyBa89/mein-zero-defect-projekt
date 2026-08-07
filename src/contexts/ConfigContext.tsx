@@ -24,10 +24,14 @@ const ConfigContext = createContext<ConfigContextType | undefined>(undefined);
 // ✅ ZERO-DEFECT: initialConfig Prop für Hydration-Safety
 //
 // Warum initialConfig?
-// - Server rendert mit getClientConfig() (kiosk.json)
+// - Server rendert mit getClientConfig() (kiosk.json/handwerk.json/arzt.json)
 // - Client MUSS mit derselben Config hydraten (kein Mismatch!)
 // - initialConfig wird vom Server übergeben (layout.tsx)
 // - Danach optionaler Refresh vom /api/client-config für Live-Updates
+//
+// ✅ Cache-Strategy:
+// - Dev-Mode: cache='no-store' (Config-Switching muss funktionieren)
+// - Production: cache='default' (CDN-Cache erlaubt, Performance)
 
 interface ConfigProviderProps {
   children: React.ReactNode;
@@ -45,9 +49,11 @@ export function ConfigProvider({ children, initialConfig }: ConfigProviderProps)
 
     async function refreshConfig() {
       try {
+        // ✅ ZERO-DEFECT: Dev-Mode = no-store, Production = default
+        const fetchCache = process.env.NODE_ENV === 'development' ? 'no-store' : 'default';
+
         const response = await fetch('/api/client-config', {
-          cache: 'force-cache',
-          next: { revalidate: 60 },
+          cache: fetchCache,
         });
 
         if (!response.ok) {
