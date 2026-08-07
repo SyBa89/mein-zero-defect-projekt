@@ -1,18 +1,30 @@
 'use client';
 
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { useConfig } from '@/contexts/ConfigContext';
 
 export default function MobileActionBar() {
-  const { contact } = CLIENT_CONFIG;
+  const config = useConfig();
+  const { contact } = config;
+
+  // ✅ ZERO-DEFECT: Phone-Formatierung für aria-label
+  const phoneFormatted = contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2');
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg z-40 md:hidden">
       <div className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-3 gap-2">
+        {/* Button 1: Anrufen */}
         <a
           href={`tel:${contact.phone}`}
+          aria-label={`Jetzt anrufen: ${phoneFormatted}`}
           className="flex flex-col items-center justify-center gap-1 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-xl transition-colors"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -23,13 +35,21 @@ export default function MobileActionBar() {
           <span className="text-xs font-semibold">📞 Anrufen</span>
         </a>
 
+        {/* Button 2: Route */}
         <a
-          href={contact.mapsUrl}
+          href={contact.mapsUrl || '#'}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Route in Google Maps öffnen"
           className="flex flex-col items-center justify-center gap-1 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -46,11 +66,19 @@ export default function MobileActionBar() {
           <span className="text-xs font-semibold">🗺️ Route</span>
         </a>
 
+        {/* Button 3: Kontakt */}
         <a
           href="/kontakt"
+          aria-label="Kontaktseite öffnen"
           className="flex flex-col items-center justify-center gap-1 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition-colors"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
