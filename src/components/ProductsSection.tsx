@@ -1,13 +1,14 @@
 'use client';
 
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { useConfig } from '@/contexts/ConfigContext';
 import FadeInWhenVisible, { StaggerContainer, StaggerItem } from './motion/FadeInWhenVisible';
 import { HoverLift } from './motion/FadeInWhenVisible';
 
 export default function ProductsSection() {
-  const { products, sections } = CLIENT_CONFIG;
+  const config = useConfig();
+  const { products, sections } = config;
 
-  // ✅. ZERO-DEFECT: White-Label - Wenn keine Produkte definiert sind, zeige nichts
+  // ✅ ZERO-DEFECT: White-Label - Wenn keine Produkte definiert sind, zeige nichts
   if (!sections.showProducts || products.categories.length === 0) {
     return null;
   }

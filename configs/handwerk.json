@@ -2,7 +2,7 @@
   "url": "https://mustermann-handwerk.de",
   "brand": {
     "name": "Mustermann Handwerk",
-    "slogan": "Ihr zuverlässiger Partner für Sanitär & Heizung",
+    "slogan": "Ihr zuverlässiger Partner für Sanitär \u0026 Heizung",
     "legalName": "Mustermann GmbH Sanitär- und Heizungstechnik",
     "primaryColor": "blue"
   },
@@ -34,7 +34,7 @@
     ]
   },
   "hero": {
-    "headline": "Meisterbetrieb für Sanitär & Heizung",
+    "headline": "Meisterbetrieb für Sanitär \u0026 Heizung",
     "subheadline": "Schnell, zuverlässig und fair – seit über 30 Jahren Ihr Partner in Hürth und Umgebung.",
     "primaryCta": {
       "label": "Jetzt Termin vereinbaren",
@@ -81,22 +81,22 @@
     {
       "icon": "🚿",
       "title": "Sanitär",
-      "sub": "Badsanierung & Reparaturen"
+      "sub": "Badsanierung \u0026 Reparaturen"
     },
     {
       "icon": "🔥",
       "title": "Heizung",
-      "sub": "Wartung & Modernisierung"
+      "sub": "Wartung \u0026 Modernisierung"
     },
     {
       "icon": "❄️",
       "title": "Klimatechnik",
-      "sub": "Installation & Service"
+      "sub": "Installation \u0026 Service"
     },
     {
       "icon": "🌊",
       "title": "Rohrreinigung",
-      "sub": "Professionell & schnell"
+      "sub": "Professionell \u0026 schnell"
     }
   ],
   "sections": {
@@ -108,11 +108,26 @@
     "logo": null,
     "showLogo": true,
     "navigation": [
-      { "label": "Startseite", "href": "/" },
-      { "label": "Leistungen", "href": "/#services" },
-      { "label": "Referenzen", "href": "/#reviews" },
-      { "label": "Über uns", "href": "/#about" },
-      { "label": "Kontakt", "href": "/kontakt" }
+      {
+        "label": "Startseite",
+        "href": "/"
+      },
+      {
+        "label": "Leistungen",
+        "href": "/#services"
+      },
+      {
+        "label": "Referenzen",
+        "href": "/#reviews"
+      },
+      {
+        "label": "Über uns",
+        "href": "/#about"
+      },
+      {
+        "label": "Kontakt",
+        "href": "/kontakt"
+      }
     ],
     "showAdminLink": true,
     "adminLabel": "Mitarbeiter-Login"
@@ -143,7 +158,7 @@
       },
       {
         "icon": "🛠️",
-        "title": "Wartung & Service",
+        "title": "Wartung \u0026 Service",
         "description": "Regelmäßige Wartung, 24/7 Notdienst, Reparaturen",
         "ageRestriction": null
       }
@@ -205,5 +220,49 @@
       "text": "Komplette Badsanierung in nur 5 Tagen. Alles perfekt, saubere Arbeit, pünktlich und zuverlässig. Absolute Empfehlung!",
       "gradient": "from-purple-500 to-blue-600"
     }
-  ]
+  ],
+  "openingHours": {
+    "tipMessage": "24/7 Notdienst auch außerhalb der Geschäftszeiten. Rufen Sie uns an!",
+    "items": [
+      {
+        "hours": "07:00 – 17:00 Uhr",
+        "isOpen": true,
+        "day": "Montag"
+      },
+      {
+        "hours": "07:00 – 17:00 Uhr",
+        "isOpen": true,
+        "day": "Dienstag"
+      },
+      {
+        "hours": "07:00 – 17:00 Uhr",
+        "isOpen": true,
+        "day": "Mittwoch"
+      },
+      {
+        "hours": "07:00 – 17:00 Uhr",
+        "isOpen": true,
+        "day": "Donnerstag"
+      },
+      {
+        "hours": "07:00 – 15:00 Uhr",
+        "isOpen": true,
+        "day": "Freitag"
+      },
+      {
+        "hours": "Nach Vereinbarung",
+        "isOpen": false,
+        "day": "Samstag"
+      },
+      {
+        "hours": "Geschlossen",
+        "isOpen": false,
+        "day": "Sonntag"
+      }
+    ],
+    "sectionTitle": "Unsere Geschäftszeiten",
+    "emergencyMessage": null,
+    "showSection": true,
+    "sectionSubtitle": "Wir sind persönlich für Sie erreichbar – im Büro und auf der Baustelle."
+  }
 }

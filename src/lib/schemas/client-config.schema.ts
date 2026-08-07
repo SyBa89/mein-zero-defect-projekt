@@ -106,6 +106,22 @@ const ReviewSchema = z.object({
   gradient: z.string().min(1),
 });
 
+// ✅ NEW: Opening Hours Schema (structured data, no parsing needed)
+const OpeningHoursItemSchema = z.object({
+  day: z.enum(['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']),
+  hours: z.string(),
+  isOpen: z.boolean(),
+});
+
+const OpeningHoursSchema = z.object({
+  items: z.array(OpeningHoursItemSchema).length(7),
+  showSection: z.boolean().optional(),
+  emergencyMessage: z.string().nullish(),
+  sectionTitle: z.string().nullish(),
+  sectionSubtitle: z.string().nullish(),
+  tipMessage: z.string().nullish(),
+});
+
 export const ClientConfigSchema = z.object({
   url: z.string().url(),
   brand: BrandSchema,
@@ -122,6 +138,7 @@ export const ClientConfigSchema = z.object({
   faq: z.array(FaqSchema).min(1),
   brands: z.array(z.string()).nullish(),
   reviews: z.array(ReviewSchema).nullish(),
+  openingHours: OpeningHoursSchema.nullish(),
 });
 
 export type ClientConfig = z.infer<typeof ClientConfigSchema>;

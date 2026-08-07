@@ -48,7 +48,7 @@
   "features": [
     {
       "icon": "🏥",
-      "title": "Alle Kassen & Privat",
+      "title": "Alle Kassen \u0026 Privat",
       "description": "Wir behandeln Patientinnen und Patienten aller gesetzlichen und privaten Krankenkassen."
     },
     {
@@ -58,7 +58,7 @@
     },
     {
       "icon": "💉",
-      "title": "Vorsorge & Impfungen",
+      "title": "Vorsorge \u0026 Impfungen",
       "description": "Alle empfohlenen Schutzimpfungen und regelmäßige Vorsorgeuntersuchungen."
     },
     {
@@ -68,7 +68,7 @@
     },
     {
       "icon": "🔬",
-      "title": "EKG & Lungenfunktion",
+      "title": "EKG \u0026 Lungenfunktion",
       "description": "Moderne Diagnostik direkt in der Praxis ohne lange Wartezeiten."
     },
     {
@@ -108,11 +108,27 @@
     "logo": null,
     "showLogo": true,
     "navigation": [
-      { "label": "Startseite", "href": "/" },
-      { "label": "Leistungen", "href": "/#services" },
-      { "label": "Sprechzeiten", "href": "/#hours" },
-      { "label": "Team", "href": "/#about" },
-      { "label": "Termin buchen", "href": "/kontakt", "isExternal": true }
+      {
+        "label": "Startseite",
+        "href": "/"
+      },
+      {
+        "label": "Leistungen",
+        "href": "/#services"
+      },
+      {
+        "label": "Sprechzeiten",
+        "href": "/#hours"
+      },
+      {
+        "label": "Team",
+        "href": "/#about"
+      },
+      {
+        "label": "Termin buchen",
+        "href": "/kontakt",
+        "isExternal": true
+      }
     ],
     "showAdminLink": true,
     "adminLabel": "Praxis-Login"
@@ -131,7 +147,7 @@
       },
       {
         "icon": "💉",
-        "title": "Vorsorge & Impfungen",
+        "title": "Vorsorge \u0026 Impfungen",
         "description": "Alle Schutzimpfungen, Krebsvorsorge, Hautkrebs-Screening",
         "ageRestriction": null
       },
@@ -205,5 +221,49 @@
       "text": "Bin seit 10 Jahren Patientin hier. Immer kompetente Beratung, besonders bei chronischen Erkrankungen. Sehr zu empfehlen!",
       "gradient": "from-purple-500 to-pink-600"
     }
-  ]
+  ],
+  "openingHours": {
+    "tipMessage": "In Notfällen erreichen Sie uns außerhalb der Sprechzeiten unter unserer Notfallnummer.",
+    "items": [
+      {
+        "hours": "08:00 – 12:00 \u0026 15:00 – 18:00 Uhr",
+        "isOpen": true,
+        "day": "Montag"
+      },
+      {
+        "hours": "08:00 – 12:00 \u0026 15:00 – 18:00 Uhr",
+        "isOpen": true,
+        "day": "Dienstag"
+      },
+      {
+        "hours": "08:00 – 12:00 Uhr",
+        "isOpen": true,
+        "day": "Mittwoch"
+      },
+      {
+        "hours": "08:00 – 12:00 \u0026 15:00 – 18:00 Uhr",
+        "isOpen": true,
+        "day": "Donnerstag"
+      },
+      {
+        "hours": "08:00 – 12:00 Uhr",
+        "isOpen": true,
+        "day": "Freitag"
+      },
+      {
+        "hours": "Geschlossen",
+        "isOpen": false,
+        "day": "Samstag"
+      },
+      {
+        "hours": "Geschlossen",
+        "isOpen": false,
+        "day": "Sonntag"
+      }
+    ],
+    "sectionTitle": "Unsere Sprechzeiten",
+    "emergencyMessage": null,
+    "showSection": true,
+    "sectionSubtitle": "Termine nur nach Vereinbarung. Bitte rufen Sie vorher an."
+  }
 }
