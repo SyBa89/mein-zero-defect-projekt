@@ -183,3 +183,9 @@ backup_*/
 backup_*/**
 .env*.local
 
+
+# Backup files (auto-generated)
+*.backup*
+*.surgical_*
+*.diagnosis_*
+*.clean_*

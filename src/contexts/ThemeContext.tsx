@@ -1,111 +1,61 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, useRef, ReactNode } from 'react';
-
-type Theme = 'light' | 'dark' | 'system';
+import React, { createContext, useContext, useMemo, useEffect } from 'react';
+import { useConfig } from './ConfigContext';
+import { getDesignSystem, DesignSystem } from '@/lib/design-systems';
 
 interface ThemeContextType {
-  theme: Theme;
-  resolvedTheme: 'light' | 'dark';
-  setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
+  theme: DesignSystem;
+  businessType: string;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-function getInitialTheme(): Theme {
-  if (typeof window === 'undefined') return 'system';
-  try {
-    const stored = localStorage.getItem('theme-preference');
-    if (stored && ['light', 'dark', 'system'].includes(stored)) {
-      return stored as Theme;
-    }
-  } catch {}
-  return 'system';
-}
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const config = useConfig();
+  const businessType = config.business.type;
 
-function getInitialResolvedTheme(): 'light' | 'dark' {
-  if (typeof window === 'undefined') return 'light';
-  if (document.documentElement.classList.contains('dark')) return 'dark';
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-  return 'light';
-}
-
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(getInitialTheme);
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>(getInitialResolvedTheme);
-  const [mounted, setMounted] = useState(false);
-
-  // Ref to track current resolved theme without triggering dependency warnings
-  const resolvedRef = useRef<'light' | 'dark'>(resolvedTheme);
+  const theme = useMemo(() => getDesignSystem(businessType), [businessType]);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Sync theme changes to DOM
-  useEffect(() => {
-    if (!mounted) return;
-
-    let resolved: 'light' | 'dark';
-    if (theme === 'system') {
-      resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    } else {
-      resolved = theme;
-    }
-
-    // Use ref to avoid dependency warning
-    if (resolved !== resolvedRef.current) {
-      resolvedRef.current = resolved;
-      setResolvedTheme(resolved);
-    }
-    document.documentElement.classList.toggle('dark', resolved === 'dark');
-
-    try {
-      localStorage.setItem('theme-preference', theme);
-    } catch {}
-    try {
-      document.cookie = `admin-dark-mode=${resolved === 'dark'}; path=/; max-age=${60 * 60 * 24 * 365}`;
-    } catch {}
-  }, [theme, mounted]);
-
-  // Listen to system preference changes (only when theme is 'system')
-  useEffect(() => {
-    if (theme !== 'system') return;
-
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = () => {
-      const newResolved = mediaQuery.matches ? 'dark' : 'light';
-      if (newResolved !== resolvedRef.current) {
-        resolvedRef.current = newResolved;
-        setResolvedTheme(newResolved);
-        document.documentElement.classList.toggle('dark', newResolved === 'dark');
+    if (theme.googleFontsUrl) {
+      const linkId = `theme-fonts-${businessType}`;
+      if (!document.getElementById(linkId)) {
+        const link = document.createElement('link');
+        link.id = linkId;
+        link.rel = 'stylesheet';
+        link.href = theme.googleFontsUrl;
+        document.head.appendChild(link);
       }
-    };
+    }
+  }, [theme, businessType]);
 
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+  useEffect(() => {
+    const root = document.documentElement;
+    Object.entries(theme.colors).forEach(([key, value]) => {
+      root.style.setProperty(`--color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`, value);
+    });
+    root.style.setProperty('--font-heading', theme.typography.heading);
+    root.style.setProperty('--font-body', theme.typography.body);
+    root.style.setProperty('--font-mono', theme.typography.mono);
+    root.style.setProperty('--shadow-sm', theme.shadows.sm);
+    root.style.setProperty('--shadow-md', theme.shadows.md);
+    root.style.setProperty('--shadow-lg', theme.shadows.lg);
+    root.style.setProperty('--shadow-xl', theme.shadows.xl);
+    root.style.setProperty('--radius-sm', theme.borderRadius.sm);
+    root.style.setProperty('--radius-md', theme.borderRadius.md);
+    root.style.setProperty('--radius-lg', theme.borderRadius.lg);
+    root.style.setProperty('--radius-xl', theme.borderRadius.xl);
+    root.style.setProperty('--duration-fast', theme.animations.duration.fast);
+    root.style.setProperty('--duration-normal', theme.animations.duration.normal);
+    root.style.setProperty('--duration-slow', theme.animations.duration.slow);
   }, [theme]);
 
-  const setTheme = (newTheme: Theme) => setThemeState(newTheme);
-  const toggleTheme = () => setThemeState(resolvedRef.current === 'light' ? 'dark' : 'light');
-
-  return (
-    <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, businessType }}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme(): ThemeContextType {
   const context = useContext(ThemeContext);
-  if (!context) {
-    return {
-      theme: 'system',
-      resolvedTheme: 'light',
-      setTheme: () => {},
-      toggleTheme: () => {},
-    };
-  }
+  if (!context) throw new Error('useTheme must be used within ThemeProvider');
   return context;
 }

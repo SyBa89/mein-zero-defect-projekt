@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -7,8 +7,8 @@ import Footer from '@/components/Footer';
 import MobileActionBar from '@/components/MobileActionBar';
 import EmergencyBanner from '@/components/EmergencyBanner';
 import CookieBanner from '@/components/CookieBanner';
-import ThemeProvider from '@/components/ThemeProvider';
 import { ConfigProvider } from '@/contexts/ConfigContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import LocalBusinessSchema from '@/components/LocalBusinessSchema';
 import { getClientConfig } from '@/lib/config-loader';
 
