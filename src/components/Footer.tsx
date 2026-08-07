@@ -142,6 +142,17 @@ export default function Footer() {
             Nach oben ↑
           </button>
         </div>
+
+        {/* ✅ ZERO-DEFECT: Jugendschutz-Banner NUR für Kiosk (Tabak/Alkohol) */}
+        {business.type === 'kiosk' && (
+          <div className="border-t border-gray-800 mt-6 pt-6">
+            <p className="text-xs text-gray-500 text-center max-w-3xl mx-auto leading-relaxed">
+              ⚠️ <strong className="font-semibold">Jugendschutz:</strong> Tabakwaren und
+              alkoholische Getränke werden nur an Personen ab 18 Jahren abgegeben. Bitte halten Sie
+              Ihren Ausweis bereit.
+            </p>
+          </div>
+        )}
       </div>
     </footer>
   );

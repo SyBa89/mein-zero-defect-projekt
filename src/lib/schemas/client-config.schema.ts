@@ -38,7 +38,6 @@ const CtaSchema = z.object({
   href: z.string().min(1),
 });
 
-// ✅ ERWEITERT: HeroSchema mit business-spezifischen Feldern
 const HeroSchema = z.object({
   headline: z.string().min(1),
   subheadline: z.string().min(1),
@@ -53,6 +52,12 @@ const FeatureSchema = z.object({
   icon: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
+});
+
+// ✅ NEU: FeaturesSection Meta-Daten für business-spezifische Headlines
+const FeaturesMetaSchema = z.object({
+  sectionTitle: z.string().min(1),
+  sectionSubtitle: z.string().min(1),
 });
 
 const ExtraServiceSchema = z.object({
@@ -125,7 +130,6 @@ const OpeningHoursSchema = z.object({
   tipMessage: z.string().nullish(),
 });
 
-// ✅ NEU: AboutSchema für business-spezifische About-Texte
 const AboutSchema = z.object({
   showSection: z.boolean().optional(),
   sectionTitle: z.string().nullish(),
@@ -133,14 +137,12 @@ const AboutSchema = z.object({
   mainDescription: z.string().min(1),
 });
 
-// ✅ NEU: BannersSchema für Runtime-Updates (optional, business-specific)
 const BannersSchema = z.object({
   showJackpot: z.boolean().optional(),
   jackpotLabel: z.string().nullish(),
   highlightLabel: z.string().nullish(),
 });
 
-// ✅ NEU: SocialSchema für Social-Media-Links
 const SocialSchema = z.object({
   facebook: z.string().url().nullish(),
   instagram: z.string().url().nullish(),
@@ -155,6 +157,7 @@ export const ClientConfigSchema = z.object({
   seo: SeoSchema,
   hero: HeroSchema,
   features: z.array(FeatureSchema).min(1),
+  featuresMeta: FeaturesMetaSchema.nullish(),
   extraServices: z.array(ExtraServiceSchema).min(1),
   sections: SectionsSchema,
   header: HeaderSchema,
