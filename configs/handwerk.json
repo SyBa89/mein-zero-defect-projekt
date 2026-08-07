@@ -43,7 +43,10 @@
     "secondaryCta": {
       "label": "24/7 Notdienst anrufen",
       "href": "tel:+4922331234567"
-    }
+    },
+    "emoji": "🔧",
+    "imageAlt": "Mustermann Handwerk – Professionelle Werkstatt und modernes Equipment",
+    "backgroundImage": "/images/fassade.png"
   },
   "features": [
     {
@@ -264,5 +267,21 @@
     "emergencyMessage": null,
     "showSection": true,
     "sectionSubtitle": "Wir sind persönlich für Sie erreichbar – im Büro und auf der Baustelle."
+  },
+  "about": {
+    "showSection": true,
+    "mainDescription": "Ob Rohrbruch, Heizungsausfall, komplette Badsanierung oder energetische Modernisierung – wir sind Ihr kompetenter Ansprechpartner. Unser 24/7 Notdienst ist auch an Sonn- und Feiertagen für Sie erreichbar. Als Meisterbetrieb legen wir größten Wert auf saubere Arbeit, pünktliche Termine und transparente Festpreise ohne versteckte Kosten.",
+    "sectionTitle": "Über uns",
+    "introText": "Mustermann Handwerk ist Ihr zuverlässiger Meisterbetrieb für Sanitär, Heizung und Klimatechnik in Hürth und Umgebung. Mit über 30 Jahren Erfahrung und einem Team qualifizierter Fachkräfte stehen wir für höchste Qualität und faire Preise."
+  },
+  "banners": {
+    "highlightLabel": "Aktuelles Angebot",
+    "jackpotLabel": null,
+    "showJackpot": false
+  },
+  "social": {
+    "instagram": null,
+    "twitter": null,
+    "facebook": null
   }
 }

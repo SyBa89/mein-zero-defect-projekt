@@ -36,7 +36,10 @@
     "secondaryCta": {
       "label": "Jetzt besuchen",
       "href": "/kontakt"
-    }
+    },
+    "emoji": "🍭",
+    "imageAlt": "Kiosk Lollipop – Fassade am Bürgerplatz in Erftstadt-Liblar",
+    "backgroundImage": "/images/fassade.png"
   },
   "features": [
     {
@@ -259,5 +262,21 @@
     "emergencyMessage": null,
     "showSection": true,
     "sectionSubtitle": "Wir sind täglich für Sie da – besuchen Sie uns direkt am Bürgerplatz!"
+  },
+  "about": {
+    "showSection": true,
+    "mainDescription": "Ob Sie morgens Ihre Zeitung holen, mittags einen schnellen Snack brauchen, Pakete versenden oder abends noch Getränke für den Feierabend kaufen möchten – wir sind für Sie da. Als offizieller Hermes Paketshop bieten wir Ihnen zusätzlich alle Dienstleistungen rund um Paketversand, -abholung und Retouren. Schnell, freundlich und zu fairen Preisen.",
+    "sectionTitle": "Über uns",
+    "introText": "Kiosk Lollipop ist Ihr freundlicher Nachbarschaftskiosk und Hermes Paketshop im Herzen von Erftstadt-Liblar. Wir befinden uns in der Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar, in der Nähe des Bahnhofs und weiterer lokaler Geschäfte."
+  },
+  "banners": {
+    "highlightLabel": "Heute im Angebot",
+    "jackpotLabel": "Aktueller Jackpot",
+    "showJackpot": true
+  },
+  "social": {
+    "instagram": null,
+    "twitter": null,
+    "facebook": "https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/"
   }
 }

@@ -13,10 +13,23 @@ export default function Footer() {
   }, []);
 
   const config = useConfig();
-  const { brand, contact, features } = config;
+  const { brand, contact, features, business } = config;
 
   // ✅ ZERO-DEFECT: White-Label - Erste 4 Features für Services-Spalte
   const footerServices = features?.slice(0, 4) || [];
+
+  // ✅ ZERO-DEFECT: Business-aware Öffnungszeiten-Text
+  const getOpeningText = (): string => {
+    switch (business.type) {
+      case 'arzt':
+        return 'Sprechzeiten nach Vereinbarung';
+      case 'handwerk':
+        return 'Mo–Fr für Sie im Einsatz';
+      case 'kiosk':
+      default:
+        return 'Mo – Sa für Sie geöffnet';
+    }
+  };
 
   return (
     <footer className="bg-gray-900 text-gray-300 mt-auto">
@@ -26,7 +39,7 @@ export default function Footer() {
           <div className="md:col-span-1">
             <h3 className="text-white font-bold text-lg mb-4">{brand.name}</h3>
             <p className="text-sm text-gray-300 mb-4">{brand.slogan}</p>
-            <p className="text-xs text-gray-400">Mo - Sa für Sie geöffnet.</p>
+            <p className="text-xs text-gray-400">{getOpeningText()}</p>
           </div>
 
           {/* Spalte 2: Rechtliches */}

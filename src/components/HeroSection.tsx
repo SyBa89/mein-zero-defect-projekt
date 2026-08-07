@@ -6,11 +6,19 @@ import Image from 'next/image';
 import FadeInWhenVisible from './motion/FadeInWhenVisible';
 
 export default function HeroSection() {
+  // ✅ ZERO-DEFECT: ALLE Hooks ZUERST (Rules of Hooks!)
   const config = useConfig();
   const { isLoading } = useConfigState();
   const prefersReducedMotion = useReducedMotion();
 
-  // ✅ ZERO-DEFECT: Skeleton UI während Config lädt
+  // ✅ Daten extrahieren mit Safe Defaults
+  const { brand, hero, contact } = config;
+  const emoji = hero.emoji || '⭐';
+  const backgroundImage = hero.backgroundImage || '/images/fassade.png';
+  const imageAlt = hero.imageAlt || `${brand.name} – Unser Standort`;
+  const addressString = `${contact.address.street}, ${contact.address.zip} ${contact.address.city}`;
+
+  // ✅ JETZT Early-Returns (NACH allen Hooks!)
   if (isLoading) {
     return (
       <section
@@ -21,13 +29,13 @@ export default function HeroSection() {
       >
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-purple-900/60 to-pink-900/70" />
         <div className="relative max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8 py-20 z-10">
-          <div className="mb-6 text-7xl md:text-8xl inline-block animate-pulse">🍭</div>
-          <div className="h-6 bg-white/20 rounded w-48 mx-auto mb-3 animate-pulse"></div>
-          <div className="h-16 bg-white/20 rounded w-3/4 mx-auto mb-6 animate-pulse"></div>
-          <div className="h-6 bg-white/20 rounded w-2/3 mx-auto mb-12 animate-pulse"></div>
+          <div className="mb-6 text-7xl md:text-8xl inline-block animate-pulse">{emoji}</div>
+          <div className="h-6 bg-white/20 rounded w-48 mx-auto mb-3 animate-pulse" />
+          <div className="h-16 bg-white/20 rounded w-3/4 mx-auto mb-6 animate-pulse" />
+          <div className="h-6 bg-white/20 rounded w-2/3 mx-auto mb-12 animate-pulse" />
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <div className="h-14 bg-white/20 rounded-2xl w-56 animate-pulse"></div>
-            <div className="h-14 bg-white/20 rounded-2xl w-56 animate-pulse"></div>
+            <div className="h-14 bg-white/20 rounded-2xl w-56 animate-pulse" />
+            <div className="h-14 bg-white/20 rounded-2xl w-56 animate-pulse" />
           </div>
         </div>
         <span className="sr-only">Inhalt wird geladen...</span>
@@ -35,18 +43,15 @@ export default function HeroSection() {
     );
   }
 
-  const { brand, hero } = config;
-
   return (
     <LazyMotion features={domAnimation} strict>
       <section
         className="relative min-h-[85vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden bg-gray-900"
         id="hero"
       >
-        {/* ✅ ZERO-DEFECT: q=75 statt q=85 (17 KiB savings, visuelle Qualität bleibt) */}
         <Image
-          src="/images/fassade.png"
-          alt={`${brand.name} – Fassade am Bürgerplatz in Erftstadt-Liblar`}
+          src={backgroundImage}
+          alt={imageAlt}
           fill
           priority
           fetchPriority="high"
@@ -58,16 +63,12 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-purple-900/60 to-pink-900/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-transparent to-transparent" />
 
+        {/* ✅ ZERO-DEFECT: Simplified animations (no willChange, no layout-shift) */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <m.div
             className="absolute -top-40 -right-40 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl"
-            style={{ willChange: 'transform' }}
-            initial={{ scale: 1, x: 0, y: 0 }}
-            animate={
-              prefersReducedMotion
-                ? { scale: 1, x: 0, y: 0 }
-                : { scale: [1, 1.1, 1], x: [0, 20, 0], y: [0, -20, 0] }
-            }
+            initial={{ scale: 1 }}
+            animate={prefersReducedMotion ? { scale: 1 } : { scale: [1, 1.1, 1] }}
             transition={{
               duration: prefersReducedMotion ? 0 : 12,
               repeat: Infinity,
@@ -76,13 +77,8 @@ export default function HeroSection() {
           />
           <m.div
             className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
-            style={{ willChange: 'transform' }}
-            initial={{ scale: 1, x: 0, y: 0 }}
-            animate={
-              prefersReducedMotion
-                ? { scale: 1, x: 0, y: 0 }
-                : { scale: [1, 1.15, 1], x: [0, -20, 0], y: [0, 20, 0] }
-            }
+            initial={{ scale: 1 }}
+            animate={prefersReducedMotion ? { scale: 1 } : { scale: [1, 1.15, 1] }}
             transition={{
               duration: prefersReducedMotion ? 0 : 15,
               repeat: Infinity,
@@ -95,24 +91,11 @@ export default function HeroSection() {
         <div className="relative max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8 py-20 z-10">
           <m.div
             className="mb-6 text-7xl md:text-8xl inline-block drop-shadow-2xl"
-            style={{ willChange: 'transform, opacity' }}
-            initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              rotate: 0,
-              y: prefersReducedMotion ? 0 : [0, -8, 0],
-            }}
-            transition={{
-              opacity: { duration: prefersReducedMotion ? 0 : 0.6, ease: 'easeOut' },
-              scale: { duration: prefersReducedMotion ? 0 : 0.6, ease: [0.34, 1.56, 0.64, 1] },
-              rotate: { duration: prefersReducedMotion ? 0 : 0.6, ease: 'easeOut' },
-              y: prefersReducedMotion
-                ? {}
-                : { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1 },
-            }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: [0.34, 1.56, 0.64, 1] }}
           >
-            🍭
+            {emoji}
           </m.div>
 
           <FadeInWhenVisible delay={0.2} direction="up">
@@ -122,9 +105,8 @@ export default function HeroSection() {
           </FadeInWhenVisible>
 
           <m.h1
-            style={{ willChange: 'transform, opacity' }}
-            initial={{ opacity: 0, y: 30, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: prefersReducedMotion ? 0 : 0.8,
               delay: 0.4,
@@ -141,18 +123,14 @@ export default function HeroSection() {
             </p>
           </FadeInWhenVisible>
 
-          {/* ✅ ZERO-DEFECT: Composited Animations (nur transform + opacity) */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <m.a
               href={hero.primaryCta.href}
-              style={{ willChange: 'transform' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: 0.8, ease: 'easeOut' }}
-              whileHover={prefersReducedMotion ? {} : { y: -2, scale: 1.02 }}
-              whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold text-lg rounded-2xl shadow-2xl shadow-pink-500/50 transition-colors backdrop-blur-sm"
-              aria-label={`${hero.primaryCta.label} - Anrufen`}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold text-lg rounded-2xl shadow-2xl shadow-pink-500/50 transition-all hover:scale-105 backdrop-blur-sm"
+              aria-label={`${hero.primaryCta.label} - ${hero.primaryCta.href.startsWith('tel:') ? 'Anrufen' : 'Öffnen'}`}
             >
               <svg
                 className="w-6 h-6"
@@ -173,14 +151,11 @@ export default function HeroSection() {
 
             <m.a
               href={hero.secondaryCta.href}
-              style={{ willChange: 'transform' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: 1.0, ease: 'easeOut' }}
-              whileHover={prefersReducedMotion ? {} : { y: -2, scale: 1.02 }}
-              whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white/95 hover:bg-white text-gray-900 font-bold text-lg rounded-2xl shadow-2xl transition-colors backdrop-blur-sm border-2 border-white/50"
-              aria-label={`${hero.secondaryCta.label} - Route anzeigen`}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-white/95 hover:bg-white text-gray-900 font-bold text-lg rounded-2xl shadow-2xl transition-all hover:scale-105 backdrop-blur-sm border-2 border-white/50"
+              aria-label={`${hero.secondaryCta.label} - ${addressString}`}
             >
               <svg
                 className="w-6 h-6"

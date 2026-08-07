@@ -38,11 +38,15 @@ const CtaSchema = z.object({
   href: z.string().min(1),
 });
 
+// ✅ ERWEITERT: HeroSchema mit business-spezifischen Feldern
 const HeroSchema = z.object({
   headline: z.string().min(1),
   subheadline: z.string().min(1),
   primaryCta: CtaSchema,
   secondaryCta: CtaSchema,
+  emoji: z.string().nullish(),
+  imageAlt: z.string().nullish(),
+  backgroundImage: z.string().nullish(),
 });
 
 const FeatureSchema = z.object({
@@ -106,7 +110,6 @@ const ReviewSchema = z.object({
   gradient: z.string().min(1),
 });
 
-// ✅ NEW: Opening Hours Schema (structured data, no parsing needed)
 const OpeningHoursItemSchema = z.object({
   day: z.enum(['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']),
   hours: z.string(),
@@ -120,6 +123,28 @@ const OpeningHoursSchema = z.object({
   sectionTitle: z.string().nullish(),
   sectionSubtitle: z.string().nullish(),
   tipMessage: z.string().nullish(),
+});
+
+// ✅ NEU: AboutSchema für business-spezifische About-Texte
+const AboutSchema = z.object({
+  showSection: z.boolean().optional(),
+  sectionTitle: z.string().nullish(),
+  introText: z.string().min(1),
+  mainDescription: z.string().min(1),
+});
+
+// ✅ NEU: BannersSchema für Runtime-Updates (optional, business-specific)
+const BannersSchema = z.object({
+  showJackpot: z.boolean().optional(),
+  jackpotLabel: z.string().nullish(),
+  highlightLabel: z.string().nullish(),
+});
+
+// ✅ NEU: SocialSchema für Social-Media-Links
+const SocialSchema = z.object({
+  facebook: z.string().url().nullish(),
+  instagram: z.string().url().nullish(),
+  twitter: z.string().url().nullish(),
 });
 
 export const ClientConfigSchema = z.object({
@@ -139,6 +164,9 @@ export const ClientConfigSchema = z.object({
   brands: z.array(z.string()).nullish(),
   reviews: z.array(ReviewSchema).nullish(),
   openingHours: OpeningHoursSchema.nullish(),
+  about: AboutSchema.nullish(),
+  banners: BannersSchema.nullish(),
+  social: SocialSchema.nullish(),
 });
 
 export type ClientConfig = z.infer<typeof ClientConfigSchema>;

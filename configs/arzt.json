@@ -43,7 +43,10 @@
     "secondaryCta": {
       "label": "Praxis anrufen",
       "href": "tel:+4922112345678"
-    }
+    },
+    "emoji": "🏥",
+    "imageAlt": "Praxis Dr. Müller – Moderne Hausarztpraxis in Köln-Rodenkirchen",
+    "backgroundImage": "/images/fassade.png"
   },
   "features": [
     {
@@ -265,5 +268,21 @@
     "emergencyMessage": null,
     "showSection": true,
     "sectionSubtitle": "Termine nur nach Vereinbarung. Bitte rufen Sie vorher an."
+  },
+  "about": {
+    "showSection": true,
+    "mainDescription": "Ob Vorsorgeuntersuchungen, Schutzimpfungen, DMP-Programme für chronische Erkrankungen oder akute Beschwerden – wir sind Ihr kompetenter Ansprechpartner für die ganze Familie. Moderne Diagnostik wie EKG, Langzeit-Blutdruckmessung und Lungenfunktionstests ermöglichen eine präzise Diagnose direkt in der Praxis. Wir behandeln Patientinnen und Patienten aller gesetzlichen und privaten Krankenkassen.",
+    "sectionTitle": "Über unsere Praxis",
+    "introText": "Die Praxis Dr. Müller ist Ihre moderne Hausarztpraxis im Herzen von Köln-Rodenkirchen. Als Fachärztin für Allgemeinmedizin biete ich Ihnen und Ihrer Familie umfassende medizinische Versorgung auf höchstem Niveau – mit persönlicher Zuwendung und ausreichend Zeit für Ihre Anliegen."
+  },
+  "banners": {
+    "highlightLabel": "Aktuelle Sprechstunde",
+    "jackpotLabel": null,
+    "showJackpot": false
+  },
+  "social": {
+    "instagram": null,
+    "twitter": null,
+    "facebook": null
   }
 }
