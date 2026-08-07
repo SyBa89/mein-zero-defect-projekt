@@ -4,53 +4,83 @@ import { validateClientConfig } from './schemas/client-config.schema';
 import { CLIENT_CONFIG as FALLBACK_CONFIG } from './client.config';
 import type { ClientConfig } from './schemas/client-config.schema';
 
-// Re-export type for external use
 export type { ClientConfig };
 
 // ═══════════════════════════════════════════════════════════════
-// Config Loader — White-Label-fähige Config-Verwaltung
+// Config Loader — Zero-Defect + Performance-Optimized
 // ═══════════════════════════════════════════════════════════════
-// Strategie:
-// 1. Prüfe ob configs/{type}.json existiert
-// 2. Wenn ja: Lade JSON und validiere mit Zod
-// 3. Wenn nein oder invalid: Fallback auf client.config.ts
-// 4. Immer helpful Error-Message
+// Singleton-Cache: Config wird nur 1x pro Prozess geladen
+// Conditional Logging: Nur in Development, nicht in Production
+// Memory-Cache: Kein File-I/O bei jedem Render
 
 const CONFIGS_DIR = path.join(process.cwd(), 'configs');
+const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
+
+// Singleton-Cache (Module-Level, nicht Class-basiert)
+let cachedConfig: ClientConfig | null = null;
+let cachedClientType: string | null = null;
+
+function log(message: string): void {
+  if (IS_DEVELOPMENT) {
+    console.log(`[ConfigLoader] ${message}`);
+  }
+}
+
+function logError(message: string, error?: unknown): void {
+  const errorMessage = error instanceof Error ? error.message : String(error);
+  console.error(`[ConfigLoader] ${message}: ${errorMessage}`);
+}
 
 /**
  * Lädt die Client-Config basierend auf CLIENT_TYPE ENV-Variable
  * Server-side Funktion (nur in Server Components / API Routes verwenden)
+ *
+ * Performance: Singleton-Cache (nur 1x laden pro Prozess)
+ * Logging: Nur in Development (kein Production-Spam)
  */
 export function getClientConfig(): ClientConfig {
   const clientType = process.env.CLIENT_TYPE || 'kiosk';
+
+  // Cache-Hit: Gleicher Client-Type bereits geladen
+  if (cachedConfig && cachedClientType === clientType) {
+    return cachedConfig;
+  }
+
+  // Cache-Miss oder Client-Type geändert: Neu laden
   const configPath = path.join(CONFIGS_DIR, clientType + '.json');
 
-  // Prüfe ob JSON-Config existiert
   if (fs.existsSync(configPath)) {
     try {
       const rawConfig = fs.readFileSync(configPath, 'utf-8');
       const parsedConfig = JSON.parse(rawConfig);
-
-      // Zod-Validation
       const validatedConfig = validateClientConfig(parsedConfig);
 
-      console.log('Loaded config from: configs/' + clientType + '.json');
+      log(`Loaded config from: configs/${clientType}.json`);
+
+      // Cache aktualisieren
+      cachedConfig = validatedConfig;
+      cachedClientType = clientType;
+
       return validatedConfig;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      console.error('Failed to load configs/' + clientType + '.json:', errorMessage);
-      console.error('Falling back to client.config.ts');
+      logError(`Failed to load configs/${clientType}.json`, error);
+      logError('Falling back to client.config.ts');
 
-      // Fallback auf alte Config (auch validieren!)
-      return validateClientConfig(FALLBACK_CONFIG);
+      const fallbackConfig = validateClientConfig(FALLBACK_CONFIG);
+      cachedConfig = fallbackConfig;
+      cachedClientType = clientType;
+
+      return fallbackConfig;
     }
   } else {
-    console.log('No config file found at configs/' + clientType + '.json');
-    console.log('Using fallback: client.config.ts');
+    log(`No config file found at configs/${clientType}.json`);
+    log('Using fallback: client.config.ts');
 
-    // Validiere auch die Fallback-Config
-    return validateClientConfig(FALLBACK_CONFIG);
+    const fallbackConfig = validateClientConfig(FALLBACK_CONFIG);
+    cachedConfig = fallbackConfig;
+    cachedClientType = clientType;
+
+    return fallbackConfig;
   }
 }
 
@@ -85,4 +115,13 @@ export function listAvailableConfigs(): string[] {
  */
 export function getCurrentClientType(): string {
   return process.env.CLIENT_TYPE || 'kiosk';
+}
+
+/**
+ * Helper: Cache invalidieren (für Tests oder Config-Reload)
+ */
+export function clearConfigCache(): void {
+  cachedConfig = null;
+  cachedClientType = null;
+  log('Config cache cleared');
 }
