@@ -1,4 +1,9 @@
 # ==============================================================================
+# ZERO-DEFECT .gitignore
+# Structured, deduplicated, UTF-8 clean
+# ==============================================================================
+
+# ==============================================================================
 # DEPENDENCIES (werden bei Bedarf neu installiert)
 # ==============================================================================
 node_modules/
@@ -10,7 +15,7 @@ node_modules/
 .pnpm/
 
 # ==============================================================================
-# BUILD-OUTPUT (wird automatisch generiert)
+# BUILD OUTPUT (wird automatisch generiert)
 # ==============================================================================
 dist/
 build/
@@ -20,21 +25,17 @@ out/
 .vuepress/
 .nuxt-dist/
 .swc/
+.vercel_build_cache/
+.vercel/
+*.vercel
 
 # ==============================================================================
 # NEXT.JS SPEZIFISCH
 # ==============================================================================
-.next/
-out/
-.vercel_build_cache/
-.turbo/                         # Ã¢Å“â€¦ Turbopack-Cache
-next-telemetry.json             # Ã¢Å“â€¦ Next.js Telemetrie
-.eslintcache                    # Ã¢Å“â€¦ ESLint-Cache
-.prettiercache                  # Ã¢Å“â€¦ Prettier-Cache
-
-# ==============================================================================
-# TYPESCRIPT (verhindert Build-Konflikte)
-# ==============================================================================
+.turbo/                         # Turbopack-Cache
+next-telemetry.json             # Next.js Telemetrie
+.eslintcache                    # ESLint-Cache
+.prettiercache                  # Prettier-Cache
 tsconfig.tsbuildinfo
 *.tsbuildinfo
 
@@ -42,11 +43,8 @@ tsconfig.tsbuildinfo
 # ENVIRONMENT VARIABLES (GEHEIM - niemals hochladen!)
 # ==============================================================================
 .env
-.env
 .env.local
 .env.*.local
-.env.*.local
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -71,9 +69,8 @@ test-results/
 *.test.html
 
 # ==============================================================================
-# BUNDLE-ANALYZER (wird lokal generiert)
+# BUNDLE ANALYZER (wird lokal generiert)
 # ==============================================================================
-*.html
 *.report.html
 bundle-analyzer-report.html
 *.webpack-bundle-analyzer.html
@@ -83,10 +80,7 @@ bundle-analyzer-report.html
 # ==============================================================================
 .vscode/
 .idea/
-*.swp
-*.swo
-*~
-.DS_Store
+.vscode-test/
 .vscode/settings.json
 .vscode/launch.json
 .idea/workspace.xml
@@ -95,13 +89,16 @@ bundle-analyzer-report.html
 .idea/dataSources.ids
 .idea/dataSources.xml
 .idea/dataSources.local.xml
+*.swp
+*.swo
+*~
 
 # ==============================================================================
-# OS
+# OS-SPEZIFISCHE DATEIEN
 # ==============================================================================
+.DS_Store
 Thumbs.db
 Desktop.ini
-.DS_Store
 .AppleDouble
 .LSOverride
 ._*
@@ -113,45 +110,9 @@ Desktop.ini
 *.temp
 .cache/
 *.bak
-*.swp
-*.swo
 
 # ==============================================================================
-# VERCEL (wird automatisch verwaltet)
-# ==============================================================================
-.vercel/
-*.vercel
-.vercel_build_cache/
-
-# ==============================================================================
-# EXTERNAL SERVICES & TOOLS
-# ==============================================================================
-# Sentry
-.sentry/
-sentry.properties
-
-# VSCode debugging
-.vscode-test/
-
-# Debug
-*.log
-
-# ==============================================================================
-# MISC
-# ==============================================================================
-# PNPM
-pnpm-lock.yaml
-pnpm-lock.yaml.cache
-
-# Yarn
-yarn.lock
-yarn-error.log
-
-# NPM
-package-lock.json
-
-# ==============================================================================
-# SICHERHEIT: Secrets (zusÃƒÂ¤tzliche Absicherung)
+# SECURITY & SECRETS (niemals committen!)
 # ==============================================================================
 *.key
 *.pem
@@ -162,36 +123,42 @@ package-lock.json
 *.secrets
 *.token
 *.jwt
-*.pem
+.sentry/
+sentry.properties
 
 # ==============================================================================
-# UPSTASH / DATENBANK (lokale Konfiguration)
+# DATENBANKEN (lokale Entwicklung)
 # ==============================================================================
 *.db
 *.sqlite
 *.sqlite3
 
 # ==============================================================================
-# DO NOT IGNORE (wichtig fÃƒÂ¼r Vercel/Next.js)
+# PACKAGE MANAGER LOCK FILES (optional - meist committed)
 # ==============================================================================
-# !.env.example   # Optional: Beispiel fÃƒÂ¼r benÃƒÂ¶tigte Env-Variablen
-# Backup-Dateien
-*.backup_*
-backup_*/
+# yarn.lock
+# package-lock.json
+# pnpm-lock.yaml
 
-# === Zero-Defect Cleanup ===
-backup_*/**
-.env*.local
-
-
-# Backup files (auto-generated)
+# ==============================================================================
+# ZERO-DEFECT BACKUP FILES (automatisch generiert)
+# ==============================================================================
 *.backup*
+*.backup_*
 *.surgical_*
 *.diagnosis_*
 *.clean_*
-
 *.zero_tracking_*
 *.schema_fix_*
 *.eslint_fix_*
 *.definitive_fix_*
 *.definitive_*
+*.premium_*
+backup_*/
+backup_*/**
+
+# ==============================================================================
+# DO NOT IGNORE (explizit einschlieen)
+# ==============================================================================
+# !.env.example
+# !public/
