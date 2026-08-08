@@ -1,10 +1,11 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useConfig } from '@/contexts/ConfigContext';
 
-export default function Footer() {
+  const config = useConfig(); {
+  // ✅ ZERO-DEFECT: Hydration-sicheres Jahr (Server rendert null, Client setzt Jahr)
   const [currentYear, setCurrentYear] = useState<number | null>(null);
 
   useEffect(() => {
@@ -14,8 +15,10 @@ export default function Footer() {
   const config = useConfig();
   const { brand, contact, features, business } = config;
 
+  // ✅ ZERO-DEFECT: White-Label - Erste 4 Features für Services-Spalte
   const footerServices = features?.slice(0, 4) || [];
 
+  // ✅ ZERO-DEFECT: Business-aware Öffnungszeiten-Text
   const getOpeningText = (): string => {
     switch (business.type) {
       case 'arzt':
@@ -32,12 +35,14 @@ export default function Footer() {
     <footer className="bg-gray-900 text-gray-300 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Spalte 1: Brand */}
           <div className="md:col-span-1">
             <h3 className="text-white font-bold text-lg mb-4">{brand.name}</h3>
             <p className="text-sm text-gray-300 mb-4">{brand.slogan}</p>
             <p className="text-xs text-gray-400">{getOpeningText()}</p>
           </div>
 
+          {/* Spalte 2: Rechtliches */}
           <div>
             <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
               Rechtliches
@@ -62,6 +67,7 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Spalte 3: Services (Dynamisch aus Config) */}
           <div>
             <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
               Services
@@ -80,6 +86,7 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Spalte 4: Kontakt */}
           <div>
             <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
               Kontakt
@@ -119,6 +126,7 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Footer Bottom */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-xs text-gray-400">
             ©{' '}
@@ -135,6 +143,7 @@ export default function Footer() {
           </button>
         </div>
 
+        {/* ✅ ZERO-DEFECT: Jugendschutz-Banner NUR für Kiosk (Tabak/Alkohol) */}
         {business.type === 'kiosk' && (
           <div className="border-t border-gray-800 mt-6 pt-6">
             <p className="text-xs text-gray-500 text-center max-w-3xl mx-auto leading-relaxed">

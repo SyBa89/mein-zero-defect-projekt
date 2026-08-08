@@ -1,24 +1,14 @@
-﻿import fs from 'fs';
+import fs from 'fs';
 import path from 'path';
+import { cache } from 'react';
 import { validateClientConfig } from './schemas/client-config.schema';
 import { CLIENT_CONFIG as FALLBACK_CONFIG } from './client.config';
 import type { ClientConfig } from './schemas/client-config.schema';
 
 export type { ClientConfig };
 
-// ═══════════════════════════════════════════════════════════════
-// Config Loader — Zero-Defect + Performance-Optimized
-// ═══════════════════════════════════════════════════════════════
-// Singleton-Cache: Config wird nur 1x pro Prozess geladen
-// Conditional Logging: Nur in Development, nicht in Production
-// Memory-Cache: Kein File-I/O bei jedem Render
-
 const CONFIGS_DIR = path.join(process.cwd(), 'configs');
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
-
-// Singleton-Cache (Module-Level, nicht Class-basiert)
-let cachedConfig: ClientConfig | null = null;
-let cachedClientType: string | null = null;
 
 function log(message: string): void {
   if (IS_DEVELOPMENT) {
@@ -33,20 +23,15 @@ function logError(message: string, error?: unknown): void {
 
 /**
  * Lädt die Client-Config basierend auf CLIENT_TYPE ENV-Variable
- * Server-side Funktion (nur in Server Components / API Routes verwenden)
  *
- * Performance: Singleton-Cache (nur 1x laden pro Prozess)
- * Logging: Nur in Development (kein Production-Spam)
+ * ZERO-DEFECT: React cache() garantiert 1 Aufruf pro Request
+ * - Server Components: Request-scoped memoization
+ * - Serverless-compatible: Funktioniert auf Vercel
+ * - Performance: Nur 1 File-Read pro Request
+ * - Type-safe: Zod validation included
  */
-export function getClientConfig(): ClientConfig {
+export const getClientConfig = cache((): ClientConfig => {
   const clientType = process.env.CLIENT_TYPE || 'kiosk';
-
-  // Cache-Hit: Gleicher Client-Type bereits geladen
-  if (cachedConfig && cachedClientType === clientType) {
-    return cachedConfig;
-  }
-
-  // Cache-Miss oder Client-Type geändert: Neu laden
   const configPath = path.join(CONFIGS_DIR, clientType + '.json');
 
   if (fs.existsSync(configPath)) {
@@ -56,45 +41,24 @@ export function getClientConfig(): ClientConfig {
       const validatedConfig = validateClientConfig(parsedConfig);
 
       log(`Loaded config from: configs/${clientType}.json`);
-
-      // Cache aktualisieren
-      cachedConfig = validatedConfig;
-      cachedClientType = clientType;
-
       return validatedConfig;
     } catch (error) {
       logError(`Failed to load configs/${clientType}.json`, error);
       logError('Falling back to client.config.ts');
-
-      const fallbackConfig = validateClientConfig(FALLBACK_CONFIG);
-      cachedConfig = fallbackConfig;
-      cachedClientType = clientType;
-
-      return fallbackConfig;
+      return validateClientConfig(FALLBACK_CONFIG);
     }
   } else {
     log(`No config file found at configs/${clientType}.json`);
     log('Using fallback: client.config.ts');
-
-    const fallbackConfig = validateClientConfig(FALLBACK_CONFIG);
-    cachedConfig = fallbackConfig;
-    cachedClientType = clientType;
-
-    return fallbackConfig;
+    return validateClientConfig(FALLBACK_CONFIG);
   }
-}
+});
 
-/**
- * Helper: Prüft ob eine Config-Datei existiert
- */
 export function configExists(clientType: string): boolean {
   const configPath = path.join(CONFIGS_DIR, clientType + '.json');
   return fs.existsSync(configPath);
 }
 
-/**
- * Helper: Listet alle verfügbaren Configs auf
- */
 export function listAvailableConfigs(): string[] {
   if (!fs.existsSync(CONFIGS_DIR)) {
     return [];
@@ -110,18 +74,6 @@ export function listAvailableConfigs(): string[] {
     });
 }
 
-/**
- * Helper: Gibt die aktuelle Config-Type zurück
- */
 export function getCurrentClientType(): string {
   return process.env.CLIENT_TYPE || 'kiosk';
-}
-
-/**
- * Helper: Cache invalidieren (für Tests oder Config-Reload)
- */
-export function clearConfigCache(): void {
-  cachedConfig = null;
-  cachedClientType = null;
-  log('Config cache cleared');
 }
