@@ -1,4 +1,4 @@
-﻿import { z } from 'zod';
+import { z } from 'zod';
 
 const BrandSchema = z.object({
   name: z.string().min(1),
@@ -166,13 +166,6 @@ export const ClientConfigSchema = z.object({
   faq: z.array(FaqSchema).min(1),
   brands: z.array(z.string()).nullish(),
   reviews: z.array(ReviewSchema).nullish(),
-  tracking: z
-    .object({
-      enabled: z.boolean().default(false),
-      googleAnalyticsId: z.string().optional(),
-      facebookPixelId: z.string().optional(),
-    })
-    .optional(),
   openingHours: OpeningHoursSchema.nullish(),
   about: AboutSchema.nullish(),
   banners: BannersSchema.nullish(),
