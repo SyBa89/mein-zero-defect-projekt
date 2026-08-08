@@ -27,10 +27,10 @@ out/
 .next/
 out/
 .vercel_build_cache/
-.turbo/                         # âœ… Turbopack-Cache
-next-telemetry.json             # âœ… Next.js Telemetrie
-.eslintcache                    # âœ… ESLint-Cache
-.prettiercache                  # âœ… Prettier-Cache
+.turbo/                         # Ã¢Å“â€¦ Turbopack-Cache
+next-telemetry.json             # Ã¢Å“â€¦ Next.js Telemetrie
+.eslintcache                    # Ã¢Å“â€¦ ESLint-Cache
+.prettiercache                  # Ã¢Å“â€¦ Prettier-Cache
 
 # ==============================================================================
 # TYPESCRIPT (verhindert Build-Konflikte)
@@ -151,7 +151,7 @@ yarn-error.log
 package-lock.json
 
 # ==============================================================================
-# SICHERHEIT: Secrets (zusÃ¤tzliche Absicherung)
+# SICHERHEIT: Secrets (zusÃƒÂ¤tzliche Absicherung)
 # ==============================================================================
 *.key
 *.pem
@@ -172,9 +172,9 @@ package-lock.json
 *.sqlite3
 
 # ==============================================================================
-# DO NOT IGNORE (wichtig fÃ¼r Vercel/Next.js)
+# DO NOT IGNORE (wichtig fÃƒÂ¼r Vercel/Next.js)
 # ==============================================================================
-# !.env.example   # Optional: Beispiel fÃ¼r benÃ¶tigte Env-Variablen
+# !.env.example   # Optional: Beispiel fÃƒÂ¼r benÃƒÂ¶tigte Env-Variablen
 # Backup-Dateien
 *.backup_*
 backup_*/
@@ -194,3 +194,4 @@ backup_*/**
 *.schema_fix_*
 *.eslint_fix_*
 *.definitive_fix_*
+*.definitive_*
