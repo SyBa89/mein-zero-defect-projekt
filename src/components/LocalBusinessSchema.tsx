@@ -1,4 +1,4 @@
-﻿// âŒ ENTFERNEN: 'use client';
+// âŒ ENTFERNEN: 'use client';
 
 import { getClientConfig } from '@/lib/config-loader';
 const config = getClientConfig();
@@ -11,7 +11,7 @@ export default function LocalBusinessSchema() {
     name: config.brand.name,
     url: config.url,
     logo: `${config.url}/images/logo.png`,
-    image: `${config.url}/images/fassade.png`,
+    image: `${config.url}/images/fassade.webp`,
     description: config.seo.description,
     address: {
       '@type': 'PostalAddress',
