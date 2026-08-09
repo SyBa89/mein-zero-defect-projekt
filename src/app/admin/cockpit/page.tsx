@@ -4,46 +4,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import OnboardingGuide from './onboarding';
-
-// Lokale Typedefinition (kein externer Import nötig)
-interface SiteConfig {
-  isClosed: boolean;
-  emergencyMessage: string;
-  openingHoursText: string;
-  jackpot: string;
-  highlight: string;
-  updatedAt: string;
-  bannerText?: string;
-  name?: string;
-  phoneDisplay?: string;
-  phoneHref?: string;
-  address?: string;
-  facebook?: string;
-  holidays?: any[];
-}
-
-// Default-Config verhindert null-Zugriffe beim Prerender
-const defaultConfig: SiteConfig = {
-  isClosed: false,
-  emergencyMessage: '',
-  openingHoursText: 'Mo-Fr 07:30-19:00, Sa 07:30-14:30',
-  jackpot: '',
-  highlight: '',
-  updatedAt: '2026-01-01T00:00:00.000Z',
-  bannerText: '',
-  name: 'Kiosk Lollipop',
-  phoneDisplay: '02235 9291160',
-  phoneHref: 'tel:+4922359291160',
-  address: 'Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar',
-  facebook: 'https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/',
-  holidays: [],
-};
+import type { ClientConfig } from '@/lib/schemas/client-config.schema';
 
 export const dynamic = 'force-dynamic';
 
 export default function AdminCockpit() {
   const [user, setUser] = useState<any>(null);
-  const [config, setConfig] = useState<SiteConfig>(defaultConfig);
+  const [config, setConfig] = useState<ClientConfig | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [debugInfo, setDebugInfo] = useState('');
@@ -57,8 +24,8 @@ export default function AdminCockpit() {
       setDebugInfo(`Config API Status: ${response.status}`);
 
       if (response.ok) {
-        const data = await response.json();
-        setConfig((prev) => ({ ...(prev ?? defaultConfig), ...(data ?? {}) }));
+        const data: ClientConfig = await response.json();
+        setConfig(data);
         setDebugInfo('Config geladen!');
       } else {
         const errorData = await response.text();
@@ -82,9 +49,10 @@ export default function AdminCockpit() {
 
       if (response.ok) {
         setUser({
+          // Zero-Defect Fix: Explizites window.crypto für ESLint Browser-Env Compliance
           id:
-            typeof crypto !== 'undefined' && 'randomUUID' in crypto
-              ? (crypto as any).randomUUID()
+            typeof window !== 'undefined' && window.crypto
+              ? window.crypto.randomUUID()
               : Date.now().toString(),
           name: 'Admin',
           role: 'admin',
@@ -132,32 +100,48 @@ export default function AdminCockpit() {
         body: JSON.stringify(config),
       });
       const data = await response.json();
+
+      // Zero-Defect Fix: Explizites window.alert für ESLint Browser-Env Compliance
       if (data.success) {
-        alert('✅ Konfiguration erfolgreich gespeichert!');
-        if (data.config) {
-          setConfig((prev) => ({ ...(prev ?? defaultConfig), ...(data.config || {}) }));
-        }
+        if (typeof window !== 'undefined')
+          window.alert('✅ Konfiguration erfolgreich gespeichert!');
+        setConfig(data.config);
       } else {
-        alert('❌ Fehler: ' + data.error);
+        if (typeof window !== 'undefined')
+          window.alert('❌ Fehler: ' + (data.error || 'Unbekannt'));
       }
     } catch {
-      alert('❌ Verbindungsfehler!');
+      if (typeof window !== 'undefined') window.alert('❌ Verbindungsfehler!');
     } finally {
       setIsSaving(false);
     }
   };
 
-  // ✅ PURITY FIX: updatedAtDisplay VOR dem return berechnen
-  const updatedAtDisplay = config?.updatedAt
-    ? new Date(config.updatedAt).toLocaleString('de-DE')
-    : '—';
+  // Helper für tiefe State-Updates (Öffnungszeiten)
+  const updateOpeningHoursItem = (
+    index: number,
+    field: 'hours' | 'isOpen',
+    value: string | boolean
+  ) => {
+    setConfig((prev) => {
+      if (!prev || !prev.openingHours) return prev;
+      const newItems = [...prev.openingHours.items];
+      newItems[index] = { ...newItems[index], [field]: value as any };
+      return {
+        ...prev,
+        openingHours: { ...prev.openingHours, items: newItems },
+      };
+    });
+  };
 
-  if (isLoading) {
+  const updatedAtDisplay = config?.hero?.headline ? new Date().toLocaleString('de-DE') : '—';
+
+  if (isLoading || !config) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Prüfe Anmeldung...</p>
+          <p className="mt-4 text-gray-600">Prüfe Anmeldung & lade Daten...</p>
           {debugInfo && (
             <div className="mt-4 p-3 bg-gray-100 rounded-xl text-xs font-mono text-gray-700">
               <strong>Debug:</strong> {debugInfo}
@@ -173,12 +157,6 @@ export default function AdminCockpit() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center max-w-md">
           <p className="text-red-600 mb-4 text-lg font-bold">{error}</p>
-          {debugInfo && (
-            <div className="mt-4 p-3 bg-gray-100 rounded-xl text-xs font-mono text-gray-700 text-left">
-              <strong>Debug-Info:</strong>
-              <pre className="mt-2 whitespace-pre-wrap">{debugInfo}</pre>
-            </div>
-          )}
           <button
             onClick={() => router.push('/admin')}
             className="mt-6 px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700"
@@ -190,6 +168,10 @@ export default function AdminCockpit() {
     );
   }
 
+  // Zero-Defect: Business-Awareness (Blocker ③)
+  const isKiosk = config.business.type === 'kiosk';
+  const businessName = config.brand.name || 'Betrieb';
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white shadow">
@@ -198,7 +180,8 @@ export default function AdminCockpit() {
             <div>
               <h1 className="text-3xl font-black text-gray-900">Admin Cockpit</h1>
               <p className="mt-1 text-sm text-gray-600">
-                Willkommen, {user?.name} ({user?.role})
+                Willkommen, {user?.name} ({user?.role}) |{' '}
+                <span className="font-bold uppercase">{config.business.type}</span>
               </p>
             </div>
             <div className="flex gap-3">
@@ -234,81 +217,112 @@ export default function AdminCockpit() {
         <OnboardingGuide />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* NOTFALL-BANNER */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">🚨 Notfall-Banner</h2>
             <div className="space-y-4">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={config.isClosed}
+                  checked={config.openingHours?.isClosed || false}
                   onChange={(e) =>
                     setConfig((prev) => ({
-                      ...(prev ?? defaultConfig),
-                      isClosed: e.target.checked,
+                      ...prev!,
+                      openingHours: { ...prev!.openingHours!, isClosed: e.target.checked },
                     }))
                   }
                   className="w-5 h-5 text-pink-600 rounded"
                 />
-                <span className="font-medium text-gray-900">Kiosk als geschlossen markieren</span>
+                <span className="font-medium text-gray-900">
+                  {businessName} als geschlossen markieren
+                </span>
               </label>
               <textarea
-                value={config.emergencyMessage}
+                value={config.openingHours?.emergencyMessage || ''}
                 onChange={(e) =>
                   setConfig((prev) => ({
-                    ...(prev ?? defaultConfig),
-                    emergencyMessage: e.target.value,
+                    ...prev!,
+                    openingHours: { ...prev!.openingHours!, emergencyMessage: e.target.value },
                   }))
                 }
                 rows={3}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                placeholder="Notfall-Nachricht"
+                placeholder="Notfall-Nachricht (z.B. Betriebsferien)"
               />
             </div>
           </div>
 
+          {/* ÖFFNUNGSZEITEN (Strukturiert nach Zod-Schema) */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">🕒 Öffnungszeiten</h2>
-            <textarea
-              value={config.openingHoursText}
-              onChange={(e) =>
-                setConfig((prev) => ({
-                  ...(prev ?? defaultConfig),
-                  openingHoursText: e.target.value,
-                }))
-              }
-              rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-              placeholder="Mo-Fr 07:30-19:00"
-            />
+            <div className="space-y-2">
+              {config.openingHours?.items.map((item, index) => (
+                <div key={item.day} className="flex items-center gap-2">
+                  <span className="w-20 text-sm font-medium text-gray-700">{item.day}</span>
+                  <input
+                    type="text"
+                    value={item.hours}
+                    onChange={(e) => updateOpeningHoursItem(index, 'hours', e.target.value)}
+                    className="flex-1 px-3 py-1 border border-gray-300 rounded text-sm"
+                    placeholder="z.B. 08:00-12:00"
+                  />
+                  <label className="flex items-center gap-1 text-xs text-gray-600">
+                    <input
+                      type="checkbox"
+                      checked={item.isOpen}
+                      onChange={(e) => updateOpeningHoursItem(index, 'isOpen', e.target.checked)}
+                    />
+                    Offen
+                  </label>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-2xl shadow-sm border border-yellow-200 dark:border-yellow-700 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">🎰 Lotto Jackpot</h2>
-            <input
-              type="text"
-              value={config.jackpot}
-              onChange={(e) =>
-                setConfig((prev) => ({ ...(prev ?? defaultConfig), jackpot: e.target.value }))
-              }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-              placeholder="45.000.000"
-              maxLength={30}
-            />
-          </div>
+          {/* KIOSK-SPEZIFISCHE FEATURES (Conditional Rendering) */}
+          {isKiosk && (
+            <>
+              <div className="bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-2xl shadow-sm border border-yellow-200 dark:border-yellow-700 p-6">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">🎰 Lotto Jackpot</h2>
+                <input
+                  type="text"
+                  value={config.banners?.jackpotLabel || ''}
+                  onChange={(e) =>
+                    setConfig((prev) => ({
+                      ...prev!,
+                      banners: { ...prev!.banners!, jackpotLabel: e.target.value },
+                    }))
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  placeholder="45.000.000"
+                  maxLength={30}
+                />
+              </div>
 
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl shadow-sm border border-blue-200 dark:border-blue-700 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">⭐ Tages-Highlight</h2>
-            <input
-              type="text"
-              value={config.highlight}
-              onChange={(e) =>
-                setConfig((prev) => ({ ...(prev ?? defaultConfig), highlight: e.target.value }))
-              }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-              placeholder="🎉 Heute: Lotto Jackpot!"
-              maxLength={100}
-            />
-          </div>
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl shadow-sm border border-blue-200 dark:border-blue-700 p-6">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">⭐ Tages-Highlight</h2>
+                <input
+                  type="text"
+                  value={config.banners?.highlightLabel || ''}
+                  onChange={(e) =>
+                    setConfig((prev) => ({
+                      ...prev!,
+                      banners: { ...prev!.banners!, highlightLabel: e.target.value },
+                    }))
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  placeholder="🎉 Heute: Lotto Jackpot!"
+                  maxLength={100}
+                />
+              </div>
+            </>
+          )}
+
+          {!isKiosk && (
+            <div className="bg-gray-50 rounded-2xl border border-gray-200 p-6 flex items-center justify-center text-gray-500 text-sm">
+              <p>ℹ️ Jackpot & Highlight Features sind nur für Kiosk-Betriebe verfügbar.</p>
+            </div>
+          )}
         </div>
 
         <div className="mt-6 text-center text-sm text-gray-500">
@@ -318,4 +332,3 @@ export default function AdminCockpit() {
     </div>
   );
 }
-

@@ -121,6 +121,15 @@ const OpeningHoursItemSchema = z.object({
   isOpen: z.boolean(),
 });
 
+// ✅ NEU (Phase 4a.1): Holiday Override Schema für Feiertage/Urlaub
+// Zero-Defect: Regex erzwingt ISO 8601 (YYYY-MM-DD) und verhindert Datenmüll
+const HolidayOverrideSchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD'),
+  name: z.string().min(1),
+  isClosed: z.boolean(),
+  hours: z.string().optional(),
+});
+
 const OpeningHoursSchema = z.object({
   items: z.array(OpeningHoursItemSchema).length(7),
   showSection: z.boolean().optional(),
@@ -128,6 +137,9 @@ const OpeningHoursSchema = z.object({
   sectionTitle: z.string().nullish(),
   sectionSubtitle: z.string().nullish(),
   tipMessage: z.string().nullish(),
+  // ✅ NEU (Phase 4a.1): Globale Schließung & Feiertags-Overrides
+  isClosed: z.boolean().default(false),
+  holidays: z.array(HolidayOverrideSchema).optional(),
 });
 
 const AboutSchema = z.object({
@@ -141,6 +153,9 @@ const BannersSchema = z.object({
   showJackpot: z.boolean().optional(),
   jackpotLabel: z.string().nullish(),
   highlightLabel: z.string().nullish(),
+  // ✅ NEU (Phase 4a.1): Allgemeine Banner & Notfall-Schalter
+  bannerText: z.string().nullish(),
+  showEmergency: z.boolean().default(true),
 });
 
 const SocialSchema = z.object({
