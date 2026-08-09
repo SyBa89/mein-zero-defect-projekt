@@ -1,20 +1,16 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
 /**
- * ✅ ZERO-DEFECT: Enterprise Security Middleware
+ * ✅ ZERO-DEFECT: Enterprise Security Middleware (Phase 4e Polish)
  *
- * 🛡️ PRODUCTION: Strikte CSP OHNE 'unsafe-eval' (maximale XSS-Sicherheit)
- * 🧪 DEVELOPMENT: Erlaubt 'unsafe-eval' NUR lokal – Next.js React Refresh
- *    benötigt eval für Hot-Reloading. Ohne diese Ausnahme stirbt der
- *    Client-Bootstrap im Dev-Modus (Uncaught EvalError) und die Seite
- *    verliert Hydration, Effects und Interaktivität.
+ * 🛡️ PRODUCTION: Strikte CSP + COOP (maximale XSS & Side-Channel Sicherheit)
+ * 🧪 DEVELOPMENT: Erlaubt 'unsafe-eval' NUR lokal für Next.js Hot-Reloading
  */
-export function middleware(_req: NextRequest) {
+export function middleware() {
   const response = NextResponse.next();
   const isDev = process.env.NODE_ENV === 'development';
 
-  // ✅ ZERO-DEFECT: Environment-aware CSP (strikt in Prod, funktional in Dev)
+  // ✅ ZERO-DEFECT: Environment-aware CSP
   const cspDirectives = [
     "default-src 'self'",
     isDev
@@ -43,6 +39,11 @@ export function middleware(_req: NextRequest) {
     'Permissions-Policy',
     'camera=(), microphone=(), geolocation=(), interest-cohort=()'
   );
+
+  // ✅ ZERO-DEFECT (Phase 4e): Cross-Origin-Opener-Policy (COOP)
+  // Schützt vor Spectre-Attacks und Side-Channel Leaks durch Popups/iframes.
+  // 'same-origin-allow-popups' ist der sichere Standard für Websites mit externen Links (Maps, etc.)
+  response.headers.set('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
 
   return response;
 }
