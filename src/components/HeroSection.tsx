@@ -11,7 +11,7 @@ export default function HeroSection() {
   // ✅ Daten extrahieren mit Safe Defaults
   const { brand, hero, contact } = config;
   const emoji = hero.emoji || '⭐';
-  const backgroundImage = hero.backgroundImage || '/images/fassade.png';
+  const backgroundImage = hero.backgroundImage || '/images/fassade.webp';
   const imageAlt = hero.imageAlt || `${brand.name} – Unser Standort`;
   const addressString = `${contact.address.street}, ${contact.address.zip} ${contact.address.city}`;
 
