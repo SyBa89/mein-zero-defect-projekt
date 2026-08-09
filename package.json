@@ -54,6 +54,14 @@
     "typescript": "^5.5.4",
     "vitest": "^2.1.6"
   },
+  "browserslist": [
+    "chrome >= 92",
+    "edge >= 92",
+    "firefox >= 90",
+    "safari >= 15.4",
+    "opera >= 78",
+    "not dead"
+  ],
   "engines": {
     "node": ">=22.0.0"
   }
