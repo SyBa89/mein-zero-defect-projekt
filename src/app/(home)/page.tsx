@@ -1,19 +1,25 @@
 ﻿import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { getClientConfig } from '@/lib/config-loader';
-const config = getClientConfig();
+
+// ✅ ZERO-DEFECT: Synchronous imports for Above-the-Fold (LCP & Critical Path)
 import JackpotBanner from '@/components/JackpotBanner';
-import DynamicSections from '@/components/DynamicSections';
 import HeroSection from '@/components/HeroSection';
-import FeaturesSection from '@/components/FeaturesSection';
-import OpeningHoursSection from '@/components/OpeningHoursSection';
-import ServicesSection from '@/components/ServicesSection';
-import HermesSection from '@/components/HermesSection';
-import ProductsSection from '@/components/ProductsSection';
-import CTASection from '@/components/CTASection';
-import AboutSection from '@/components/AboutSection';
-import LegalNotice from '@/components/LegalNotice';
-import Reviews from '@/components/Reviews';
-// ❌ ENTFERNEN: import FAQ from '@/components/FAQ';
+
+// ✅ ZERO-DEFECT PERFORMANCE: Dynamic imports for Below-the-Fold
+// Reduziert das initiale JS-Bundle massiv und befreit den Main-Thread auf Mobile (Moto G Power)
+const FeaturesSection = dynamic(() => import('@/components/FeaturesSection'));
+const OpeningHoursSection = dynamic(() => import('@/components/OpeningHoursSection'));
+const ServicesSection = dynamic(() => import('@/components/ServicesSection'));
+const HermesSection = dynamic(() => import('@/components/HermesSection'));
+const ProductsSection = dynamic(() => import('@/components/ProductsSection'));
+const AboutSection = dynamic(() => import('@/components/AboutSection'));
+const Reviews = dynamic(() => import('@/components/Reviews'));
+const DynamicSections = dynamic(() => import('@/components/DynamicSections'));
+const CTASection = dynamic(() => import('@/components/CTASection'));
+const LegalNotice = dynamic(() => import('@/components/LegalNotice'));
+
+const config = getClientConfig();
 
 export const metadata: Metadata = {
   title: `${config.brand.name} | ${config.brand.slogan}`,
@@ -33,7 +39,6 @@ export default function HomePage() {
       <ProductsSection />
       <AboutSection />
       <Reviews />
-      {/* ❌ ENTFERNEN: <FAQ /> - wird bereits in DynamicSections gerendert */}
       <DynamicSections />
       <CTASection />
       <LegalNotice />
