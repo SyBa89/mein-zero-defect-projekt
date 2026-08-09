@@ -10,15 +10,24 @@ export interface UserSession {
   name: string;
 }
 
+// ✅ NEU: User Interface für Datenbank-Modelle (aus site-config.ts migriert)
+export interface User {
+  id: string;
+  username: string;
+  passwordHash: string;
+  role: 'admin' | 'mitarbeiter' | 'redakteur';
+  name: string;
+  createdAt: string;
+  lastLogin?: string;
+}
+
 // ✅ ROBUST: JWT_SECRET Resolution mit expliziten Typen
 function getJwtSecret(): string {
-  // 1. Explizite Umgebungsvariable hat höchste Priorität
   const explicitSecret = process.env.JWT_SECRET;
   if (explicitSecret && explicitSecret.length > 0) {
     return explicitSecret;
   }
 
-  // 2. Production ohne JWT_SECRET = kritischer Fehler
   if (process.env.NODE_ENV === 'production') {
     throw new Error(
       '❌ KRITISCH: JWT_SECRET fehlt in Production. ' +
@@ -26,10 +35,8 @@ function getJwtSecret(): string {
     );
   }
 
-  // 3. Development: Fallback aus Admin-Passwort + Redis-Token
   const adminPassword: string = process.env.ADMIN_PASSWORD || 'lollipop2024';
   const redisToken: string = process.env.KV_REST_API_TOKEN || 'dev-redis-fallback';
-
   return `${adminPassword}_${redisToken}`;
 }
 

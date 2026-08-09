@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { Ratelimit } from '@upstash/ratelimit';
-import { User } from '@/lib/site-config';
 import {
+  User,
   hashPassword,
   verifyPassword,
   generateSecurePassword,
@@ -89,9 +89,20 @@ export async function GET(request: NextRequest) {
 
   try {
     const users = await getUsers(redis);
-    const safeUsers = users.map(({ passwordHash: _ph, ...rest }) => rest);
+
+    // ✅ ZERO-DEFECT FIX: Explizites Mapping statt Destrukturierung (verhindert ESLint no-unused-vars)
+    const safeUsers = users.map((user) => ({
+      id: user.id,
+      username: user.username,
+      role: user.role,
+      name: user.name,
+      createdAt: user.createdAt,
+      lastLogin: user.lastLogin,
+    }));
+
     return NextResponse.json(safeUsers);
-  } catch (_error: unknown) {
+  } catch {
+    // ✅ ZERO-DEFECT FIX: Parameterloses Catch verhindert ungenutzte Error-Variablen
     return NextResponse.json({ error: 'Fehler beim Laden' }, { status: 500 });
   }
 }
