@@ -1,25 +1,25 @@
 {
   "url": "https://mustermann-handwerk.de",
   "brand": {
-    "name": "Mustermann Handwerk",
-    "slogan": "Ihr zuverlässiger Partner für Sanitär \u0026 Heizung",
-    "legalName": "Mustermann GmbH Sanitär- und Heizungstechnik",
+    "name": "Salon Eleganz",
+    "slogan": "Ihr Friseur für zeitlose Eleganz",
+    "legalName": "Salon Eleganz GmbH",
     "primaryColor": "blue"
   },
   "contact": {
     "address": {
-      "street": "Industriestraße 42",
-      "zip": "50354",
-      "city": "Hürth",
+      "street": "Hauptstraße 15",
+      "zip": "50996",
+      "city": "Köln",
       "country": "DE"
     },
-    "phone": "+4922331234567",
-    "email": "info@mustermann-handwerk.de",
+    "phone": "+4922112345678",
+    "email": "info@salon-eleganz.de",
     "googlePlaceId": "ChIJJexampleHandwerk",
     "mapsUrl": "https://maps.google.com/?cid=mustermann-handwerk"
   },
   "business": {
-    "type": "handwerk",
+    "type": "friseur",
     "isSmallBusiness": true,
     "vatId": "DE123456789"
   },
@@ -34,8 +34,8 @@
     ]
   },
   "hero": {
-    "headline": "Meisterbetrieb für Sanitär \u0026 Heizung",
-    "subheadline": "Schnell, zuverlässig und fair – seit über 30 Jahren Ihr Partner in Hürth und Umgebung.",
+    "headline": "Salon Eleganz",
+    "subheadline": "Zeitlose Frisuren \u0026 moderner Style im Herzen von Köln",
     "primaryCta": {
       "label": "Jetzt Termin vereinbaren",
       "href": "/kontakt"
@@ -290,10 +290,10 @@
   },
   "tracking": {},
   "theme": {
-    "primaryColor": "#0F4C81",
-    "accentColor": "#F39C12",
-    "borderRadius": "sm",
-    "fontHeading": "roboto",
-    "fontBody": "inter"
+    "primaryColor": "#D4AF37",
+    "accentColor": "#1A1A1A",
+    "borderRadius": "lg",
+    "fontHeading": "lora",
+    "fontBody": "source-sans"
   }
 }

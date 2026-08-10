@@ -285,10 +285,10 @@
   },
   "tracking": {},
   "theme": {
-    "primaryColor": "#0F4C81",
-    "accentColor": "#F39C12",
-    "borderRadius": "sm",
-    "fontHeading": "roboto",
+    "primaryColor": "#db2777",
+    "accentColor": "#9333ea",
+    "borderRadius": "full",
+    "fontHeading": "poppins",
     "fontBody": "inter"
   }
 }
