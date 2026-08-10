@@ -1,9 +1,39 @@
-﻿import { z } from 'zod';
+import { z } from 'zod';
+
+// ═══════════════════════════════════════════════════════════════
+// 🏛️ VERTICAL THEME ENGINE SCHEMA (Phase 6)
+// Definiert Design-Tokens für echte White-Label-Souveränität.
+// 100% abwärtskompatibel: Alle neuen Felder sind optional.
+// ═══════════════════════════════════════════════════════════════
+const ThemeSchema = z
+  .object({
+    primaryColor: z
+      .string()
+      .regex(/^#[0-9A-Fa-f]{6}$/, 'Must be valid HEX')
+      .optional(),
+    accentColor: z
+      .string()
+      .regex(/^#[0-9A-Fa-f]{6}$/, 'Must be valid HEX')
+      .optional(),
+    borderRadius: z.enum(['none', 'sm', 'md', 'lg', 'full']).optional(),
+    fontHeading: z
+      .enum(['poppins', 'montserrat', 'roboto', 'lora', 'inter', 'source-sans'])
+      .optional(),
+    fontBody: z.enum(['inter', 'source-sans', 'roboto', 'lora']).optional(),
+  })
+  .optional();
+
+// ═══════════════════════════════════════════════════════════════
+// 🏛️ LAYOUT ORCHESTRATION SCHEMA
+// Erlaubt dem Tenant, die Reihenfolge der Sektionen zu definieren.
+// ═══════════════════════════════════════════════════════════════
+const LayoutSchema = z.array(z.string()).optional();
 
 const BrandSchema = z.object({
   name: z.string().min(1),
   slogan: z.string().min(1),
   legalName: z.string().min(1),
+  // ✅ Legacy: Wird ignoriert, wenn theme.primaryColor gesetzt ist.
   primaryColor: z.enum(['pink', 'blue', 'green', 'orange', 'purple']),
 });
 
@@ -23,7 +53,7 @@ const ContactSchema = z.object({
 });
 
 const BusinessSchema = z.object({
-  type: z.enum(['kiosk', 'restaurant', 'retail', 'service', 'handwerk', 'arzt']),
+  type: z.enum(['kiosk', 'restaurant', 'retail', 'service', 'handwerk', 'arzt', 'friseur']),
   isSmallBusiness: z.boolean(),
   vatId: z.string().nullish(),
 });
@@ -48,13 +78,15 @@ const HeroSchema = z.object({
   backgroundImage: z.string().nullish(),
 });
 
+// ✅ ERWEITERT: price & duration für Friseur-Services & Gastro-Speisen
 const FeatureSchema = z.object({
   icon: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
+  price: z.string().nullish(),
+  duration: z.string().nullish(),
 });
 
-// ✅ NEU: FeaturesSection Meta-Daten für business-spezifische Headlines
 const FeaturesMetaSchema = z.object({
   sectionTitle: z.string().min(1),
   sectionSubtitle: z.string().min(1),
@@ -66,6 +98,7 @@ const ExtraServiceSchema = z.object({
   sub: z.string().min(1),
 });
 
+// ✅ Legacy: Bleibt für Abwärtskompatibilität. layout-Array hat Vorrang.
 const SectionsSchema = z.object({
   showHermes: z.boolean(),
   showProducts: z.boolean(),
@@ -91,10 +124,12 @@ const HermesSchema = z.object({
   description: z.string().min(1),
 });
 
+// ✅ ERWEITERT: price für Speisekarten-Kategorien
 const ProductCategorySchema = z.object({
   icon: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
+  price: z.string().nullish(),
   ageRestriction: z.string().nullish(),
 });
 
@@ -121,8 +156,6 @@ const OpeningHoursItemSchema = z.object({
   isOpen: z.boolean(),
 });
 
-// ✅ NEU (Phase 4a.1): Holiday Override Schema für Feiertage/Urlaub
-// Zero-Defect: Regex erzwingt ISO 8601 (YYYY-MM-DD) und verhindert Datenmüll
 const HolidayOverrideSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD'),
   name: z.string().min(1),
@@ -137,7 +170,6 @@ const OpeningHoursSchema = z.object({
   sectionTitle: z.string().nullish(),
   sectionSubtitle: z.string().nullish(),
   tipMessage: z.string().nullish(),
-  // ✅ NEU (Phase 4a.1): Globale Schließung & Feiertags-Overrides
   isClosed: z.boolean().default(false),
   holidays: z.array(HolidayOverrideSchema).optional(),
 });
@@ -153,7 +185,6 @@ const BannersSchema = z.object({
   showJackpot: z.boolean().optional(),
   jackpotLabel: z.string().nullish(),
   highlightLabel: z.string().nullish(),
-  // ✅ NEU (Phase 4a.1): Allgemeine Banner & Notfall-Schalter
   bannerText: z.string().nullish(),
   showEmergency: z.boolean().default(true),
 });
@@ -175,6 +206,8 @@ export const ClientConfigSchema = z.object({
   featuresMeta: FeaturesMetaSchema.nullish(),
   extraServices: z.array(ExtraServiceSchema).min(1),
   sections: SectionsSchema,
+  layout: LayoutSchema, // ✅ NEU: Layout Orchestration
+  theme: ThemeSchema, // ✅ NEU: Vertical Theme Engine
   header: HeaderSchema,
   hermes: HermesSchema,
   products: ProductsSchema,
