@@ -142,7 +142,7 @@ export default function PackageCalculator() {
               placeholder="0"
               aria-invalid={hasError}
               aria-describedby={RESULT_ID}
-              className="w-full px-3 py-3 text-center border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-900 rounded-xl focus:ring-2 focus:ring-[var(--theme-primary)] focus:border-pink-500 outline-none transition-all font-bold text-gray-900 dark:text-gray-100 placeholder:text-gray-300 dark:placeholder:text-gray-600"
+              className="w-full px-3 py-3 text-center bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[var(--theme-primary)] focus:border-[var(--theme-primary)] outline-none transition-all font-bold text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
             />
           </div>
         ))}

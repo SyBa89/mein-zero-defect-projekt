@@ -310,7 +310,7 @@ export default function KontaktFormClient() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl border-2 outline-none transition-all duration-200 ${errors.name ? 'border-red-300 focus:border-red-500 bg-red-50' : 'border-gray-200 focus:border-pink-500 bg-gray-50 focus:bg-white'}`}
+                  className={`field-input ${errors.name ? '!border-red-300 focus:!border-red-500 !bg-red-50' : ''}`}
                   aria-required="true"
                   aria-invalid={!!errors.name}
                   placeholder="Max Mustermann"
@@ -344,7 +344,7 @@ export default function KontaktFormClient() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl border-2 outline-none transition-all duration-200 ${errors.email ? 'border-red-300 focus:border-red-500 bg-red-50' : 'border-gray-200 focus:border-pink-500 bg-gray-50 focus:bg-white'}`}
+                  className={`field-input ${errors.email ? '!border-red-300 focus:!border-red-500 !bg-red-50' : ''}`}
                   aria-required="true"
                   aria-invalid={!!errors.email}
                   placeholder="max@beispiel.de"
@@ -378,7 +378,7 @@ export default function KontaktFormClient() {
                   value={formData.message}
                   onChange={handleChange}
                   rows={5}
-                  className={`w-full px-4 py-3 rounded-xl border-2 outline-none transition-all duration-200 resize-none ${errors.message ? 'border-red-300 focus:border-red-500 bg-red-50' : 'border-gray-200 focus:border-pink-500 bg-gray-50 focus:bg-white'}`}
+                  className={`field-input resize-none ${errors.message ? '!border-red-300 focus:!border-red-500 !bg-red-50' : ''}`}
                   aria-required="true"
                   aria-invalid={!!errors.message}
                   placeholder="Wie können wir Ihnen helfen?"

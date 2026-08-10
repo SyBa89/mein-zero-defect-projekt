@@ -84,7 +84,7 @@ export default function AdminLoginPage() {
           <p className="text-gray-600">Kiosk Lollipop Verwaltung</p>
 
           {/* 🐛 DEBUG INFO - Wird später entfernt */}
-          <div className="mt-3 text-xs bg-yellow-50 border border-yellow-200 rounded-lg p-2 text-left">
+          <div className="mt-3 text-xs bg-yellow-50 border border-yellow-200 rounded-lg p-2 text-left text-yellow-900 font-medium">
             <strong>Debug:</strong> Passwort-Länge: {password.length} | Button:{' '}
             {isButtonDisabled ? '🔒 Deaktiviert' : '✅ Aktiv'}
           </div>
@@ -109,7 +109,7 @@ export default function AdminLoginPage() {
                 setUsername(e.target.value);
                 console.log('✏️ Username changed:', e.target.value);
               }}
-              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 outline-none transition-all"
+              className="field-input"
               placeholder="admin"
               disabled={isLoading}
               autoComplete="username"
@@ -128,7 +128,7 @@ export default function AdminLoginPage() {
                 setPassword(e.target.value);
                 console.log('✏️ Password changed, length:', e.target.value.length);
               }}
-              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 outline-none transition-all"
+              className="field-input"
               placeholder="••••••••••••"
               disabled={isLoading}
               autoFocus

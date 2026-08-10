@@ -174,7 +174,7 @@ export default function AdminCockpit() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow">
+      <div className="bg-white dark:bg-gray-900 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
@@ -218,7 +218,7 @@ export default function AdminCockpit() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* NOTFALL-BANNER */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">🚨 Notfall-Banner</h2>
             <div className="space-y-4">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -246,14 +246,14 @@ export default function AdminCockpit() {
                   }))
                 }
                 rows={3}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                className="field-input !py-2 !border"
                 placeholder="Notfall-Nachricht (z.B. Betriebsferien)"
               />
             </div>
           </div>
 
           {/* ÖFFNUNGSZEITEN (Strukturiert nach Zod-Schema) */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-4">🕒 Öffnungszeiten</h2>
             <div className="space-y-2">
               {config.openingHours?.items.map((item, index) => (
@@ -263,7 +263,7 @@ export default function AdminCockpit() {
                     type="text"
                     value={item.hours}
                     onChange={(e) => updateOpeningHoursItem(index, 'hours', e.target.value)}
-                    className="flex-1 px-3 py-1 border border-gray-300 rounded text-sm"
+                    className="field-input !py-1 !border text-sm"
                     placeholder="z.B. 08:00-12:00"
                   />
                   <label className="flex items-center gap-1 text-xs text-gray-600">
@@ -293,7 +293,7 @@ export default function AdminCockpit() {
                       banners: { ...prev!.banners!, jackpotLabel: e.target.value },
                     }))
                   }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  className="field-input !py-2 !border"
                   placeholder="45.000.000"
                   maxLength={30}
                 />
@@ -310,7 +310,7 @@ export default function AdminCockpit() {
                       banners: { ...prev!.banners!, highlightLabel: e.target.value },
                     }))
                   }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  className="field-input !py-2 !border"
                   placeholder="🎉 Heute: Lotto Jackpot!"
                   maxLength={100}
                 />

@@ -66,6 +66,33 @@ code, pre { font-family: var(--font-mono); }
     transition-duration: 0.01ms !important;
   }
 }
+/* ═══════════════════════════════════════════════════════════════ */
+/* 🏛️ ZERO-DEFECT FIELD STANDARD (Phase 7.1) */
+/* Eine Klasse für ALLE Inputs in ALLEN Formularen (Light + Dark) */
+/* ═══════════════════════════════════════════════════════════════ */
+.field-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 2px solid #e5e7eb;
+  background-color: #ffffff;
+  color: #111827;
+  outline: none;
+  transition: all 0.2s;
+}
+.field-input::placeholder { color: #9ca3af; }
+.field-input:focus {
+  border-color: var(--theme-primary, #db2777);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-primary, #db2777) 20%, transparent);
+}
+@media (prefers-color-scheme: dark) {
+  .field-input {
+    background-color: #1f2937;
+    color: #f9fafb;
+    border-color: #374151;
+  }
+  .field-input::placeholder { color: #6b7280; }
+}
 /* GLASS-FIX-V1: theme-aware glass-card (dark mode support) */
 @media (prefers-color-scheme: dark) {
   .glass-card {
