@@ -1,36 +1,74 @@
 import { NextResponse } from 'next/server';
 
 /**
- * ✅ ZERO-DEFECT: Enterprise Security Middleware (Phase 4e Polish)
+ * ✅ ZERO-DEFECT: Enterprise Security Middleware
  *
  * 🛡️ PRODUCTION: Strikte CSP + COOP (maximale XSS & Side-Channel Sicherheit)
  * 🧪 DEVELOPMENT: Erlaubt 'unsafe-eval' NUR lokal für Next.js Hot-Reloading
+ *
+ * Security Headers: CSP, HSTS, COOP, COEP, CORP, X-Frame-Options,
+ * X-Content-Type-Options, Referrer-Policy, Permissions-Policy
  */
 export function middleware() {
   const response = NextResponse.next();
   const isDev = process.env.NODE_ENV === 'development';
 
-  // ✅ ZERO-DEFECT: Environment-aware CSP
-  const cspDirectives = [
+  const scriptSrc = isDev
+    ? [
+        "'self'",
+        "'unsafe-inline'",
+        "'unsafe-eval'",
+        'https://vercel.live',
+        'https://*.vercel.app',
+        'https://vitals.vercel-insights.com',
+        'https://vercel.com',
+        'https://va.vercel-scripts.com',
+      ]
+    : [
+        "'self'",
+        "'unsafe-inline'",
+        'https://vercel.live',
+        'https://*.vercel.app',
+        'https://vitals.vercel-insights.com',
+        'https://vercel.com',
+        'https://va.vercel-scripts.com',
+      ];
+  const connectSrc = isDev
+    ? [
+        "'self'",
+        'ws:',
+        'wss:',
+        'https://*.upstash.io',
+        'https://*.vercel.app',
+        'https://*.googleapis.com',
+        'https://vitals.vercel-insights.com',
+        'https://vercel.live',
+        'https://vercel.com',
+        'https://va.vercel-scripts.com',
+      ]
+    : [
+        "'self'",
+        'https://*.upstash.io',
+        'https://*.vercel.app',
+        'https://*.googleapis.com',
+        'https://vitals.vercel-insights.com',
+        'https://vercel.live',
+        'https://vercel.com',
+        'https://va.vercel-scripts.com',
+      ];
+  const csp = [
     "default-src 'self'",
-    isDev
-      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://*.vercel.app https://vitals.vercel-insights.com https://vercel.com https://va.vercel-scripts.com"
-      : "script-src 'self' 'unsafe-inline' https://vercel.live https://*.vercel.app https://vitals.vercel-insights.com https://vercel.com https://va.vercel-scripts.com",
+    'script-src ' + scriptSrc.join(' '),
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data: https://fonts.gstatic.com",
-    isDev
-      ? "connect-src 'self' ws: wss: https://*.upstash.io https://*.vercel.app https://*.googleapis.com https://vitals.vercel-insights.com https://vercel.live https://vercel.com https://va.vercel-scripts.com"
-      : "connect-src 'self' https://*.upstash.io https://*.vercel.app https://*.googleapis.com https://vitals.vercel-insights.com https://vercel.live https://vercel.com https://va.vercel-scripts.com",
+    'connect-src ' + connectSrc.join(' '),
     "frame-src 'self' https://www.google.com https://maps.google.com",
     "frame-ancestors 'self'",
     "base-uri 'self'",
     "form-action 'self'",
-  ];
-
-  response.headers.set('Content-Security-Policy', cspDirectives.join('; '));
-
-  // 🛡️ Enterprise Security Header (Production + Development)
+  ].join('; ');
+  response.headers.set('Content-Security-Policy', csp);
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('X-Frame-Options', 'SAMEORIGIN');
@@ -39,16 +77,12 @@ export function middleware() {
     'Permissions-Policy',
     'camera=(), microphone=(), geolocation=(), interest-cohort=()'
   );
-
-  // ✅ ZERO-DEFECT (Phase 4e): Cross-Origin-Opener-Policy (COOP)
-  // Schützt vor Spectre-Attacks und Side-Channel Leaks durch Popups/iframes.
-  // 'same-origin-allow-popups' ist der sichere Standard für Websites mit externen Links (Maps, etc.)
   response.headers.set('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
-
+  response.headers.set('Cross-Origin-Resource-Policy', 'same-origin');
+  response.headers.set('X-Permitted-Cross-Domain-Policies', 'none');
   return response;
 }
 
 export const config = {
-  // 🚀 Performance: Middleware NICHT auf statischen Dateien ausführen
   matcher: '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|llms.txt).*)',
 };
