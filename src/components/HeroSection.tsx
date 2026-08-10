@@ -11,7 +11,7 @@ export default function HeroSection() {
   // ✅ Daten extrahieren mit Safe Defaults
   const { brand, hero, contact } = config;
   const emoji = hero.emoji || '⭐';
-  const backgroundImage = hero.backgroundImage || '/images/fassade.webp';
+  const backgroundImage = hero.backgroundImage || '';
   const imageAlt = hero.imageAlt || `${brand.name} – Unser Standort`;
   const addressString = `${contact.address.street}, ${contact.address.zip} ${contact.address.city}`;
 
@@ -24,7 +24,7 @@ export default function HeroSection() {
         aria-busy="true"
         role="status"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-purple-900/60 to-pink-900/70" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-[var(--theme-grad-mid)] to-[var(--theme-grad-end)]" />
         <div className="relative max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8 py-20 z-10">
           <div className="mb-6 text-7xl md:text-8xl inline-block animate-pulse">{emoji}</div>
           <div className="h-6 bg-white/20 rounded w-48 mx-auto mb-3 animate-pulse" />
@@ -46,18 +46,20 @@ export default function HeroSection() {
       id="hero"
     >
       {/* ✅ ZERO-DEFECT LCP: Next.js Image mit priority, fetchPriority, quality=75 */}
-      <Image
-        src={backgroundImage}
-        alt={imageAlt}
-        fill
-        priority
-        fetchPriority="high"
-        sizes="100vw"
-        quality={75}
-        className="object-cover"
-      />
+      {backgroundImage && (
+        <Image
+          src={backgroundImage}
+          alt={imageAlt}
+          fill
+          priority
+          fetchPriority="high"
+          sizes="100vw"
+          quality={75}
+          className="object-cover"
+        />
+      )}
 
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-purple-900/60 to-pink-900/70" />
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-[var(--theme-grad-mid)] to-[var(--theme-grad-end)]" />
       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-transparent to-transparent" />
 
       {/* ✅ ZERO-DEFECT: GPU-composited CSS Animations (kein Framer Motion Main-Thread-Blocking) */}

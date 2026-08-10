@@ -132,6 +132,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     '--theme-primary': theme?.primaryColor || '#db2777', // Fallback: Pink
     '--theme-accent': theme?.accentColor || '#9333ea', // Fallback: Purple
     '--theme-radius': radiusMap[theme?.borderRadius || 'md'],
+    '--theme-grad-mid': (theme?.accentColor || '#9333ea') + '99',
+    '--theme-grad-end': (theme?.primaryColor || '#db2777') + 'b3',
   } as Record<string, string>;
 
   const fontClasses = [
