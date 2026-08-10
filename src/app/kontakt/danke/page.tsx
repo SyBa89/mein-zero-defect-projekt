@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import MobileActionBar from '@/components/MobileActionBar';
 import type { Metadata } from 'next';
 import { getClientConfig } from '@/lib/config-loader';
@@ -57,7 +57,7 @@ export default function DankePage() {
           <div className="bg-pink-50 dark:bg-pink-900/10 border border-pink-100 dark:border-pink-900/30 rounded-2xl p-6 mb-8 text-left">
             <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
               <svg
-                className="w-5 h-5 text-pink-600 dark:text-pink-400"
+                className="w-5 h-5 text-[var(--theme-primary)] dark:text-[var(--theme-primary)]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -149,7 +149,7 @@ export default function DankePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/"
-              className="bg-pink-600 hover:bg-purple-600 md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-pink-500/30 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
+              className="bg-[var(--theme-primary)] hover:bg-[var(--theme-accent)] md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-pink-500/30 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
             >
               <svg
                 className="w-5 h-5"

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+/* global HTMLButtonElement, KeyboardEvent, requestAnimationFrame */
 
 function useCookieConsent() {
   const [consent, setConsent] = useState<boolean | null>(null);
@@ -80,11 +81,11 @@ export default function CookieNotice() {
           </span>
           <span className="font-semibold text-white">Datenschutz-Hinweis:</span> Diese Website
           verwendet ausschließlich technisch notwendige Cookies. Es findet{' '}
-          <span className="text-pink-400 font-medium">kein Tracking</span> und keine Weitergabe von
-          Daten an Dritte statt.
+          <span className="text-[var(--theme-primary)] font-medium">kein Tracking</span> und keine
+          Weitergabe von Daten an Dritte statt.
           <a
             href="/datenschutz"
-            className="underline hover:text-pink-400 ml-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded"
+            className="underline hover:text-[var(--theme-primary)] ml-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] rounded"
             aria-label="Weitere Informationen zum Datenschutz"
           >
             Mehr erfahren
@@ -94,7 +95,7 @@ export default function CookieNotice() {
         <button
           ref={buttonRef}
           onClick={handleAccept}
-          className="bg-pink-600 hover:bg-pink-500 text-white px-6 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-all shadow-lg hover:shadow-pink-500/30 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 active:scale-95"
+          className="bg-[var(--theme-primary)] hover:bg-pink-500 text-white px-6 py-2.5 rounded-lg font-semibold text-xs sm:text-sm transition-all shadow-lg hover:shadow-pink-500/30 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 active:scale-95"
           aria-label="Cookie-Hinweis schließen und Zustimmung erteilen"
         >
           Verstanden

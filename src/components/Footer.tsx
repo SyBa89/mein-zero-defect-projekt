@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -48,7 +48,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/impressum"
-                  className="text-sm text-gray-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-gray-200 hover:text-[var(--theme-primary)] transition-colors"
                 >
                   Impressum
                 </Link>
@@ -56,7 +56,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/datenschutz"
-                  className="text-sm text-gray-200 hover:text-pink-400 transition-colors"
+                  className="text-sm text-gray-200 hover:text-[var(--theme-primary)] transition-colors"
                 >
                   Datenschutz
                 </Link>
@@ -93,7 +93,7 @@ export default function Footer() {
                   href={contact.mapsUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-200 hover:text-pink-400 transition-colors"
+                  className="text-gray-200 hover:text-[var(--theme-primary)] transition-colors"
                   aria-label={`Adresse: ${contact.address.street}, ${contact.address.zip} ${contact.address.city}`}
                 >
                   {contact.address.street}, {contact.address.zip} {contact.address.city}
@@ -103,7 +103,7 @@ export default function Footer() {
                 <span aria-hidden="true">📞</span>
                 <a
                   href={`tel:${contact.phone}`}
-                  className="text-gray-200 hover:text-pink-400 transition-colors"
+                  className="text-gray-200 hover:text-[var(--theme-primary)] transition-colors"
                 >
                   {contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2')}
                 </a>
@@ -112,7 +112,7 @@ export default function Footer() {
                 <span aria-hidden="true">✉️</span>
                 <a
                   href={`mailto:${contact.email}`}
-                  className="text-gray-200 hover:text-pink-400 transition-colors"
+                  className="text-gray-200 hover:text-[var(--theme-primary)] transition-colors"
                 >
                   {contact.email}
                 </a>
@@ -132,7 +132,7 @@ export default function Footer() {
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             aria-label="Nach oben scrollen"
-            className="mt-4 md:mt-0 text-xs text-gray-400 hover:text-pink-400 transition-colors flex items-center gap-1"
+            className="mt-4 md:mt-0 text-xs text-gray-400 hover:text-[var(--theme-primary)] transition-colors flex items-center gap-1"
           >
             Nach oben ↑
           </button>

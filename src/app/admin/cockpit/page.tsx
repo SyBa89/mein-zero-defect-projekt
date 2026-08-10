@@ -140,7 +140,7 @@ export default function AdminCockpit() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--theme-primary)] mx-auto"></div>
           <p className="mt-4 text-gray-600">Prüfe Anmeldung & lade Daten...</p>
           {debugInfo && (
             <div className="mt-4 p-3 bg-gray-100 rounded-xl text-xs font-mono text-gray-700">
@@ -159,7 +159,7 @@ export default function AdminCockpit() {
           <p className="text-red-600 mb-4 text-lg font-bold">{error}</p>
           <button
             onClick={() => router.push('/admin')}
-            className="mt-6 px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700"
+            className="mt-6 px-6 py-3 bg-[var(--theme-primary)] text-white rounded-lg hover:brightness-110"
           >
             Zurück zum Login
           </button>
@@ -231,7 +231,7 @@ export default function AdminCockpit() {
                       openingHours: { ...prev!.openingHours!, isClosed: e.target.checked },
                     }))
                   }
-                  className="w-5 h-5 text-pink-600 rounded"
+                  className="w-5 h-5 text-[var(--theme-primary)] rounded"
                 />
                 <span className="font-medium text-gray-900">
                   {businessName} als geschlossen markieren

@@ -16,7 +16,7 @@ export default function MobileActionBar() {
         <a
           href={`tel:${contact.phone}`}
           aria-label={`Jetzt anrufen: ${phoneFormatted}`}
-          className="flex flex-col items-center justify-center gap-1 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-xl transition-colors"
+          className="flex flex-col items-center justify-center gap-1 py-2 bg-[var(--theme-primary)] hover:brightness-110 text-white rounded-xl transition-colors"
         >
           <svg
             className="w-5 h-5"
@@ -70,7 +70,7 @@ export default function MobileActionBar() {
         <a
           href="/kontakt"
           aria-label="Kontaktseite öffnen"
-          className="flex flex-col items-center justify-center gap-1 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition-colors"
+          className="flex flex-col items-center justify-center gap-1 py-2 bg-[var(--theme-accent)] hover:bg-purple-700 text-white rounded-xl transition-colors"
         >
           <svg
             className="w-5 h-5"

@@ -1,4 +1,4 @@
-﻿import { Metadata } from 'next';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { getClientConfig } from '@/lib/config-loader';
 const config = getClientConfig();
@@ -74,7 +74,7 @@ export default function DatenschutzPage() {
               Weitere Informationen finden Sie in der DatenschutzerklÃ¤rung von Vercel:{' '}
               <a
                 href="https://vercel.com/legal/privacy-policy"
-                className="text-pink-600 dark:text-pink-400 hover:underline"
+                className="text-[var(--theme-primary)] dark:text-[var(--theme-primary)] hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -135,7 +135,10 @@ export default function DatenschutzPage() {
         </section>
 
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-          <Link href="/" className="text-pink-600 dark:text-pink-400 hover:underline font-semibold">
+          <Link
+            href="/"
+            className="text-[var(--theme-primary)] dark:text-[var(--theme-primary)] hover:underline font-semibold"
+          >
             â† ZurÃ¼ck zur Startseite
           </Link>
         </div>

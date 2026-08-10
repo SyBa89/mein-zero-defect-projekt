@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useConfig, useConfigState } from '@/contexts/ConfigContext';
@@ -337,13 +337,13 @@ export default function OpeningHoursSection() {
           <div className="bg-gradient-to-r from-gray-50 to-gray-100/50 dark:from-gray-800/50 dark:to-gray-900/50 border-t border-gray-200/50 dark:border-gray-700/50 px-6 md:px-8 py-5 backdrop-blur-sm">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                <MapPinIcon className="w-5 h-5 text-pink-600 dark:text-pink-400 flex-shrink-0" />
+                <MapPinIcon className="w-5 h-5 text-[var(--theme-primary)] dark:text-[var(--theme-primary)] flex-shrink-0" />
                 <span className="text-sm md:text-base font-medium">{addressString}</span>
               </div>
               <button
                 onClick={handleOpenInMaps}
                 type="button"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-semibold text-sm rounded-xl shadow-md shadow-pink-500/30 hover:shadow-lg hover:shadow-pink-500/40 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-semibold text-sm rounded-xl shadow-md shadow-pink-500/30 hover:shadow-lg hover:shadow-pink-500/40 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 aria-label="Route in Google Maps öffnen"
               >
                 <MapPinIcon className="w-4 h-4" />

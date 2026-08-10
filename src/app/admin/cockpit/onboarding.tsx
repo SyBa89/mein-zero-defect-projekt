@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 
@@ -10,12 +10,14 @@ const steps = [
   },
   {
     title: 'Öffnungszeiten verwalten',
-    description: 'Passen Sie Ihre Öffnungszeiten dynamisch an – auch für Feiertage und Sonderöffnungen.',
+    description:
+      'Passen Sie Ihre Öffnungszeiten dynamisch an – auch für Feiertage und Sonderöffnungen.',
     icon: '🕒',
   },
   {
     title: 'Notfall-Banner steuern',
-    description: 'Schalten Sie in Sekunden ein Banner für ungeplante Schließungen oder wichtige Hinweise.',
+    description:
+      'Schalten Sie in Sekunden ein Banner für ungeplante Schließungen oder wichtige Hinweise.',
     icon: '🚨',
   },
   {
@@ -52,19 +54,15 @@ export default function CockpitOnboarding() {
         </button>
       </div>
 
-      <h2 className="text-xl font-bold text-gray-900 mb-2">
-        {steps[currentStep].title}
-      </h2>
-      <p className="text-gray-600 mb-6 leading-relaxed">
-        {steps[currentStep].description}
-      </p>
+      <h2 className="text-xl font-bold text-gray-900 mb-2">{steps[currentStep].title}</h2>
+      <p className="text-gray-600 mb-6 leading-relaxed">{steps[currentStep].description}</p>
 
       <div className="flex justify-center gap-2 mb-6">
         {steps.map((_, idx) => (
           <div
             key={idx}
             className={`h-2 rounded-full transition-all duration-300 ${
-              idx === currentStep ? 'w-8 bg-pink-600' : 'w-2 bg-gray-300'
+              idx === currentStep ? 'w-8 bg-[var(--theme-primary)]' : 'w-2 bg-gray-300'
             }`}
           />
         ))}
@@ -98,4 +96,3 @@ export default function CockpitOnboarding() {
     </div>
   );
 }
-

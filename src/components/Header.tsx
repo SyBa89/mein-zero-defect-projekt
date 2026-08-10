@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { getClientConfig } from '@/lib/config-loader';
 
 const config = getClientConfig();
@@ -48,7 +48,7 @@ export default function Header() {
                 key={i}
                 href={item.href}
                 {...(item.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className="text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-[var(--theme-primary)] dark:hover:text-[var(--theme-primary)] transition-colors"
               >
                 {item.label}
               </Link>
@@ -59,7 +59,7 @@ export default function Header() {
           {showAdminLink && (
             <Link
               href="/admin"
-              className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg transition-colors"
+              className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-[var(--theme-primary)] hover:brightness-110 text-white rounded-lg transition-colors"
             >
               {adminLabel}
             </Link>

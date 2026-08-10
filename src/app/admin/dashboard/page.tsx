@@ -30,7 +30,7 @@ export default function AdminDashboard() {
   if (isLoading)
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--theme-primary)]"></div>
       </div>
     );
 
@@ -92,7 +92,7 @@ export default function AdminDashboard() {
                 <div>
                   <p className="text-sm text-gray-500 font-medium">Ungelesen</p>
                   <p
-                    className={`text-3xl font-black mt-1 ${stats.unreadContacts > 0 ? 'text-pink-600' : 'text-gray-900'}`}
+                    className={`text-3xl font-black mt-1 ${stats.unreadContacts > 0 ? 'text-[var(--theme-primary)]' : 'text-gray-900'}`}
                   >
                     {stats.unreadContacts}
                   </p>

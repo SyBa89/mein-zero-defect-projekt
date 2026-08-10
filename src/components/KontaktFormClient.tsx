@@ -1,6 +1,8 @@
-﻿'use client';
+'use client';
 
 import { useState, useRef, FormEvent, useEffect } from 'react';
+/* global HTMLDivElement, HTMLInputElement, HTMLTextAreaElement */
+import type React from 'react';
 
 export default function KontaktFormClient() {
   const [formData, setFormData] = useState({
@@ -120,7 +122,7 @@ export default function KontaktFormClient() {
                 <a href="tel:+4922359291160" className="flex items-start gap-4 group">
                   <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 group-hover:bg-pink-200 transition-colors">
                     <svg
-                      className="w-5 h-5 text-pink-600"
+                      className="w-5 h-5 text-[var(--theme-primary)]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -135,7 +137,7 @@ export default function KontaktFormClient() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 font-medium">Telefon</p>
-                    <p className="text-gray-900 font-semibold group-hover:text-pink-600 transition-colors">
+                    <p className="text-gray-900 font-semibold group-hover:text-[var(--theme-primary)] transition-colors">
                       02235 9291160
                     </p>
                   </div>
@@ -145,7 +147,7 @@ export default function KontaktFormClient() {
                 <a href="mailto:info@kiosk-lollipop.de" className="flex items-start gap-4 group">
                   <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 group-hover:bg-pink-200 transition-colors">
                     <svg
-                      className="w-5 h-5 text-pink-600"
+                      className="w-5 h-5 text-[var(--theme-primary)]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -160,17 +162,22 @@ export default function KontaktFormClient() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 font-medium">E-Mail</p>
-                    <p className="text-gray-900 font-semibold group-hover:text-pink-600 transition-colors break-all">
+                    <p className="text-gray-900 font-semibold group-hover:text-[var(--theme-primary)] transition-colors break-all">
                       info@kiosk-lollipop.de
                     </p>
                   </div>
                 </a>
               </li>
               <li>
-                <a href="https://www.google.com/maps/search/?api=1&query=Theodor-Heuss-Stra%C3%9Fe+35+50374+Erftstadt" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Theodor-Heuss-Stra%C3%9Fe+35+50374+Erftstadt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-4 group"
+                >
                   <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 group-hover:bg-pink-200 transition-colors">
                     <svg
-                      className="w-5 h-5 text-pink-600"
+                      className="w-5 h-5 text-[var(--theme-primary)]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -191,12 +198,14 @@ export default function KontaktFormClient() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 font-medium">Adresse</p>
-                    <p className="text-gray-900 font-semibold group-hover:text-pink-600 transition-colors">
+                    <p className="text-gray-900 font-semibold group-hover:text-[var(--theme-primary)] transition-colors">
                       Theodor-Heuss-Str. 35
                       <br />
                       50374 Erftstadt
                     </p>
-                    <p className="text-xs text-pink-600 mt-1 group-hover:underline">Auf Google Maps anzeigen →</p>
+                    <p className="text-xs text-[var(--theme-primary)] mt-1 group-hover:underline">
+                      Auf Google Maps anzeigen →
+                    </p>
                   </div>
                 </a>
               </li>
@@ -396,7 +405,7 @@ export default function KontaktFormClient() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-pink-600 hover:bg-purple-600 md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-pink-500/30 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
+                className="w-full bg-[var(--theme-primary)] hover:bg-[var(--theme-accent)] md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-pink-500/30 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
@@ -447,6 +456,3 @@ export default function KontaktFormClient() {
     </div>
   );
 }
-
-
-

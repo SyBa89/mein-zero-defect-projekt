@@ -82,9 +82,9 @@ export function MobileBottomNav() {
               onClick={() => router.push(route)}
               aria-current={isActive ? 'page' : undefined}
               aria-label={`${item.label}${isActive ? ' (aktiv)' : ''}`}
-              className={`flex flex-col items-center justify-center gap-1 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-inset ${
+              className={`flex flex-col items-center justify-center gap-1 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-inset ${
                 isActive
-                  ? 'text-pink-600 dark:text-pink-400'
+                  ? 'text-[var(--theme-primary)] dark:text-[var(--theme-primary)]'
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}
             >

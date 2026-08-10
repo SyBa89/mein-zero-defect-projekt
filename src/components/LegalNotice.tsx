@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { CLIENT_CONFIG } from '@/lib/client.config';
 
 export default function LegalNotice() {
@@ -30,11 +30,17 @@ export default function LegalNotice() {
         <div className="text-xs text-gray-600 dark:text-gray-400 text-center font-medium space-y-1">
           <p>Alle Preise inkl. gesetzlicher MwSt. | Irrtümer und Änderungen vorbehalten.</p>
           <p>
-            <Link href="/impressum" className="hover:text-pink-600 underline transition-colors">
+            <Link
+              href="/impressum"
+              className="hover:text-[var(--theme-primary)] underline transition-colors"
+            >
               Impressum
             </Link>
             {' | '}
-            <Link href="/datenschutz" className="hover:text-pink-600 underline transition-colors">
+            <Link
+              href="/datenschutz"
+              className="hover:text-[var(--theme-primary)] underline transition-colors"
+            >
               Datenschutz
             </Link>
           </p>

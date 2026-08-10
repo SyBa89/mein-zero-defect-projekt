@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getClientConfig } from '@/lib/config-loader';
 const config = getClientConfig();
@@ -61,7 +61,7 @@ export default function AboutPage() {
         <div className="mb-12">
           <Link
             href="/"
-            className="inline-flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-200 mb-6 group"
+            className="inline-flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[var(--theme-primary)] dark:hover:text-[var(--theme-primary)] transition-colors duration-200 mb-6 group"
           >
             <svg
               className="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform duration-200"
@@ -81,7 +81,7 @@ export default function AboutPage() {
 
           <h1 className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-gray-100 tracking-tight mb-4 text-center">
             Über{' '}
-            <span className="text-transparent bg-clip-text bg-pink-600 hover:bg-purple-600 md:bg-gradient-to-r from-pink-600 to-purple-600">
+            <span className="text-transparent bg-clip-text bg-[var(--theme-primary)] hover:bg-[var(--theme-accent)] md:bg-gradient-to-r from-pink-600 to-purple-600">
               Zero-Defect OS
             </span>
           </h1>
@@ -97,7 +97,7 @@ export default function AboutPage() {
           <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 sm:p-10 transition-shadow duration-300 hover:shadow-md">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-3">
               <svg
-                className="w-6 h-6 text-pink-600"
+                className="w-6 h-6 text-[var(--theme-primary)]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -131,7 +131,7 @@ export default function AboutPage() {
           <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 sm:p-10 transition-shadow duration-300 hover:shadow-md">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-3">
               <svg
-                className="w-6 h-6 text-pink-600"
+                className="w-6 h-6 text-[var(--theme-primary)]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -238,7 +238,7 @@ export default function AboutPage() {
           <section className="bg-gradient-to-br from-pink-50 to-purple-50 dark:from-gray-800 dark:to-gray-800 rounded-2xl border border-pink-100 dark:border-gray-700 p-8 sm:p-10">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-3">
               <svg
-                className="w-6 h-6 text-pink-600"
+                className="w-6 h-6 text-[var(--theme-primary)]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

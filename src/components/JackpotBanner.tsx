@@ -16,7 +16,7 @@ export default async function JackpotBanner() {
     <div className="relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-10 -left-10 w-40 h-40 bg-yellow-300/30 dark:bg-yellow-600/20 rounded-full blur-2xl" />
-        <div className="absolute -top-10 -right-10 w-40 h-40 bg-pink-300/30 dark:bg-pink-600/20 rounded-full blur-2xl" />
+        <div className="absolute -top-10 -right-10 w-40 h-40 bg-pink-300/30 dark:bg-[var(--theme-primary)]/20 rounded-full blur-2xl" />
       </div>
 
       <div className="relative glass-card border-x-0 border-t-0 rounded-none shadow-lg">

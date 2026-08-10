@@ -1,4 +1,4 @@
-﻿import { Metadata } from 'next';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { getClientConfig } from '@/lib/config-loader';
 const config = getClientConfig();
@@ -38,12 +38,18 @@ export default function ImpressumPage() {
           <div className="prose prose-gray max-w-none">
             <p>
               Telefon:{' '}
-              <a href={`tel:${contact.phone}`} className="text-pink-600 hover:underline">
+              <a
+                href={`tel:${contact.phone}`}
+                className="text-[var(--theme-primary)] hover:underline"
+              >
                 {contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2')}
               </a>
               <br />
               E-Mail:{' '}
-              <a href={`mailto:${contact.email}`} className="text-pink-600 hover:underline">
+              <a
+                href={`mailto:${contact.email}`}
+                className="text-[var(--theme-primary)] hover:underline"
+              >
                 {contact.email}
               </a>
             </p>
@@ -101,7 +107,7 @@ export default function ImpressumPage() {
 
         {/* Zurück-Link */}
         <div className="mt-12 pt-8 border-t border-gray-200">
-          <Link href="/" className="text-pink-600 hover:underline font-semibold">
+          <Link href="/" className="text-[var(--theme-primary)] hover:underline font-semibold">
             ← Zurück zur Startseite
           </Link>
         </div>

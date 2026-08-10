@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import type React from 'react';
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState('admin');
@@ -170,7 +171,10 @@ export default function AdminLoginPage() {
         </form>
 
         <div className="mt-8 text-center">
-          <Link href="/" className="text-sm text-gray-600 hover:text-pink-600 transition-colors">
+          <Link
+            href="/"
+            className="text-sm text-gray-600 hover:text-[var(--theme-primary)] transition-colors"
+          >
             ← Zurück zur Startseite
           </Link>
         </div>

@@ -158,7 +158,7 @@ export default function FAQ() {
                   id={buttonId}
                   data-faq-button={index}
                   onClick={() => toggleAccordion(index)}
-                  className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 rounded-2xl"
+                  className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-offset-2 rounded-2xl"
                   aria-expanded={isOpen}
                   aria-controls={answerId}
                   aria-label={`${faq.question} ${isOpen ? 'einklappen' : 'ausklappen'}`}
@@ -167,7 +167,7 @@ export default function FAQ() {
                     {faq.question}
                   </span>
                   <span
-                    className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 transition-transform duration-300 ease-out ${
+                    className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-pink-50 dark:bg-pink-900/20 text-[var(--theme-primary)] dark:text-[var(--theme-primary)] transition-transform duration-300 ease-out ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                     aria-hidden="true"
@@ -198,7 +198,7 @@ export default function FAQ() {
                         if (el) answerRefs.current[index] = el;
                       }}
                       tabIndex={isOpen ? 0 : -1}
-                      className="p-6 pt-0 text-gray-700 dark:text-gray-300 leading-relaxed border-t border-gray-100 dark:border-gray-700 mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 rounded"
+                      className="p-6 pt-0 text-gray-700 dark:text-gray-300 leading-relaxed border-t border-gray-100 dark:border-gray-700 mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] rounded"
                     >
                       {faq.answer}
                     </div>

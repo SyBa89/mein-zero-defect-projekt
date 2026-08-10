@@ -156,7 +156,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="font-body antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-pink-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[var(--theme-primary)] focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--theme-primary)] focus:ring-offset-2"
         >
           Zum Hauptinhalt springen
         </a>
