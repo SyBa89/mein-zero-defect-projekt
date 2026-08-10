@@ -283,5 +283,12 @@
     "sectionTitle": "Warum Kunden zu uns kommen",
     "sectionSubtitle": "Mehr als nur ein Kiosk - wir sind Ihr Nachbar mit echtem Service"
   },
-  "tracking": {}
+  "tracking": {},
+  "theme": {
+    "primaryColor": "#0F4C81",
+    "accentColor": "#F39C12",
+    "borderRadius": "sm",
+    "fontHeading": "roboto",
+    "fontBody": "inter"
+  }
 }

@@ -86,7 +86,7 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a
             href={hero.primaryCta.href}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold text-lg rounded-2xl shadow-2xl shadow-pink-500/50 transition-all hover:scale-105 backdrop-blur-sm animate-fade-in-up animation-delay-800"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-[var(--theme-primary)] hover:brightness-110 text-white font-bold text-lg rounded-[var(--theme-radius)] shadow-2xl shadow-black/20 transition-all hover:scale-105 backdrop-blur-sm animate-fade-in-up animation-delay-800"
             aria-label={`${hero.primaryCta.label} - ${hero.primaryCta.href.startsWith('tel:') ? 'Anrufen' : 'Öffnen'}`}
           >
             <svg
