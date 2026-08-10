@@ -12,38 +12,25 @@ import EmergencyBanner from '@/components/EmergencyBanner';
 import CookieBanner from '@/components/CookieBanner';
 import './globals.css';
 
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
-
+const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
 const poppins = Poppins({
   weight: ['400', '500', '600', '700', '900'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-poppins',
 });
-
 const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-montserrat',
 });
-
 const roboto = Roboto({
   weight: ['400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-roboto',
 });
-
-const lora = Lora({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-lora',
-});
-
+const lora = Lora({ subsets: ['latin'], display: 'swap', variable: '--font-lora' });
 const sourceSans = Source_Sans_3({
   subsets: ['latin'],
   display: 'swap',
@@ -69,16 +56,15 @@ export async function generateMetadata(): Promise<Metadata> {
     kiosk: ['Kiosk', 'Späti', 'Hermes Paketshop', 'Lotto', 'Getränke', contact.address.city],
     handwerk: ['Sanitär', 'Heizung', 'Klempner', 'Notdienst', 'Badsanierung', contact.address.city],
     arzt: ['Hausarzt', 'Allgemeinmedizin', 'Praxis', 'Vorsorge', contact.address.city],
+    restaurant: ['Restaurant', 'Café', 'Speisekarte', 'Gastronomie', contact.address.city],
+    friseur: ['Friseur', 'Salon', 'Haircut', 'Stylist', contact.address.city],
   };
 
   const keywords = [...seo.keywords, ...(businessKeywords[business.type] || [])];
 
   return {
     metadataBase: new URL(config.url),
-    title: {
-      default: brand.name + ' | ' + brand.slogan,
-      template: '%s | ' + brand.name,
-    },
+    title: { default: brand.name + ' | ' + brand.slogan, template: '%s | ' + brand.name },
     description: seo.description,
     keywords: keywords,
     authors: [{ name: brand.legalName }],
@@ -93,11 +79,7 @@ export async function generateMetadata(): Promise<Metadata> {
       apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
       shortcut: '/favicon.ico',
     },
-    appleWebApp: {
-      capable: true,
-      statusBarStyle: 'black-translucent',
-      title: brand.name,
-    },
+    appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: brand.name },
     formatDetection: { telephone: true, email: true, address: true },
     openGraph: {
       type: 'website',
@@ -135,26 +117,37 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function RootLayout({ children }: { children: ReactNode }) {
   const config = getClientConfig();
   const schema = generateSchemaOrg(config);
+  const theme = config.theme;
+
+  // ✅ ZERO-DEFECT THEME ENGINE: CSS-Variablen Mapping
+  const radiusMap: Record<string, string> = {
+    none: '0px',
+    sm: '0.25rem',
+    md: '0.5rem',
+    lg: '1rem',
+    full: '9999px',
+  };
+
+  const cssVariables = {
+    '--theme-primary': theme?.primaryColor || '#db2777', // Fallback: Pink
+    '--theme-accent': theme?.accentColor || '#9333ea', // Fallback: Purple
+    '--theme-radius': radiusMap[theme?.borderRadius || 'md'],
+  } as Record<string, string>;
+
+  const fontClasses = [
+    inter.variable,
+    poppins.variable,
+    montserrat.variable,
+    roboto.variable,
+    lora.variable,
+    sourceSans.variable,
+  ].join(' ');
 
   return (
-    <html
-      lang="de"
-      suppressHydrationWarning
-      className={
-        inter.variable +
-        ' ' +
-        poppins.variable +
-        ' ' +
-        montserrat.variable +
-        ' ' +
-        roboto.variable +
-        ' ' +
-        lora.variable +
-        ' ' +
-        sourceSans.variable
-      }
-    >
+    <html lang="de" suppressHydrationWarning className={fontClasses} style={cssVariables}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
