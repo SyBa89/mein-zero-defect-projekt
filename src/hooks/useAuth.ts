@@ -12,7 +12,7 @@ export function useAuth() {
   useEffect(() => {
     const checkAuth = () => {
       const cookies = document.cookie.split(';');
-      const sessionCookie = cookies.find((c) => c.trim().startsWith('admin-session='));
+      const sessionCookie = cookies.find((c) => c.trim().startsWith('ui-session='));
       if (sessionCookie && sessionCookie.includes('authenticated')) {
         setIsAuthenticated(true);
       } else {
@@ -34,7 +34,7 @@ export function useAuth() {
         body: JSON.stringify({ password }),
       });
       if (res.ok) {
-        document.cookie = 'admin-session=authenticated; path=/; max-age=3600; SameSite=Lax; Secure';
+        document.cookie = 'ui-session=true; path=/; max-age=1800; SameSite=Strict; Secure';
         setIsAuthenticated(true);
         return { success: true };
       }
@@ -45,7 +45,7 @@ export function useAuth() {
   };
 
   const logout = () => {
-    document.cookie = 'admin-session=; path=/; max-age=0';
+    document.cookie = 'ui-session=; path=/; max-age=0; SameSite=Strict; Secure';
     setIsAuthenticated(false);
     router.push('/admin-login');
   };
