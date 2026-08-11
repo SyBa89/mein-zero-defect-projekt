@@ -1,0 +1,32 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 7 * * *'
+
+jobs:
+  audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install (npm ci liest .npmrc legacy-peer-deps)
+        run: npm ci --no-audit --no-fund
+
+      - name: Audit (moderate, non-blocking)
+        run: npm audit --audit-level=moderate || true
+
+      - name: Audit Production (high = blocking)
+        run: npm audit --omit=dev --audit-level=high

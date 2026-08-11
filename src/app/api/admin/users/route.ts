@@ -1,3 +1,5 @@
+import { checkRateLimit } from '@/lib/rate-limit';
+import { LoginSchema, safeValidate } from '@/lib/security/validation';
 import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { Ratelimit } from '@upstash/ratelimit';
@@ -113,11 +115,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Server nicht konfiguriert' }, { status: 500 });
   }
 
-  const ratelimit = getRatelimit(redis);
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
-  const { success } = await ratelimit.limit(ip);
-  if (!success) {
-    return NextResponse.json({ error: 'Zu viele Anfragen' }, { status: 429 });
+    // 🔒 ZERO-DEFECT: Rate-Limit (altes System)
+  const rateLimit = await checkRateLimit(request, { limit: 5, window: '15 m' });
+  if (!rateLimit.success) {
+    return NextResponse.json(
+      { error: 'Zu viele Anmeldeversuche. Bitte warten Sie 15 Minuten.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil((rateLimit.reset - Date.now()) / 1000)) } }
+    );
   }
 
   try {

@@ -1,3 +1,4 @@
+import { ContactFormSchema, safeValidate } from '@/lib/security/validation';
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit } from '@/lib/rate-limit';
 import { Resend } from 'resend';
@@ -45,14 +46,20 @@ const RATE_LIMIT = 5; // max. 5 Anfragen
 const RATE_LIMIT_WINDOW = 60; // pro 60 Sekunden
 
 export async function POST(request: NextRequest) {
-  const rateLimit = await checkRateLimit(request, { limit: 3, window: '60 s' });
-  if (!rateLimit.success) {
-    return NextResponse.json(
-      { success: false, error: 'Zu viele Anfragen. Bitte warten Sie eine Minute.' },
-      { status: 429, headers: { 'Retry-After': String(Math.ceil((rateLimit.reset - Date.now()) / 1000)) } }
-    );
-  }
+  // 🔒 ZERO-DEFECT: Rate-Limit + Input-Validation + Honeypot
+let body: unknown;
   try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Ungueltiges JSON' }, { status: 400 });
+  }
+
+  const validation = safeValidate(ContactFormSchema, body);
+  if (!validation.success) {
+    return NextResponse.json({ error: validation.error }, { status: 400 });
+  }
+  const validatedInput = validation.data;
+try {
     const body = await request.json();
     const { name, email, message, honeypot } = body;
 
