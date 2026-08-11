@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "analyze": "cross-env ANALYZE=true next build",
     "test": "vitest",
     "e2e": "playwright test",
     "test:run": "vitest run",
