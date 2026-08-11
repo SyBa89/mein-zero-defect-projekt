@@ -1,34 +1,47 @@
-﻿{
-  "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
-  ],
-  "exclude": ["node_modules", "playwright.config.ts"]
+{
+    "compilerOptions":  {
+                            "target":  "ES2022",
+                            "lib":  [
+                                        "DOM",
+                                        "DOM.Iterable",
+                                        "ESNext"
+                                    ],
+                            "allowJs":  true,
+                            "skipLibCheck":  true,
+                            "strict":  true,
+                            "noEmit":  true,
+                            "esModuleInterop":  true,
+                            "module":  "ESNext",
+                            "moduleResolution":  "bundler",
+                            "resolveJsonModule":  true,
+                            "isolatedModules":  true,
+                            "jsx":  "preserve",
+                            "incremental":  true,
+                            "plugins":  [
+                                            {
+                                                "name":  "next"
+                                            }
+                                        ],
+                            "baseUrl":  ".",
+                            "paths":  {
+                                          "@/*":  [
+                                                      "./src/*"
+                                                  ]
+                                      }
+                        },
+    "include":  [
+                    "next-env.d.ts",
+                    "**/*.ts",
+                    "**/*.tsx",
+                    ".next/types/**/*.ts",
+                    ".next/dev/types/**/*.ts"
+                ],
+    "exclude":  [
+                    "node_modules",
+                    "playwright.config.ts",
+                    "backups",
+                    "**/*.backup*",
+                    ".next",
+                    ".vercel"
+                ]
 }

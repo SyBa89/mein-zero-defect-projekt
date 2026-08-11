@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { checkRateLimit } from '@/lib/rate-limit';
 import { Resend } from 'resend';
 import { Redis } from '@upstash/redis';
 
@@ -44,6 +45,13 @@ const RATE_LIMIT = 5; // max. 5 Anfragen
 const RATE_LIMIT_WINDOW = 60; // pro 60 Sekunden
 
 export async function POST(request: NextRequest) {
+  const rateLimit = await checkRateLimit(request, { limit: 3, window: '60 s' });
+  if (!rateLimit.success) {
+    return NextResponse.json(
+      { success: false, error: 'Zu viele Anfragen. Bitte warten Sie eine Minute.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil((rateLimit.reset - Date.now()) / 1000)) } }
+    );
+  }
   try {
     const body = await request.json();
     const { name, email, message, honeypot } = body;

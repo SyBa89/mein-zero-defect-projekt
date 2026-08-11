@@ -1,0 +1,107 @@
+openapi: 3.0.0
+info:
+  title: Zero-Defect Multi-Tenant Platform API
+  version: 1.0.0
+  description: |
+    Production-ready API for White-Label Platform (Kiosk/Handwerk/Friseur).
+    All admin endpoints require authentication via httpOnly session cookie.
+    Rate limiting: /api/contact = 3 req/min per IP.
+servers:
+  - url: https://mein-zero-defect-projekt.vercel.app
+    description: Production
+  - url: http://localhost:3000
+    description: Development
+tags:
+  - name: Public
+    description: Public endpoints (no auth required)
+  - name: Admin
+    description: Admin endpoints (session cookie required)
+  - name: System
+    description: Health checks and monitoring
+paths:
+  /api/contact:
+    post:
+      summary: Submit contact form
+      tags: [Public]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, message]
+              properties:
+                name: { type: string, example: 'Max Mustermann' }
+                email: { type: string, format: email, example: 'max@example.com' }
+                message: { type: string, example: 'Ich habe eine Frage...' }
+      responses:
+        '200': { description: Message sent successfully }
+        '429': { description: Rate limit exceeded (3 req/min) }
+        '400': { description: Validation error }
+  /api/admin/contacts:
+    get:
+      summary: List all contacts (Admin)
+      tags: [Admin]
+      security: [{ sessionCookie: [] }]
+      responses:
+        '200':
+          description: Array of contacts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: { type: string }
+                    name: { type: string }
+                    email: { type: string }
+                    message: { type: string }
+                    createdAt: { type: string, format: date-time }
+                    status: { type: string, enum: [new, read, answered] }
+        '401': { description: Unauthorized }
+    patch:
+      summary: Update contact status
+      tags: [Admin]
+      security: [{ sessionCookie: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id, status]
+              properties:
+                id: { type: string }
+                status: { type: string, enum: [read, answered] }
+      responses:
+        '200': { description: Contact updated }
+        '401': { description: Unauthorized }
+  /api/health:
+    get:
+      summary: Health check
+      tags: [System]
+      responses:
+        '200':
+          description: System healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: 'ok' }
+                  timestamp: { type: string, format: date-time }
+  /api/redis-health:
+    get:
+      summary: Redis connection check
+      tags: [System]
+      responses:
+        '200': { description: Redis connected }
+        '500': { description: Redis connection failed }
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: session
+      description: httpOnly session cookie (set after successful /api/admin/login)

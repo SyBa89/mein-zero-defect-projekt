@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 interface DashboardStats {
@@ -97,6 +98,7 @@ export default function AdminDashboard() {
                     {stats.unreadContacts}
                   </p>
                   <p className="text-xs text-gray-400 mt-1">Warten auf Antwort</p>
+                  <Link href="/admin/contacts" className="block text-xs font-semibold mt-2 text-[var(--theme-primary)]">Zur Inbox →</Link>
                 </div>
                 <div className="w-14 h-14 bg-pink-50 rounded-2xl flex items-center justify-center text-3xl">
                   🔔

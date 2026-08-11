@@ -1,13 +1,12 @@
-﻿import { Metadata } from 'next';
+// src/app/(home)/page.tsx
+// ✅ ZERO-DEFECT: Startseite rendert wieder ALLE Sektionen (kein Black-Screen)
+
+import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { getClientConfig } from '@/lib/config-loader';
-
-// ✅ ZERO-DEFECT: Synchronous imports for Above-the-Fold (LCP & Critical Path)
 import JackpotBanner from '@/components/JackpotBanner';
 import HeroSection from '@/components/HeroSection';
 
-// ✅ ZERO-DEFECT PERFORMANCE: Dynamic imports for Below-the-Fold
-// Reduziert das initiale JS-Bundle massiv und befreit den Main-Thread auf Mobile (Moto G Power)
 const FeaturesSection = dynamic(() => import('@/components/FeaturesSection'));
 const OpeningHoursSection = dynamic(() => import('@/components/OpeningHoursSection'));
 const ServicesSection = dynamic(() => import('@/components/ServicesSection'));
@@ -22,7 +21,7 @@ const LegalNotice = dynamic(() => import('@/components/LegalNotice'));
 const config = getClientConfig();
 
 export const metadata: Metadata = {
-  title: `${config.brand.name} | ${config.brand.slogan}`,
+  title: config.brand.name + ' | ' + config.brand.slogan,
   description: config.seo.description,
   keywords: config.seo.keywords,
 };

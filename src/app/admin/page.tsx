@@ -16,15 +16,7 @@ export default function AdminLoginPage() {
   const isFormValid = username.trim().length > 0 && password.length > 0;
   const isButtonDisabled = isLoading || !isFormValid;
 
-  // 🐛 DEBUG: Zeigt State-Updates in Console
-  console.log('🔍 Login State:', {
-    username,
-    passwordLength: password.length,
-    isFormValid,
-    isButtonDisabled,
-  });
-
-  const handleLogin = async (e: React.FormEvent) => {
+const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!isFormValid) {
@@ -82,9 +74,7 @@ export default function AdminLoginPage() {
           </div>
           <h1 className="text-3xl font-black text-gray-900 mb-2">Admin Login</h1>
           <p className="text-gray-600">Kiosk Lollipop Verwaltung</p>
-
-          {/* 🐛 DEBUG INFO - Wird später entfernt */}
-          <div className="mt-3 text-xs bg-yellow-50 border border-yellow-200 rounded-lg p-2 text-left text-yellow-900 font-medium">
+<div className="mt-3 text-xs bg-yellow-50 border border-yellow-200 rounded-lg p-2 text-left text-yellow-900 font-medium">
             <strong>Debug:</strong> Passwort-Länge: {password.length} | Button:{' '}
             {isButtonDisabled ? '🔒 Deaktiviert' : '✅ Aktiv'}
           </div>
@@ -107,7 +97,6 @@ export default function AdminLoginPage() {
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
-                console.log('✏️ Username changed:', e.target.value);
               }}
               className="field-input"
               placeholder="admin"
@@ -126,7 +115,6 @@ export default function AdminLoginPage() {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                console.log('✏️ Password changed, length:', e.target.value.length);
               }}
               className="field-input"
               placeholder="••••••••••••"

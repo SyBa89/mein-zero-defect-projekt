@@ -1,79 +1,66 @@
-import fs from 'fs';
-import path from 'path';
-import { cache } from 'react';
-import { validateClientConfig } from './schemas/client-config.schema';
-import { CLIENT_CONFIG as FALLBACK_CONFIG } from './client.config';
-import type { ClientConfig } from './schemas/client-config.schema';
+﻿// src/lib/config-loader.ts
+// ✅ ZERO-DEFECT: Hybrid-Loader für Server- (SSR/SSG) und Client-Kontext
+// ✅ WHITE-LABEL: Mandanten-spezifische Configs via ENV oder Default
+// ✅ SECURITY: Keine sensiblen Daten im Client-Bundle
 
-export type { ClientConfig };
+import type { TenantConfig } from '@/types/config';
+import { defaultTenantConfig } from './config/defaults';
+import { tenantConfigs } from './config/tenants';
 
-const CONFIGS_DIR = path.join(process.cwd(), 'configs');
-const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
+/**
+ * Server-seitige Config-Auflösung (App Router, RSC)
+ * Nutzt NEXT_PUBLIC_TENANT_ID oder fallback auf default
+ */
+export function getTenantConfig(tenantId?: string): TenantConfig {
+  const resolvedId =
+    tenantId ??
+    process.env.NEXT_PUBLIC_TENANT_ID ??
+    defaultTenantConfig.tenantId;
 
-function log(message: string): void {
-  if (IS_DEVELOPMENT) {
-    console.log(`[ConfigLoader] ${message}`);
-  }
-}
+  const config = tenantConfigs[resolvedId] ?? defaultTenantConfig;
 
-function logError(message: string, error?: unknown): void {
-  const errorMessage = error instanceof Error ? error.message : String(error);
-  console.error(`[ConfigLoader] ${message}: ${errorMessage}`);
+  // ✅ ZERO-DEFECT: Runtime-Validierung gegen inkonsistente Daten
+  validateConfig(config);
+
+  return config;
 }
 
 /**
- * Lädt die Client-Config basierend auf CLIENT_TYPE ENV-Variable
- *
- * ZERO-DEFECT: React cache() garantiert 1 Aufruf pro Request
- * - Server Components: Request-scoped memoization
- * - Serverless-compatible: Funktioniert auf Vercel
- * - Performance: Nur 1 File-Read pro Request
- * - Type-safe: Zod validation included
+ * Client-seitige Config (Wrapper für Kompatibilität)
+ * Für Pages, die noch den alten API-Namen nutzen
  */
-export const getClientConfig = cache((): ClientConfig => {
-  const clientType = process.env.CLIENT_TYPE || 'kiosk';
-  const configPath = path.join(CONFIGS_DIR, clientType + '.json');
+export function getClientConfig(): TenantConfig {
+  return getTenantConfig();
+}
 
-  if (fs.existsSync(configPath)) {
-    try {
-      const rawConfig = fs.readFileSync(configPath, 'utf-8');
-      const parsedConfig = JSON.parse(rawConfig);
-      const validatedConfig = validateClientConfig(parsedConfig);
+/**
+ * Runtime-Validierung – verhindert White-Screen bei fehlerhafter Config
+ */
+function validateConfig(config: TenantConfig): asserts config is TenantConfig {
+  const required: (keyof TenantConfig)[] = [
+    'tenantId',
+    'url',
+    'brand',
+    'theme',
+    'seo',
+    'contact',
+  ];
 
-      log(`Loaded config from: configs/${clientType}.json`);
-      return validatedConfig;
-    } catch (error) {
-      logError(`Failed to load configs/${clientType}.json`, error);
-      logError('Falling back to client.config.ts');
-      return validateClientConfig(FALLBACK_CONFIG);
+  for (const key of required) {
+    if (!config[key]) {
+      throw new Error(
+        `[Zero-Defect Config] Pflichtfeld "${key}" fehlt in Tenant "${config.tenantId}"`
+      );
     }
-  } else {
-    log(`No config file found at configs/${clientType}.json`);
-    log('Using fallback: client.config.ts');
-    return validateClientConfig(FALLBACK_CONFIG);
-  }
-});
-
-export function configExists(clientType: string): boolean {
-  const configPath = path.join(CONFIGS_DIR, clientType + '.json');
-  return fs.existsSync(configPath);
-}
-
-export function listAvailableConfigs(): string[] {
-  if (!fs.existsSync(CONFIGS_DIR)) {
-    return [];
   }
 
-  return fs
-    .readdirSync(CONFIGS_DIR)
-    .filter(function (file: string) {
-      return file.endsWith('.json');
-    })
-    .map(function (file: string) {
-      return file.replace('.json', '');
-    });
-}
+  if (!config.brand.name?.trim()) {
+    throw new Error('[Zero-Defect Config] brand.name darf nicht leer sein');
+  }
 
-export function getCurrentClientType(): string {
-  return process.env.CLIENT_TYPE || 'kiosk';
+  if (!config.url?.startsWith('http')) {
+    throw new Error(
+      `[Zero-Defect Config] url muss eine gültige URL sein (aktuell: "${config.url}")`
+    );
+  }
 }

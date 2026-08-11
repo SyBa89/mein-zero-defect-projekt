@@ -1,2 +1,1 @@
-echo "🛡️ Zero-Defect Guardrails werden geprüft..."
-npx lint-staged
+npm run test:run

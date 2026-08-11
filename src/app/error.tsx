@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import * as Sentry from '@sentry/nextjs';
 
 export default function Error({
   error,
@@ -10,27 +11,22 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error('[Error Boundary]', error);
+    // 🏛️ Phase 11.1 Sentry Integration
+    Sentry.captureException(error);
   }, [error]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-orange-50 px-4">
-      <div className="max-w-lg w-full text-center">
-        <div className="text-6xl mb-4">⚠️</div>
-        <h1 className="text-3xl font-bold text-gray-900">Etwas ist schiefgelaufen</h1>
-        <p className="mt-4 text-gray-600">
-          Ein unerwarteter Fehler ist aufgetreten. Unser Team wurde automatisch informiert.
-        </p>
-        {error.digest && (
-          <p className="mt-2 text-xs text-gray-400 font-mono">Error ID: {error.digest}</p>
-        )}
-        <button
-          onClick={reset}
-          className="mt-8 px-6 py-3 bg-[var(--theme-primary)] hover:brightness-110 text-white font-semibold rounded-[var(--theme-radius)] transition-all shadow-lg hover:shadow-xl"
-        >
-          Erneut versuchen
-        </button>
-      </div>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 text-center p-6">
+      <h2 className="text-2xl font-bold text-theme-primary">Konfigurationsfehler</h2>
+      <p className="text-text-secondary max-w-md">
+        Die Mandanten-Konfiguration konnte nicht geladen werden. Unser Team wurde bereits automatisch via Sentry benachrichtigt.
+      </p>
+      <button
+        className="bg-theme-primary text-white px-6 py-3 rounded-lg shadow-theme-md hover:opacity-90 transition"
+        onClick={() => reset()}
+      >
+        Erneut versuchen
+      </button>
     </div>
   );
 }

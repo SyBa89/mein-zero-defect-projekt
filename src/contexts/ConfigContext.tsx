@@ -1,122 +1,39 @@
-﻿'use client';
+// src/contexts/ConfigContext.tsx
+'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { validateClientConfig } from '../lib/schemas/client-config.schema';
-import type { ClientConfig } from '../lib/schemas/client-config.schema';
+import { createContext, useContext, useMemo } from 'react';
+import type { ReactNode } from 'react';
+import type { TenantConfig } from '@/types/config';
 
-export type { ClientConfig };
+const ConfigContext = createContext<TenantConfig | null>(null);
 
-// ═══════════════════════════════════════════════════════════════
-// ConfigContext — Single Source of Truth für Client Components
-// ═══════════════════════════════════════════════════════════════
-
-interface ConfigContextType {
-  config: ClientConfig;
-  isLoading: boolean;
-  error: Error | null;
-}
-
-const ConfigContext = createContext<ConfigContextType | undefined>(undefined);
-
-// ═══════════════════════════════════════════════════════════════
-// ConfigProvider — Wrappt die gesamte App
-// ═══════════════════════════════════════════════════════════════
-// ✅ ZERO-DEFECT: initialConfig Prop für Hydration-Safety
-//
-// Warum initialConfig?
-// - Server rendert mit getClientConfig() (kiosk.json/handwerk.json/arzt.json)
-// - Client MUSS mit derselben Config hydraten (kein Mismatch!)
-// - initialConfig wird vom Server übergeben (layout.tsx)
-// - Danach optionaler Refresh vom /api/client-config für Live-Updates
-//
-// ✅ Cache-Strategy:
-// - Dev-Mode: cache='no-store' (Config-Switching muss funktionieren)
-// - Production: cache='default' (CDN-Cache erlaubt, Performance)
-
-interface ConfigProviderProps {
-  children: React.ReactNode;
-  initialConfig: ClientConfig; // ✅ REQUIRED: Server-rendered config
+export interface ConfigProviderProps {
+  children: ReactNode;
+  initialConfig: TenantConfig;
 }
 
 export function ConfigProvider({ children, initialConfig }: ConfigProviderProps) {
-  // ✅ ZERO-DEFECT: Initial state = Server state (kein Hydration-Mismatch!)
-  const [config, setConfig] = useState<ClientConfig>(initialConfig);
-  const [isLoading, setIsLoading] = useState(false); // ✅ false! Wir haben schon Config
-  const [error, setError] = useState<Error | null>(null);
+  return <ConfigContext.Provider value={initialConfig}>{children}</ConfigContext.Provider>;
+}
 
-  useEffect(function () {
-    let mounted = true;
+export function useConfig(): TenantConfig {
+  const ctx = useContext(ConfigContext);
+  if (!ctx) {
+    throw new Error('[Zero-Defect] useConfig() muss innerhalb eines <ConfigProvider> verwendet werden.');
+  }
+  return ctx;
+}
 
-    async function refreshConfig() {
-      try {
-        // ✅ ZERO-DEFECT: Dev-Mode = no-store, Production = default
-        const fetchCache = process.env.NODE_ENV === 'development' ? 'no-store' : 'default';
+// ✅ ZERO-DEFECT: Kompatibilitäts-Hook für bestehende Komponenten.
+// Funktioniert für BEIDE Nutzungsmuster:
+//   const config = useConfigState()        ODER
+//   const { config } = useConfigState()
+export type ConfigState = TenantConfig & { config: TenantConfig; isLoading: boolean };
 
-        const response = await fetch('/api/client-config', {
-          cache: fetchCache,
-        });
-
-        if (!response.ok) {
-          throw new Error('HTTP ' + response.status);
-        }
-
-        const data = await response.json();
-        const validated = validateClientConfig(data);
-
-        if (mounted) {
-          setConfig(validated);
-        }
-      } catch (err) {
-        if (mounted) {
-          const errorMessage = err instanceof Error ? err.message : String(err);
-          console.error('ConfigProvider: Failed to refresh config, keeping initial:', errorMessage);
-          setError(err instanceof Error ? err : new Error(errorMessage));
-          // ✅ KEIN Fallback auf client.config.ts - wir behalten initialConfig
-        }
-      } finally {
-        if (mounted) {
-          setIsLoading(false);
-        }
-      }
-    }
-
-    // ✅ Optional refresh für Live-Updates (nicht kritisch für erste Render)
-    refreshConfig();
-
-    return function cleanup() {
-      mounted = false;
-    };
-  }, []);
-
-  return (
-    <ConfigContext.Provider value={{ config, isLoading, error }}>{children}</ConfigContext.Provider>
+export function useConfigState(): ConfigState {
+  const config = useConfig();
+  return useMemo(
+    () => Object.assign({}, config, { config, isLoading: false }),
+    [config]
   );
-}
-
-// ═══════════════════════════════════════════════════════════════
-// useConfig — Hook für Client Components
-// ═══════════════════════════════════════════════════════════════
-
-export function useConfig(): ClientConfig {
-  const context = useContext(ConfigContext);
-
-  if (context === undefined) {
-    throw new Error('useConfig must be used within a ConfigProvider');
-  }
-
-  return context.config;
-}
-
-// ═══════════════════════════════════════════════════════════════
-// useConfigState — Hook für Loading/Error States
-// ═══════════════════════════════════════════════════════════════
-
-export function useConfigState(): { isLoading: boolean; error: Error | null } {
-  const context = useContext(ConfigContext);
-
-  if (context === undefined) {
-    throw new Error('useConfigState must be used within a ConfigProvider');
-  }
-
-  return { isLoading: context.isLoading, error: context.error };
 }

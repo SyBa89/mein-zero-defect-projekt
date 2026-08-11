@@ -1,12 +1,12 @@
+// src/app/api/admin/dashboard/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { Redis } from '@upstash/redis';
+import { getRedis } from '@/lib/db/redis';
+import { verifySessionToken, hasPermission } from '@/lib/auth';
+import { CURRENT_DOMAIN } from '@/lib/config/domain';
 
-const ADMIN_PASSWORD = process.env.INTERN_PASSWORD || 'lollipop2024';
-
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL!,
-  token: process.env.KV_REST_API_TOKEN!,
-});
+// 🚨 ZWINGEND: Verhindert die Next.js Caching-Falle (Der Hauptgrund für alte Daten!)
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 interface ChecklistItem {
   id: string;
@@ -15,45 +15,54 @@ interface ChecklistItem {
 }
 
 export async function GET(request: NextRequest) {
-  const password = request.headers.get('x-admin-password');
-  if (password !== ADMIN_PASSWORD) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
   try {
+    // 🔒 ZERO-DEFECT SECURITY: Einheitlicher Session-Check (Keine Header-Passwörter mehr!)
+    const token = request.cookies.get('session')?.value;
+    const sessionUser = token ? verifySessionToken(token) : null;
+
+    if (!sessionUser || !hasPermission(sessionUser.role, 'view-dashboard')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const redis = getRedis();
+    if (!redis) {
+      return NextResponse.json({ 
+        error: 'Database offline', 
+        systemStatus: 'offline' 
+      }, { status: 503 });
+    }
+
     const today = new Date().toISOString().split('T')[0];
-    const revenue = (await redis.get<number>(`revenue-${today}`)) || 0;
-    const contacts = (await redis.get<unknown[]>('admin-contacts')) || [];
-    const checklist = (await redis.get<ChecklistItem[]>('admin-checklist')) || [];
-    const openTasks = checklist.filter((item) => !item.done).length;
+    
+    // 🌍 WHITE-LABEL: Nutzt dynamisch die Keys der aktuellen Domain (Kiosk/Handwerker/Arzt)
+    const revenueKey = CURRENT_DOMAIN.redisKeys.dailyRevenue(today);
+    const tasksKey = CURRENT_DOMAIN.redisKeys.tasks;
+    const contactsKey = CURRENT_DOMAIN.redisKeys.contacts;
+
+    const [revenue, checklist, contacts] = await Promise.all([
+      redis.get<number>(revenueKey),
+      redis.get<ChecklistItem[]>(tasksKey),
+      redis.get<unknown[]>(contactsKey)
+    ]);
+
+    const openTasks = (checklist || []).filter((item) => !item.done).length;
 
     return NextResponse.json({
+      domain: CURRENT_DOMAIN.id,
       today,
-      revenue,
+      revenue: revenue || 0,
       openTasks,
-      totalContacts: contacts.length,
-      lastWeekRevenue: await getLastWeekRevenue(),
+      totalContacts: (contacts || []).length,
+      systemStatus: 'healthy',
+      lastUpdate: new Date().toISOString()
     });
-  } catch {
-    return NextResponse.json({ error: 'Failed to load dashboard' }, { status: 500 });
-  }
-}
 
-async function getLastWeekRevenue() {
-  try {
-    const redis = new Redis({
-      url: process.env.KV_REST_API_URL!,
-      token: process.env.KV_REST_API_TOKEN!,
-    });
-    const data = [];
-    for (let i = 6; i >= 0; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      const key = `revenue-${date.toISOString().split('T')[0]}`;
-      const value = (await redis.get<number>(key)) || 0;
-      data.push(value);
-    }
-    return data;
-  } catch {
-    return [0, 0, 0, 0, 0, 0, 0];
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error(`[Dashboard API] Critical Error:`, message);
+    return NextResponse.json({ 
+      error: 'Failed to load dashboard', 
+      systemStatus: 'degraded' 
+    }, { status: 500 });
   }
 }

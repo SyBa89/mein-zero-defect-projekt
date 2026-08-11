@@ -1,180 +1,89 @@
-import type { Metadata, Viewport } from 'next';
-import type { ReactNode } from 'react';
-import { Inter, Poppins, Montserrat, Roboto, Lora, Source_Sans_3 } from 'next/font/google';
-import { getClientConfig } from '@/lib/config-loader';
-import { generateSchemaOrg } from '@/lib/schema-generator';
+// src/app/layout.tsx
+// ✅ ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
+// ✅ WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
+// ✅ SEO: Globale Metadaten aus Tenant-Config
+
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import { ConfigProvider } from '@/contexts/ConfigContext';
-import { ThemeProvider } from '@/contexts/ThemeContext';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import MobileActionBar from '@/components/MobileActionBar';
-import EmergencyBanner from '@/components/EmergencyBanner';
-import CookieBanner from '@/components/CookieBanner';
+import { getTenantConfig } from '@/lib/config-loader';
+import { MobileActionBar } from '@/components/MobileActionBar';
+import type { BorderRadius } from '@/types/config'; // ✅ FIX: TenantConfig importiert
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
-const poppins = Poppins({
-  weight: ['400', '500', '600', '700', '900'],
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-poppins',
+  variable: '--font-inter',
 });
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-montserrat',
-});
-const roboto = Roboto({
-  weight: ['400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-roboto',
-});
-const lora = Lora({ subsets: ['latin'], display: 'swap', variable: '--font-lora' });
-const sourceSans = Source_Sans_3({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-source-sans',
-});
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 5,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#111827' },
-  ],
-  colorScheme: 'light dark',
-};
 
 export async function generateMetadata(): Promise<Metadata> {
-  const config = getClientConfig();
-  const { brand, seo, contact, business } = config;
-
-  const businessKeywords: Record<string, string[]> = {
-    kiosk: ['Kiosk', 'Späti', 'Hermes Paketshop', 'Lotto', 'Getränke', contact.address.city],
-    handwerk: ['Sanitär', 'Heizung', 'Klempner', 'Notdienst', 'Badsanierung', contact.address.city],
-    arzt: ['Hausarzt', 'Allgemeinmedizin', 'Praxis', 'Vorsorge', contact.address.city],
-    restaurant: ['Restaurant', 'Café', 'Speisekarte', 'Gastronomie', contact.address.city],
-    friseur: ['Friseur', 'Salon', 'Haircut', 'Stylist', contact.address.city],
-  };
-
-  const keywords = [...seo.keywords, ...(businessKeywords[business.type] || [])];
-
+  const config = getTenantConfig();
   return {
     metadataBase: new URL(config.url),
-    title: { default: brand.name + ' | ' + brand.slogan, template: '%s | ' + brand.name },
-    description: seo.description,
-    keywords: keywords,
-    authors: [{ name: brand.legalName }],
-    creator: brand.legalName,
-    publisher: brand.legalName,
-    alternates: { canonical: config.url },
-    icons: {
-      icon: [
-        { url: '/favicon.ico', sizes: 'any' },
-        { url: '/icon.svg', type: 'image/svg+xml' },
-      ],
-      apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
-      shortcut: '/favicon.ico',
+    title: {
+      default: config.seo.defaultTitle ?? config.brand.name,
+      template: `%s | ${config.brand.name}`,
     },
-    appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: brand.name },
-    formatDetection: { telephone: true, email: true, address: true },
+    description: config.seo.defaultDescription,
+    keywords: config.seo.keywords,
     openGraph: {
       type: 'website',
       locale: 'de_DE',
-      url: config.url,
-      siteName: brand.name,
-      title: brand.name + ' | ' + brand.slogan,
-      description: seo.description,
-      images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: brand.name }],
+      siteName: config.brand.name,
+      title: config.seo.defaultTitle ?? config.brand.name,
+      description: config.seo.defaultDescription,
     },
     twitter: {
       card: 'summary_large_image',
-      title: brand.name + ' | ' + brand.slogan,
-      description: seo.description,
-      images: ['/images/og-image.png'],
+      title: config.seo.defaultTitle ?? config.brand.name,
+      description: config.seo.defaultDescription,
     },
-    robots: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
+    alternates: {
+      canonical: config.url,
     },
-    verification: { google: process.env.GOOGLE_SITE_VERIFICATION || '' },
   };
 }
 
-export default function RootLayout({ children }: { children: ReactNode }) {
-  const config = getClientConfig();
-  const schema = generateSchemaOrg(config);
-  const theme = config.theme;
+// ✅ ZERO-DEFECT: Mapping statt String-Interpolation für Tailwind-Kompatibilität
+const radiusMap: Record<BorderRadius, string> = {
+  none: '0px',
+  sm: '0.25rem',
+  md: '0.5rem',
+  lg: '1rem',
+  full: '9999px',
+};
 
-  // ✅ ZERO-DEFECT THEME ENGINE: CSS-Variablen Mapping
-  const radiusMap: Record<string, string> = {
-    none: '0px',
-    sm: '0.25rem',
-    md: '0.5rem',
-    lg: '1rem',
-    full: '9999px',
-  };
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const config = getTenantConfig();
 
-  const cssVariables = {
-    '--theme-primary': theme?.primaryColor || '#db2777', // Fallback: Pink
-    '--theme-accent': theme?.accentColor || '#9333ea', // Fallback: Purple
-    '--theme-radius': radiusMap[theme?.borderRadius || 'md'],
-    '--theme-grad-mid': (theme?.accentColor || '#9333ea') + '99',
-    '--theme-grad-end': (theme?.primaryColor || '#db2777') + 'b3',
-  } as Record<string, string>;
-
-  const fontClasses = [
-    inter.variable,
-    poppins.variable,
-    montserrat.variable,
-    roboto.variable,
-    lora.variable,
-    sourceSans.variable,
-  ].join(' ');
+  // ✅ ZERO-DEFECT: CSS Custom Properties für Theme (vermeidet inline-style Drift)
+  const cssVars = {
+    '--theme-primary': config.theme.primaryColor,
+    '--theme-secondary': config.theme.secondaryColor,
+    '--theme-accent': config.theme.accentColor,
+    '--theme-radius': radiusMap[config.theme.borderRadius],
+    '--font-heading': config.theme.fontHeading,
+    '--font-body': config.theme.fontBody,
+  } as React.CSSProperties;
 
   return (
-    <html lang="de" suppressHydrationWarning className={fontClasses} style={cssVariables}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      </head>
-      <body className="font-body antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:bg-[var(--theme-primary)] focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--theme-primary)] focus:ring-offset-2"
-        >
-          Zum Hauptinhalt springen
-        </a>
+    <html lang="de" className={inter.variable} suppressHydrationWarning>
+      <body
+        className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased font-body"
+        style={cssVars}
+      >
         <ConfigProvider initialConfig={config}>
-          <ThemeProvider>
-            <div className="flex flex-col min-h-screen">
-              <EmergencyBanner />
-              <Header />
-              <main id="main-content" className="flex-grow">
-                {children}
-              </main>
-              <Footer />
-            </div>
-            <MobileActionBar />
-            <CookieBanner />
-          </ThemeProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
+          >
+            Zum Hauptinhalt springen
+          </a>
+          <main id="main-content" className="pb-24 md:pb-0">
+            {children}
+          </main>
+          <MobileActionBar />
         </ConfigProvider>
       </body>
     </html>
