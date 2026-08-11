@@ -36,7 +36,7 @@ jobs:
           cache: 'npm'
 
       - name: 📦 Install dependencies
-        run: npm ci
+        run: npm ci --no-audit --no-fund
 
       - name: 🛡️ Run npm audit (production only)
         run: |
@@ -62,7 +62,7 @@ jobs:
           cache: 'npm'
 
       - name: 📦 Install dependencies
-        run: npm ci
+        run: npm ci --no-audit --no-fund
 
       - name: 🔍 TypeScript strict check (THE source of truth)
         # TypeScript prüft:
@@ -99,7 +99,7 @@ jobs:
           cache: 'npm'
 
       - name: 📦 Install dependencies
-        run: npm ci
+        run: npm ci --no-audit --no-fund
 
       - name: 💾 Cache Next.js build
         uses: actions/cache@v4
