@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getClientConfig } from '@/lib/config-loader';
 
+import Image from 'next/image';
 const config = getClientConfig();
 
 // ✅ ZERO-DEFECT: Type definition with null support (PowerShell JSON compat)
@@ -33,7 +34,15 @@ export default function Header() {
         <div className="flex justify-between items-center py-4">
           {/* Logo/Name */}
           <Link href="/" className="flex items-center gap-3"> {header.showLogo && header.logo && (
-              <img src={header.logo} alt={brand.name} className="h-10 w-auto" />
+              <Image 
+              src={header.logo} 
+              alt={brand.name} 
+              width={120}
+              height={40}
+              unoptimized={true}
+              priority={true}
+              className="h-10 w-auto"
+            />
             )}
             <div>
               <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">{brand.name}</h1>
