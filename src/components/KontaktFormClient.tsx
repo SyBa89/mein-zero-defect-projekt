@@ -136,7 +136,7 @@ export default function KontaktFormClient() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 font-medium">Telefon</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">Telefon</p>
                     <p className="text-gray-900 font-semibold group-hover:text-[var(--theme-primary)] transition-colors">
                       02235 9291160
                     </p>
@@ -161,7 +161,7 @@ export default function KontaktFormClient() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 font-medium">E-Mail</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">E-Mail</p>
                     <p className="text-gray-900 font-semibold group-hover:text-[var(--theme-primary)] transition-colors break-all">
                       info@kiosk-lollipop.de
                     </p>
@@ -197,7 +197,7 @@ export default function KontaktFormClient() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 font-medium">Adresse</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">Adresse</p>
                     <p className="text-gray-900 font-semibold group-hover:text-[var(--theme-primary)] transition-colors">
                       Theodor-Heuss-Str. 35
                       <br />
@@ -445,7 +445,7 @@ export default function KontaktFormClient() {
                   </>
                 )}
               </button>
-              <p className="text-xs text-gray-600 dark:text-gray-600 dark:text-gray-400 text-center mt-4 leading-relaxed flex items-center justify-center gap-1">
+              <p className="text-xs text-gray-600 dark:text-gray-400 text-center mt-4 leading-relaxed flex items-center justify-center gap-1">
                 <span aria-hidden="true">🔒</span> Datenschutzfreundlich: Ihre Nachricht wird sicher
                 verarbeitet.
               </p>

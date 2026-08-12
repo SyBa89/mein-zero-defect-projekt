@@ -27,7 +27,7 @@ export default function LegalNotice() {
             </div>
           </div>
         )}
-        <div className="text-xs text-gray-600 dark:text-gray-600 dark:text-gray-400 text-center font-medium space-y-1">
+        <div className="text-xs text-gray-600 dark:text-gray-400 text-center font-medium space-y-1">
           <p>Alle Preise inkl. gesetzlicher MwSt. | Irrtümer und Änderungen vorbehalten.</p>
           <p>
             <Link

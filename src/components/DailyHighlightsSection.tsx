@@ -112,7 +112,7 @@ export default function DailyHighlightsSection() {
             </StaggerContainer>
 
             <FadeInWhenVisible direction="up" delay={0.6} duration={0.6}>
-              <p className="text-center text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 mt-8 font-medium">
+              <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-8 font-medium">
                 ✨ Aktualisiert täglich • Alles sofort verfügbar
               </p>
             </FadeInWhenVisible>

@@ -67,7 +67,7 @@ export function DashboardStats() {
                 <span className="text-xs text-gray-500 dark:text-gray-600 dark:text-gray-400 mt-1">
                   {value > 0 ? `€${value.toFixed(0)}` : '-'}
                 </span>
-                <span className="text-xs text-gray-400 dark:text-gray-600 dark:text-gray-600 dark:text-gray-400">-{6 - index}</span>
+                <span className="text-xs text-gray-400 dark:text-gray-600 dark:text-gray-400">-{6 - index}</span>
               </div>
             );
           })}

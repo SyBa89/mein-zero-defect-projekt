@@ -61,7 +61,7 @@ export default function CookieBanner() {
         {showSettings ? (
           <div className="animate-fade-in">
             <h3 id="cookie-title" className="text-lg font-bold text-gray-900 dark:text-white mb-4">Cookie-Einstellungen</h3>
-            <p id="cookie-desc" className="text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 mb-4">Wählen Sie selbst, welche Cookie-Kategorien Sie zulassen möchten.</p>
+            <p id="cookie-desc" className="text-sm text-gray-600 dark:text-gray-400 mb-4">Wählen Sie selbst, welche Cookie-Kategorien Sie zulassen möchten.</p>
             <div className="space-y-3 mb-6">
               {/* Notwendig */}
               <div className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg opacity-75 cursor-not-allowed">
@@ -119,7 +119,7 @@ export default function CookieBanner() {
               <span className="text-3xl flex-shrink-0" aria-hidden="true">🍪</span>
               <div className="flex-1">
                 <h3 id="cookie-title" className="font-bold text-gray-900 dark:text-white mb-1 text-lg">Wir respektieren Ihre Privatsphäre</h3>
-                <p id="cookie-desc" className="text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p id="cookie-desc" className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   Wir verwenden Cookies, um Ihre Erfahrung zu verbessern und unsere App fehlerfrei zu halten. 
                   <Link href="/datenschutz" className="ml-1 underline hover:text-[var(--theme-primary,#0055ff)] font-medium focus:outline-none focus:ring-2 focus:ring-[var(--theme-primary,#0055ff)] rounded">Datenschutzerklärung</Link>
                 </p>

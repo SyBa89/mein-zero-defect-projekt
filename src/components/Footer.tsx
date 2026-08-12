@@ -140,7 +140,7 @@ export default function Footer() {
 
         {business.type === 'kiosk' && (
           <div className="border-t border-gray-800 mt-6 pt-6">
-            {/* ✅ FIX: text-gray-600 dark:text-gray-400 statt text-gray-600 dark:text-gray-600 dark:text-gray-400. Jugendschutz muss lesbar sein! */}
+            {/* ✅ FIX: text-gray-600 dark:text-gray-400 statt text-gray-600 dark:text-gray-400. Jugendschutz muss lesbar sein! */}
             <p className="text-xs text-gray-600 dark:text-gray-400 text-center max-w-3xl mx-auto leading-relaxed">
               ⚠️ <strong className="font-semibold text-gray-200">Jugendschutz:</strong> Tabakwaren
               und alkoholische Getränke werden nur an Personen ab 18 Jahren abgegeben. Bitte halten

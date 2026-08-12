@@ -36,7 +36,7 @@ export default async function JackpotBanner() {
               </div>
             </div>
 
-            <span className="hidden sm:inline text-gray-400 dark:text-gray-600 dark:text-gray-600 dark:text-gray-400 text-2xl">•</span>
+            <span className="hidden sm:inline text-gray-400 dark:text-gray-600 dark:text-gray-400 text-2xl">•</span>
 
             <div className="flex items-center gap-2">
               <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">

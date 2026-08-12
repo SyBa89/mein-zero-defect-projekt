@@ -207,7 +207,7 @@ export default function OpeningHoursSection() {
           >
             {sectionTitle}
           </h2>
-          <p className="text-gray-600 dark:text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
             {sectionSubtitle}
           </p>
         </div>
