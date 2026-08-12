@@ -7,6 +7,8 @@ import { defaultTenantConfig } from './defaults';
 import { medicalTenant } from './tenants/medical';
 import { craftsmanTenant } from './tenants/craftsman';
 import { kioskTenant } from './tenants/kiosk';
+import { friseurTenant } from './tenants/friseur';
+import { restaurantTenant } from './tenants/restaurant';
 
 /**
  * Registry aller verfügbaren Tenant-Konfigurationen
@@ -17,6 +19,8 @@ export const tenantConfigs: Record<string, TenantConfig> = {
   medical: medicalTenant,
   craftsman: craftsmanTenant,
   kiosk: kioskTenant,
+  friseur: friseurTenant,
+  restaurant: restaurantTenant,
 } as const;
 
 /**

@@ -1,5 +1,5 @@
 // src/lib/config/domain.ts
-export type DomainType = 'kiosk' | 'handwerker' | 'arzt';
+export type DomainType = 'kiosk' | 'handwerker' | 'arzt' | 'friseur' | 'restaurant';
 
 export interface DomainConfig {
   id: DomainType;
@@ -39,8 +39,26 @@ const domains: Record<DomainType, DomainConfig> = {
       contacts: 'arzt:patients',
     },
   },
+  friseur: {
+    id: 'friseur',
+    displayName: 'Friseur Salon',
+    redisKeys: {
+      dailyRevenue: (date: string) => `friseur:revenue:${date}`,
+      tasks: 'friseur:appointments',
+      contacts: 'friseur:clients',
+    },
+  },
+  restaurant: {
+    id: 'restaurant',
+    displayName: 'Restaurant System',
+    redisKeys: {
+      dailyRevenue: (date: string) => `restaurant:revenue:${date}`,
+      tasks: 'restaurant:orders',
+      contacts: 'restaurant:guests',
+    },
+  },
 };
 
-// Liest die Umgebungsvariable. Standard ist Kiosk, kann aber via .env auf Handwerker/Arzt geändert werden.
+// Liest die Umgebungsvariable. Standard ist Kiosk, kann aber via .env geändert werden.
 const envDomain = (process.env.NEXT_PUBLIC_DOMAIN_TYPE as DomainType) || 'kiosk';
 export const CURRENT_DOMAIN = domains[envDomain];
