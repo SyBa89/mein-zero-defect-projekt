@@ -92,7 +92,7 @@ export default function DailyHighlightsSection() {
             </div>
 
             {/* ✅ ZERO-DEFECT: Stagger-Grid für die 4 Highlights */}
-            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4" staggerDelay={0.12}>
+            <StaggerContainer className={`grid gap-4 ${items.length === 1 ? "grid-cols-1 max-w-xs mx-auto" : items.length === 2 ? "grid-cols-2 max-w-2xl mx-auto" : items.length === 3 ? "grid-cols-2 md:grid-cols-3 max-w-4xl mx-auto" : "grid-cols-2 md:grid-cols-4"}`} staggerDelay={0.12}>
               {items.map((item, i) => (
                 <StaggerItem key={i}>
                   <HoverLift liftAmount={-6}>

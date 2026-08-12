@@ -77,7 +77,7 @@ export default function Footer() {
                   </li>
                 ))
               ) : (
-                <li className="text-gray-600 dark:text-gray-400">Keine Services definiert</li>
+                <li className="text-gray-500 dark:text-gray-500 italic text-xs">Services werden konfiguriert...</li>
               )}
             </ul>
           </div>

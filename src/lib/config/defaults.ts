@@ -48,7 +48,7 @@ export const defaultTenantConfig: TenantConfig = {
   featuresMeta: { sectionTitle: 'Unsere Leistungen', sectionSubtitle: 'Qualität, die überzeugt.' },
   extraServices: [{ icon: '📞', title: 'Support', sub: 'Mo–Fr erreichbar' }],
   sections: { showHermes: false, showProducts: false, showJackpot: false },
-  header: { showLogo: true, navigation: [], showAdminLink: false, adminLabel: 'Admin' },
+  header: { showLogo: true, navigation: [], showAdminLink: true, adminLabel: 'Admin' },
   hermes: { enabled: false, description: '' },
   products: { categories: [] },
   faq: [],

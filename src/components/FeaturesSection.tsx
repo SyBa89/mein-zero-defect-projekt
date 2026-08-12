@@ -28,7 +28,7 @@ export default function FeaturesSection() {
             <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto mb-4 animate-pulse" />
             <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mx-auto animate-pulse" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className={`grid gap-6 ${features.length === 1 ? "grid-cols-1 max-w-md mx-auto" : features.length === 2 ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}`}>
             {[...Array(6)].map((_, index) => (
               <div
                 key={index}
@@ -64,7 +64,7 @@ export default function FeaturesSection() {
         </FadeInWhenVisible>
 
         <StaggerContainer
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className={`grid gap-6 ${features.length === 1 ? "grid-cols-1 max-w-md mx-auto" : features.length === 2 ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}`}
           staggerDelay={0.15}
         >
           {features.map((feature, index) => (
