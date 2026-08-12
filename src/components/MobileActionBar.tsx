@@ -86,7 +86,7 @@ export function MobileActionBar() {
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={action.icon} />
             </svg>
-            <span className="text-xs font-semibold tracking-wide text-gray-700 dark:text-gray-300">{action.label}</span>
+            <span className="text-xs font-semibold tracking-wide text-white dark:text-white">{action.label}</span>
           </a>
         ))}
       </div>
