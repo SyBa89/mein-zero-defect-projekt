@@ -37,7 +37,7 @@ export default function Footer() {
           <div className="md:col-span-1">
             <h3 className="text-white font-bold text-lg mb-4">{brand.name}</h3>
             <p className="text-sm text-gray-200 mb-4">{brand.slogan}</p>
-            <p className="text-xs text-gray-400">{getOpeningText()}</p>
+            <p className="text-xs text-gray-600 dark:text-gray-400">{getOpeningText()}</p>
           </div>
 
           <div>
@@ -77,7 +77,7 @@ export default function Footer() {
                   </li>
                 ))
               ) : (
-                <li className="text-gray-400">Keine Services definiert</li>
+                <li className="text-gray-600 dark:text-gray-400">Keine Services definiert</li>
               )}
             </ul>
           </div>
@@ -122,8 +122,8 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          {/* ✅ FIX: text-gray-400 auf bg-gray-900 = Kontrast ~5.4:1 (Besteht WCAG AA) */}
-          <p className="text-xs text-gray-400">
+          {/* ✅ FIX: text-gray-600 dark:text-gray-400 auf bg-gray-900 = Kontrast ~5.4:1 (Besteht WCAG AA) */}
+          <p className="text-xs text-gray-600 dark:text-gray-400">
             ©{' '}
             {currentYear
               ? `${currentYear} ${brand.name}. Alle Rechte vorbehalten.`
@@ -132,7 +132,7 @@ export default function Footer() {
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             aria-label="Nach oben scrollen"
-            className="mt-4 md:mt-0 text-xs text-gray-400 hover:text-[var(--theme-primary)] transition-colors flex items-center gap-1"
+            className="mt-4 md:mt-0 text-xs text-gray-600 dark:text-gray-400 hover:text-[var(--theme-primary)] transition-colors flex items-center gap-1"
           >
             Nach oben ↑
           </button>
@@ -140,8 +140,8 @@ export default function Footer() {
 
         {business.type === 'kiosk' && (
           <div className="border-t border-gray-800 mt-6 pt-6">
-            {/* ✅ FIX: text-gray-400 statt text-gray-500. Jugendschutz muss lesbar sein! */}
-            <p className="text-xs text-gray-400 text-center max-w-3xl mx-auto leading-relaxed">
+            {/* ✅ FIX: text-gray-600 dark:text-gray-400 statt text-gray-600 dark:text-gray-600 dark:text-gray-400. Jugendschutz muss lesbar sein! */}
+            <p className="text-xs text-gray-600 dark:text-gray-400 text-center max-w-3xl mx-auto leading-relaxed">
               ⚠️ <strong className="font-semibold text-gray-200">Jugendschutz:</strong> Tabakwaren
               und alkoholische Getränke werden nur an Personen ab 18 Jahren abgegeben. Bitte halten
               Sie Ihren Ausweis bereit.

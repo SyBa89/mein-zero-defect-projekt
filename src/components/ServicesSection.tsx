@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 import FadeInWhenVisible, { StaggerContainer, StaggerItem } from './motion/FadeInWhenVisible';
@@ -61,7 +61,7 @@ export default function ServicesSection() {
                   <h3 className="font-bold text-gray-900 dark:text-gray-100 text-sm">
                     {service.title}
                   </h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{service.sub}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-600 dark:text-gray-400 mt-1">{service.sub}</p>
                 </div>
               </StaggerItem>
             ))}

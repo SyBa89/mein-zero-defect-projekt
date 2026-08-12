@@ -41,7 +41,7 @@ export default function Reviews() {
                   </div>
                   <div>
                     <p className="font-bold text-gray-900 dark:text-white">{review.name}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{review.date}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400">{review.date}</p>
                   </div>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 italic">
@@ -59,7 +59,7 @@ export default function Reviews() {
             ✍️ Bewertung auf Google schreiben
           </a>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mt-6">
+        <p className="text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 mt-6">
           📌 <strong>Transparent:</strong> Demo-Beispiele für White-Label-Plattform.
         </p>
       </div>

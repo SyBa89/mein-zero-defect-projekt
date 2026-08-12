@@ -207,7 +207,7 @@ export default function OpeningHoursSection() {
           >
             {sectionTitle}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
             {sectionSubtitle}
           </p>
         </div>
@@ -355,7 +355,7 @@ export default function OpeningHoursSection() {
 
         {/* Tip message */}
         {tipMessage && (
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6 max-w-2xl mx-auto">
+          <p className="text-center text-sm text-gray-500 dark:text-gray-600 dark:text-gray-400 mt-6 max-w-2xl mx-auto">
             💡 <strong className="font-semibold">Tipp:</strong> {tipMessage}
           </p>
         )}

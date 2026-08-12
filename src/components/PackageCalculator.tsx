@@ -112,7 +112,7 @@ export default function PackageCalculator() {
         <span aria-hidden="true">📦</span>
         Finde deine Paketgröße
       </h3>
-      <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 text-center">
+      <p className="text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 mb-6 text-center">
         Gib die Maße deines Pakets ein (in cm). Die Reihenfolge ist egal.
       </p>
 
@@ -142,7 +142,7 @@ export default function PackageCalculator() {
               placeholder="0"
               aria-invalid={hasError}
               aria-describedby={RESULT_ID}
-              className="w-full px-3 py-3 text-center bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[var(--theme-primary)] focus:border-[var(--theme-primary)] outline-none transition-all font-bold text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+              className="w-full px-3 py-3 text-center bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[var(--theme-primary)] focus:border-[var(--theme-primary)] outline-none transition-all font-bold text-gray-900 dark:text-white placeholder:text-gray-600 dark:text-gray-600 dark:text-gray-400 dark:placeholder:text-gray-600 dark:text-gray-400"
             />
           </div>
         ))}
@@ -195,13 +195,13 @@ export default function PackageCalculator() {
           </div>
         )}
         {!result && !hasError && (
-          <p className="text-sm text-gray-400 dark:text-gray-500 text-center font-medium transition-all duration-300 ease-out">
+          <p className="text-sm text-gray-400 dark:text-gray-600 dark:text-gray-600 dark:text-gray-400 text-center font-medium transition-all duration-300 ease-out">
             Das Ergebnis erscheint hier nach dem Prüfen.
           </p>
         )}
       </div>
 
-      <p className="text-xs text-gray-400 dark:text-gray-500 text-center mt-4 leading-relaxed">
+      <p className="text-xs text-gray-400 dark:text-gray-600 dark:text-gray-600 dark:text-gray-400 text-center mt-4 leading-relaxed">
         *Unverbindliche Richtwerte basierend auf Standard-Hermes-Maßen. Verbindliche Preise und Maße
         direkt im Markt oder auf hermes.de.
       </p>
