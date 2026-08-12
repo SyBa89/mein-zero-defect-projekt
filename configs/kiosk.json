@@ -1,301 +1,295 @@
 {
-    "url":  "https://mein-zero-defect-projekt.vercel.app",
-    "brand":  {
-                  "name":  "Kiosk Lollipop",
-                  "slogan":  "Ihr Kiosk und Hermes Paketshop am BÃ¼rgerplatz",
-                  "legalName":  "Kiosk Lollipop (Inhaber: Angaben werden ergÃ¤nzt)",
-                  "primaryColor":  "pink"
-              },
-    "contact":  {
-                    "address":  {
-                                    "street":  "Theodor-Heuss-StraÃŸe 35",
-                                    "zip":  "50374",
-                                    "city":  "Erftstadt-Liblar",
-                                    "country":  "DE"
-                                },
-                    "phone":  "+4922359291160",
-                    "email":  "info@kiosk-lollipop.de",
-                    "googlePlaceId":  "ChIJeWG_xdsXv0cRInW4W6rog_0",
-                    "mapsUrl":  "https://maps.google.com/?cid=123456789",
-                    "phoneDisplay":  "02235 9291160"
-                },
-    "business":  {
-                     "type":  "kiosk",
-                     "isSmallBusiness":  true
-                 },
-    "seo":  {
-                "description":  "Kiosk Lollipop in Erftstadt-Liblar: Hermes Paketshop, Lotto, GetrÃ¤nke \u0026 Snacks.",
-                "keywords":  [
-                                 "Kiosk Erftstadt",
-                                 "Hermes Liblar",
-                                 "Lotto 50374"
-                             ]
-            },
-    "hero":  {
-                 "headline":  "Willkommen bei Kiosk Lollipop",
-                 "subheadline":  "Ihr Kiosk und Hermes Paketshop am BÃ¼rgerplatz in Erftstadt-Liblar",
-                 "primaryCta":  {
-                                    "label":  "02235 9291160",
-                                    "href":  "tel:+4922359291160"
-                                },
-                 "secondaryCta":  {
-                                      "label":  "Jetzt besuchen",
-                                      "href":  "/kontakt"
-                                  },
-                 "emoji":  "ðŸ­",
-                 "imageAlt":  "Kiosk Lollipop â€“ Fassade am BÃ¼rgerplatz in Erftstadt-Liblar",
-                 "backgroundImage":  "/images/fassade.webp"
-             },
-    "features":  [
-                     {
-                         "icon":  "ðŸ“¦",
-                         "title":  "Hermes Paketshop",
-                         "description":  "Komplett-Service fÃ¼r Paketversand, Abholung und Retouren. Schnell und zuverlÃ¤ssig."
-                     },
-                     {
-                         "icon":  "ðŸ•’",
-                         "title":  "Lange Ã–ffnungszeiten",
-                         "description":  "Mo-Fr bis 19:00 Uhr, Sa bis 14:30 Uhr. Wir sind da, wenn Sie uns brauchen."
-                     },
-                     {
-                         "icon":  "ðŸ“",
-                         "title":  "Zentrale Lage",
-                         "description":  "Direkt am BÃ¼rgerplatz in Liblar. Gut zu FuÃŸ oder mit dem Auto erreichbar."
-                     },
-                     {
-                         "icon":  "ðŸ…¿ï¸",
-                         "title":  "ParkplÃ¤tze vor der TÃ¼r",
-                         "description":  "Kurze Haltezone direkt vor dem Laden und Ã¶ffentliche ParkplÃ¤tze in der NÃ¤he."
-                     },
-                     {
-                         "icon":  "ðŸ’³",
-                         "title":  "Moderne Zahlung",
-                         "description":  "Bar, EC-Karte, Kontaktlos, Apple Pay und Google Pay. Sie zahlen, wie Sie wollen."
-                     },
-                     {
-                         "icon":  "ðŸ¤",
-                         "title":  "PersÃ¶nlicher Service",
-                         "description":  "Seit 2020 fÃ¼r Liblar da. Wir kennen unsere Kunden und beraten mit Herz und Verstand."
-                     }
-                 ],
-    "extraServices":  [
-                          {
-                              "icon":  "ðŸ’°",
-                              "title":  "Geld abheben",
-                              "sub":  "EC-Karte"
-                          },
-                          {
-                              "icon":  "ðŸ–¨ï¸",
-                              "title":  "Druckservice",
-                              "sub":  "Kopien \u0026 Ausdrucke"
-                          },
-                          {
-                              "icon":  "â˜•",
-                              "title":  "HeiÃŸe GetrÃ¤nke",
-                              "sub":  "Kaffee \u0026 Tee to go"
-                          },
-                          {
-                              "icon":  "ðŸ”Œ",
-                              "title":  "Handy-Ladestation",
-                              "sub":  "Smartphone aufladen"
-                          }
-                      ],
-    "sections":  {
-                     "showHermes":  true,
-                     "showProducts":  true,
-                     "showJackpot":  true
-                 },
-    "header":  {
-                   "adminLabel":  "Admin Cockpit",
-                   "navigation":  [
-                                      {
-                                          "href":  "/",
-                                          "label":  "Startseite"
-                                      },
-                                      {
-                                          "href":  "/#services",
-                                          "label":  "Services"
-                                      },
-                                      {
-                                          "href":  "/#products",
-                                          "label":  "Sortiment"
-                                      },
-                                      {
-                                          "href":  "/kontakt",
-                                          "label":  "Kontakt"
-                                      }
-                                  ],
-                   "showAdminLink":  true,
-                   "logo":  null,
-                   "showLogo":  false
-               },
-    "hermes":  {
-                   "enabled":  true,
-                   "description":  "Wir sind Ihr offizieller Hermes Paketshop in Erftstadt-Liblar!"
-               },
-    "products":  {
-                     "categories":  [
-                                        {
-                                            "icon":  "ðŸ¥¤",
-                                            "title":  "Ãœber 100 GetrÃ¤nke",
-                                            "description":  "Kalte und warme GetrÃ¤nke, Softdrinks, SÃ¤fte, Wasser, Bier und mehr. Immer frisch und gekÃ¼hlt!",
-                                            "ageRestriction":  "Alkoholische GetrÃ¤nke nur an Personen ab 18 Jahren"
-                                        },
-                                        {
-                                            "icon":  "ðŸ«",
-                                            "title":  "SÃ¼ÃŸe Versuchungen",
-                                            "description":  "Wie frÃ¼her! GroÃŸe Auswahl an Schokolade, Chips, GummibÃ¤rchen, Riegeln und allen beliebten Snacks."
-                                        },
-                                        {
-                                            "icon":  "ðŸ“°",
-                                            "title":  "Ãœber 500 Zeitschriften",
-                                            "description":  "Tageszeitungen, Magazine, Illustrierte und Fachzeitschriften. FÃ¼r jeden das Richtige!"
-                                        },
-                                        {
-                                            "icon":  "ðŸš¬",
-                                            "title":  "Tabakwaren",
-                                            "description":  "Zigaretten, Zigarren, Tabak und ZubehÃ¶r aller gÃ¤ngigen Marken. Alles vorrÃ¤tig!",
-                                            "ageRestriction":  "Nur an Personen ab 18 Jahren"
-                                        },
-                                        {
-                                            "icon":  "ðŸŽ«",
-                                            "title":  "Lotterie \u0026 GlÃ¼cksspiel",
-                                            "description":  "Lotto 6aus49, Eurojackpot, Rubbellose und weitere Lotterieprodukte.",
-                                            "ageRestriction":  "Die Teilnahme ist erst ab 18 Jahren erlaubt. GlÃ¼cksspiel kann sÃ¼chtig machen."
-                                        },
-                                        {
-                                            "icon":  "ðŸ“±",
-                                            "title":  "Handy-Guthaben",
-                                            "description":  "Aufladung fÃ¼r alle Mobilfunkanbieter: Telekom, Vodafone, O2, Aldi Talk und viele mehr."
-                                        },
-                                        {
-                                            "icon":  "ðŸ“",
-                                            "title":  "Schreibwaren",
-                                            "description":  "Stifte, Hefte, BriefumschlÃ¤ge und alles fÃ¼r Schule, BÃ¼ro und Zuhause."
-                                        }
-                                    ]
-                 },
-    "faq":  [
-                {
-                    "question":  "Wo genau befindet sich Kiosk Lollipop?",
-                    "answer":  "Wir befinden uns direkt in der Theodor-Heuss-StraÃŸe 35, 50374 Erftstadt-Liblar, in unmittelbarer NÃ¤he zum Bahnhof."
-                },
-                {
-                    "question":  "Kann ich bei Ihnen Pakete versenden und abholen?",
-                    "answer":  "Ja, wir sind ein offizieller Hermes Paketshop. Sie kÃ¶nnen bei uns Pakete versenden, abholen und Retouren einfach abgeben."
-                },
-                {
-                    "question":  "Welche Zahlungsmethoden akzeptieren Sie?",
-                    "answer":  "Sie kÃ¶nnen bei uns bar, mit EC-Karte, kontaktlos sowie mit Apple Pay und Google Pay bezahlen."
-                },
-                {
-                    "question":  "Wie sind Ihre Ã–ffnungszeiten?",
-                    "answer":  "Unsere regulÃ¤ren Ã–ffnungszeiten sind Mo-Fr von 07:30 bis 19:00 Uhr und samstags von 07:30 bis 14:30 Uhr. An Sonn- und Feiertagen haben wir geschlossen."
-                }
-            ],
-    "brands":  [
-                   "ðŸ¥¤ Coca-Cola \u0026 Fanta",
-                   "ðŸ« Milka \u0026 Ritter Sport",
-                   "ðŸš¬ Marlboro \u0026 Camel",
-                   "ðŸŽ« Lotto 6aus49 \u0026 Eurojackpot",
-                   "ðŸ“° Express \u0026 KÃ¶lner Stadt-Anzeiger",
-                   "ðŸ“± Vodafone \u0026 Telekom"
-               ],
-    "reviews":  [
-                    {
-                        "date":  "vor 2 Wochen",
-                        "gradient":  "from-pink-500 to-purple-600",
-                        "initial":  "T",
-                        "name":  "Thomas M.",
-                        "text":  "Super freundlicher Service! Mein Hermes-Paket war schnell gefunden."
-                    },
-                    {
-                        "date":  "vor 1 Monat",
-                        "gradient":  "from-purple-500 to-blue-600",
-                        "initial":  "S",
-                        "name":  "Sandra K.",
-                        "text":  "Der beste Kiosk in Liblar. Immer sauber, gut sortiert."
-                    },
-                    {
-                        "date":  "vor 2 Monaten",
-                        "gradient":  "from-blue-500 to-cyan-600",
-                        "initial":  "M",
-                        "name":  "Markus B.",
-                        "text":  "Praktische Lage direkt am BÃ¼rgerplatz. GetrÃ¤nke sind immer schÃ¶n kalt."
-                    }
-                ],
-    "openingHours":  {
-                         "tipMessage":  "An Sonn- und Feiertagen geschlossen. Bei SonderÃ¶ffnungszeiten informieren wir Sie Ã¼ber unser Notfall-Banner.",
-                         "items":  [
-                                       {
-                                           "hours":  "07:30 â€“ 19:00 Uhr",
-                                           "isOpen":  true,
-                                           "day":  "Montag"
-                                       },
-                                       {
-                                           "hours":  "07:30 â€“ 19:00 Uhr",
-                                           "isOpen":  true,
-                                           "day":  "Dienstag"
-                                       },
-                                       {
-                                           "hours":  "07:30 â€“ 19:00 Uhr",
-                                           "isOpen":  true,
-                                           "day":  "Mittwoch"
-                                       },
-                                       {
-                                           "hours":  "07:30 â€“ 19:00 Uhr",
-                                           "isOpen":  true,
-                                           "day":  "Donnerstag"
-                                       },
-                                       {
-                                           "hours":  "07:30 â€“ 19:00 Uhr",
-                                           "isOpen":  true,
-                                           "day":  "Freitag"
-                                       },
-                                       {
-                                           "hours":  "07:30 â€“ 14:30 Uhr",
-                                           "isOpen":  true,
-                                           "day":  "Samstag"
-                                       },
-                                       {
-                                           "hours":  "Geschlossen",
-                                           "isOpen":  false,
-                                           "day":  "Sonntag"
-                                       }
-                                   ],
-                         "sectionTitle":  "Ã–ffnungszeiten",
-                         "emergencyMessage":  null,
-                         "showSection":  true,
-                         "sectionSubtitle":  "Wir sind tÃ¤glich fÃ¼r Sie da â€“ besuchen Sie uns direkt am BÃ¼rgerplatz!"
-                     },
-    "about":  {
-                  "showSection":  true,
-                  "mainDescription":  "Ob Sie morgens Ihre Zeitung holen, mittags einen schnellen Snack brauchen, Pakete versenden oder abends noch GetrÃ¤nke fÃ¼r den Feierabend kaufen mÃ¶chten â€“ wir sind fÃ¼r Sie da. Als offizieller Hermes Paketshop bieten wir Ihnen zusÃ¤tzlich alle Dienstleistungen rund um Paketversand, -abholung und Retouren. Schnell, freundlich und zu fairen Preisen.",
-                  "sectionTitle":  "Ãœber uns",
-                  "introText":  "Kiosk Lollipop ist Ihr freundlicher Nachbarschaftskiosk und Hermes Paketshop im Herzen von Erftstadt-Liblar. Wir befinden uns in der Theodor-Heuss-StraÃŸe 35, 50374 Erftstadt-Liblar, in der NÃ¤he des Bahnhofs und weiterer lokaler GeschÃ¤fte."
-              },
-    "banners":  {
-                    "highlightLabel":  "Heute im Angebot",
-                    "jackpotLabel":  "Aktueller Jackpot",
-                    "showJackpot":  true
-                },
-    "social":  {
-                   "instagram":  null,
-                   "twitter":  null,
-                   "facebook":  "https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/"
-               },
-    "featuresMeta":  {
-                         "sectionTitle":  "Warum Kunden zu uns kommen",
-                         "sectionSubtitle":  "Mehr als nur ein Kiosk - wir sind Ihr Nachbar mit echtem Service"
-                     },
-    "tracking":  {
-
-                 },
-    "theme":  {
-                  "primaryColor":  "#db2777",
-                  "accentColor":  "#9333ea",
-                  "borderRadius":  "full",
-                  "fontHeading":  "poppins",
-                  "fontBody":  "inter"
-              }
+  "url": "https://mein-zero-defect-projekt.vercel.app",
+  "brand": {
+    "name": "Kiosk Lollipop",
+    "slogan": "Ihr Kiosk und Hermes Paketshop am Bürgerplatz",
+    "legalName": "Kiosk Lollipop (Inhaber: Angaben werden ergänzt)",
+    "primaryColor": "pink"
+  },
+  "contact": {
+    "address": {
+      "street": "Theodor-Heuss-Straße 35",
+      "zip": "50374",
+      "city": "Erftstadt-Liblar",
+      "country": "DE"
+    },
+    "phone": "+4922359291160",
+    "phoneDisplay": "02235 9291160",
+    "email": "info@kiosk-lollipop.de",
+    "googlePlaceId": "ChIJeWG_xdsXv0cRInW4W6rog_0",
+    "mapsUrl": "https://maps.google.com/?cid=123456789"
+  },
+  "business": {
+    "type": "kiosk",
+    "isSmallBusiness": true
+  },
+  "seo": {
+    "description": "Kiosk Lollipop in Erftstadt-Liblar: Hermes Paketshop, Lotto, Getränke \u0026 Snacks.",
+    "keywords": ["Kiosk Erftstadt", "Hermes Liblar", "Lotto 50374"]
+  },
+  "hero": {
+    "headline": "Willkommen bei Kiosk Lollipop",
+    "subheadline": "Ihr Kiosk und Hermes Paketshop am Bürgerplatz in Erftstadt-Liblar",
+    "primaryCta": {
+      "label": "02235 9291160",
+      "href": "tel:+4922359291160"
+    },
+    "secondaryCta": {
+      "label": "Jetzt besuchen",
+      "href": "/kontakt"
+    },
+    "emoji": "🍭",
+    "imageAlt": "Kiosk Lollipop – Fassade am Bürgerplatz in Erftstadt-Liblar",
+    "backgroundImage": "/images/fassade.webp"
+  },
+  "features": [
+    {
+      "icon": "📦",
+      "title": "Hermes Paketshop",
+      "description": "Komplett-Service für Paketversand, Abholung und Retouren. Schnell und zuverlässig."
+    },
+    {
+      "icon": "🕒",
+      "title": "Lange Öffnungszeiten",
+      "description": "Mo-Fr bis 19:00 Uhr, Sa bis 14:30 Uhr. Wir sind da, wenn Sie uns brauchen."
+    },
+    {
+      "icon": "📍",
+      "title": "Zentrale Lage",
+      "description": "Direkt am Bürgerplatz in Liblar. Gut zu Fuß oder mit dem Auto erreichbar."
+    },
+    {
+      "icon": "🅿️",
+      "title": "Parkplätze vor der Tür",
+      "description": "Kurze Haltezone direkt vor dem Laden und öffentliche Parkplätze in der Nähe."
+    },
+    {
+      "icon": "💳",
+      "title": "Moderne Zahlung",
+      "description": "Bar, EC-Karte, Kontaktlos, Apple Pay und Google Pay. Sie zahlen, wie Sie wollen."
+    },
+    {
+      "icon": "🤝",
+      "title": "Persönlicher Service",
+      "description": "Seit 2020 für Liblar da. Wir kennen unsere Kunden und beraten mit Herz und Verstand."
+    }
+  ],
+  "extraServices": [
+    {
+      "icon": "💰",
+      "title": "Geld abheben",
+      "sub": "EC-Karte"
+    },
+    {
+      "icon": "🖨️",
+      "title": "Druckservice",
+      "sub": "Kopien \u0026 Ausdrucke"
+    },
+    {
+      "icon": "☕",
+      "title": "Heiße Getränke",
+      "sub": "Kaffee \u0026 Tee to go"
+    },
+    {
+      "icon": "🔌",
+      "title": "Handy-Ladestation",
+      "sub": "Smartphone aufladen"
+    }
+  ],
+  "sections": {
+    "showHermes": true,
+    "showProducts": true,
+    "showJackpot": true
+  },
+  "header": {
+    "adminLabel": "Admin Cockpit",
+    "navigation": [
+      {
+        "href": "/",
+        "label": "Startseite"
+      },
+      {
+        "href": "/#services",
+        "label": "Services"
+      },
+      {
+        "href": "/#products",
+        "label": "Sortiment"
+      },
+      {
+        "href": "/kontakt",
+        "label": "Kontakt"
+      }
+    ],
+    "showAdminLink": true,
+    "logo": null,
+    "showLogo": false
+  },
+  "hermes": {
+    "enabled": true,
+    "description": "Wir sind Ihr offizieller Hermes Paketshop in Erftstadt-Liblar!"
+  },
+  "products": {
+    "categories": [
+      {
+        "icon": "🥤",
+        "title": "Über 100 Getränke",
+        "description": "Kalte und warme Getränke, Softdrinks, Säfte, Wasser, Bier und mehr. Immer frisch und gekühlt!",
+        "ageRestriction": "Alkoholische Getränke nur an Personen ab 18 Jahren"
+      },
+      {
+        "icon": "🍫",
+        "title": "Süße Versuchungen",
+        "description": "Wie früher! Große Auswahl an Schokolade, Chips, Gummibärchen, Riegeln und allen beliebten Snacks."
+      },
+      {
+        "icon": "📰",
+        "title": "Über 500 Zeitschriften",
+        "description": "Tageszeitungen, Magazine, Illustrierte und Fachzeitschriften. Für jeden das Richtige!"
+      },
+      {
+        "icon": "🚬",
+        "title": "Tabakwaren",
+        "description": "Zigaretten, Zigarren, Tabak und Zubehör aller gängigen Marken. Alles vorrätig!",
+        "ageRestriction": "Nur an Personen ab 18 Jahren"
+      },
+      {
+        "icon": "🎫",
+        "title": "Lotterie \u0026 Glücksspiel",
+        "description": "Lotto 6aus49, Eurojackpot, Rubbellose und weitere Lotterieprodukte.",
+        "ageRestriction": "Die Teilnahme ist erst ab 18 Jahren erlaubt. Glücksspiel kann süchtig machen."
+      },
+      {
+        "icon": "📱",
+        "title": "Handy-Guthaben",
+        "description": "Aufladung für alle Mobilfunkanbieter: Telekom, Vodafone, O2, Aldi Talk und viele mehr."
+      },
+      {
+        "icon": "📝",
+        "title": "Schreibwaren",
+        "description": "Stifte, Hefte, Briefumschläge und alles für Schule, Büro und Zuhause."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "question": "Wo genau befindet sich Kiosk Lollipop?",
+      "answer": "Wir befinden uns direkt in der Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar, in unmittelbarer Nähe zum Bahnhof."
+    },
+    {
+      "question": "Kann ich bei Ihnen Pakete versenden und abholen?",
+      "answer": "Ja, wir sind ein offizieller Hermes Paketshop. Sie können bei uns Pakete versenden, abholen und Retouren einfach abgeben."
+    },
+    {
+      "question": "Welche Zahlungsmethoden akzeptieren Sie?",
+      "answer": "Sie können bei uns bar, mit EC-Karte, kontaktlos sowie mit Apple Pay und Google Pay bezahlen."
+    },
+    {
+      "question": "Wie sind Ihre Öffnungszeiten?",
+      "answer": "Unsere regulären Öffnungszeiten sind Mo-Fr von 07:30 bis 19:00 Uhr und samstags von 07:30 bis 14:30 Uhr. An Sonn- und Feiertagen haben wir geschlossen."
+    }
+  ],
+  "brands": [
+    "🥤 Coca-Cola \u0026 Fanta",
+    "🍫 Milka \u0026 Ritter Sport",
+    "🚬 Marlboro \u0026 Camel",
+    "🎫 Lotto 6aus49 \u0026 Eurojackpot",
+    "📰 Express \u0026 Kölner Stadt-Anzeiger",
+    "📱 Vodafone \u0026 Telekom"
+  ],
+  "reviews": [
+    {
+      "date": "vor 2 Wochen",
+      "gradient": "from-pink-500 to-purple-600",
+      "initial": "T",
+      "name": "Thomas M.",
+      "text": "Super freundlicher Service! Mein Hermes-Paket war schnell gefunden."
+    },
+    {
+      "date": "vor 1 Monat",
+      "gradient": "from-purple-500 to-blue-600",
+      "initial": "S",
+      "name": "Sandra K.",
+      "text": "Der beste Kiosk in Liblar. Immer sauber, gut sortiert."
+    },
+    {
+      "date": "vor 2 Monaten",
+      "gradient": "from-blue-500 to-cyan-600",
+      "initial": "M",
+      "name": "Markus B.",
+      "text": "Praktische Lage direkt am Bürgerplatz. Getränke sind immer schön kalt."
+    }
+  ],
+  "openingHours": {
+    "tipMessage": "An Sonn- und Feiertagen geschlossen. Bei Sonderöffnungszeiten informieren wir Sie über unser Notfall-Banner.",
+    "items": [
+      {
+        "hours": "07:30 – 19:00 Uhr",
+        "isOpen": true,
+        "day": "Montag"
+      },
+      {
+        "hours": "07:30 – 19:00 Uhr",
+        "isOpen": true,
+        "day": "Dienstag"
+      },
+      {
+        "hours": "07:30 – 19:00 Uhr",
+        "isOpen": true,
+        "day": "Mittwoch"
+      },
+      {
+        "hours": "07:30 – 19:00 Uhr",
+        "isOpen": true,
+        "day": "Donnerstag"
+      },
+      {
+        "hours": "07:30 – 19:00 Uhr",
+        "isOpen": true,
+        "day": "Freitag"
+      },
+      {
+        "hours": "07:30 – 14:30 Uhr",
+        "isOpen": true,
+        "day": "Samstag"
+      },
+      {
+        "hours": "Geschlossen",
+        "isOpen": false,
+        "day": "Sonntag"
+      }
+    ],
+    "sectionTitle": "Öffnungszeiten",
+    "emergencyMessage": null,
+    "showSection": true,
+    "sectionSubtitle": "Wir sind täglich für Sie da – besuchen Sie uns direkt am Bürgerplatz!"
+  },
+  "about": {
+    "showSection": true,
+    "mainDescription": "Ob Sie morgens Ihre Zeitung holen, mittags einen schnellen Snack brauchen, Pakete versenden oder abends noch Getränke für den Feierabend kaufen möchten – wir sind für Sie da. Als offizieller Hermes Paketshop bieten wir Ihnen zusätzlich alle Dienstleistungen rund um Paketversand, -abholung und Retouren. Schnell, freundlich und zu fairen Preisen.",
+    "sectionTitle": "Über uns",
+    "introText": "Kiosk Lollipop ist Ihr freundlicher Nachbarschaftskiosk und Hermes Paketshop im Herzen von Erftstadt-Liblar. Wir befinden uns in der Theodor-Heuss-Straße 35, 50374 Erftstadt-Liblar, in der Nähe des Bahnhofs und weiterer lokaler Geschäfte."
+  },
+  "banners": {
+    "highlightLabel": "Heute im Angebot",
+    "jackpotLabel": "Aktueller Jackpot",
+    "showJackpot": true
+  },
+  "social": {
+    "instagram": null,
+    "twitter": null,
+    "facebook": "https://www.facebook.com/LollipopKiosk50374ErftstadtLiblarBuergerplatz/"
+  },
+  "featuresMeta": {
+    "sectionTitle": "Warum Kunden zu uns kommen",
+    "sectionSubtitle": "Mehr als nur ein Kiosk - wir sind Ihr Nachbar mit echtem Service"
+  },
+  "tracking": {},
+  "theme": {
+    "primaryColor": "#db2777",
+    "accentColor": "#9333ea",
+    "borderRadius": "full",
+    "fontHeading": "poppins",
+    "fontBody": "inter"
+  }
 }
