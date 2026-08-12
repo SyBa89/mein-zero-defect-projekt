@@ -1,8 +1,21 @@
 import Link from 'next/link';
-import { CLIENT_CONFIG } from '@/lib/client.config';
+import { getTenantConfig } from '@/lib/config-loader';
 
+/**
+ * @fileoverview Legal Notice Component (Server Component)
+ * 
+ * @description
+ * Zeigt Jugendschutz-Hinweis (für Kiosks/Retail) + gesetzliche Pflichtangaben.
+ * Nutzt das neue White-Label-System via getTenantConfig().
+ * 
+ * @whiteLabel
+ * Jugendschutz wird nur für business.type 'kiosk' oder 'retail' angezeigt.
+ * Andere Branchen (Arzt, Handwerk, etc.) sehen nur die Standard-Pflichtangaben.
+ */
 export default function LegalNotice() {
-  const { business } = CLIENT_CONFIG;
+  // ✅ ZERO-DEFECT: Server-seitige Config (RSC-Pattern)
+  const config = getTenantConfig();
+  const { business } = config;
 
   // White-Label: Zeige Jugendschutz nur für Kiosks/Retail mit Alkohol/Tabak
   const showYouthProtection = business.type === 'kiosk' || business.type === 'retail';
