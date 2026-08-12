@@ -1,4 +1,4 @@
-﻿// src/lib/config-loader.ts
+// src/lib/config-loader.ts
 // ✅ ZERO-DEFECT: Hybrid-Loader für Server- (SSR/SSG) und Client-Kontext
 // ✅ WHITE-LABEL: Mandanten-spezifische Configs via ENV oder Default
 // ✅ SECURITY: Keine sensiblen Daten im Client-Bundle
@@ -15,6 +15,7 @@ export function getTenantConfig(tenantId?: string): TenantConfig {
   const resolvedId =
     tenantId ??
     process.env.NEXT_PUBLIC_TENANT_ID ??
+    process.env.NEXT_PUBLIC_CLIENT_TYPE ??
     defaultTenantConfig.tenantId;
 
   const config = tenantConfigs[resolvedId] ?? defaultTenantConfig;
