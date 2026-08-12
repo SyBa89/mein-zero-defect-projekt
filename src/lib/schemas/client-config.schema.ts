@@ -47,6 +47,7 @@ const AddressSchema = z.object({
 const ContactSchema = z.object({
   address: AddressSchema,
   phone: z.string().min(1),
+  phoneDisplay: z.string().optional(),
   email: z.string().email(),
   googlePlaceId: z.string().nullish(),
   mapsUrl: z.string().url().nullish(),

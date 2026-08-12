@@ -105,7 +105,7 @@ export default function Footer() {
                   href={`tel:${contact.phone}`}
                   className="text-gray-200 hover:text-[var(--theme-primary)] transition-colors"
                 >
-                  {contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2')}
+                  {contact.phoneDisplay ?? contact.phone}
                 </a>
               </li>
               <li className="flex items-start gap-2">

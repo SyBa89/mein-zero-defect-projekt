@@ -32,7 +32,7 @@ export default function CTASection() {
   }
 
   const { contact } = config;
-  const phoneFormatted = contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2');
+  const phoneFormatted = contact.phoneDisplay ?? contact.phone;
 
   return (
     <LazyMotion features={domAnimation} strict>

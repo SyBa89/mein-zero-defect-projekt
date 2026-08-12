@@ -22,7 +22,7 @@ export default function DankePage() {
   const { brand, contact } = config;
 
   // Formatierung der Telefonnummer für die Anzeige (z.B. +4922359291160 → 02235 9291160)
-  const displayPhone = contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2');
+  const displayPhone = contact.phoneDisplay ?? contact.phone;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col">

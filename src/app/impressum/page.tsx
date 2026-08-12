@@ -42,7 +42,7 @@ export default function ImpressumPage() {
                 href={`tel:${contact.phone}`}
                 className="text-[var(--theme-primary)] hover:underline"
               >
-                {contact.phone.replace('+49', '0').replace(/(\d{4})(\d{7})/, '$1 $2')}
+                {contact.phoneDisplay ?? contact.phone}
               </a>
               <br />
               E-Mail:{' '}

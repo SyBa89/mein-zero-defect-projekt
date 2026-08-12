@@ -26,6 +26,7 @@ export interface AddressConfig {
 export interface ContactConfig {
   address: AddressConfig;
   phone: string;
+phoneDisplay?: string;
   email: string;
   mapsUrl?: string | null;
   googlePlaceId?: string | null;
