@@ -68,7 +68,7 @@ export const defaultTenantConfig: TenantConfig = {
     showSection: true,
     emergencyMessage: null,
   },
-  about: { introText: 'Über uns', mainDescription: 'Wir stehen für Qualität.' },
+  about: { sectionTitle: 'Über uns', introText: 'Mehr als nur ein Kiosk – Ihr Treffpunkt im Viertel.', mainDescription: 'Wir stehen für Qualität, faire Preise und freundlichen Service – Tag für Tag. Von frischem Kaffee über Lotto bis hin zu Zeitschriften: Bei uns finden Sie alles für den kleinen Bedarf zwischendurch.' },
   banners: { showJackpot: false, showEmergency: true },
   social: null,
   uiFeatures: { showMobileActionBar: true, showCookieBanner: true, showDarkModeToggle: true },
