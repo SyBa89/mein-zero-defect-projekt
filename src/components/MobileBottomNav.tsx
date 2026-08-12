@@ -85,7 +85,7 @@ export function MobileBottomNav() {
               className={`flex flex-col items-center justify-center gap-1 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-inset ${
                 isActive
                   ? 'text-[var(--theme-primary)] dark:text-[var(--theme-primary)]'
-                  : 'text-gray-500 dark:text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
               }`}
             >
               <Icon className="w-6 h-6" aria-hidden="true" />

@@ -27,21 +27,21 @@ export function DashboardStats() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-          <p className="text-sm text-gray-500 dark:text-gray-600 dark:text-gray-400">Heutiger Umsatz</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Heutiger Umsatz</p>
           <p className="text-2xl font-bold text-gray-900 dark:text-white">
             €{data.revenue.toFixed(2)}
           </p>
         </div>
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-          <p className="text-sm text-gray-500 dark:text-gray-600 dark:text-gray-400">Offene Aufgaben</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Offene Aufgaben</p>
           <p className="text-2xl font-bold text-gray-900 dark:text-white">{data.openTasks}</p>
         </div>
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-          <p className="text-sm text-gray-500 dark:text-gray-600 dark:text-gray-400">Kontakte</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Kontakte</p>
           <p className="text-2xl font-bold text-gray-900 dark:text-white">{data.totalContacts}</p>
         </div>
         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-          <p className="text-sm text-gray-500 dark:text-gray-600 dark:text-gray-400">Datum</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Datum</p>
           <p className="text-2xl font-bold text-gray-900 dark:text-white">{data.today}</p>
         </div>
       </div>
@@ -64,10 +64,10 @@ export function DashboardStats() {
                     style={{ height: '100%' }}
                   />
                 </div>
-                <span className="text-xs text-gray-500 dark:text-gray-600 dark:text-gray-400 mt-1">
+                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                   {value > 0 ? `€${value.toFixed(0)}` : '-'}
                 </span>
-                <span className="text-xs text-gray-400 dark:text-gray-600 dark:text-gray-400">-{6 - index}</span>
+                <span className="text-xs text-gray-400 dark:text-gray-400">-{6 - index}</span>
               </div>
             );
           })}

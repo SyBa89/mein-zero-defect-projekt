@@ -195,13 +195,13 @@ export default function PackageCalculator() {
           </div>
         )}
         {!result && !hasError && (
-          <p className="text-sm text-gray-400 dark:text-gray-600 dark:text-gray-400 text-center font-medium transition-all duration-300 ease-out">
+          <p className="text-sm text-gray-400 dark:text-gray-400 text-center font-medium transition-all duration-300 ease-out">
             Das Ergebnis erscheint hier nach dem Prüfen.
           </p>
         )}
       </div>
 
-      <p className="text-xs text-gray-400 dark:text-gray-600 dark:text-gray-400 text-center mt-4 leading-relaxed">
+      <p className="text-xs text-gray-400 dark:text-gray-400 text-center mt-4 leading-relaxed">
         *Unverbindliche Richtwerte basierend auf Standard-Hermes-Maßen. Verbindliche Preise und Maße
         direkt im Markt oder auf hermes.de.
       </p>

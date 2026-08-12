@@ -1,5 +1,7 @@
 'use client';
 // src/hooks/useAuth.ts
+// ✅ ZERO-DEFECT: Auth-Hook auf echtem System (/api/admin/users)
+// Session-Cookie ist HttpOnly -> Server-Check statt Client-Cookie-Lesen
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -10,15 +12,15 @@ export function useAuth() {
   const router = useRouter();
 
   useEffect(() => {
-    const checkAuth = () => {
-      const cookies = document.cookie.split(';');
-      const sessionCookie = cookies.find((c) => c.trim().startsWith('ui-session='));
-      if (sessionCookie && sessionCookie.includes('authenticated')) {
-        setIsAuthenticated(true);
-      } else {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/admin/users', { method: 'GET', credentials: 'include' });
+        setIsAuthenticated(res.ok);
+      } catch {
         setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     checkAuth();
@@ -26,28 +28,37 @@ export function useAuth() {
     return () => clearInterval(interval);
   }, []);
 
-  const login = async (password: string) => {
+  const login = async (password: string, username = 'admin') => {
     try {
-      const res = await fetch('/api/admin/login', {
+      const res = await fetch('/api/admin/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        credentials: 'include',
+        body: JSON.stringify({ action: 'login', username, password }),
       });
       if (res.ok) {
-        document.cookie = 'ui-session=true; path=/; max-age=1800; SameSite=Strict; Secure';
         setIsAuthenticated(true);
         return { success: true };
       }
-      return { success: false, error: 'Falsches Passwort' };
+      const data = await res.json().catch(() => null);
+      return { success: false, error: data?.error || 'Falsches Passwort' };
     } catch {
       return { success: false, error: 'Verbindungsfehler' };
     }
   };
 
-  const logout = () => {
-    document.cookie = 'ui-session=; path=/; max-age=0; SameSite=Strict; Secure';
-    setIsAuthenticated(false);
-    router.push('/admin-login');
+  const logout = async () => {
+    try {
+      await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ action: 'logout' }),
+      });
+    } finally {
+      setIsAuthenticated(false);
+      router.push('/admin');
+    }
   };
 
   return { isAuthenticated, isLoading, login, logout };

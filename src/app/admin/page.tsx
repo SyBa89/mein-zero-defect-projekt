@@ -1,25 +1,43 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import type React from 'react';
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   const router = useRouter();
 
-  // ✅ ROBUST: Explizite Berechnung
-  const isFormValid = username.trim().length > 0 && password.length > 0;
-  const isButtonDisabled = isLoading || !isFormValid;
+  // Prüfe ob bereits eingeloggt
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/admin/users', {
+          method: 'GET',
+          credentials: 'include',
+        });
 
-const handleLogin = async (e: React.FormEvent) => {
+        if (response.ok) {
+          // Bereits eingeloggt → Redirect zu Cockpit
+          router.push('/admin/cockpit');
+        } else {
+          setIsChecking(false);
+        }
+      } catch {
+        setIsChecking(false);
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!isFormValid) {
+    if (!username.trim() || !password) {
       setError('Bitte füllen Sie alle Felder aus.');
       return;
     }
@@ -31,6 +49,7 @@ const handleLogin = async (e: React.FormEvent) => {
       const response = await fetch('/api/admin/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           action: 'login',
           username: username.trim(),
@@ -53,52 +72,41 @@ const handleLogin = async (e: React.FormEvent) => {
     }
   };
 
+  if (isChecking) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Prüfe Authentifizierung...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8">
         <div className="text-center mb-8">
           <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg
-              className="w-10 h-10 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-              />
+            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-black text-gray-900 mb-2">Admin Login</h1>
-          <p className="text-gray-600">Kiosk Lollipop Verwaltung</p>
-<div className="mt-3 text-xs bg-yellow-50 border border-yellow-200 rounded-lg p-2 text-left text-yellow-900 font-medium">
-            <strong>Debug:</strong> Passwort-Länge: {password.length} | Button:{' '}
-            {isButtonDisabled ? '🔒 Deaktiviert' : '✅ Aktiv'}
-          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Login</h1>
+          <p className="text-gray-600">Melden Sie sich an, um fortzufahren</p>
         </div>
-
-        {error && (
-          <div className="mb-6 bg-red-50 border-2 border-red-200 text-red-800 px-4 py-3 rounded-xl">
-            <p className="font-semibold">{error}</p>
-          </div>
-        )}
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label htmlFor="username" className="block text-sm font-bold text-gray-900 mb-2">
+            <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-2">
               Benutzername
             </label>
             <input
-              type="text"
               id="username"
+              type="text"
               value={username}
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-              className="field-input"
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
               placeholder="admin"
               disabled={isLoading}
               autoComplete="username"
@@ -106,66 +114,35 @@ const handleLogin = async (e: React.FormEvent) => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-bold text-gray-900 mb-2">
+            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
               Passwort
             </label>
             <input
-              type="password"
               id="password"
+              type="password"
               value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              className="field-input"
-              placeholder="••••••••••••"
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+              placeholder="••••••••"
               disabled={isLoading}
-              autoFocus
               autoComplete="current-password"
             />
           </div>
 
+          {error && (
+            <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+              {error}
+            </div>
+          )}
+
           <button
             type="submit"
-            disabled={isButtonDisabled}
-            className={`w-full font-bold py-4 rounded-xl transition-all shadow-lg transform hover:-translate-y-0.5 active:scale-95 ${
-              isButtonDisabled
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white hover:shadow-pink-500/30 cursor-pointer'
-            }`}
+            disabled={isLoading}
+            className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-3 px-4 rounded-xl hover:from-pink-600 hover:to-purple-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                Anmeldung läuft...
-              </span>
-            ) : (
-              'Anmelden'
-            )}
+            {isLoading ? 'Anmeldung läuft...' : 'Anmelden'}
           </button>
         </form>
-
-        <div className="mt-8 text-center">
-          <Link
-            href="/"
-            className="text-sm text-gray-600 hover:text-[var(--theme-primary)] transition-colors"
-          >
-            ← Zurück zur Startseite
-          </Link>
-        </div>
       </div>
     </div>
   );

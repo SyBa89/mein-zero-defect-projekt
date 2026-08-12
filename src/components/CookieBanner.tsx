@@ -68,7 +68,7 @@ export default function CookieBanner() {
                 <input type="checkbox" checked disabled className="w-5 h-5 mt-0.5 accent-[var(--theme-primary,#0055ff)]" aria-label="Notwendige Cookies" />
                 <div>
                   <div className="font-semibold text-gray-900 dark:text-white">Notwendige Cookies (immer aktiv)</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-600 dark:text-gray-400">Für grundlegende Funktionen und Sicherheit erforderlich.</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Für grundlegende Funktionen und Sicherheit erforderlich.</div>
                 </div>
               </div>
               {/* Analytics */}
@@ -81,7 +81,7 @@ export default function CookieBanner() {
                 />
                 <div>
                   <div className="font-semibold text-gray-900 dark:text-white">Analyse-Cookies (z.B. Sentry)</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-600 dark:text-gray-400">Helfen uns, Fehler zu finden und die App stabil zu halten.</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Helfen uns, Fehler zu finden und die App stabil zu halten.</div>
                 </div>
               </label>
               {/* Marketing */}
@@ -94,7 +94,7 @@ export default function CookieBanner() {
                 />
                 <div>
                   <div className="font-semibold text-gray-900 dark:text-white">Marketing-Cookies</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-600 dark:text-gray-400">Für personalisierte Inhalte und Werbung.</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Für personalisierte Inhalte und Werbung.</div>
                 </div>
               </label>
             </div>
