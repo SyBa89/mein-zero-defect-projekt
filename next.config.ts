@@ -1,10 +1,6 @@
-import { withSentryConfig } from '@sentry/nextjs';
+// next.config.ts
+// ✅ ZERO-DEFECT: Next.js 15 + TypeScript 5.x (stabile Basis)
 import type { NextConfig } from 'next';
-import bundleAnalyzer from '@next/bundle-analyzer';
-
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-});
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -12,24 +8,11 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true, // ESLint läuft separat im CI
+  },
+  typescript: {
+    ignoreBuildErrors: false, // TypeScript-Fehler blockieren Build
   },
 };
 
-// ✅ ZERO-DEFECT: Sentry + Bundle Analyzer kombiniert
-// Bundle-Analyzer nur bei ANALYZE=true (kein Production-Overhead)
-export default withBundleAnalyzer(
-  withSentryConfig(nextConfig, {
-    org: process.env.SENTRY_ORG || 'your-org',
-    project: process.env.SENTRY_PROJECT || 'your-project',
-    silent: true,
-    widenClientFileUpload: true,
-    tunnelRoute: '/monitoring',
-    sourcemaps: { disable: false },
-    webpack: {
-      autoInstrumentServerFunctions: true,
-      autoInstrumentMiddleware: true,
-      treeshake: { removeDebugLogging: true },
-    },
-  })
-);
+export default nextConfig;
