@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { useConfig } from '@/contexts/ConfigContext';
 import { COLOR_PALETTES, getThemeColor } from '@/lib/theme';
+import { logger } from '@/lib/logger';
 
 /**
  * ✅ ZERO-DEFECT: ThemeProvider mit useConfig() (Konsistenz!)
@@ -45,7 +46,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
       root.setAttribute('data-theme', themeColor);
     } catch (error) {
       // Silent fail - Theme ist optional, Seite funktioniert auch ohne
-      console.warn('ThemeProvider: Failed to apply theme', error);
+      logger.warn('ThemeProvider: Failed to apply theme', error);
     }
   }, [themeColor, palette]);
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { logger } from '@/lib/logger';
 
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
@@ -85,12 +86,12 @@ export function useToast() {
   if (!context) {
     return {
       toasts: [],
-      addToast: () => console.warn('useToast: addToast called outside ToastProvider'),
-      removeToast: () => console.warn('useToast: removeToast called outside ToastProvider'),
-      success: (msg: string) => console.log('Success:', msg),
+      addToast: () => logger.warn('useToast: addToast called outside ToastProvider'),
+      removeToast: () => logger.warn('useToast: removeToast called outside ToastProvider'),
+      success: (msg: string) => logger.log('Success:', msg),
       error: (msg: string) => console.error('Error:', msg),
-      info: (msg: string) => console.info('Info:', msg),
-      warning: (msg: string) => console.warn('Warning:', msg),
+      info: (msg: string) => logger.info('Info:', msg),
+      warning: (msg: string) => logger.warn('Warning:', msg),
     };
   }
   return context;
