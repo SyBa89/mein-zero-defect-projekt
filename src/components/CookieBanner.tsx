@@ -28,6 +28,7 @@ export default function CookieBanner() {
       const timer = setTimeout(() => firstFocusableRef.current?.focus(), 100);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [isVisible, showSettings]);
 
   // A11y: Keyboard Navigation (Escape)
@@ -61,14 +62,14 @@ export default function CookieBanner() {
         {showSettings ? (
           <div className="animate-fade-in">
             <h3 id="cookie-title" className="text-lg font-bold text-gray-900 dark:text-white mb-4">Cookie-Einstellungen</h3>
-            <p id="cookie-desc" className="text-sm text-gray-600 dark:text-gray-400 mb-4">Wählen Sie selbst, welche Cookie-Kategorien Sie zulassen möchten.</p>
+            <p id="cookie-desc" className="text-sm text-gray-600 dark:text-gray-400 mb-4">WÃƒÂ¤hlen Sie selbst, welche Cookie-Kategorien Sie zulassen mÃƒÂ¶chten.</p>
             <div className="space-y-3 mb-6">
               {/* Notwendig */}
               <div className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg opacity-75 cursor-not-allowed">
                 <input type="checkbox" checked disabled className="w-5 h-5 mt-0.5 accent-[var(--theme-primary,#0055ff)]" aria-label="Notwendige Cookies" />
                 <div>
                   <div className="font-semibold text-gray-900 dark:text-white">Notwendige Cookies (immer aktiv)</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">Für grundlegende Funktionen und Sicherheit erforderlich.</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">FÃƒÂ¼r grundlegende Funktionen und Sicherheit erforderlich.</div>
                 </div>
               </div>
               {/* Analytics */}
@@ -94,7 +95,7 @@ export default function CookieBanner() {
                 />
                 <div>
                   <div className="font-semibold text-gray-900 dark:text-white">Marketing-Cookies</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">Für personalisierte Inhalte und Werbung.</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">FÃƒÂ¼r personalisierte Inhalte und Werbung.</div>
                 </div>
               </label>
             </div>
@@ -103,7 +104,7 @@ export default function CookieBanner() {
                 onClick={() => setShowSettings(false)} 
                 className="px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:ring-2 focus:ring-[var(--theme-primary,#0055ff)] focus:outline-none"
               >
-                ← Zurück
+                Ã¢â€ Â ZurÃƒÂ¼ck
               </button>
               <button 
                 onClick={handleSaveSettings} 
@@ -116,12 +117,12 @@ export default function CookieBanner() {
         ) : (
           <div className="animate-fade-in">
             <div className="flex items-start gap-4 mb-5">
-              <span className="text-3xl flex-shrink-0" aria-hidden="true">🍪</span>
+              <span className="text-3xl flex-shrink-0" aria-hidden="true">Ã°Å¸ÂÂª</span>
               <div className="flex-1">
-                <h3 id="cookie-title" className="font-bold text-gray-900 dark:text-white mb-1 text-lg">Wir respektieren Ihre Privatsphäre</h3>
+                <h3 id="cookie-title" className="font-bold text-gray-900 dark:text-white mb-1 text-lg">Wir respektieren Ihre PrivatsphÃƒÂ¤re</h3>
                 <p id="cookie-desc" className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   Wir verwenden Cookies, um Ihre Erfahrung zu verbessern und unsere App fehlerfrei zu halten. 
-                  <Link href="/datenschutz" className="ml-1 underline hover:text-[var(--theme-primary,#0055ff)] font-medium focus:outline-none focus:ring-2 focus:ring-[var(--theme-primary,#0055ff)] rounded">Datenschutzerklärung</Link>
+                  <Link href="/datenschutz" className="ml-1 underline hover:text-[var(--theme-primary,#0055ff)] font-medium focus:outline-none focus:ring-2 focus:ring-[var(--theme-primary,#0055ff)] rounded">DatenschutzerklÃƒÂ¤rung</Link>
                 </p>
               </div>
             </div>

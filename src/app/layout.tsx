@@ -1,14 +1,14 @@
 // src/app/layout.tsx
-// ✅ ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
-// ✅ WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
-// ✅ SEO: Globale Metadaten aus Tenant-Config
+// âœ… ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
+// âœ… WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
+// âœ… SEO: Globale Metadaten aus Tenant-Config
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ConfigProvider } from '@/contexts/ConfigContext';
 import { getTenantConfig } from '@/lib/config-loader';
 import { MobileActionBar } from '@/components/MobileActionBar';
-import type { BorderRadius } from '@/types/config'; // ✅ FIX: TenantConfig importiert
+import type { BorderRadius } from '@/types/config'; // âœ… FIX: TenantConfig importiert
 import './globals.css';
 
 const inter = Inter({
@@ -45,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// ✅ ZERO-DEFECT: Mapping statt String-Interpolation für Tailwind-Kompatibilität
+// âœ… ZERO-DEFECT: Mapping statt String-Interpolation fÃ¼r Tailwind-KompatibilitÃ¤t
 const radiusMap: Record<BorderRadius, string> = {
   none: '0px',
   sm: '0.25rem',
@@ -57,7 +57,7 @@ const radiusMap: Record<BorderRadius, string> = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const config = getTenantConfig();
 
-  // ✅ ZERO-DEFECT: CSS Custom Properties für Theme (vermeidet inline-style Drift)
+  // âœ… ZERO-DEFECT: CSS Custom Properties fÃ¼r Theme (vermeidet inline-style Drift)
   const cssVars = {
     '--theme-primary': config.theme.primaryColor,
     '--theme-secondary': config.theme.secondaryColor,
@@ -84,7 +84,50 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </main>
           <MobileActionBar />
-        </ConfigProvider>
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'LocalBusiness',
+                    name: config.brand.name,
+                    description: config.seo.defaultDescription ?? config.seo.description,
+                    url: config.url,
+                    telephone: config.contact.phoneDisplay ?? config.contact.phone,
+                    email: config.contact.email,
+                    address: {
+                      '@type': 'PostalAddress',
+                      streetAddress: config.contact.address.street,
+                      addressLocality: config.contact.address.city,
+                      postalCode: config.contact.address.zip,
+                      addressCountry: config.contact.address.country || 'DE',
+                    },
+                    openingHoursSpecification: (config.openingHours?.items ?? [])
+                      .filter((item) => item.isOpen)
+                      .map((item) => {
+                        const times = item.hours.match(/\d{1,2}:\d{2}/g) ?? [];
+                        const dayOfWeekMap: Record<string, string> = {
+                          Montag: 'Monday',
+                          Dienstag: 'Tuesday',
+                          Mittwoch: 'Wednesday',
+                          Donnerstag: 'Thursday',
+                          Freitag: 'Friday',
+                          Samstag: 'Saturday',
+                          Sonntag: 'Sunday',
+                        };
+                        return {
+                          '@type': 'OpeningHoursSpecification',
+                          dayOfWeek: dayOfWeekMap[item.day] ?? item.day,
+                          opens: times[0] ?? '00:00',
+                          closes: times[1] ?? '23:59',
+                        };
+                      }),
+                    priceRange: '€€',
+                    image: config.url + '/images/logo.png',
+                  }),
+                }}
+              />
+            </ConfigProvider>
       </body>
     </html>
   );

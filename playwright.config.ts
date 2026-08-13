@@ -1,5 +1,4 @@
 import { defineConfig, devices } from '@playwright/test';
-import path from 'path';
 
 export default defineConfig({
   testDir: './e2e',
@@ -36,7 +35,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    // Next.js 15 Production Build für stabile Tests
+    // Next.js 15 Production Build fÃ¼r stabile Tests
     command: 'npm run build && npm run start',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
