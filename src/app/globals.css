@@ -104,3 +104,129 @@ code, pre { font-family: var(--font-mono); }
   background: rgba(17, 24, 39, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
+/* ========================================
+   ZERO-DEFECT: Motion Utilities (CSS/IO)
+   ======================================== */
+
+/* Fade-In Animation */
+.motion-fade-in {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.motion-fade-in.motion-visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.motion-hidden {
+  opacity: 0;
+}
+
+.motion-visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Stagger Container */
+.motion-stagger-container {
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.motion-stagger-container.motion-visible {
+  opacity: 1;
+}
+
+/* Stagger Item */
+.motion-stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+              transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.motion-stagger-container.motion-visible .motion-stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Delay (CSS Custom Property) */
+.motion-stagger-container.motion-visible .motion-stagger-item:nth-child(1) { transition-delay: 0.1s; }
+.motion-stagger-container.motion-visible .motion-stagger-item:nth-child(2) { transition-delay: 0.2s; }
+.motion-stagger-container.motion-visible .motion-stagger-item:nth-child(3) { transition-delay: 0.3s; }
+.motion-stagger-container.motion-visible .motion-stagger-item:nth-child(4) { transition-delay: 0.4s; }
+.motion-stagger-container.motion-visible .motion-stagger-item:nth-child(5) { transition-delay: 0.5s; }
+.motion-stagger-container.motion-visible .motion-stagger-item:nth-child(6) { transition-delay: 0.6s; }
+.motion-stagger-container.motion-visible .motion-stagger-item:nth-child(7) { transition-delay: 0.7s; }
+.motion-stagger-container.motion-visible .motion-stagger-item:nth-child(8) { transition-delay: 0.8s; }
+
+/* Hover Lift */
+.motion-hover-lift {
+  transition: transform 0.2s ease-out;
+}
+
+.motion-hover-lift:hover {
+  transform: translateY(var(--lift-amount, -4px));
+}
+
+.motion-hover-lift:active {
+  transform: scale(0.98);
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .motion-fade-in,
+  .motion-stagger-container,
+  .motion-stagger-item,
+  .motion-hover-lift {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .motion-hidden {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .motion-stagger-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Background Blob Animations (CTASection) */
+@keyframes blob-float-1 {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.2) translate(30px, -20px);
+  }
+}
+
+@keyframes blob-float-2 {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.15) translate(-30px, 20px);
+  }
+}
+
+.animate-blob-1 {
+  animation: blob-float-1 10s ease-in-out infinite;
+}
+
+.animate-blob-2 {
+  animation: blob-float-2 12s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blob-1,
+  .animate-blob-2 {
+    animation: none !important;
+  }
+}

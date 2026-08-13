@@ -1,7 +1,6 @@
 'use client';
 
-import { m, useReducedMotion, Variants, LazyMotion, domAnimation } from 'framer-motion';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
 interface FadeInWhenVisibleProps {
   children: ReactNode;
@@ -13,15 +12,15 @@ interface FadeInWhenVisibleProps {
 }
 
 /**
- * ✅ ZERO-DEFECT MAXIMUM: Universelle Scroll-Reveal Komponente
+ * ✅ ZERO-DEFECT MAXIMUM: Universelle Scroll-Reveal Komponente (CSS/IO-Version)
  *
  * Premium Features:
- * - ✅ LazyMotion (reduziert Bundle um ~30 KiB)
- * - ✅ `m` statt `motion` (strict mode für echtes Tree-Shaking)
- * - ✅ Nur GPU-composited Properties (transform, opacity)
+ * - ✅ Native IntersectionObserver (kein JS-Framework)
+ * - ✅ CSS-Transitions (GPU-composited: transform, opacity)
  * - ✅ will-change: transform, opacity (Browser-Optimierung)
  * - ✅ SSR-sicher durch konsistente DOM-Struktur
- * - ✅ Accessibility (prefers-reduced-motion)
+ * - ✅ Accessibility (prefers-reduced-motion via CSS Media Query)
+ * - ✅ ~34 KB Bundle-Reduktion (kein framer-motion)
  */
 export default function FadeInWhenVisible({
   children,
@@ -31,51 +30,56 @@ export default function FadeInWhenVisible({
   className = '',
   once = true,
 }: FadeInWhenVisibleProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const directionOffset = {
-    up: { y: 30 },
-    down: { y: -30 },
-    left: { x: 30 },
-    right: { x: -30 },
-    none: {},
-  };
-
-  const variants: Variants = {
-    hidden: {
-      opacity: 0,
-      ...directionOffset[direction],
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : duration,
-        delay: prefersReducedMotion ? 0 : delay,
-        ease: [0.25, 0.1, 0.25, 1] as const,
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (once && ref.current) {
+            observer.unobserve(ref.current);
+          }
+        } else if (!once) {
+          setIsVisible(false);
+        }
       },
-    },
+      { threshold: 0.2 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [once]);
+
+  const directionStyles = {
+    up: 'translate-y-[30px]',
+    down: 'translate-y-[-30px]',
+    left: 'translate-x-[30px]',
+    right: 'translate-x-[-30px]',
+    none: '',
   };
 
   return (
-    <LazyMotion features={domAnimation} strict>
-      <m.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once, amount: 0.2 }}
-        variants={variants}
-        className={className}
-        style={{ willChange: 'transform, opacity' }}
-      >
-        {children}
-      </m.div>
-    </LazyMotion>
+    <div
+      ref={ref}
+      className={`${className} motion-fade-in ${isVisible ? 'motion-visible' : 'motion-hidden'} ${directionStyles[direction]}`}
+      style={{
+        transitionDuration: `${duration}s`,
+        transitionDelay: `${delay}s`,
+        willChange: 'transform, opacity',
+      }}
+    >
+      {children}
+    </div>
   );
 }
 
 /**
- * ✅ ZERO-DEFECT MAXIMUM: Stagger Container
+ * ✅ ZERO-DEFECT MAXIMUM: Stagger Container (CSS/IO-Version)
  */
 export function StaggerContainer({
   children,
@@ -86,37 +90,45 @@ export function StaggerContainer({
   className?: string;
   staggerDelay?: number;
 }) {
-  const prefersReducedMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: prefersReducedMotion ? 0 : staggerDelay,
-        delayChildren: prefersReducedMotion ? 0 : 0.1,
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (ref.current) {
+            observer.unobserve(ref.current);
+          }
+        }
       },
-    },
-  };
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <LazyMotion features={domAnimation} strict>
-      <m.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={containerVariants}
-        className={className}
-        style={{ willChange: 'opacity' }}
-      >
-        {children}
-      </m.div>
-    </LazyMotion>
+    <div
+      ref={ref}
+      className={`${className} motion-stagger-container ${isVisible ? 'motion-visible' : 'motion-hidden'}`}
+      style={{
+        ['--stagger-delay' as any]: `${staggerDelay}s`,
+        willChange: 'opacity',
+      }}
+    >
+      {children}
+    </div>
   );
 }
 
 /**
- * ✅ ZERO-DEFECT MAXIMUM: Stagger Item
+ * ✅ ZERO-DEFECT MAXIMUM: Stagger Item (CSS/IO-Version)
  */
 export function StaggerItem({
   children,
@@ -125,33 +137,18 @@ export function StaggerItem({
   children: ReactNode;
   className?: string;
 }) {
-  const prefersReducedMotion = useReducedMotion();
-
   return (
-    <LazyMotion features={domAnimation} strict>
-      <m.div
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-              duration: prefersReducedMotion ? 0 : 0.5,
-              ease: [0.25, 0.1, 0.25, 1] as const,
-            },
-          },
-        }}
-        className={className}
-        style={{ willChange: 'transform, opacity' }}
-      >
-        {children}
-      </m.div>
-    </LazyMotion>
+    <div
+      className={`${className} motion-stagger-item`}
+      style={{ willChange: 'transform, opacity' }}
+    >
+      {children}
+    </div>
   );
 }
 
 /**
- * ✅ ZERO-DEFECT MAXIMUM: Hover-Lift
+ * ✅ ZERO-DEFECT MAXIMUM: Hover-Lift (CSS/IO-Version)
  */
 export function HoverLift({
   children,
@@ -162,25 +159,15 @@ export function HoverLift({
   className?: string;
   liftAmount?: number;
 }) {
-  const prefersReducedMotion = useReducedMotion();
-
   return (
-    <LazyMotion features={domAnimation} strict>
-      <m.div
-        whileHover={
-          prefersReducedMotion
-            ? {}
-            : {
-                y: liftAmount,
-                transition: { duration: 0.2, ease: 'easeOut' },
-              }
-        }
-        whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
-        className={className}
-        style={{ willChange: 'transform' }}
-      >
-        {children}
-      </m.div>
-    </LazyMotion>
+    <div
+      className={`${className} motion-hover-lift`}
+      style={{
+        ['--lift-amount' as any]: `${liftAmount}px`,
+        willChange: 'transform',
+      }}
+    >
+      {children}
+    </div>
   );
 }
