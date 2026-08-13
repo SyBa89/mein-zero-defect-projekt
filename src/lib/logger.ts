@@ -1,54 +1,20 @@
-export type LogArgs = unknown[];
+// src/lib/logger.ts
+// ✅ ZERO-DEFECT: Conditional Logging (nur in Development)
 
-function safeConsole(...args: unknown[]) {
-  if (typeof console !== 'undefined' && console.log) console.log(...args);
-}
+const isDev = process.env.NODE_ENV === 'development';
 
 export const logger = {
-  debug: (...args: LogArgs) => {
-    try {
-      if (typeof console !== 'undefined' && typeof console.debug === 'function') {
-        console.debug(...args);
-      } else {
-        safeConsole(...args);
-      }
-    } catch {
-      safeConsole(...args);
-    }
+  log: (...args: unknown[]) => {
+    if (isDev) console.log(...args);
   },
-  info: (...args: LogArgs) => {
-    try {
-      if (typeof console !== 'undefined' && typeof console.info === 'function') {
-        console.info(...args);
-      } else {
-        safeConsole(...args);
-      }
-    } catch {
-      safeConsole(...args);
-    }
+  error: (...args: unknown[]) => {
+    // Error immer loggen (auch in Production für Sentry)
+    console.error(...args);
   },
-  warn: (...args: LogArgs) => {
-    try {
-      if (typeof console !== 'undefined' && typeof console.warn === 'function') {
-        console.warn(...args);
-      } else {
-        safeConsole(...args);
-      }
-    } catch {
-      safeConsole(...args);
-    }
+  warn: (...args: unknown[]) => {
+    if (isDev) console.warn(...args);
   },
-  error: (...args: LogArgs) => {
-    try {
-      if (typeof console !== 'undefined' && typeof console.error === 'function') {
-        console.error(...args);
-      } else {
-        safeConsole(...args);
-      }
-    } catch {
-      safeConsole(...args);
-    }
+  info: (...args: unknown[]) => {
+    if (isDev) console.info(...args);
   },
 };
-
-export default logger;
