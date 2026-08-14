@@ -1,4 +1,4 @@
-# Ã°Å¸Ââ€ºÃ¯Â¸Â White-Label SaaS Platform
+# 🏛️ White-Label SaaS Platform
 
 **Production-Ready Multi-Tenant Platform for Local Businesses**
 
@@ -7,33 +7,33 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15.5-black)](https://nextjs.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-A **zero-defect, premium-quality** white-label platform that serves multiple business verticals (Kiosk Ã°Å¸ÂÂ­, Handwerk Ã°Å¸â€Â§, Friseur Ã°Å¸â€™â€¡) from a single codebase.
+A **zero-defect, premium-quality** white-label platform that serves multiple business verticals (Kiosk 🍭, Handwerk 🔧, Friseur 💇) from a single codebase.
 
 ---
 
-## Ã¢Å“Â¨ Features
+## ✨ Features
 
-### Ã°Å¸Å½Â¯ Multi-Tenant Architecture
+### 🎯 Multi-Tenant Architecture
 
 - **Single Codebase, Multiple Tenants**: Switch between business types via environment variable
 - **Theme Engine**: Dynamic CSS variables for colors, fonts, border-radius
 - **Business-Aware Rendering**: Conditional UI based on tenant type
 
-### Ã°Å¸Å¡â‚¬ Performance Optimized
+### 🚀 Performance Optimized
 
 - **Lighthouse 100/100/100/100**: Accessibility, Best Practices, SEO
 - **Code Splitting**: Dynamic imports for below-the-fold sections
 - **Image Optimization**: WebP format, lazy loading, responsive sizes
 - **Bundle Size**: <200KB initial JS payload
 
-### Ã°Å¸â€â€™ Security First
+### 🔒 Security First
 
 - **Type-Safe APIs**: Zod validation on all endpoints
 - **Auth-Protected Admin**: Session-based authentication
 - **CSRF Protection**: Secure cookie handling
 - **Input Sanitization**: XSS prevention
 
-### Ã°Å¸â€œÂ§ Business Features
+### 📧 Business Features
 
 - **Contact Form**: Spam-protected with honeypot + rate limiting
 - **Admin Inbox**: Read, reply, delete customer inquiries
@@ -42,7 +42,7 @@ A **zero-defect, premium-quality** white-label platform that serves multiple bus
 
 ---
 
-## Ã°Å¸Ââ€”Ã¯Â¸Â Tech Stack
+## 🏗️ Tech Stack
 
 | Layer          | Technology                |
 | -------------- | ------------------------- |
@@ -58,7 +58,7 @@ A **zero-defect, premium-quality** white-label platform that serves multiple bus
 
 ---
 
-## Ã°Å¸Å¡â‚¬ Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 
@@ -90,7 +90,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## Ã°Å¸â€Â§ Environment Variables
+## 🔧 Environment Variables
 
 Create a `.env.local` file in the root directory:
 
@@ -116,35 +116,35 @@ See `.env.example` for all available variables.
 
 ---
 
-## Ã°Å¸â€œÂ Project Structure
+## 📁 Project Structure
 
 ```
 mein-zero-defect-projekt/
-Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ configs/              # Tenant-specific JSON configs
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ kiosk.json
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ craftsman.json
-Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ friseur.json
-Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ src/
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ app/             # Next.js App Router pages
-Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ (home)/      # Public pages
-Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ admin/       # Admin cockpit
-Ã¢â€â€š   Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ api/         # API routes
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ components/      # React components
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ contexts/        # React contexts (Config, Theme)
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ lib/             # Utilities, schemas, helpers
-Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ hooks/           # Custom React hooks
-Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ public/              # Static assets
-Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ tests/               # Test files
-Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ .github/workflows/   # CI/CD pipelines
+├── configs/              # Tenant-specific JSON configs
+│   ├── kiosk.json
+│   ├── craftsman.json
+│   └── friseur.json
+├── src/
+│   ├── app/             # Next.js App Router pages
+│   │   ├── (home)/      # Public pages
+│   │   ├── admin/       # Admin cockpit
+│   │   └── api/         # API routes
+│   ├── components/      # React components
+│   ├── contexts/        # React contexts (Config, Theme)
+│   ├── lib/             # Utilities, schemas, helpers
+│   └── hooks/           # Custom React hooks
+├── public/              # Static assets
+├── tests/               # Test files
+└── .github/workflows/   # CI/CD pipelines
 ```
 
 ---
 
-## Ã°Å¸Å½Â¨ Switching Tenants
+## 🎨 Switching Tenants
 
 The platform supports multiple business types from a single codebase:
 
-### Kiosk Ã°Å¸ÂÂ­ (Default)
+### Kiosk 🍭 (Default)
 
 ```bash
 NEXT_PUBLIC_TENANT_ID=kiosk npm run dev
@@ -153,7 +153,7 @@ NEXT_PUBLIC_TENANT_ID=kiosk npm run dev
 - **Theme**: Pink/Purple, Pill-shaped buttons, Poppins font
 - **Features**: Jackpot banner, Hermes parcel shop, age verification
 
-### Handwerk Ã°Å¸â€Â§ (Craftsman)
+### Handwerk 🔧 (Craftsman)
 
 ```bash
 NEXT_PUBLIC_TENANT_ID=craftsman npm run dev
@@ -162,7 +162,7 @@ NEXT_PUBLIC_TENANT_ID=craftsman npm run dev
 - **Theme**: Blue/Orange, Sharp corners, Roboto font
 - **Features**: Emergency service, master craftsman badge, fair pricing
 
-### Friseur Ã°Å¸â€™â€¡ (Hair Salon)
+### Friseur 💇 (Hair Salon)
 
 ```bash
 NEXT_PUBLIC_TENANT_ID=friseur npm run dev
@@ -173,7 +173,7 @@ NEXT_PUBLIC_TENANT_ID=friseur npm run dev
 
 ---
 
-## Ã°Å¸Â§Âª Testing
+## 🧪 Testing
 
 ### Unit Tests (Vitest)
 
@@ -195,7 +195,7 @@ npm run type-check
 
 ---
 
-## Ã°Å¸Å¡Â¢ Deployment
+## 🚢 Deployment
 
 ### Vercel (Recommended)
 
@@ -206,7 +206,7 @@ npm run type-check
 
 ### Environment Variables in Vercel
 
-Add these variables in Vercel Ã¢â€ â€™ Settings Ã¢â€ â€™ Environment Variables:
+Add these variables in Vercel → Settings → Environment Variables:
 
 - `NEXT_PUBLIC_TENANT_ID`
 - `KV_REST_API_URL`
@@ -216,21 +216,21 @@ Add these variables in Vercel Ã¢â€ â€™ Settings Ã¢â€ â€™ E
 
 ---
 
-## Ã°Å¸â€œÅ  Performance Metrics
+## 📊 Performance Metrics
 
 | Metric                     | Target | Achieved |
 | -------------------------- | ------ | -------- |
 | **Lighthouse Performance** | 90+    | 100/98 |
-| **Accessibility**          | 100    | 100 Ã¢Å“â€¦   |
-| **Best Practices**         | 95+    | 96 Ã¢Å“â€¦    |
-| **SEO**                    | 100    | 100 Ã¢Å“â€¦   |
-| **LCP**                    | <2.5s  | 2.2s Ã¢Å“â€¦  |
-| **FID**                    | <100ms | 45ms Ã¢Å“â€¦  |
-| **CLS**                    | <0.1   | 0.02 Ã¢Å“â€¦  |
+| **Accessibility**          | 100    | 100 ✅   |
+| **Best Practices**         | 95+    | 96 ✅    |
+| **SEO**                    | 100    | 100 ✅   |
+| **LCP**                    | <2.5s  | 2.2s ✅  |
+| **FID**                    | <100ms | 45ms ✅  |
+| **CLS**                    | <0.1   | 0.02 ✅  |
 
 ---
 
-## Ã°Å¸â€Â Security
+## 🔐 Security
 
 - **Authentication**: Session-based with secure cookies
 - **Authorization**: Role-based permissions (admin, employee)
@@ -241,19 +241,19 @@ Add these variables in Vercel Ã¢â€ â€™ Settings Ã¢â€ â€™ E
 
 ---
 
-## Ã°Å¸Â¤Â Contributing
+## 🤝 Contributing
 
 This is a private project. For questions or collaboration, contact the maintainer.
 
 ---
 
-## Ã°Å¸â€œâ€ž License
+## 📄 License
 
 MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-## Ã°Å¸â„¢Â Acknowledgments
+## 🙏 Acknowledgments
 
 - **Next.js Team** for the amazing framework
 - **Vercel** for hosting and deployment
@@ -262,7 +262,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-## Ã°Å¸â€œÅ¾ Support
+## 📞 Support
 
 For issues or questions:
 
@@ -271,4 +271,4 @@ For issues or questions:
 
 ---
 
-**Built with Ã¢ÂÂ¤Ã¯Â¸Â and Zero-Defect Engineering**
+**Built with ❤️ and Zero-Defect Engineering**
