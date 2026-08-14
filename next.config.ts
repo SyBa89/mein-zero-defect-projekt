@@ -1,6 +1,12 @@
 // next.config.ts
-// ✅ ZERO-DEFECT: Next.js 15 + TypeScript 5.x + Security Headers
+// ✅ ZERO-DEFECT: Next.js 15 + TypeScript 5.x + Security Headers + Bundle Analyzer
 import type { NextConfig } from 'next';
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
+// ✅ Bundle Analyzer: Nur aktiv wenn ANALYZE=true gesetzt ist
+const bundleAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const securityHeaders = [
   {
@@ -39,7 +45,7 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
     ignoreBuildErrors: false,
@@ -54,4 +60,5 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// ✅ Export mit Bundle Analyzer Wrapper
+export default bundleAnalyzer(nextConfig);
