@@ -35,7 +35,12 @@ async function initializeDefaultAdmin(redis: Redis): Promise<User[]> {
     return existingUsers;
   }
 
-  const adminPassword = process.env.ADMIN_PASSWORD || 'lollipop2024';
+  // ✅ FIX: TYPE-SAFE + FAIL-CLOSED (kein hardcoded Passwort, kein undefined)
+  const adminPassword = process.env.ADMIN_PASSWORD || process.env.INTERN_PASSWORD;
+  if (!adminPassword) {
+    throw new Error('[ADMIN-USERS] ADMIN_PASSWORD oder INTERN_PASSWORD erforderlich');
+  }
+
   const defaultAdmin: User = {
     id: '1',
     username: 'admin',
@@ -62,11 +67,13 @@ async function saveUsers(redis: Redis, users: User[]): Promise<void> {
   await redis.set('users', users);
 }
 
-function getSessionUser(request: NextRequest): any {
+function getSessionUser(request: NextRequest): UserSessionOrNull {
   const token = request.cookies.get('session')?.value;
   if (!token) return null;
   return verifySessionToken(token);
 }
+
+type UserSessionOrNull = ReturnType<typeof verifySessionToken>;
 
 export async function GET(request: NextRequest) {
   const redis = getRedisClient();
@@ -82,7 +89,7 @@ export async function GET(request: NextRequest) {
   try {
     const users = await getUsers(redis);
 
-    // ✅ ZERO-DEFECT FIX: Explizites Mapping statt Destrukturierung (verhindert ESLint no-unused-vars)
+    // ✅ ZERO-DEFECT FIX: Explizites Mapping statt Destrukturierung
     const safeUsers = users.map((user) => ({
       id: user.id,
       username: user.username,
@@ -94,7 +101,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(safeUsers);
   } catch {
-    // ✅ ZERO-DEFECT FIX: Parameterloses Catch verhindert ungenutzte Error-Variablen
     return NextResponse.json({ error: 'Fehler beim Laden' }, { status: 500 });
   }
 }
@@ -105,7 +111,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Server nicht konfiguriert' }, { status: 500 });
   }
 
-  // ✅ ZERO-DEFECT: Globales Rate-Limit (altes System, bleibt aktiv)
+  // ✅ ZERO-DEFECT: Globales Rate-Limit
   const rateLimit = await checkRateLimit(request, { limit: 5, window: '15 m' });
   if (!rateLimit.success) {
     return NextResponse.json(

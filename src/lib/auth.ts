@@ -22,6 +22,8 @@ export interface User {
 }
 
 // ✅ ROBUST: JWT_SECRET Resolution mit expliziten Typen
+// ✅ SECURITY: Production OHNE JWT_SECRET = kontrollierter Fehler (kein unsicherer Default)
+// ✅ SECURITY: Dev-Fallback NUR in Entwicklung, niemals in Production
 function getJwtSecret(): string {
   const explicitSecret = process.env.JWT_SECRET;
   if (explicitSecret && explicitSecret.length > 0) {
@@ -35,7 +37,8 @@ function getJwtSecret(): string {
     );
   }
 
-  const adminPassword: string = process.env.ADMIN_PASSWORD || 'lollipop2024';
+  // ✅ FIX: TYPE-SAFE Dev-Fallback (?? statt ||, kein hardcoded Passwort)
+  const adminPassword: string = process.env.ADMIN_PASSWORD ?? 'dev-only-admin';
   const redisToken: string = process.env.KV_REST_API_TOKEN || 'dev-redis-fallback';
   return `${adminPassword}_${redisToken}`;
 }

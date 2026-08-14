@@ -17,10 +17,7 @@ const securityHeaders = [
     key: 'Strict-Transport-Security',
     value: 'max-age=63072000; includeSubDomains; preload',
   },
-  {
-    key: 'X-XSS-Protection',
-    value: '1; mode=block',
-  },
+  // ✅ FIX: X-XSS-Protection ENTFERNT (deprecated, kann in alten Browsern XSS erleichtern)
   {
     key: 'X-Frame-Options',
     value: 'SAMEORIGIN',
@@ -30,8 +27,9 @@ const securityHeaders = [
     value: 'nosniff',
   },
   {
+    // ✅ FIX: konsistent mit middleware.ts (strict-origin-when-cross-origin)
     key: 'Referrer-Policy',
-    value: 'origin-when-cross-origin',
+    value: 'strict-origin-when-cross-origin',
   },
   {
     key: 'Permissions-Policy',

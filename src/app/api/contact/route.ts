@@ -1,4 +1,5 @@
 import { ContactFormSchema, safeValidate } from '@/lib/security/validation';
+import { getTenantConfig } from '@/lib/config-loader';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { Redis } from '@upstash/redis';
@@ -37,6 +38,33 @@ function getResendClient(): Resend | null {
   }
 }
 
+// ✅ FIX (SECURITY): HTML-Escaping verhindert Stored-XSS in Admin-Postfach
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ✅ FIX (WHITE-LABEL): E-Mail-Ziele aus Tenant-Config statt hardcodiert
+function getMailTargets(): { from: string; to: string } {
+  let brandName = 'Kontakt';
+  let contactEmail = 'info@kiosk-lollipop.de';
+  try {
+    const config = getTenantConfig();
+    brandName = config.brand.name;
+    contactEmail = config.contact.email;
+  } catch {
+    // Fallback bleibt bestehen (Default-Tenant)
+  }
+  return {
+    from: process.env.RESEND_FROM || `${brandName} <noreply@kiosk-lollipop.de>`,
+    to: process.env.CONTACT_EMAIL || contactEmail,
+  };
+}
+
 // ✅ CI-SAFE: Wenn CI=true, nutze Mock statt echter API-Calls
 const isCI = process.env.CI === 'true';
 
@@ -53,16 +81,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Ungültiges JSON' }, { status: 400 });
   }
 
-  // ✅ HONEYPOT ANTI-SPAM (liest raw body - Zod filtert unbekannte Keys)
-  // Der Client sendet 'honeypot', das Zod-Schema kennt nur 'website' als Honeypot.
-  // Wir prüfen BEIDE Felder: honeypot (raw) + website (via Zod refine)
+  // ✅ HONEYPOT ANTI-SPAM
   const { honeypot } = body as { honeypot?: string };
   if (honeypot && String(honeypot).length > 0) {
     return NextResponse.json({ success: false, error: 'Spam erkannt.' }, { status: 400 });
   }
 
   // ✅ ZOD VALIDATION (Single Source of Truth)
-  // Validiert: name, email, message, website (2. Honeypot-Schicht via refine)
   const validation = safeValidate(ContactFormSchema, body);
   if (!validation.success) {
     return NextResponse.json({ error: validation.error }, { status: 400 });
@@ -122,23 +147,29 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           error:
-            'E-Mail-Service nicht konfiguriert. Bitte kontaktieren Sie uns telefonisch unter 02235 9291160.',
+            'E-Mail-Service nicht konfiguriert. Bitte kontaktieren Sie uns telefonisch.',
         },
         { status: 500 }
       );
     }
 
+    // ✅ FIX: White-Label Targets + HTML-Escaping
+    const { from, to } = getMailTargets();
+    const safeName = escapeHtml(String(name));
+    const safeEmail = escapeHtml(String(email));
+    const safeMessage = escapeHtml(String(message)).replace(/\n/g, '<br>');
+
     const { data, error } = await resend.emails.send({
-      from: 'Kiosk Lollipop <noreply@kiosk-lollipop.de>',
-      to: ['lol111@live.de'],
+      from,
+      to: [to],
       subject: `Neue Kontaktanfrage von ${name}`,
       replyTo: String(email),
       html: `
         <h2>Neue Nachricht über das Kontaktformular</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>E-Mail:</strong> ${email}</p>
+        <p><strong>Name:</strong> ${safeName}</p>
+        <p><strong>E-Mail:</strong> ${safeEmail}</p>
         <p><strong>Nachricht:</strong></p>
-        <p>${String(message).replace(/\n/g, '<br>')}</p>
+        <p>${safeMessage}</p>
         <p><small>Empfangen: ${new Date().toLocaleString('de-DE')}</small></p>
       `,
       text: `Name: ${name}\nE-Mail: ${email}\n\nNachricht:\n${message}`,

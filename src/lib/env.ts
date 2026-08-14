@@ -15,8 +15,8 @@ const envSchema = z.object({
   // ✅ Resend: Immer optional
   RESEND_API_KEY: z.string().optional(),
 
-  // ✅ Admin Password: Default für Development
-  ADMIN_PASSWORD: z.string().min(8).default('lollipop2024'),
+  // ✅ FIX: ADMIN_PASSWORD optional im Schema (Runtime-Checks passieren in den Routen)
+  ADMIN_PASSWORD: z.string().min(8).optional(),
 
   // ✅ JWT Secret: Optional während Build
   JWT_SECRET: z.string().optional(),
@@ -28,7 +28,7 @@ interface EnvConfig {
   KV_REST_API_URL: string | undefined;
   KV_REST_API_TOKEN: string | undefined;
   RESEND_API_KEY: string | undefined;
-  ADMIN_PASSWORD: string;
+  ADMIN_PASSWORD: string | undefined; // ✅ FIX: undefined erlaubt
   JWT_SECRET: string | undefined;
 }
 
@@ -46,7 +46,7 @@ function getEnv(): EnvConfig {
         KV_REST_API_URL: undefined,
         KV_REST_API_TOKEN: undefined,
         RESEND_API_KEY: undefined,
-        ADMIN_PASSWORD: 'lollipop2024',
+        ADMIN_PASSWORD: undefined, // ✅ FIX: fehlte vorher (TS-2741)
         JWT_SECRET: undefined,
       };
     }
