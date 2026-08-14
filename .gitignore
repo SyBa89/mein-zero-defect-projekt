@@ -163,3 +163,10 @@ backup_*/**
 # !.env.example
 # !public/
 backups/
+
+# Added by Skript 62 (Zero-Defect Cleanup)
+# Build artifacts
+# Analysis + Reports
+analyze/
+playwright-report/
+# Local backups (Skript 54.x/55/56/59/61 artifacts)
