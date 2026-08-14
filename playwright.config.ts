@@ -1,28 +1,26 @@
+// playwright.config.ts
+// ✅ ZERO-DEFECT: Playwright E2E Configuration (v2 - stabilisiert)
+// - reuseExistingServer: false → Playwright startet EIGENEN Server mit CI=true
+// - workers: 1 + fullyParallel: false → keine Dev-Kompilations-Konkurrenz
+// - timeout: 90s → Puffer für Dev-Kompilierung
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './e2e',
-  outputDir: './test-results',
-  fullyParallel: true,
+  testDir: './tests/e2e',
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? '50%' : undefined,
-  reporter: [
-    ['list'],
-    ['html', { open: 'never', outputFolder: 'playwright-report' }],
-    ['json', { outputFile: 'test-results/results.json' }]
-  ],
+  retries: 1,
+  workers: 1,
+  reporter: 'html',
+  timeout: 90000,
+  expect: {
+    timeout: 10000,
+  },
   use: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+    baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    actionTimeout: 10000,
-    navigationTimeout: 30000,
-    // Next.js 15 App Router spezifische Header
-    extraHTTPHeaders: {
-      'x-nextjs-cache': 'disable',
-    },
   },
   projects: [
     {
@@ -31,16 +29,16 @@ export default defineConfig({
     },
     {
       name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
+      use: { ...devices['Pixel 7'] },
     },
   ],
   webServer: {
-    // Next.js 15 Production Build fÃ¼r stabile Tests
-    command: 'npm run build && npm run start',
+    command: 'npm run dev',
     url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 180 * 1000,
-    stdout: 'pipe',
-    stderr: 'pipe',
+    reuseExistingServer: false,
+    env: {
+      CI: 'true', // ✅ garantiert: keine echten Email-Sends
+    },
+    timeout: 120000,
   },
 });
