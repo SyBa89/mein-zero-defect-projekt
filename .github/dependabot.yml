@@ -1,67 +1,29 @@
-# .github/dependabot.yml
-# ✅ ZERO-DEFECT: Dependabot mit Schutz vor Breaking Changes
-#
-# Strategie:
-# - Minor/Patch Updates: Automatisch (sicher)
-# - Major Updates: Manuell prüfen (verhindert Build-Breaks)
-# - Kritische Pakete: TypeScript, TailwindCSS auf stabile Versionen pinnen
-
+﻿# .github/dependabot.yml
+# ✅ ZERO-DEFECT: Dependabot-Konfiguration
+# - Major-Updates werden ignoriert (Breaking Changes erfordern manuelle Migration)
+# - Minor/Patch werden gruppiert (weniger PR-Spam)
+# - Keine nicht-existierenden Labels (behebt Dependabot-Warnung)
 version: 2
 updates:
-  # npm Dependencies
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"
-      time: "09:00"
-    open-pull-requests-limit: 10
-    
-    # ✅ IGNORE: Breaking Changes verhindern
+    open-pull-requests-limit: 5
     ignore:
-      # TypeScript 7.x hat Breaking Changes (baseUrl entfernt)
-      # Bleibe auf 5.x bis Migration getestet ist
-      - dependency-name: "typescript"
-        versions: ["7.x", "8.x", "9.x"]
-      
-      # TailwindCSS 4.x hat Breaking Changes (PostCSS Plugin geändert)
-      # Bleibe auf 3.x bis Migration getestet ist
-      - dependency-name: "tailwindcss"
-        versions: ["4.x", "5.x"]
-      
-      # Next.js 16.x hat Breaking Changes
-      # Bleibe auf 15.x LTS bis Oktober 2026
-      - dependency-name: "next"
-        versions: ["16.x", "17.x"]
-    
-    # ✅ ALLOW: Nur Minor/Patch Updates
-    # Diese sind rückwärtskompatibel und sicher
-    allow:
-      - dependency-type: "direct"
-        update-type: "version-update:semver-minor"
-      - dependency-type: "direct"
-        update-type: "version-update:semver-patch"
-    
-    # Labels für einfache PR-Verwaltung
-    labels:
-      - "dependencies"
-      - "automated"
-    
-    # Commit Message Prefix
-    commit-message:
-      prefix: "chore(deps):"
-      include: "scope"
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
 
-  # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"
-      time: "09:00"
-    open-pull-requests-limit: 5
-    labels:
-      - "ci"
-      - "automated"
-    commit-message:
-      prefix: "ci(actions):"
+    open-pull-requests-limit: 3
