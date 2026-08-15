@@ -4,6 +4,7 @@
     "private": true,
     "type": "module",
     "scripts": {
+    "audit:high": "npm audit --audit-level=high",
         "analyze": "cross-env ANALYZE=true next build",
         "test": "vitest",
         "e2e": "playwright test",
