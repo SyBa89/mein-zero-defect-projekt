@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as Sentry from '@sentry/nextjs';
-import { getTenantConfig } from '@/lib/config-loader';
 
 export default function Error({
   error,
@@ -11,10 +10,17 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  const config = getTenantConfig();
+  const [brandName, setBrandName] = useState('');
+  const [phone, setPhone] = useState('');
   
   useEffect(() => {
     Sentry.captureException(error);
+    // Lazy-Load Config nur wenn nötig
+    import('@/lib/config-loader').then(({ getTenantConfig }) => {
+      const config = getTenantConfig();
+      setBrandName(config.brand.name);
+      setPhone(config.contact.phoneDisplay || config.contact.phone);
+    });
   }, [error]);
 
   return (
@@ -29,15 +35,17 @@ export default function Error({
       <p className="text-text-secondary max-w-md">
         Die Mandanten-Konfiguration konnte nicht geladen werden.
       </p>
-      <p className="text-text-secondary max-w-md">
-        Kontaktieren Sie {config.brand.name} direkt:{' '}
-        <a 
-          href={`tel:${config.contact.phone}`} 
-          className="text-theme-primary font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-theme-primary"
-        >
-          {config.contact.phoneDisplay || config.contact.phone}
-        </a>
-      </p>
+      {phone && (
+        <p className="text-text-secondary max-w-md">
+          Kontaktieren Sie {brandName} direkt:{' '}
+          <a 
+            href={`tel:${phone}`} 
+            className="text-theme-primary font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-theme-primary"
+          >
+            {phone}
+          </a>
+        </p>
+      )}
       {error.digest && (
         <p className="text-xs text-gray-400 font-mono tracking-wider">
           Fehler-Referenz: {error.digest}
