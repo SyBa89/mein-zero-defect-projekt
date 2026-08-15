@@ -1,4 +1,4 @@
-﻿// src/app/layout.tsx
+// src/app/layout.tsx
 // ✅ ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
 // ✅ WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
 // ✅ SEO: Globale Metadaten aus Tenant-Config
@@ -57,6 +57,8 @@ const radiusMap: Record<BorderRadius, string> = {
   lg: '1rem',
   full: '9999px',
 };
+
+import CookieNotice from '@/components/CookieNotice';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const config = getTenantConfig();
@@ -131,7 +133,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }),
             }}
           />
-        </ConfigProvider>
+                <CookieNotice />
+      </ConfigProvider>
       </body>
     </html>
   );
