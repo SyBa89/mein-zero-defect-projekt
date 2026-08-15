@@ -206,7 +206,7 @@ export default function AdminCockpit() {
                     : 'bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700'
                 }`}
               >
-                {isSaving ? 'Speichere...' : '💾 Speichern'}
+                {isSaving ? 'Speichere...' : '💾 Live-Felder speichern'}
               </button>
             </div>
           </div>
