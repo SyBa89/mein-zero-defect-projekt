@@ -1,4 +1,5 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getClientConfig } from '@/lib/config-loader';
 import { verifySessionToken, hasPermission } from '@/lib/auth';
 import { getConfigOverride, setConfigOverride, ConfigOverride } from '@/lib/config-override';
@@ -67,6 +68,10 @@ export async function POST(request: NextRequest) {
       { success: false, error: 'Redis nicht verfügbar – Live-Speichern deaktiviert.' },
       { status: 503 }
     );
+
+  // ✅ ISR: Hauptseite + Kontakt on-demand neu generieren -> Live-Werte erscheinen sofort
+  revalidatePath('/');
+  revalidatePath('/kontakt');
 
   const publicConfig = buildPublicConfig() as Record<string, unknown>;
   if (override.openingHours) publicConfig.openingHours = override.openingHours;

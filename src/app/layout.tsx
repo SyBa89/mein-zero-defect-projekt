@@ -1,5 +1,6 @@
 // src/app/layout.tsx
 // ✅ ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
+// ✅ LIVE-UPDATE: Server-Merge mit Redis-Override (ISR-Revalidierung bei Speichern)
 // ✅ WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
 // ✅ SEO: Globale Metadaten aus Tenant-Config
 
@@ -7,6 +8,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ConfigProvider } from '@/contexts/ConfigContext';
 import { getTenantConfig } from '@/lib/config-loader';
+import { getConfigOverride } from '@/lib/config-override';
 import { MobileActionBar } from '@/components/MobileActionBar';
 import type { BorderRadius } from '@/types/config';
 import './globals.css';
@@ -19,7 +21,6 @@ const inter = Inter({
 
 export async function generateMetadata(): Promise<Metadata> {
   const config = getTenantConfig();
-  // ✅ SEO-FIX: Korrektes Feld aus Zod-Schema (description, nicht defaultDescription)
   const metaDescription = config.seo.description;
   const metaTitle = config.brand.name;
 
@@ -49,7 +50,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// ✅ ZERO-DEFECT: Mapping statt String-Interpolation für Tailwind-Kompatibilität
 const radiusMap: Record<BorderRadius, string> = {
   none: '0px',
   sm: '0.25rem',
@@ -60,10 +60,15 @@ const radiusMap: Record<BorderRadius, string> = {
 
 import CookieNotice from '@/components/CookieNotice';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const config = getTenantConfig();
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const base = getTenantConfig();
+  const override = await getConfigOverride();
+  const config = {
+    ...base,
+    ...(override?.openingHours ? { openingHours: override.openingHours as typeof base.openingHours } : {}),
+    ...(override?.banners ? { banners: { ...base.banners, ...override.banners } as typeof base.banners } : {}),
+  } as typeof base;
 
-  // ✅ ZERO-DEFECT: CSS Custom Properties für Theme (vermeidet inline-style Drift)
   const cssVars = {
     '--theme-primary': config.theme.primaryColor,
     '--theme-secondary': config.theme.secondaryColor,
@@ -133,8 +138,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }),
             }}
           />
-                <CookieNotice />
-      </ConfigProvider>
+          <CookieNotice />
+        </ConfigProvider>
       </body>
     </html>
   );
