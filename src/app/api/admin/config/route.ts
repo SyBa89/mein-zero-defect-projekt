@@ -1,31 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
-import { getClientConfig } from '@/lib/config-loader';
+import { getEffectiveConfig } from '@/lib/config-loader';
 import { verifySessionToken, hasPermission } from '@/lib/auth';
-import { getConfigOverride, setConfigOverride, ConfigOverride } from '@/lib/config-override';
+import { setConfigOverride, ConfigOverride } from '@/lib/config-override';
 import { z } from 'zod';
-// ZERO-DEFECT HARDENING: Schema-Validation vor Persistenz (Name vom Skript aufgelöst)
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// ZERO-DEFECT HARDENING: nur erlaubte Felder; Single Source of Truth = Schema
-const OverrideSchema = z.object({}).passthrough().partial();
-
-function buildPublicConfig() {
-  const config = getClientConfig();
-  return {
-    brand: config.brand, contact: config.contact, business: config.business,
-    openingHours: config.openingHours, banners: config.banners, sections: config.sections,
-  };
-}
+// ZERO-DEFECT HARDENING: Whitelist-Schema (strict) vor Persistenz
+const OverrideSchema = z
+  .object({
+    openingHours: z.unknown().optional(),
+    banners: z.unknown().optional(),
+    sections: z.unknown().optional(),
+    emergencyMessage: z.string().optional(),
+    isClosed: z.boolean().optional(),
+  })
+  .strict();
 
 export async function GET() {
   try {
-    const publicConfig = buildPublicConfig() as Record<string, unknown>;
-    const override = await getConfigOverride();
-    if (override?.openingHours) publicConfig.openingHours = override.openingHours;
-    if (override?.banners) publicConfig.banners = override.banners;
+    const effective = await getEffectiveConfig();
+    const publicConfig = {
+      brand: effective.brand,
+      contact: effective.contact,
+      business: effective.business,
+      openingHours: effective.openingHours,
+      banners: effective.banners,
+      sections: effective.sections,
+    };
     return NextResponse.json(publicConfig, {
       headers: {
         'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
@@ -51,7 +55,7 @@ export async function POST(request: NextRequest) {
   if (!body || typeof body !== 'object')
     return NextResponse.json({ error: 'Ungültiger Body' }, { status: 400 });
 
-  // ZERO-DEFECT HARDENING: Zod-Validation VOR Persistenz
+  // ZERO-DEFECT HARDENING: Zod-Whitelist-Validation VOR Persistenz
   const parsed = OverrideSchema.safeParse(body);
   if (!parsed.success)
     return NextResponse.json(
@@ -77,8 +81,6 @@ export async function POST(request: NextRequest) {
   revalidateTag('config');
   revalidatePath('/kontakt');
 
-  const publicConfig = buildPublicConfig() as Record<string, unknown>;
-  if (override.openingHours) publicConfig.openingHours = override.openingHours;
-  if (override.banners) publicConfig.banners = override.banners;
-  return NextResponse.json({ success: true, config: publicConfig });
+  const effective = await getEffectiveConfig();
+  return NextResponse.json({ success: true, config: effective });
 }
