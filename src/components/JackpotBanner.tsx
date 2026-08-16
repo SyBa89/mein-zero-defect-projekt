@@ -1,8 +1,8 @@
-import { getClientConfig } from '@/lib/config-loader';
+import { getEffectiveConfig } from '@/lib/config-loader';
 
 export default async function JackpotBanner() {
   // ✅ ZERO-DEFECT: Server Component nutzt getClientConfig() (White-Label!)
-  const config = getClientConfig();
+  const config = await getEffectiveConfig();
 
   // ✅ Early-Return: Nur anzeigen wenn business-type es unterstützt
   if (config.banners?.showJackpot !== true) {

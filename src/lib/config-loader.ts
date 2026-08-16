@@ -65,3 +65,20 @@ function validateConfig(config: TenantConfig): asserts config is TenantConfig {
     );
   }
 }
+import { getConfigOverride } from './config-override';
+
+/**
+ * ZERO-DEFECT: Merged Static-Config + Redis-Override
+ * Single Source of Truth fuer Server-Komponenten
+ */
+export async function getEffectiveConfig() {
+  const staticConfig = getClientConfig();
+  const override = await getConfigOverride();
+  if (!override) return staticConfig;
+  return {
+    ...staticConfig,
+    openingHours: (override.openingHours as typeof staticConfig.openingHours) ?? staticConfig.openingHours,
+    banners: { ...staticConfig.banners, ...(override.banners as Record<string, unknown> | undefined) },
+    sections: (override.sections as typeof staticConfig.sections) ?? staticConfig.sections,
+  };
+}

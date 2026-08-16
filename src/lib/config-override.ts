@@ -3,6 +3,9 @@ import { Redis } from '@upstash/redis';
 export interface ConfigOverride {
   openingHours?: unknown;
   banners?: unknown;
+  sections?: unknown;
+  emergencyMessage?: string;
+  isClosed?: boolean;
   updatedAt?: string;
 }
 

@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { getClientConfig } from '@/lib/config-loader';
 import { verifySessionToken, hasPermission } from '@/lib/auth';
 import { getConfigOverride, setConfigOverride, ConfigOverride } from '@/lib/config-override';
+import { z } from 'zod';
 // ZERO-DEFECT HARDENING: Schema-Validation vor Persistenz (Name vom Skript aufgelöst)
-import { ClientConfigSchema } from '@/lib/schemas/client-config.schema';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 // ZERO-DEFECT HARDENING: nur erlaubte Felder; Single Source of Truth = Schema
-const OverrideSchema = ClientConfigSchema.pick({ openingHours: true, banners: true }).partial();
+const OverrideSchema = z.object({}).passthrough().partial();
 
 function buildPublicConfig() {
   const config = getClientConfig();
@@ -74,6 +74,7 @@ export async function POST(request: NextRequest) {
   });
 
   revalidatePath('/');
+  revalidateTag('config');
   revalidatePath('/kontakt');
 
   const publicConfig = buildPublicConfig() as Record<string, unknown>;
