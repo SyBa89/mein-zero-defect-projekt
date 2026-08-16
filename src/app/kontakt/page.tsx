@@ -4,13 +4,13 @@ import KontaktFormClient from '@/components/KontaktFormClient';
 import { getClientConfig } from '@/lib/config-loader';
 const config = getClientConfig();
 
-// âœ… ZERO-DEFECT: Dynamische Metadata fÃ¼r White-Label-FÃ¤higkeit
+// ✅ ZERO-DEFECT: Dynamische Metadata für White-Label-Fähigkeit
 export async function generateMetadata(): Promise<Metadata> {
   const { brand, contact } = config;
 
   return {
     title: `Kontakt | ${brand.name}`,
-    description: `Kontaktieren Sie ${brand.name} in ${contact.address.city}. Wir sind fÃ¼r Sie da â€“ per Telefon, E-Mail oder Ã¼ber unser sicheres Kontaktformular.`,
+    description: `Kontaktieren Sie ${brand.name} in ${contact.address.city}. Wir sind für Sie da "“ per Telefon, E-Mail oder über unser sicheres Kontaktformular.`,
     robots: {
       index: true,
       follow: true,

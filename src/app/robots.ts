@@ -12,7 +12,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/admin', '/api', '/onboarding', '/_next'],
       },
-      // ðŸ¤– KI-Bots explizit erlauben (GEO - Generative Engine Optimization)
+      // 🔒¤– KI-Bots explizit erlauben (GEO - Generative Engine Optimization)
       { userAgent: 'GPTBot', allow: '/' },
       { userAgent: 'ChatGPT-User', allow: '/' },
       { userAgent: 'PerplexityBot', allow: '/' },
