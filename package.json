@@ -4,7 +4,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-    "audit:high": "npm audit --audit-level=high",
+        "audit:high": "npm audit --audit-level=high",
         "analyze": "cross-env ANALYZE=true next build",
         "test": "vitest",
         "e2e": "playwright test",
@@ -36,7 +36,7 @@
         "zod": "^4.4.3"
     },
     "devDependencies": {
-        "@next/bundle-analyzer": "^16.3.1",
+        "@next/bundle-analyzer": "^15.5.23",
         "@playwright/test": "^1.62.1",
         "@tailwindcss/typography": "^0.5.13",
         "@testing-library/jest-dom": "^7.0.1",

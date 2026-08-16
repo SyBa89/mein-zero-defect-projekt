@@ -1,0 +1,16 @@
+{
+  "version": "0.2",
+  "language": "en,de",
+  "words": [
+    "Paketshop", "Bürgerplatz", "Erftstadt", "Liblar", "Kiosk", "Lollipop",
+    "Hermes", "hermes", "Öffnungszeiten", "Notfall", "Jackpot", "Theodor", "Heuss",
+    "Straße", "Inhaber", "Mustermann", "Zero", "Defect", "Vercel", "Upstash",
+    "Resend", "Sentry", "Tenant", "Tenants", "White", "Label", "ISR", "SSG",
+    "Cockpit", "Lighthouse", "Datenschutz", "Impressum",
+    "subheadline", "kontakt", "Rubbellose", "Sonn", "ratelimit", "jose",
+    "firefox", "maxage"
+  ],
+  "ignorePaths": [
+    "node_modules/**", ".next/**", "coverage/**", "package-lock.json"
+  ]
+}

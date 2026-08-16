@@ -1,14 +1,5 @@
 import { NextResponse } from 'next/server';
 
-/**
- * ✅ ZERO-DEFECT: Enterprise Security Middleware
- *
- * 🛡️ PRODUCTION: Strikte CSP + COOP (maximale XSS & Side-Channel Sicherheit)
- * 🧪 DEVELOPMENT: Erlaubt 'unsafe-eval' NUR lokal für Next.js Hot-Reloading
- *
- * Security Headers: CSP, HSTS, COOP, COEP, CORP, X-Frame-Options,
- * X-Content-Type-Options, Referrer-Policy, Permissions-Policy
- */
 export function middleware() {
   const response = NextResponse.next();
   const isDev = process.env.NODE_ENV === 'development';
@@ -59,9 +50,9 @@ export function middleware() {
   const csp = [
     "default-src 'self'",
     'script-src ' + scriptSrc.join(' ') + " 'unsafe-inline'",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
-    "font-src 'self' data: https://fonts.gstatic.com",
+    "font-src 'self' data:",
     'connect-src ' + connectSrc.join(' '),
     "frame-src 'self' https://www.google.com https://maps.google.com",
     "frame-ancestors 'self'",

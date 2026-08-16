@@ -3,9 +3,14 @@ import { revalidatePath } from 'next/cache';
 import { getClientConfig } from '@/lib/config-loader';
 import { verifySessionToken, hasPermission } from '@/lib/auth';
 import { getConfigOverride, setConfigOverride, ConfigOverride } from '@/lib/config-override';
+// ZERO-DEFECT HARDENING: Schema-Validation vor Persistenz (Name vom Skript aufgelöst)
+import { ClientConfigSchema } from '@/lib/schemas/client-config.schema';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+// ZERO-DEFECT HARDENING: nur erlaubte Felder; Single Source of Truth = Schema
+const OverrideSchema = ClientConfigSchema.pick({ openingHours: true, banners: true }).partial();
 
 function buildPublicConfig() {
   const config = getClientConfig();
@@ -35,18 +40,6 @@ export async function GET() {
   }
 }
 
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Max-Age': '86400',
-    },
-  });
-}
-
 export async function POST(request: NextRequest) {
   const token = request.cookies.get('session')?.value;
   const session = token ? verifySessionToken(token) : null;
@@ -58,10 +51,15 @@ export async function POST(request: NextRequest) {
   if (!body || typeof body !== 'object')
     return NextResponse.json({ error: 'Ungültiger Body' }, { status: 400 });
 
-  const override: ConfigOverride = {};
-  if (body.openingHours) override.openingHours = body.openingHours;
-  if (body.banners) override.banners = body.banners;
+  // ZERO-DEFECT HARDENING: Zod-Validation VOR Persistenz
+  const parsed = OverrideSchema.safeParse(body);
+  if (!parsed.success)
+    return NextResponse.json(
+      { error: 'Ungültige Felder', count: parsed.error.issues.length },
+      { status: 422 }
+    );
 
+  const override = parsed.data as ConfigOverride;
   const ok = await setConfigOverride(override);
   if (!ok)
     return NextResponse.json(
@@ -69,7 +67,12 @@ export async function POST(request: NextRequest) {
       { status: 503 }
     );
 
-  // ✅ ISR: Hauptseite + Kontakt on-demand neu generieren -> Live-Werte erscheinen sofort
+  // ZERO-DEFECT HARDENING: Audit-Log ohne PII
+  console.info('[AUDIT] config override saved', {
+    role: session.role,
+    at: new Date().toISOString(),
+  });
+
   revalidatePath('/');
   revalidatePath('/kontakt');
 
