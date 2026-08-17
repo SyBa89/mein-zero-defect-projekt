@@ -31,3 +31,13 @@ Hinweis: Vor Einsatz WCAG-AA-Kontrast pruefen.
 1 Relevanz (echtes Kundenproblem?) 2 Lizenz (White-Label erlaubt?)
 3 Performance (LCP Mobile?) 4 Konsistenz (Design-System?) 5 Blast Radius
 Kategorien: CODE (nur Kundenbedarf) / SALES / BACKLOG / ABGELEHNT.
+## 5. NACHTRAG 2 - Weitere Paletten + Three.js (Intake 17.08.2026)
+Paletten (Wadhah Aloui Ebook, Slides 3-6):
+- Flight/Travel:  #47A5FF #000000 #4C5055 #FFFFFF #FF8F00
+- Grocery/Fresh:  #004B24 #108A11 #031B03 #FFFFFF #FF7006 #F8D91A  (Top-Kandidat Kiosk-Theme)
+- Dashboard/Data: #E1FB15 #32D583 #FFFFFF #131313 #000000
+- SaaS/Dark:      #ABF43F #3FF4E5 #FFFFFF #090909 #F0793F
+Hinweis: Vor Einsatz WCAG-AA-Kontrast pruefen.
+Three.js Particle-Morph (@codewithbhurtel):
+- ABGELEHNT fuer Tenant-Seiten (WebGL ~600KB, LCP/Mobile-Battery, Reduced-Motion).
+- BACKLOG-Showcase: evtl. Premium-Landing-Hero NUR mit lazy-load + prefers-reduced-motion Fallback.
