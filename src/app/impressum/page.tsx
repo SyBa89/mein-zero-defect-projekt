@@ -16,9 +16,9 @@ export default function ImpressumPage() {
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-4xl font-black text-gray-900 mb-8">Impressum</h1>
 
-        {/* Angaben gemäß §5 TMG */}
+        {/* Angaben gemäß §5 DDG */}
         <section className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Angaben gemäß §5 TMG</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Angaben gemäß §5 DDG</h2>
           <div className="prose prose-gray max-w-none">
             <p>
               <strong>{brand.name}</strong>
@@ -77,7 +77,7 @@ export default function ImpressumPage() {
         {/* Verantwortlich für den Inhalt */}
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Verantwortlich für den Inhalt nach §55 Abs. 2 RStV
+            Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
           </h2>
           <div className="prose prose-gray max-w-none">
             <p>
@@ -96,8 +96,8 @@ export default function ImpressumPage() {
           <div className="prose prose-gray max-w-none">
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Haftung für Inhalte</h3>
             <p>
-              Als Diensteanbieter sind wir gemäß §7 Abs.1 TMG für eigene Inhalte auf diesen Seiten
-              nach den allgemeinen Gesetzen verantwortlich. Nach §§8 bis 10 TMG sind wir als
+              Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten
+              nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als
               Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde
               Informationen zu überwachen oder nach Umständen zu forschen, die auf eine
               rechtswidrige Tätigkeit hinweisen.

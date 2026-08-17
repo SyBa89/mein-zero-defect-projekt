@@ -61,7 +61,28 @@ export default function DatenschutzPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">3. Hosting</h2>
+          
+        <section className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            3a. Konfigurations-Speicherung (Upstash Redis, USA)
+          </h2>
+          <div className="prose prose-gray dark:prose-invert max-w-none">
+            <p className="text-gray-700 dark:text-gray-300">
+              Für Admin-Konfigurationen (Öffnungszeiten, Banner, Notfall-Status) nutzen wir den
+              Redis-Dienst von Upstash Inc. (San Francisco, USA). Die Verarbeitung erfolgt auf
+              Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an zuverlässigem,
+              schnellem Betrieb).
+            </p>
+            <p className="text-gray-700 dark:text-gray-300">
+              Die Datenübermittlung in die USA erfolgt auf Grundlage von Standardvertragsklauseln
+              (SCCs) gem. Art. 46 Abs. 2 lit. c DSGVO. Weitere Informationen:
+              <a href="https://upstash.com/privacy" target="_blank" rel="noopener noreferrer"
+                className="text-[var(--theme-primary)] hover:underline"> upstash.com/privacy</a>.
+            </p>
+          </div>
+        </section>
+
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">3. Hosting</h2>
           <div className="prose prose-gray dark:prose-invert max-w-none">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Vercel</h3>
             <p className="text-gray-700 dark:text-gray-300">
