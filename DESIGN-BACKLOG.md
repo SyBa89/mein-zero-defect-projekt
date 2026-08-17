@@ -41,3 +41,19 @@ Hinweis: Vor Einsatz WCAG-AA-Kontrast pruefen.
 Three.js Particle-Morph (@codewithbhurtel):
 - ABGELEHNT fuer Tenant-Seiten (WebGL ~600KB, LCP/Mobile-Battery, Reduced-Motion).
 - BACKLOG-Showcase: evtl. Premium-Landing-Hero NUR mit lazy-load + prefers-reduced-motion Fallback.
+
+## 6. NACHTRAG 3 - Swipe-Gesture-Spec + Paletten/Gradients (Intake 17.08.2026)
+UX-SPEC: SWIPE/GESTURES (Quelle: @designmotionhq "Swipe is a language")
+Gilt fuer: mobile Listen-UIs (z.B. /admin/contacts), kuenftige Cockpit-Iteration
+- S1 Thresholds: REVEAL = Menue (kurzer Pull, nichts feuert); COMMIT = Entscheidung.
+- S2 Rubber-Band-Physik: Widerstand als Feedback; Haptic Tick bei Commit.
+- S3 Richtung: rechts = sicher/reversibel; links = destruktiv. Nie tauschen.
+- S4 Discoverability: Launch 1 = Peek-Hint; ab Launch 2 nichts (teach once).
+- S5 Safety Net: kein Confirm-Dialog; Undo-Toast mit Countdown (delete fast, forgive faster).
+Bezug: ergaenzt Toast-Spec (R2/R4); relevant fuer F1-Audit & Kontakt-Verwaltung (Cockpit hat heute KEIN Undo).
+Paletten/Gradients:
+- Event/Ticket: #0249E1 #80B0EC #FFFFFF #111111 #DAFB71 #EE3D5A
+- Solar Pop:  #FF6A00 -> #FFD500  (Restaurant-Hero-Kandidat)
+- Lime Crush: #F9F586 -> #A1FFCE  (Handwerk/Kiosk-Kandidat)
+- Berry Frost:#B24592 -> #F15F79  (Friseur-Hero-Kandidat)
+Hinweis: WCAG-AA vor Einsatz pruefen. Regel 50 bleibt aktiv.
