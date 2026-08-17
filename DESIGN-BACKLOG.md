@@ -95,3 +95,20 @@ Gradients:
 - Cyber Bloom: #FF0099 -> #493240  (Friseur/Event-Akzent)
 - Ocean Rose:  #AA4B6B -> #3B8D99  (Friseur/Restaurant-elegant)
 Hinweis: WCAG-AA vor Einsatz pruefen. Regel 50 bleibt aktiv.
+
+## 9. NACHTRAG 6 - Meridian-Designwelt + Sales-Patterns + Security-Validierung (Intake 17.08.2026)
+DESIGN-WELT (Quelle: @erlich.studios "Meridian"):
+- Dark-Navy + Gold/Creme, Serif + Italic-Akzente = "Premium Handwerk/Agentur".
+- Kandidat fuer Handwerker-Premium-Theme (vgl. Impeccable "Sattelleder & Faden").
+SALES-PATTERNS (aus Meridian, fuer unsere Verkaufs-Story):
+- Risk-Reversal: "Sehen Sie Ihre Website, bevor Sie zahlen" (kostenloser Erst-Entwurf).
+- Prozess-Transparenz: "In vier Schritten online" (Briefing, Entwurf, Feinschliff, Online).
+- Social-Proof-Stats-Zeile (Jahre, Projekte, Sterne, Zufriedenheit).
+- WhatsApp-CTA als Zweit-Kanal neben Telefon (KMU-Realitaet in DE). (F15)
+SECURITY-VALIDIERUNG EXTERN (@webnailed-Serie):
+- 02 SQL-Injection: N/A by architecture (kein SQL; Redis KV + statische Configs).
+- 03 Hashing bcrypt/argon2: BESTAETIGT (bcryptjs, hash+verify roundtrip getestet).
+- 04 JWT verify statt decode: BESTAETIGT (verifySessionToken prueft Signatur).
+- 05 Rate Limiting: BESTAETIGT (rate-limit.ts + Tests).
+-> Keine Aktion; dient als externer Nachweis fuer das Uebergabe-Zertifikat.
+Regel 50 bleibt aktiv.
