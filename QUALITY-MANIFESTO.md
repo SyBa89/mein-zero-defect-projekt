@@ -63,3 +63,7 @@ Jede künftige Session, die an diesem Projekt arbeitet, beginnt hier.
 ---
 *Version 1.0 — erstellt am Übergabetag*
 *Signatur: Principal Technical Lead + Projektleiter*
+## LESSONS LEARNED (Addendum 7c8e78a)
+- Keine Regex auf JSX: strukturelle Patches nutzen (scripts/fix-a11y.js).
+- Vor Fertig-Meldung immer git diff --stat pruefen (7c8e78a enthielt nur das Script).
+- E2E ist die einzige Wahrheitsquelle; Unit-Gruen allein genuegt nicht.
