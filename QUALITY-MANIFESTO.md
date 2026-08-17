@@ -69,3 +69,9 @@ Jede künftige Session, die an diesem Projekt arbeitet, beginnt hier.
 - E2E ist die einzige Wahrheitsquelle; Unit-Gruen allein genuegt nicht.
 - Commit-Messages muessen dem tatsaechlichen Diff entsprechen (Traceability).
 - Vor Scripts: package.json auf type:module pruefen (.cjs fuer CommonJS).
+
+## SECURITY-POLICIES (Addendum F14/F16/F18)
+- CORS: "*" NUR auf GET /api/config (public read-only). Admin/Mutation: same-origin, keine CORS-Header.
+- Webhooks (kuenftig): Signatur-Pruefung PFLICHT (verify before you trust), Secret aus Env.
+- EU AI Act (seit 02.08.2026): KI-Inhalte kennzeichnen; NIEMALS Watermark-/Provenance-Remover.
+- Next-Upgrade-Pfad: unstable_noStore() durch connection() ersetzen bei Next-Major-Upgrade.

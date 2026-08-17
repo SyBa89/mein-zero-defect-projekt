@@ -44,3 +44,11 @@ ISR statt force-dynamic (P3) | jose/jsonwebtoken konsolidieren (P3)
 Entscheidungsregel: nur bauen, wenn zahlender Kunde es konkret anfragt.
 
 *Version 1.0 — Uebergabetag. Teil der Git-History.*
+## AUFGABE 7: EU-AI-Act-Compliance (laufend)
+1. KI-generierte Assets (OG/Social/Bilder) sichtbar + maschinlesbar kennzeichnen.
+2. Keine Watermark-/Provenance-Remover verwenden.
+3. Tenant-Uploads mit KI-Anteil: Kennzeichnung pruefen/einholen.
+
+## AUFGABE 8: Monitoring (woechentlich, 1 Min)
+1. Vercel -> Observability/Logs: Fehlerrate pruefen (Ziel 0 %).
+2. Runtime-Logs auf [AUDIT]- und Error-Eintraege sichten.
