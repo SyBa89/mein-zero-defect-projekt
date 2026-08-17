@@ -147,3 +147,20 @@ SALES-STACK: ANIMATED MOCKUPS (Quelle: @janm_ux)
 - Einsatz: Showreel/Landing/Sales-Material (vgl. Reelfolio, Raylight), NICHT Tenant-Code.
 efecto.app (Dither/ASCII): wie Ascii Magic - ABGELEHNT fuer Tenants; optional OG/Social-Art.
 Regel 50 bleibt aktiv.
+
+## 12. NACHTRAG 9 - Handwerker-Redesign-Case + Formel-Vertiefung (Intake 17.08.2026)
+CASE STUDY (Quelle: @bilal.webdesign "Dill Energy", Elektro/Solar):
+- Vorher: beige/datiert, kleine Bilder -> Nachher: dark + Marken-Akzent (Orange),
+  Bold-Typo, Scroll-Storytelling, Stats-Cards, Partner-Logos, Projekt-Fotos.
+- GOLD-REFERENZ fuer F13 Handwerker-Vertical: dieser Stil-Pass ist der
+  Premium-Standard im Handwerk (dunkel + Akzent + Story + Proof).
+- SALES-PATTERN: "Gleiche Firma. Neuer Auftritt." - Vorher/Nachher als Demo-Werkzeug.
+FORMELN VERTIEFT (@yassinezaanouni Einzelkarten):
+- Miller praezisiert: 7±2 = Gedaechtnis-Span (~4 nach Cowan), NICHT Nav-Link-Limit.
+  -> Entscheidungs-Kontexte klein halten (Hick); Nav darf mehr Links bei Gruppierung.
+- Doherty 400ms: "A spinner buys you nothing - you missed the budget."
+  -> Validiert: SkeletonLoader statt Spinner ist die richtige Wahl.
+- Fitts 2D/W: "distance and size are the only two dials."
+  -> Validiert: MobileActionBar (fix unten, grosse Targets) = D~0 = Fitts-optimal.
+- Measure 45-75 (Ziel 66ch): Lesetexte (Datenschutz/About) im F13-Typo-Pass pruefen.
+Regel 50 bleibt aktiv.
