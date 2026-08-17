@@ -211,3 +211,20 @@ TOOL: namethatui.com (Quelle: @howtowebdev) - "visual dictionary of UI":
 DUPLIKATE (bereits klassifiziert, keine Aktion): Reelfolio, BrowserFrame,
 Mockups-Design, Artboard Studio (Sales-Stack, Nachtraege 7/10).
 Regel 50 bleibt aktiv.
+
+## 16. NACHTRAG 13 - Vertical-Gold-Referenzen + 21st.dev (Intake 17.08.2026)
+GOLD-REFERENZ FRISEUR (Quelle: LUXE Salon & Studio):
+- Mauve/Rose + Serif + Script-Akzente; Booking-Kalender-Widget ("Book Your Slot");
+  Stats-Zeile (500+ Clients, 15+ Stylists, 8+ Jahre); Trust-Chips (u.a. "Hygienic & Safe");
+  Studio-Video-CTA; Stylist-/Gallery-Sektionen.
+- Blaupause fuer F13 Friseur-Vertical (Booking/Team/Gallery = exakt die fehlenden Features).
+- Compliance-Link: "Hygienic & Safe"-Chip = Hygiene-Vorschriften aus Strategie-Annex.
+WEITERE DESIGN-REFERENZEN:
+- Lumiere Skincare: Premium-E-Commerce (Trust-Badges, Promo-Schwelle "Free Kit ab $99",
+  Social-Proof-Karte) -> Shop-Features/Beauty-Tenants.
+- Aurora Headphones: Produkt-Landing (Spec-Chips, Variant-Selector mit Preis)
+  -> Produkt-/Shop-Tenants.
+- Novatech: SaaS-Landing (Floating-Stat-Cards, Avatar-Proof) -> eigene Sales-Page.
+TOOL: 21st.dev - Marketplace fuer React-UI-Components (copy-paste, shadcn-Stil).
+- F13-Backlog; Lizenz pro Komponente pruefen (F8).
+Regel 50 bleibt aktiv.
