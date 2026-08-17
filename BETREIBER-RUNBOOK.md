@@ -52,3 +52,8 @@ Entscheidungsregel: nur bauen, wenn zahlender Kunde es konkret anfragt.
 ## AUFGABE 8: Monitoring (woechentlich, 1 Min)
 1. Vercel -> Observability/Logs: Fehlerrate pruefen (Ziel 0 %).
 2. Runtime-Logs auf [AUDIT]- und Error-Eintraege sichten.
+## AUFGABE 9: Redis-Override-Backup (monatlich, 2 Min)
+1. Upstash Dashboard -> Data Browser -> Key tenant:{tenantId}:config-override oeffnen.
+2. JSON-Wert kopieren, lokal/Drive speichern: backups/config-override-YYYY-MM.json.
+3. Restore im Notfall: Data Browser -> SET tenant:{tenantId}:config-override <json>.
+Hinweis: Tokens/Secrets NIEMALS ins Repository.
