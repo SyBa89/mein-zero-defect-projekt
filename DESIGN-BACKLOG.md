@@ -57,3 +57,23 @@ Paletten/Gradients:
 - Lime Crush: #F9F586 -> #A1FFCE  (Handwerk/Kiosk-Kandidat)
 - Berry Frost:#B24592 -> #F15F79  (Friseur-Hero-Kandidat)
 Hinweis: WCAG-AA vor Einsatz pruefen. Regel 50 bleibt aktiv.
+
+## 7. NACHTRAG 4 - Style-Direction-Rezept + Gradients (Intake 17.08.2026)
+PROZESS-REZEPT (Quelle: @duncanrogoff): "Context before Prompt"
+- Nie generisch prompten ("build a landing page") -> erzeugt AI-Default-Look.
+- Immer attachen: Brand-Colors, Logo, Referenz-Screenshots, Design-System = Source of Truth.
+- Prompt-Schablone: "Design and build a premium, conversion-focused website for [BRAND].
+  Strictly follow the uploaded brand colors, typography, logo files and reference
+  screenshots as the source of truth. Sections: navigation, hero, features,
+  testimonials, pricing, FAQ, footer. Polished, animation-rich, brand-consistent,
+  generous whitespace, full responsiveness in one pass."
+- Bestaetigt unseren Governance-Ansatz: Manifest/Backlog = Context fuer jede Session.
+SELF-AUDIT NOTE: Vertical-Pages (Handwerker/Arzt/Friseur/Restaurant) nutzen
+Gradient-Hero + Emoji-Icons = teilweise "AI-Default"-Aesthetik.
+-> Design-Pass v2 MIT Backlog-Paletten + Rezept. Trigger: Kundenbedarf. (F13)
+Gradients:
+- Aurora Dust:    #B993D6 -> #8CA6DB   (Arzt/Vertrauen-Kandidat)
+- Sunrise Sorbet: #C6FFDD -> #FBD786 -> #F7797D   (Restaurant/Cafe-Kandidat)
+- Neon Pulse:     #8A2387 -> #E94057 -> #F27121   (Event/Lotto-Akzent; WCAG kritisch)
+- Mint Eclipse:   #1F4037 -> #493240   (Dark-Mode/Footer-Kandidat)
+Hinweis: WCAG-AA vor Einsatz pruefen. Regel 50 bleibt aktiv.
