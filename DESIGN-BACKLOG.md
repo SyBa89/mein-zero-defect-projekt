@@ -164,3 +164,21 @@ FORMELN VERTIEFT (@yassinezaanouni Einzelkarten):
   -> Validiert: MobileActionBar (fix unten, grosse Targets) = D~0 = Fitts-optimal.
 - Measure 45-75 (Ziel 66ch): Lesetexte (Datenschutz/About) im F13-Typo-Pass pruefen.
 Regel 50 bleibt aktiv.
+
+## 13. NACHTRAG 10 - Optimierungs-Level-Modell + Mockup/Sales-Tools (Intake 17.08.2026)
+STRATEGIE: SELF-DRIVING WEBSITE 5-LEVEL-MODELL (Quelle: @ki_borish)
+- L1 Statisch (alle sehen dasselbe) = UNSER IST-ZUSTAND, bewusst privacy-first (cookieless).
+- L2 Tracking -> bei uns NUR cookieless (Vercel Web Analytics), DSGVO-konform ohne
+  Consent; passt zu Runbook-Item "Enable Web Analytics". (F17)
+- L3 A/B-Test (ship the winner) -> Vercel Flags (Dashboard-Recommendation vorhanden). (F17)
+- L4 KI-Agent (testet & shippt, Human-in-the-Loop) = Vision/Backlog.
+- L5 Personalisiert (perfekte Version pro Besuch; Loop zeigen->messen->lernen->anpassen)
+  = Vision/Backlog.
+- BUSINESS-INSIGHT: Level = Upsell-Stufen der Plattform (Service-Tiers fuer Kunden).
+- DSGVO-Grenze: L2+ nur cookieless ODER mit Consent-Banner; nie Third-Party-Tracking.
+SALES-STACK ERGAENZT (Quelle: @yassinezaanouni "Best Free Mockup Websites"):
+- browserframe.com (Screenshots in echte Browser-Frames, free) - Angebote/OG.
+- artboard.studio (Produkt-Mockups im Browser, freemium).
+- mockups-design.com (Mockup-Dateien ohne Signup, free).
+- Reelfolio erneut als "MY PICK" bestaetigt (Showreel).
+Regel 50 bleibt aktiv.
