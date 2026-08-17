@@ -23,12 +23,12 @@ export function ToastContainer() {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 w-full max-w-sm">
+    <div className="fixed top-4 left-4 right-4 z-50 flex flex-col gap-2 sm:top-auto sm:left-auto sm:bottom-4 sm:max-w-sm">
       {toasts.map((toast) => (
         <div
           key={toast.id}
           className={`flex items-start gap-3 p-4 rounded-lg shadow-lg border-l-4 animate-in slide-in-from-bottom-5 fade-in duration-300 ${typeStyles[toast.type]}`}
-          role="alert"
+          role={toast.type === 'error' ? 'alert' : 'status'}
         >
           <div className="flex-shrink-0 mt-0.5">
             {icons[toast.type]}
@@ -37,7 +37,7 @@ export function ToastContainer() {
             {toast.message}
           </div>
           <button
-            onClick={() => removeToast(toast.id)}
+            aria-label="Schließen" onClick={() => removeToast(toast.id)}
             className="flex-shrink-0 rounded-md p-1 hover:bg-black/5 transition-colors"
           >
             <XMarkIcon className="h-4 w-4" />
