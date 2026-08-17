@@ -225,6 +225,7 @@ export default function AdminCockpit() {
                 <input
                   type="checkbox"
                   checked={config.openingHours?.isClosed || false}
+                    id="cockpit-isClosed" name="isClosed"
                   onChange={(e) =>
                     setConfig((prev) => ({
                       ...prev!,
@@ -239,6 +240,7 @@ export default function AdminCockpit() {
               </label>
               <textarea
                 value={config.openingHours?.emergencyMessage || ''}
+                  id="cockpit-emergencyMessage" name="emergencyMessage"
                 onChange={(e) =>
                   setConfig((prev) => ({
                     ...prev!,
@@ -262,6 +264,7 @@ export default function AdminCockpit() {
                   <input
                     type="text"
                     value={item.hours}
+                      id={`cockpit-hours-${index}`} name={`hours-${index}`}
                     onChange={(e) => updateOpeningHoursItem(index, 'hours', e.target.value)}
                     className="field-input !py-1 !border text-sm"
                     placeholder="z.B. 08:00-12:00"
@@ -270,6 +273,7 @@ export default function AdminCockpit() {
                     <input
                       type="checkbox"
                       checked={item.isOpen}
+                        id={`cockpit-isOpen-${index}`} name={`isOpen-${index}`}
                       onChange={(e) => updateOpeningHoursItem(index, 'isOpen', e.target.checked)}
                     />
                     Offen
@@ -287,6 +291,7 @@ export default function AdminCockpit() {
                 <input
                   type="text"
                   value={config.banners?.jackpotLabel || ''}
+                    id="cockpit-jackpotLabel" name="jackpotLabel"
                   onChange={(e) =>
                     setConfig((prev) => ({
                       ...prev!,
@@ -304,6 +309,7 @@ export default function AdminCockpit() {
                 <input
                   type="text"
                   value={config.banners?.highlightLabel || ''}
+                    id="cockpit-highlightLabel" name="highlightLabel"
                   onChange={(e) =>
                     setConfig((prev) => ({
                       ...prev!,

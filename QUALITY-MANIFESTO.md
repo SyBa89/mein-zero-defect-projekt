@@ -67,3 +67,5 @@ Jede künftige Session, die an diesem Projekt arbeitet, beginnt hier.
 - Keine Regex auf JSX: strukturelle Patches nutzen (scripts/fix-a11y.js).
 - Vor Fertig-Meldung immer git diff --stat pruefen (7c8e78a enthielt nur das Script).
 - E2E ist die einzige Wahrheitsquelle; Unit-Gruen allein genuegt nicht.
+- Commit-Messages muessen dem tatsaechlichen Diff entsprechen (Traceability).
+- Vor Scripts: package.json auf type:module pruefen (.cjs fuer CommonJS).
