@@ -3,23 +3,10 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import { getEffectiveConfig } from '@/lib/config-loader';
 import { verifySessionToken, hasPermission } from '@/lib/auth';
 import { setConfigOverride, ConfigOverride } from '@/lib/config-override';
-import { z } from 'zod';
+import { OverrideSchema } from '@/lib/schemas/override.schema';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-
-// ZERO-DEFECT HARDENING v2: Whitelist-Schema im STRIP-Modus
-// - Bekannte Felder: typ-validiert (Sicherheit)
-// - Unbekannte Felder: sicher ignoriert, NICHT persistiert (kein 422 fuer Cockpit-Payloads)
-// - nullable: leere/zurueckgesetzte Cockpit-Felder brechen nicht
-const OverrideSchema = z.object({
-  openingHours: z.unknown().optional(),
-  banners: z.unknown().optional(),
-  sections: z.unknown().optional(),
-  emergencyMessage: z.string().nullable().optional(),
-  isClosed: z.boolean().nullable().optional(),
-  updatedAt: z.string().optional(),
-});
 
 export async function GET() {
   try {
@@ -68,7 +55,6 @@ export async function POST(request: NextRequest) {
       { status: 422 }
     );
 
-  // Expliziter, typsicherer Override-Aufbau (null wird verworfen)
   const d = parsed.data;
   const override: ConfigOverride = {
     ...(d.openingHours !== undefined ? { openingHours: d.openingHours } : {}),
