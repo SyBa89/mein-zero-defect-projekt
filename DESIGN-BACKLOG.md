@@ -200,3 +200,14 @@ UI-LIBS (F13-Backlog; Lizenz-Check F8 vor Einsatz):
 SALES-STACK:
 - mockuphone.com (Device-Frames, free) - ergaenzt BrowserFrame/Artboard/Mockups-Design.
 Regel 50 bleibt aktiv.
+
+## 15. NACHTRAG 12 - UI-Terminologie-Dictionary + Duplikate (Intake 17.08.2026)
+TOOL: namethatui.com (Quelle: @howtowebdev) - "visual dictionary of UI":
+- Eigene Worte -> echter Name + API-Symbol + paste-ready Prompt fuer Coding-Agents.
+- Komplement zum Style-Direction-Rezept (Nachtrag 4): praezise Terminologie =
+  bessere KI-Generierung, weniger Iterationen.
+- Styles-Atlas (Skeuo/Neumorphism/Glassmorphism/Liquid Glass) = Referenz fuer F13.
+- Validiert: unsere "glass-card"-Klasse = Glassmorphism (korrekter Begriff).
+DUPLIKATE (bereits klassifiziert, keine Aktion): Reelfolio, BrowserFrame,
+Mockups-Design, Artboard Studio (Sales-Stack, Nachtraege 7/10).
+Regel 50 bleibt aktiv.
