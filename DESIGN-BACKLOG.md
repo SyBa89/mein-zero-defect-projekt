@@ -112,3 +112,19 @@ SECURITY-VALIDIERUNG EXTERN (@webnailed-Serie):
 - 05 Rate Limiting: BESTAETIGT (rate-limit.ts + Tests).
 -> Keine Aktion; dient als externer Nachweis fuer das Uebergabe-Zertifikat.
 Regel 50 bleibt aktiv.
+
+## 10. NACHTRAG 7 - SSR-Validierung + CORS-Policy + Inspirations-Verzeichnisse (Intake 17.08.2026)
+ARCHITEKTUR-VALIDIERUNG (Quelle: @kuls.tech SSR):
+- SSR richtig fuer content-heavy, public-facing Sites (Storefronts) - bestaetigt unsere
+  Next.js-App-Router-Wahl fuer Tenant-Seiten (First Paint ~0.3s statt 3.4s; SEO/Sharing).
+- Trade-off "server does more work per request" = exakt der Grund fuer F10 (ISR/Caching),
+  um Server-Last pro Request zu senken ohne First-Paint/SEO zu verlieren.
+SEC-NOTE: CORS (Quelle: @webnailed 01) - "Allow-Origin: * = everyone on the list"
+- Unsere Policy: "*" NUR auf oeffentlichem Read-Only-Endpoint /api/config
+  (Daten ohnehin oeffentlich; erlaubt Widget-Embeds).
+- Admin-/Mutations-Endpoints: KEINE CORS-Header (same-origin only). (F16 - dokumentieren)
+INSPIRATIONS-VERZEICHNISSE (grafikcem):
+- toolfolio.io (Framer, Rive, Spline) - fuer F13 Animations/Design-Pass.
+- adfolio.design (B2B-Ads/Creative) - fuer Marketing-Phase.
+- savee.com (Moodboards) - fuer F13 Design-Welt-Auswahl.
+Regel 50 bleibt aktiv.
