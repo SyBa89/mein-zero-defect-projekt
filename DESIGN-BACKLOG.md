@@ -77,3 +77,21 @@ Gradients:
 - Neon Pulse:     #8A2387 -> #E94057 -> #F27121   (Event/Lotto-Akzent; WCAG kritisch)
 - Mint Eclipse:   #1F4037 -> #493240   (Dark-Mode/Footer-Kandidat)
 Hinweis: WCAG-AA vor Einsatz pruefen. Regel 50 bleibt aktiv.
+
+## 8. NACHTRAG 5 - Impeccable + Webhook-Security-Spec + Gradients (Intake 17.08.2026)
+TOOL: pbakaus/impeccable (GitHub, ~56k Stars) - "The design language that makes
+your AI harness better at design." 188 gepruefte Design-Welten (Risograph-Aushang,
+Sattelleder & Faden, Rennserien-Livery u.a.).
+- TOP-KANDIDAT fuer F13: pro Vertical/Brand EINE Design-Welt waehlen,
+  statt Template-Einheitsbrei ("AI baut immer denselben Look").
+- Lizenz pruefen (F8) vor Einsatz.
+SEC-SPEC: WEBHOOKS (Quelle: @webnailed 07/Payments) - "verify before you trust"
+- Payment-Webhooks NUR mit Signatur-Pruefung akzeptieren (z.B. Stripe-Signature +
+  Secret); sonst kann jeder "order paid" fälschen.
+- Verbindlich fuer kuenftige Payment-/Booking-Integrationen. (F14)
+BESTAETIGT: @webnailed 06 (Input Validation zod/joi) = unsere Praxis
+(OverrideSchema, ClientConfigSchema) - keine Aktion noetig.
+Gradients:
+- Cyber Bloom: #FF0099 -> #493240  (Friseur/Event-Akzent)
+- Ocean Rose:  #AA4B6B -> #3B8D99  (Friseur/Restaurant-elegant)
+Hinweis: WCAG-AA vor Einsatz pruefen. Regel 50 bleibt aktiv.
