@@ -182,3 +182,21 @@ SALES-STACK ERGAENZT (Quelle: @yassinezaanouni "Best Free Mockup Websites"):
 - mockups-design.com (Mockup-Dateien ohne Signup, free).
 - Reelfolio erneut als "MY PICK" bestaetigt (Showreel).
 Regel 50 bleibt aktiv.
+
+## 14. NACHTRAG 11 - EU AI Act Transparenz + UI-Libs (Intake 17.08.2026)
+LEGAL/COMPLIANCE: EU AI ACT (Quelle: @itzdross; seit 02.08.2026 IN KRAFT)
+- Transparenzpflicht fuer KI-Inhalte: Kennzeichnung erforderlich (maschinlesbare
+  Provenienz, C2PA/Watermarking); Bussgelder bis 35 Mio. EUR.
+- NIEMALS Watermark-/Provenance-Remover einsetzen = Verstoss-Risiko.
+- Unsere Praxis validiert: Demo-Reviews bereits transparent als Demo gekennzeichnet.
+- F18 AI-CONTENT-POLICY (dokumentieren, kein Code jetzt):
+  (a) KI-generierte OG/Social-Assets labeln;
+  (b) Tenant-Uploads mit KI-Anteil kennzeichnen;
+  (c) AI-Act-Hinweis in naechste Legal-Revision (Runbook/Datenschutz-Anhang).
+UI-LIBS (F13-Backlog; Lizenz-Check F8 vor Einsatz):
+- VengeanceUI (Next-Gen Interactions; Vercel OSS Program) - Marketing/Landing.
+- AnimmasterLib (300 Pro-Components von Award-Sites) - F13 Design-Pass.
+- SkiperUI (Uncommon Tailwind Components, npx shadcn add) - Tailwind-kompatibel.
+SALES-STACK:
+- mockuphone.com (Device-Frames, free) - ergaenzt BrowserFrame/Artboard/Mockups-Design.
+Regel 50 bleibt aktiv.
