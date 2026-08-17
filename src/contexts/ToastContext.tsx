@@ -36,10 +36,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       const id = Math.random().toString(36).substring(2, 9);
       const newToast: Toast = { ...toast, id };
 
-      setToasts((prev) => [...prev, newToast]);
+      setToasts((prev) => [...prev, newToast].slice(-3));
 
-      const duration = toast.duration ?? 5000;
-      if (duration > 0) {
+      const duration = toast.duration ?? (toast.type === 'error' ? 0 : toast.type === 'info' ? 4000 : toast.type === 'warning' ? 7000 : 5000);
+      if (duration > 0 && toast.type !== 'error') {
         setTimeout(() => removeToast(id), duration);
       }
     },
