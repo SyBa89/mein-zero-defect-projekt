@@ -225,7 +225,7 @@ export default function AdminCockpit() {
                 <input
                   type="checkbox"
                   checked={config.openingHours?.isClosed || false}
-                  onChange={(e) =>
+                  onChange={(e) = id="cockpit-input-1" name="field1" id="cockpit-input-auto" name="field-auto">
                     setConfig((prev) => ({
                       ...prev!,
                       openingHours: { ...prev!.openingHours!, isClosed: e.target.checked },
@@ -239,7 +239,7 @@ export default function AdminCockpit() {
               </label>
               <textarea
                 value={config.openingHours?.emergencyMessage || ''}
-                onChange={(e) =>
+                onChange={(e) = id="cockpit-textarea-1" name="field2">
                   setConfig((prev) => ({
                     ...prev!,
                     openingHours: { ...prev!.openingHours!, emergencyMessage: e.target.value },
@@ -262,7 +262,7 @@ export default function AdminCockpit() {
                   <input
                     type="text"
                     value={item.hours}
-                    onChange={(e) => updateOpeningHoursItem(index, 'hours', e.target.value)}
+                    onChange={(e) = id="cockpit-input-1" name="field1" id="cockpit-input-auto" name="field-auto"> updateOpeningHoursItem(index, 'hours', e.target.value)}
                     className="field-input !py-1 !border text-sm"
                     placeholder="z.B. 08:00-12:00"
                   />
@@ -270,7 +270,7 @@ export default function AdminCockpit() {
                     <input
                       type="checkbox"
                       checked={item.isOpen}
-                      onChange={(e) => updateOpeningHoursItem(index, 'isOpen', e.target.checked)}
+                      onChange={(e) = id="cockpit-input-1" name="field1" id="cockpit-input-auto" name="field-auto"> updateOpeningHoursItem(index, 'isOpen', e.target.checked)}
                     />
                     Offen
                   </label>
@@ -287,7 +287,7 @@ export default function AdminCockpit() {
                 <input
                   type="text"
                   value={config.banners?.jackpotLabel || ''}
-                  onChange={(e) =>
+                  onChange={(e) = id="cockpit-input-1" name="field1" id="cockpit-input-auto" name="field-auto">
                     setConfig((prev) => ({
                       ...prev!,
                       banners: { ...prev!.banners!, jackpotLabel: e.target.value },
@@ -304,7 +304,7 @@ export default function AdminCockpit() {
                 <input
                   type="text"
                   value={config.banners?.highlightLabel || ''}
-                  onChange={(e) =>
+                  onChange={(e) = id="cockpit-input-1" name="field1" id="cockpit-input-auto" name="field-auto">
                     setConfig((prev) => ({
                       ...prev!,
                       banners: { ...prev!.banners!, highlightLabel: e.target.value },
