@@ -8,16 +8,18 @@ import { z } from 'zod';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// ZERO-DEFECT HARDENING: Whitelist-Schema (strict) vor Persistenz
-const OverrideSchema = z
-  .object({
-    openingHours: z.unknown().optional(),
-    banners: z.unknown().optional(),
-    sections: z.unknown().optional(),
-    emergencyMessage: z.string().optional(),
-    isClosed: z.boolean().optional(),
-  })
-  .strict();
+// ZERO-DEFECT HARDENING v2: Whitelist-Schema im STRIP-Modus
+// - Bekannte Felder: typ-validiert (Sicherheit)
+// - Unbekannte Felder: sicher ignoriert, NICHT persistiert (kein 422 fuer Cockpit-Payloads)
+// - nullable: leere/zurueckgesetzte Cockpit-Felder brechen nicht
+const OverrideSchema = z.object({
+  openingHours: z.unknown().optional(),
+  banners: z.unknown().optional(),
+  sections: z.unknown().optional(),
+  emergencyMessage: z.string().nullable().optional(),
+  isClosed: z.boolean().nullable().optional(),
+  updatedAt: z.string().optional(),
+});
 
 export async function GET() {
   try {
@@ -55,15 +57,27 @@ export async function POST(request: NextRequest) {
   if (!body || typeof body !== 'object')
     return NextResponse.json({ error: 'Ungültiger Body' }, { status: 400 });
 
-  // ZERO-DEFECT HARDENING: Zod-Whitelist-Validation VOR Persistenz
   const parsed = OverrideSchema.safeParse(body);
   if (!parsed.success)
     return NextResponse.json(
-      { error: 'Ungültige Felder', count: parsed.error.issues.length },
+      {
+        error: 'Ungültige Felder',
+        count: parsed.error.issues.length,
+        issues: parsed.error.issues.map((i) => i.path.join('.') || '(root)'),
+      },
       { status: 422 }
     );
 
-  const override = parsed.data as ConfigOverride;
+  // Expliziter, typsicherer Override-Aufbau (null wird verworfen)
+  const d = parsed.data;
+  const override: ConfigOverride = {
+    ...(d.openingHours !== undefined ? { openingHours: d.openingHours } : {}),
+    ...(d.banners !== undefined ? { banners: d.banners } : {}),
+    ...(d.sections !== undefined ? { sections: d.sections } : {}),
+    ...(typeof d.emergencyMessage === 'string' ? { emergencyMessage: d.emergencyMessage } : {}),
+    ...(typeof d.isClosed === 'boolean' ? { isClosed: d.isClosed } : {}),
+  };
+
   const ok = await setConfigOverride(override);
   if (!ok)
     return NextResponse.json(
@@ -71,7 +85,6 @@ export async function POST(request: NextRequest) {
       { status: 503 }
     );
 
-  // ZERO-DEFECT HARDENING: Audit-Log ohne PII
   console.info('[AUDIT] config override saved', {
     role: session.role,
     at: new Date().toISOString(),
