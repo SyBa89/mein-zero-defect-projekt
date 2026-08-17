@@ -2,10 +2,13 @@
 // ✅ ZERO-DEFECT: Hybrid-Loader für Server- (SSR/SSG) und Client-Kontext
 // ✅ WHITE-LABEL: Mandanten-spezifische Configs via ENV oder Default
 // ✅ SECURITY: Keine sensiblen Daten im Client-Bundle
+// ✅ LIVE-SAVE: unstable_noStore() verhindert Data-Cache für Echtzeit-Updates
 
 import type { TenantConfig } from '@/types/config';
+import { unstable_noStore as noStore } from 'next/cache';
 import { defaultTenantConfig } from './config/defaults';
 import { tenantConfigs } from './config/tenants';
+import { getConfigOverride } from './config-override';
 
 /**
  * Server-seitige Config-Auflösung (App Router, RSC)
@@ -65,13 +68,17 @@ function validateConfig(config: TenantConfig): asserts config is TenantConfig {
     );
   }
 }
-import { getConfigOverride } from './config-override';
 
 /**
  * ZERO-DEFECT: Merged Static-Config + Redis-Override
- * Single Source of Truth fuer Server-Komponenten
+ * Single Source of Truth für Server-Komponenten
+ * 
+ * ✅ LIVE-SAVE: unstable_noStore() verhindert Data-Cache
+ * Damit revalidatePath('/') + revalidateTag('config') sofort wirken
  */
 export async function getEffectiveConfig() {
+  noStore(); // Verhindert Next.js Data Cache für Live-Save-Scenarios
+  
   const staticConfig = getClientConfig();
   const override = await getConfigOverride();
   if (!override) return staticConfig;
