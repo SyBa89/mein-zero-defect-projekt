@@ -1,9 +1,11 @@
-// src/app/(home)/page.tsx
-// ✅ ZERO-DEFECT: Startseite rendert wieder ALLE Sektionen (kein Black-Screen)
-
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import { getClientConfig } from '@/lib/config-loader';
+import { getDomainFromHost } from '@/lib/config/domain';
+import { headers } from 'next/headers';
+import HandwerkerHome from './handwerker/page';
+import ArztHome from './arzt/page';
+import FriseurHome from './friseur/page';
+import RestaurantHome from './restaurant/page';
 import JackpotBanner from '@/components/JackpotBanner';
 import HeroSection from '@/components/HeroSection';
 
@@ -18,16 +20,14 @@ const DynamicSections = dynamic(() => import('@/components/DynamicSections'));
 const CTASection = dynamic(() => import('@/components/CTASection'));
 const LegalNotice = dynamic(() => import('@/components/LegalNotice'));
 
-const config = getClientConfig();
-
 export const metadata: Metadata = {
-  title: config.brand.name + ' | ' + config.brand.slogan,
-  description: config.seo.description,
-  keywords: config.seo.keywords,
+  title: 'Startseite',
+  description: 'Willkommen auf unserer Startseite',
 };
 
-export default function Home() {
-  const domain = getDomainFromHost(typeof window !== 'undefined' ? window.location.host : 'localhost');
+export default async function Home() {
+  const headersList = await headers();
+  const domain = getDomainFromHost(headersList.get('host'));
   
   // Conditional Rendering basierend auf Domain
   if (domain === 'handwerker') return <HandwerkerHome />;
@@ -35,7 +35,7 @@ export default function Home() {
   if (domain === 'friseur') return <FriseurHome />;
   if (domain === 'restaurant') return <RestaurantHome />;
   
-  // Default: Kiosk {
+  // Default: Kiosk
   return (
     <>
       <JackpotBanner />
