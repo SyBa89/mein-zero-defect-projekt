@@ -62,3 +62,35 @@ const domains: Record<DomainType, DomainConfig> = {
 // Liest die Umgebungsvariable. Standard ist Kiosk, kann aber via .env geändert werden.
 const envDomain = (process.env.NEXT_PUBLIC_DOMAIN_TYPE as DomainType) || 'kiosk';
 export const CURRENT_DOMAIN = domains[envDomain];
+
+/**
+ * ZERO-DEFECT: Domain-Resolution aus Host-Header
+ * Ermöglicht Multi-Tenant basierend auf Subdomain/Domain
+ */
+export function getDomainFromHost(host: string | null): DomainType {
+  if (!host) return 'kiosk'; // Fallback
+  
+  const h = host.toLowerCase();
+  
+  // Subdomain-basierte Resolution
+  if (h.includes('handwerk') || h.includes('handwerker')) return 'handwerker';
+  if (h.includes('arzt') || h.includes('praxis')) return 'arzt';
+  if (h.includes('friseur') || h.includes('salon')) return 'friseur';
+  if (h.includes('restaurant') || h.includes('bistro') || h.includes('cafe')) return 'restaurant';
+  
+  // Fallback: Kiosk
+  return 'kiosk';
+}
+
+/**
+ * Helper: Aktuelle Domain aus Request-Context holen
+ */
+export function getCurrentDomain(): DomainType {
+  // Client-Side: window.location.host
+  // Server-Side: headers().get('host')
+  if (typeof window !== 'undefined') {
+    return getDomainFromHost(window.location.host);
+  }
+  // Server-Side Fallback: ENV-Variable
+  return (process.env.NEXT_PUBLIC_DOMAIN_TYPE as DomainType) || 'kiosk';
+}

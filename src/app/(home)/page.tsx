@@ -26,7 +26,16 @@ export const metadata: Metadata = {
   keywords: config.seo.keywords,
 };
 
-export default function HomePage() {
+export default function Home() {
+  const domain = getDomainFromHost(typeof window !== 'undefined' ? window.location.host : 'localhost');
+  
+  // Conditional Rendering basierend auf Domain
+  if (domain === 'handwerker') return <HandwerkerHome />;
+  if (domain === 'arzt') return <ArztHome />;
+  if (domain === 'friseur') return <FriseurHome />;
+  if (domain === 'restaurant') return <RestaurantHome />;
+  
+  // Default: Kiosk {
   return (
     <>
       <JackpotBanner />
