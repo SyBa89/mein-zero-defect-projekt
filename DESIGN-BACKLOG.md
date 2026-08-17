@@ -128,3 +128,22 @@ INSPIRATIONS-VERZEICHNISSE (grafikcem):
 - adfolio.design (B2B-Ads/Creative) - fuer Marketing-Phase.
 - savee.com (Moodboards) - fuer F13 Design-Welt-Auswahl.
 Regel 50 bleibt aktiv.
+
+## 11. NACHTRAG 8 - Motion/UX-Formeln + Animated-Mockup-Stack (Intake 17.08.2026)
+UX-SPEC: MOTION & FORMELN (Quelle: @yassinezaanouni "Seven Formulas")
+- Motion Duration: 200-300ms fuer UI-Bewegung; <100ms = nichts bewegt; >500ms = Warten.
+  Groessere Elemente = laengere Dauer (Material Guidance).
+- 45-75 Zeichen/Zeile (Measure) fuer Lesetexte.
+- Fitts: Primaer-CTAs gross + nah platzieren.
+- Hick: Auswahl reduzieren (Entscheidungszeit = log2(n+1)).
+- Doherty: Interaktion <400ms = instant (validiert: Live-Save + SSR-First-Paint).
+- Miller 7±2: max ~7 sichtbare Gruppen (Cockpit-Sektionen bei Iteration pruefen).
+- 60/30/10: 60% Haupt-/30% Zweit-/10% Akzentfarbe.
+  "Accent only works while rare - spend it on the thing you want clicked."
+  Validiert unsere Praxis: --theme-primary nur fuer CTAs (Anrufen/Route/Speichern).
+SALES-STACK: ANIMATED MOCKUPS (Quelle: @janm_ux)
+- Pipeline: Figma -> Jitter (jitter.video, AI-Brainstorm) -> Video-Export
+  -> ultramock.io (Device-Templates) -> top-tier animated Mockup.
+- Einsatz: Showreel/Landing/Sales-Material (vgl. Reelfolio, Raylight), NICHT Tenant-Code.
+efecto.app (Dither/ASCII): wie Ascii Magic - ABGELEHNT fuer Tenants; optional OG/Social-Art.
+Regel 50 bleibt aktiv.
