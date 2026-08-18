@@ -15,7 +15,35 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const config = useConfig();
   const businessType = config.business.type;
 
-  const theme = useMemo(() => getDesignSystem(businessType), [businessType]);
+  // ✅ HIERARCHICAL THEME: config.theme (3-Ebenen-Merge) + DesignSystem für reiche Details
+  const theme = useMemo(() => {
+    const designSystem = getDesignSystem(businessType);
+    return {
+      name: designSystem.name,
+      colors: {
+        primary: config.theme.primaryColor || designSystem.colors.primary,
+        secondary: config.theme.secondaryColor || designSystem.colors.secondary,
+        accent: config.theme.accentColor || designSystem.colors.accent,
+        background: designSystem.colors.background,
+        surface: designSystem.colors.surface,
+        text: designSystem.colors.text,
+        textSecondary: designSystem.colors.textSecondary,
+        border: designSystem.colors.border,
+      },
+      typography: {
+        heading: config.theme.fontHeading ? `'${config.theme.fontHeading}', sans-serif` : designSystem.typography.heading,
+        body: config.theme.fontBody ? `'${config.theme.fontBody}', sans-serif` : designSystem.typography.body,
+        mono: designSystem.typography.mono,
+        headingWeights: designSystem.typography.headingWeights,
+        bodyWeights: designSystem.typography.bodyWeights,
+      },
+      spacing: designSystem.spacing,
+      shadows: designSystem.shadows,
+      borderRadius: designSystem.borderRadius,
+      animations: designSystem.animations,
+      googleFontsUrl: designSystem.googleFontsUrl,
+    } as DesignSystem;
+  }, [config, businessType]);
 
   useEffect(() => {
     if (theme.googleFontsUrl) {
@@ -35,6 +63,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     Object.entries(theme.colors).forEach(([key, value]) => {
       root.style.setProperty(`--color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`, value);
     });
+    root.style.setProperty('--theme-primary', theme.colors.primary);
+    root.style.setProperty('--theme-secondary', theme.colors.secondary);
+    root.style.setProperty('--theme-accent', theme.colors.accent);
     root.style.setProperty('--font-heading', theme.typography.heading);
     root.style.setProperty('--font-body', theme.typography.body);
     root.style.setProperty('--font-mono', theme.typography.mono);
