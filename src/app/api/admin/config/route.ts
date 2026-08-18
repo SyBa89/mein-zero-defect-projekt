@@ -15,6 +15,7 @@ export async function GET() {
       brand: effective.brand,
       contact: effective.contact,
       business: effective.business,
+      theme: effective.theme,
       openingHours: effective.openingHours,
       banners: effective.banners,
       sections: effective.sections,
@@ -62,6 +63,7 @@ export async function POST(request: NextRequest) {
     ...(d.sections !== undefined ? { sections: d.sections } : {}),
     ...(typeof d.emergencyMessage === 'string' ? { emergencyMessage: d.emergencyMessage } : {}),
     ...(typeof d.isClosed === 'boolean' ? { isClosed: d.isClosed } : {}),
+    ...(d.theme !== undefined ? { theme: d.theme } : {}),
   };
 
   const ok = await setConfigOverride(override);
