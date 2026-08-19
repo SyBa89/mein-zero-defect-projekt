@@ -38,6 +38,21 @@ const FONT_BODY_OPTIONS = [
 type ColorKey = 'primaryColor' | 'secondaryColor' | 'accentColor';
 type Toast = { type: 'success' | 'error' | 'info'; message: string } | null;
 
+function luminance(hex: string): number {
+  const m = hex.replace('#', '');
+  if (m.length !== 6) return 0;
+  const rgb = [0, 1, 2]
+    .map((n) => parseInt(m.substr(n * 2, 2), 16) / 255)
+    .map((c) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)));
+  return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+}
+
+function contrastRatio(a: string, b: string): number {
+  const l1 = luminance(a);
+  const l2 = luminance(b);
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+}
+
 const FONT_SLUG_MAP: Record<string, string> = {
   poppins: 'poppins', montserrat: 'montserrat', roboto: 'roboto',
   lora: 'lora', inter: 'inter', 'source-sans': 'source-sans',
@@ -90,6 +105,14 @@ export function StyleEditor() {
     ];
     return keys.some(k => draft[k] !== tenantTheme[k]);
   }, [draft, tenantTheme]);
+
+  // -- WCAG-Live-Check: Primary vs. weisser Text --
+  const contrastWarning = useMemo(() => {
+    const ratio = contrastRatio(draft.primaryColor || '#000000', '#FFFFFF');
+    return ratio < 4.5
+      ? `WCAG-Hinweis: Kontrast Primary/Weiss ${ratio.toFixed(2)}:1 - AA empfiehlt mind. 4.5:1.`
+      : '';
+  }, [draft.primaryColor]);
 
 
   // -- Sync: Draft nur aktualisieren wenn keine ungespeicherten Aenderungen (Hardening) --
@@ -279,6 +302,11 @@ export function StyleEditor() {
       {/* Color Picker */}
       <div className="mb-6">
         <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">Farben</h3>
+        {contrastWarning && (
+          <div className="mb-3 p-2 rounded-lg text-xs font-medium bg-yellow-50 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800">
+            {contrastWarning}
+          </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {(['primaryColor', 'secondaryColor', 'accentColor'] as ColorKey[]).map(key => (
             <div key={key} className="space-y-2">
