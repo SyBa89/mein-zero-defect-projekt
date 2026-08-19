@@ -170,3 +170,8 @@ backups/
 analyze/
 playwright-report/
 # Local backups (Skript 54.x/55/56/59/61 artifacts)
+
+# ── Local Debug-Logs (NIE committen) ──
+*-log.txt
+schema-raw.txt
+v2*-log.txt
