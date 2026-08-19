@@ -1,14 +1,13 @@
 // src/app/layout.tsx
-// ✅ ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
-// ✅ LIVE-UPDATE: Server-Merge mit Redis-Override (ISR-Revalidierung bei Speichern)
-// ✅ WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
-// ✅ SEO: Globale Metadaten aus Tenant-Config
+// Ã¢Å“â€¦ ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
+// Ã¢Å“â€¦ LIVE-UPDATE: Server-Merge mit Redis-Override (ISR-Revalidierung bei Speichern)
+// Ã¢Å“â€¦ WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
+// Ã¢Å“â€¦ SEO: Globale Metadaten aus Tenant-Config
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ConfigProvider } from '@/contexts/ConfigContext';
-import { getTenantConfig } from '@/lib/config-loader';
-import { getConfigOverride } from '@/lib/config-override';
+import { getTenantConfig, getEffectiveConfig } from '@/lib/config-loader';
 import { MobileActionBar } from '@/components/MobileActionBar';
 import type { BorderRadius } from '@/types/config';
 import './globals.css';
@@ -61,13 +60,7 @@ const radiusMap: Record<BorderRadius, string> = {
 import CookieNotice from '@/components/CookieNotice';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const base = getTenantConfig();
-  const override = await getConfigOverride();
-  const config = {
-    ...base,
-    ...(override?.openingHours ? { openingHours: override.openingHours as typeof base.openingHours } : {}),
-    ...(override?.banners ? { banners: { ...base.banners, ...override.banners } as typeof base.banners } : {}),
-  } as typeof base;
+  const config = await getEffectiveConfig();
 
   const cssVars = {
     '--theme-primary': config.theme.primaryColor,
@@ -133,7 +126,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                       closes: times[1] ?? '23:59',
                     };
                   }),
-                priceRange: '€€',
+                priceRange: 'Ã¢â€šÂ¬Ã¢â€šÂ¬',
                 image: config.url + '/images/logo.png',
               }),
             }}
