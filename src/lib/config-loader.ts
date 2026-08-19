@@ -1,9 +1,9 @@
 // src/lib/config-loader.ts
-// âœ… ZERO-DEFECT: Hybrid-Loader fÃ¼r Server- (SSR/SSG) und Client-Kontext
-// âœ… WHITE-LABEL: Mandanten-spezifische Configs via ENV oder Default
-// âœ… SECURITY: Keine sensiblen Daten im Client-Bundle
-// âœ… LIVE-SAVE: unstable_noStore() verhindert Data-Cache fÃ¼r Echtzeit-Updates
-// âœ… HIERARCHICAL THEME: 3-Ebenen-Merge (Business-Type â†’ Tenant â†’ Runtime)
+// Ã¢Å“â€¦ ZERO-DEFECT: Hybrid-Loader fÃƒÂ¼r Server- (SSR/SSG) und Client-Kontext
+// Ã¢Å“â€¦ WHITE-LABEL: Mandanten-spezifische Configs via ENV oder Default
+// Ã¢Å“â€¦ SECURITY: Keine sensiblen Daten im Client-Bundle
+// Ã¢Å“â€¦ LIVE-SAVE: unstable_noStore() verhindert Data-Cache fÃƒÂ¼r Echtzeit-Updates
+// Ã¢Å“â€¦ HIERARCHICAL THEME: 3-Ebenen-Merge (Business-Type Ã¢â€ â€™ Tenant Ã¢â€ â€™ Runtime)
 
 import type { TenantConfig, ThemeConfig } from '@/types/config';
 import { unstable_noStore as noStore } from 'next/cache';
@@ -13,7 +13,7 @@ import { getConfigOverride } from './config-override';
 import { getDesignSystem } from './design-systems';
 
 /**
- * Server-seitige Config-AuflÃ¶sung (App Router, RSC)
+ * Server-seitige Config-AuflÃƒÂ¶sung (App Router, RSC)
  * Nutzt NEXT_PUBLIC_TENANT_ID oder fallback auf default
  */
 export function getTenantConfig(tenantId?: string): TenantConfig {
@@ -25,26 +25,26 @@ export function getTenantConfig(tenantId?: string): TenantConfig {
 
   const config = tenantConfigs[resolvedId] ?? defaultTenantConfig;
 
-  // âœ… ZERO-DEFECT: Runtime-Validierung gegen inkonsistente Daten
+  // Ã¢Å“â€¦ ZERO-DEFECT: Runtime-Validierung gegen inkonsistente Daten
   validateConfig(config);
 
   return config;
 }
 
 /**
- * Client-seitige Config (Wrapper fÃ¼r KompatibilitÃ¤t)
- * FÃ¼r Pages, die noch den alten API-Namen nutzen
+ * Client-seitige Config (Wrapper fÃƒÂ¼r KompatibilitÃƒÂ¤t)
+ * FÃƒÂ¼r Pages, die noch den alten API-Namen nutzen
  */
 export function getClientConfig(): TenantConfig {
   return getTenantConfig();
 }
 
 /**
- * âœ… HIERARCHICAL THEME ENGINE
- * 3-Ebenen-Merge fÃ¼r maximale White-Label-SouverÃ¤nitÃ¤t:
- * 1. Business-Type Defaults (DesignSystem) â€” niedrigste PrioritÃ¤t
- * 2. Tenant Defaults (config.theme) â€” mittlere PrioritÃ¤t
- * 3. Runtime Overrides (Redis) â€” hÃ¶chste PrioritÃ¤t
+ * Ã¢Å“â€¦ HIERARCHICAL THEME ENGINE
+ * 3-Ebenen-Merge fÃƒÂ¼r maximale White-Label-SouverÃƒÂ¤nitÃƒÂ¤t:
+ * 1. Business-Type Defaults (DesignSystem) Ã¢â‚¬â€ niedrigste PrioritÃƒÂ¤t
+ * 2. Tenant Defaults (config.theme) Ã¢â‚¬â€ mittlere PrioritÃƒÂ¤t
+ * 3. Runtime Overrides (Redis) Ã¢â‚¬â€ hÃƒÂ¶chste PrioritÃƒÂ¤t
  */
 export const FONT_FAMILY_MAP: Record<string, string> = {
   poppins: "'Poppins', sans-serif",
@@ -76,7 +76,7 @@ export function getEffectiveTheme(
     fontBody: designSystem.typography.body.split(',')[0].replace(/'/g, '').toLowerCase(),
   };
 
-  // Ebene 2: Tenant Defaults Ã¼berschreiben (mittlere PrioritÃ¤t)
+  // Ebene 2: Tenant Defaults ÃƒÂ¼berschreiben (mittlere PrioritÃƒÂ¤t)
   if (tenantTheme) {
     if (tenantTheme.primaryColor) baseTheme.primaryColor = tenantTheme.primaryColor;
     if (tenantTheme.secondaryColor) baseTheme.secondaryColor = tenantTheme.secondaryColor;
@@ -86,7 +86,7 @@ export function getEffectiveTheme(
     if (tenantTheme.fontBody) baseTheme.fontBody = tenantTheme.fontBody;
   }
 
-  // Ebene 3: Runtime Overrides Ã¼berschreiben (hÃ¶chste PrioritÃ¤t)
+  // Ebene 3: Runtime Overrides ÃƒÂ¼berschreiben (hÃƒÂ¶chste PrioritÃƒÂ¤t)
   if (runtimeOverride) {
     if (runtimeOverride.primaryColor) baseTheme.primaryColor = runtimeOverride.primaryColor;
     if (runtimeOverride.secondaryColor) baseTheme.secondaryColor = runtimeOverride.secondaryColor;
@@ -100,7 +100,7 @@ export function getEffectiveTheme(
 }
 
 /**
- * Runtime-Validierung â€“ verhindert White-Screen bei fehlerhafter Config
+ * Runtime-Validierung Ã¢â‚¬â€œ verhindert White-Screen bei fehlerhafter Config
  */
 function validateConfig(config: TenantConfig): asserts config is TenantConfig {
   const required: (keyof TenantConfig)[] = [
@@ -126,35 +126,41 @@ function validateConfig(config: TenantConfig): asserts config is TenantConfig {
 
   if (!config.url?.startsWith('http')) {
     throw new Error(
-      `[Zero-Defect Config] url muss eine gÃ¼ltige URL sein (aktuell: "${config.url}")`
+      `[Zero-Defect Config] url muss eine gÃƒÂ¼ltige URL sein (aktuell: "${config.url}")`
     );
   }
 }
 
 /**
  * ZERO-DEFECT: Merged Static-Config + Redis-Override
- * Single Source of Truth fÃ¼r Server-Komponenten
+ * Single Source of Truth fÃƒÂ¼r Server-Komponenten
  * 
- * âœ… LIVE-SAVE: unstable_noStore() verhindert Data-Cache
+ * Ã¢Å“â€¦ LIVE-SAVE: unstable_noStore() verhindert Data-Cache
  * Damit revalidatePath('/') + revalidateTag('config') sofort wirken
  */
 export async function getEffectiveConfig() {
-  noStore(); // Verhindert Next.js Data Cache fÃ¼r Live-Save-Scenarios
-  
+  noStore(); // Verhindert Next.js Data Cache fuer Live-Save-Szenarien
+
   const staticConfig = getClientConfig();
   const override = await getConfigOverride();
-  
-  if (!override) return staticConfig;
-  
-  // âœ… HIERARCHICAL THEME: Merge theme from override
+
+  // Ebene 1.5: Design-Sprache (Override) vor Business-Type
+  const dsId = override?.designSystemId ?? staticConfig.business.type;
+
+  if (!override) {
+    return { ...staticConfig, designSystemId: dsId, theme: staticConfig.theme };
+  }
+
+  // HIERARCHICAL THEME: Ebene 1 = Design-Sprache
   const effectiveTheme = getEffectiveTheme(
-    staticConfig.business.type,
+    dsId,
     staticConfig.theme,
     override.theme
   );
-  
+
   return {
     ...staticConfig,
+    designSystemId: dsId,
     theme: effectiveTheme,
     openingHours: (override.openingHours as typeof staticConfig.openingHours) ?? staticConfig.openingHours,
     banners: { ...staticConfig.banners, ...(override.banners as Record<string, unknown> | undefined) },

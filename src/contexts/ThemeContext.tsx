@@ -16,9 +16,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const config = useConfig();
   const businessType = config.business.type;
 
-  // ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ HIERARCHICAL THEME: config.theme (3-Ebenen-Merge) + DesignSystem fÃƒÆ’Ã‚Â¼r reiche Details
+  // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ HIERARCHICAL THEME: config.theme (3-Ebenen-Merge) + DesignSystem fÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼r reiche Details
   const theme = useMemo(() => {
-    const designSystem = getDesignSystem(businessType);
+    const designSystem = getDesignSystem((config as { designSystemId?: string }).designSystemId || businessType);
     return {
       name: designSystem.name,
       colors: {
