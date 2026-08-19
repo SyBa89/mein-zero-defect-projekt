@@ -237,9 +237,9 @@ export function StyleEditor() {
             onChange={(e) => setSelectedPresetId(e.target.value)}
             className="flex-1 px-3 py-2 text-sm bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500"
           >
-            <option value="">Ã¢â‚¬â€ Preset auswaehlen Ã¢â‚¬â€</option>
+            <option value="">-- Preset auswaehlen --</option>
             {THEME_PRESETS.map(p => (
-              <option key={p.id} value={p.id}>{p.name} Ã¢â‚¬â€ {p.description}</option>
+              <option key={p.id} value={p.id}>{p.name} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â {p.description}</option>
             ))}
           </select>
           <button
