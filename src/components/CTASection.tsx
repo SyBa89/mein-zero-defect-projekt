@@ -48,7 +48,7 @@ export default function CTASection() {
 
       <div className="relative max-w-4xl mx-auto text-center">
         <FadeInWhenVisible direction="up" duration={0.8}>
-          <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-6">
+          <h2 className="text-3xl md:text-4xl font-black text-[var(--color-text)] dark:text-gray-100 mb-6">
             Besuchen Sie uns!
           </h2>
         </FadeInWhenVisible>
@@ -102,7 +102,7 @@ export default function CTASection() {
             <HoverLift liftAmount={-4}>
               <a
                 href={`tel:${contact.phone}`}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-bold text-lg radius-token-lg shadow-token-lg hover:shadow-token-xl transition-colors border-2 border-gray-200 dark:border-gray-700 backdrop-blur-sm bg-opacity-90"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-[var(--color-surface)] dark:bg-gray-800 text-[var(--color-text)] dark:text-gray-100 font-bold text-lg radius-token-lg shadow-token-lg hover:shadow-token-xl transition-colors border-2 border-gray-200 dark:border-gray-700 backdrop-blur-sm bg-opacity-90"
                 aria-label={`Jetzt anrufen: ${phoneFormatted}`}
               >
                 <svg

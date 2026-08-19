@@ -15,13 +15,13 @@ export default function Reviews() {
   return (
     <section className="py-20 px-4 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl font-black text-gray-900 dark:text-white mb-6">
+        <h2 className="text-4xl font-black text-[var(--color-text)] dark:text-white mb-6">
           Das sagen unsere Kunden
         </h2>
         <p className="text-xl text-gray-600 dark:text-gray-300 mb-12">
           Kundenstimmen aus {contact?.address?.city || 'der Region'}
         </p>
-        <div className="bg-white dark:bg-gray-800 radius-token-xl p-8 shadow-token-xl">
+        <div className="bg-[var(--color-surface)] dark:bg-gray-800 radius-token-xl p-8 shadow-token-xl">
           <div className="flex items-center justify-center gap-2 mb-4">
             <span className="text-3xl">⭐</span>
             <span className="text-2xl font-bold">5.0 Google</span>
@@ -40,7 +40,7 @@ export default function Reviews() {
                     {review.initial}
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900 dark:text-white">{review.name}</p>
+                    <p className="font-bold text-[var(--color-text)] dark:text-white">{review.name}</p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">{review.date}</p>
                   </div>
                 </div>

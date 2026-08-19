@@ -77,7 +77,7 @@ export default function HermesSection() {
             <div className="text-6xl mb-4 inline-block" aria-hidden="true">
               📦
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-4">
+            <h2 className="text-3xl md:text-4xl font-black text-[var(--color-text)] dark:text-gray-100 mb-4">
               Hermes Paketshop
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
@@ -100,7 +100,7 @@ export default function HermesSection() {
                 <StaggerItem>
                   <HoverLift liftAmount={-4}>
                     <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm radius-token-lg p-6 border border-white/40 dark:border-gray-700/40 shadow-token-sm h-full">
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                      <h3 className="text-2xl font-bold text-[var(--color-text)] dark:text-gray-100 mb-4">
                         📮 Pakete abholen & versenden
                       </h3>
                       <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -113,7 +113,7 @@ export default function HermesSection() {
                 <StaggerItem>
                   <HoverLift liftAmount={-4}>
                     <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm radius-token-lg p-6 border border-white/40 dark:border-gray-700/40 shadow-token-sm h-full">
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                      <h3 className="text-2xl font-bold text-[var(--color-text)] dark:text-gray-100 mb-4">
                         ↩️ Retouren & 🏷️ Etiketten
                       </h3>
                       <p className="text-gray-700 dark:text-gray-300 leading-relaxed">

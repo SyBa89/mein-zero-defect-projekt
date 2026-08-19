@@ -86,7 +86,7 @@ export default function DailyHighlightsSection() {
               <span className="text-4xl mr-3" aria-hidden="true">
                 🔥
               </span>
-              <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-black text-[var(--color-text)] dark:text-gray-100 tracking-tight">
                 Heute besonders gefragt
               </h2>
             </div>
@@ -102,7 +102,7 @@ export default function DailyHighlightsSection() {
                       <div className="text-4xl mb-3" aria-hidden="true">
                         {item.icon}
                       </div>
-                      <p className="font-bold text-gray-900 dark:text-gray-100 text-sm leading-tight">
+                      <p className="font-bold text-[var(--color-text)] dark:text-gray-100 text-sm leading-tight">
                         {item.text}
                       </p>
                     </div>

@@ -14,7 +14,7 @@ export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
 const variantStyles: Record<ButtonVariant, string> = {
   primary: 'bg-[var(--theme-primary)] hover:brightness-110 text-white shadow-token-lg hover:shadow-token-xl',
   secondary:
-    'bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:border-[var(--theme-primary)]',
+    'bg-[var(--color-surface)] dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-[var(--color-text)] dark:text-white hover:border-[var(--theme-primary)]',
   ghost: 'bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300',
   danger: 'bg-red-600 hover:bg-red-700 text-white shadow-token-lg hover:shadow-token-xl',
 };

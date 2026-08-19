@@ -107,8 +107,8 @@ export default function PackageCalculator() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 radius-token-lg shadow-token-lg border border-gray-100 dark:border-gray-700 p-6 md:p-8">
-      <h3 className="text-2xl font-black text-gray-900 dark:text-gray-100 mb-2 text-center flex items-center justify-center gap-2">
+    <div className="bg-[var(--color-surface)] dark:bg-gray-800 radius-token-lg shadow-token-lg border border-gray-100 dark:border-gray-700 p-6 md:p-8">
+      <h3 className="text-2xl font-black text-[var(--color-text)] dark:text-gray-100 mb-2 text-center flex items-center justify-center gap-2">
         <span aria-hidden="true">📦</span>
         Finde deine Paketgröße
       </h3>
@@ -142,7 +142,7 @@ export default function PackageCalculator() {
               placeholder="0"
               aria-invalid={hasError}
               aria-describedby={RESULT_ID}
-              className="w-full px-3 py-3 text-center bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 radius-token-md focus:ring-2 focus:ring-[var(--theme-primary)] focus:border-[var(--theme-primary)] outline-none transition-all font-bold text-gray-900 dark:text-white placeholder:text-gray-600 dark:text-gray-400 dark:placeholder:text-gray-600 dark:text-gray-400"
+              className="w-full px-3 py-3 text-center bg-[var(--color-surface)] dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 radius-token-md focus:ring-2 focus:ring-[var(--theme-primary)] focus:border-[var(--theme-primary)] outline-none transition-all font-bold text-[var(--color-text)] dark:text-white placeholder:text-gray-600 dark:text-gray-400 dark:placeholder:text-gray-600 dark:text-gray-400"
             />
           </div>
         ))}

@@ -14,11 +14,11 @@ export default function ProductsSection() {
   }
 
   return (
-    <section className="py-20 px-4 bg-white dark:bg-gray-900" id="products">
+    <section className="py-20 px-4 bg-[var(--color-surface)] dark:bg-gray-900" id="products">
       <div className="max-w-7xl mx-auto">
         <FadeInWhenVisible direction="up" duration={0.8}>
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-4">
+            <h2 className="text-3xl md:text-4xl font-black text-[var(--color-text)] dark:text-gray-100 mb-4">
               Unser Sortiment
             </h2>
           </div>
@@ -28,9 +28,9 @@ export default function ProductsSection() {
           {products.categories.map((category, index) => (
             <StaggerItem key={index}>
               <HoverLift liftAmount={-6}>
-                <div className="bg-white dark:bg-gray-800 radius-token-lg shadow-token-lg p-6 border border-gray-100 dark:border-gray-700 hover:shadow-token-xl transition-shadow h-full">
+                <div className="bg-[var(--color-surface)] dark:bg-gray-800 radius-token-lg shadow-token-lg p-6 border border-gray-100 dark:border-gray-700 hover:shadow-token-xl transition-shadow h-full">
                   <div className="text-5xl mb-4">{category.icon}</div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+                  <h3 className="text-xl font-bold text-[var(--color-text)] dark:text-gray-100 mb-3">
                     {category.title}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">{category.description}</p>

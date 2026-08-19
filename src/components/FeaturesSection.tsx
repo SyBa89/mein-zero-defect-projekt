@@ -18,7 +18,7 @@ export default function FeaturesSection() {
   if (isLoading) {
     return (
       <section
-        className="py-20 px-4 bg-white dark:bg-gray-900"
+        className="py-20 px-4 bg-[var(--color-surface)] dark:bg-gray-900"
         id="features"
         aria-busy="true"
         role="status"
@@ -32,7 +32,7 @@ export default function FeaturesSection() {
             {[...Array(6)].map((_, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-gray-800 radius-token-lg shadow-token-lg p-8 border border-gray-100 dark:border-gray-700"
+                className="bg-[var(--color-surface)] dark:bg-gray-800 radius-token-lg shadow-token-lg p-8 border border-gray-100 dark:border-gray-700"
               >
                 <div className="text-5xl mb-4 animate-pulse">⏳</div>
                 <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3 animate-pulse" />
@@ -50,11 +50,11 @@ export default function FeaturesSection() {
   if (!features || features.length === 0) return null;
 
   return (
-    <section className="py-20 px-4 bg-white dark:bg-gray-900" id="features">
+    <section className="py-20 px-4 bg-[var(--color-surface)] dark:bg-gray-900" id="features">
       <div className="max-w-7xl mx-auto">
         <FadeInWhenVisible direction="up" duration={0.8}>
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-4">
+            <h2 className="text-3xl md:text-4xl font-black text-[var(--color-text)] dark:text-gray-100 mb-4">
               {sectionTitle}
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -69,11 +69,11 @@ export default function FeaturesSection() {
         >
           {features.map((feature, index) => (
             <StaggerItem key={index}>
-              <div className="bg-white dark:bg-gray-800 radius-token-lg shadow-token-lg p-8 border border-gray-100 dark:border-gray-700 hover:shadow-token-xl hover:scale-105 transition-all duration-300 h-full">
+              <div className="bg-[var(--color-surface)] dark:bg-gray-800 radius-token-lg shadow-token-lg p-8 border border-gray-100 dark:border-gray-700 hover:shadow-token-xl hover:scale-105 transition-all duration-300 h-full">
                 <div className="text-5xl mb-4" aria-hidden="true">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+                <h3 className="text-xl font-bold text-[var(--color-text)] dark:text-gray-100 mb-3">
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed">

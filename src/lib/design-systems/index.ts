@@ -190,6 +190,18 @@ export const NATURE_CALM_DESIGN_SYSTEM: DesignSystem = {
   googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500&display=swap',
 };
 
+// ROYAL NOIR - dunkles Premium (Gold auf Schwarz)
+export const ROYAL_NOIR_DESIGN_SYSTEM: DesignSystem = {
+  name: 'Royal Noir',
+  colors: { primary: '#C9A227', secondary: '#8C2F39', accent: '#E8D9A0', background: '#0B0B0F', surface: '#15151C', text: '#F4EFE4', textSecondary: '#A79E8B', border: '#2A2A35' },
+  typography: { heading: "'Lora', serif", body: "'Montserrat', sans-serif", mono: "'Fira Code', monospace", headingWeights: [500, 600, 700], bodyWeights: [400, 500, 600] },
+  spacing: { unit: 8, scale: [0, 4, 8, 16, 24, 32, 48, 64, 96, 128] },
+  shadows: { sm: '0 1px 2px 0 rgba(0, 0, 0, 0.6)', md: '0 4px 8px -1px rgba(0, 0, 0, 0.6)', lg: '0 10px 20px -3px rgba(0, 0, 0, 0.7)', xl: '0 20px 35px -5px rgba(0, 0, 0, 0.8)' },
+  borderRadius: { sm: '0.125rem', md: '0.25rem', lg: '0.375rem', xl: '0.5rem', full: '9999px' },
+  animations: { duration: { fast: '200ms', normal: '350ms', slow: '600ms' }, easing: { default: 'cubic-bezier(0.4, 0, 0.2, 1)', in: 'cubic-bezier(0.4, 0, 1, 1)', out: 'cubic-bezier(0, 0, 0.2, 1)', inOut: 'cubic-bezier(0.4, 0, 0.2, 1)' } },
+  googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap',
+};
+
 export const ALL_DESIGN_SYSTEMS: Record<string, DesignSystem> = {
   kiosk: KIOSK_DESIGN_SYSTEM,
   handwerk: HANDWERK_DESIGN_SYSTEM,
@@ -197,6 +209,7 @@ export const ALL_DESIGN_SYSTEMS: Record<string, DesignSystem> = {
   'boutique-elegance': BOUTIQUE_ELEGANCE_DESIGN_SYSTEM,
   'urban-bold': URBAN_BOLD_DESIGN_SYSTEM,
   'nature-calm': NATURE_CALM_DESIGN_SYSTEM,
+  'royal-noir': ROYAL_NOIR_DESIGN_SYSTEM,
 };
 
 export function getDesignSystem(id: string): DesignSystem {
@@ -208,4 +221,5 @@ export const DESIGN_LANGUAGE_OPTIONS = [
   { value: 'boutique-elegance', label: 'Boutique Elegance - Pastell, Serif, luftig' },
   { value: 'urban-bold', label: 'Urban Bold - kontraststark, kantig, plakativ' },
   { value: 'nature-calm', label: 'Nature Calm - Erdtoene, rund, ruhig' },
+  { value: 'royal-noir', label: 'Royal Noir - dunkles Premium, Gold, Serif' },
 ];
