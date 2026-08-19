@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getClientConfig } from '@/lib/config-loader';
-import { getConfigOverride } from '@/lib/config-override';
+import { getEffectiveConfig } from '@/lib/config-loader';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -11,12 +10,11 @@ export const revalidate = 0;
  */
 export async function GET() {
   try {
-    const staticConfig = getClientConfig();
-    const override = await getConfigOverride();
-    const merged = { ...staticConfig } as Record<string, unknown>;
-    if (override?.openingHours) merged.openingHours = override.openingHours;
-    if (override?.banners) merged.banners = { ...(staticConfig.banners as object), ...(override.banners as object) };
-    return NextResponse.json(merged, {
+    // ZERO-DEFECT: Konsistenz mit layout.tsx SSR
+    // getEffectiveConfig() liefert: staticConfig + override (theme/openingHours/banners/sections)
+    const config = await getEffectiveConfig();
+    
+    return NextResponse.json(config, {
       headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Content-Type': 'application/json; charset=utf-8' },
     });
   } catch (error: unknown) {
