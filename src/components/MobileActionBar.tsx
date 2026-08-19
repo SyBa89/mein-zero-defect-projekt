@@ -75,7 +75,7 @@ export function MobileActionBar() {
             target={action.isExternal ? '_blank' : undefined}
             rel={action.isExternal ? 'noopener noreferrer' : undefined}
             aria-label={action.ariaLabel}
-            className={`flex-1 flex flex-col items-center justify-center gap-1.5 py-2.5 rounded-xl transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--theme-primary)] ${action.className}`}
+            className={`flex-1 flex flex-col items-center justify-center gap-1.5 py-2.5 radius-token-md transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--theme-primary)] ${action.className}`}
           >
             <svg
               className="w-5 h-5"

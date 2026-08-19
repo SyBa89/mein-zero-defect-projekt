@@ -21,7 +21,7 @@ export default function Reviews() {
         <p className="text-xl text-gray-600 dark:text-gray-300 mb-12">
           Kundenstimmen aus {contact?.address?.city || 'der Region'}
         </p>
-        <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl">
+        <div className="bg-white dark:bg-gray-800 radius-token-xl p-8 shadow-token-xl">
           <div className="flex items-center justify-center gap-2 mb-4">
             <span className="text-3xl">⭐</span>
             <span className="text-2xl font-bold">5.0 Google</span>
@@ -34,7 +34,7 @@ export default function Reviews() {
           </div>
           <div className="space-y-4 mb-8">
             {reviews.map((review, idx) => (
-              <div key={idx} className="text-left bg-gray-50 dark:bg-gray-900 rounded-xl p-4">
+              <div key={idx} className="text-left bg-gray-50 dark:bg-gray-900 radius-token-md p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-10 h-10 rounded-full bg-[var(--theme-primary)] text-white font-bold flex items-center justify-center">
                     {review.initial}

@@ -22,7 +22,7 @@ export default function DailyHighlightsSection() {
         </div>
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="glass-card rounded-3xl shadow-2xl p-8 md:p-10">
+          <div className="glass-card radius-token-xl shadow-token-xl p-8 md:p-10">
             <div className="flex items-center justify-center mb-8">
               <span className="text-4xl mr-3" aria-hidden="true">
                 🔥
@@ -34,7 +34,7 @@ export default function DailyHighlightsSection() {
               {[...Array(4)].map((_, i) => (
                 <div
                   key={i}
-                  className="text-center p-6 bg-gray-100/60 dark:bg-gray-800/60 rounded-2xl backdrop-blur-sm border border-white/40 dark:border-gray-700/40 shadow-sm flex flex-col justify-center"
+                  className="text-center p-6 bg-gray-100/60 dark:bg-gray-800/60 radius-token-lg backdrop-blur-sm border border-white/40 dark:border-gray-700/40 shadow-token-sm flex flex-col justify-center"
                 >
                   <div className="text-4xl mb-3 animate-pulse" aria-hidden="true">
                     ⏳
@@ -81,7 +81,7 @@ export default function DailyHighlightsSection() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ✅ ZERO-DEFECT: Glass-Card Haupt-Container */}
         <FadeInWhenVisible direction="up" duration={0.8}>
-          <div className="glass-card rounded-3xl shadow-2xl p-8 md:p-10">
+          <div className="glass-card radius-token-xl shadow-token-xl p-8 md:p-10">
             <div className="flex items-center justify-center mb-8">
               <span className="text-4xl mr-3" aria-hidden="true">
                 🔥
@@ -97,7 +97,7 @@ export default function DailyHighlightsSection() {
                 <StaggerItem key={i}>
                   <HoverLift liftAmount={-6}>
                     <div
-                      className={`text-center p-6 ${item.bg} rounded-2xl backdrop-blur-sm border border-white/40 dark:border-gray-700/40 shadow-sm h-full flex flex-col justify-center transition-colors duration-300`}
+                      className={`text-center p-6 ${item.bg} radius-token-lg backdrop-blur-sm border border-white/40 dark:border-gray-700/40 shadow-token-sm h-full flex flex-col justify-center transition-colors duration-300`}
                     >
                       <div className="text-4xl mb-3" aria-hidden="true">
                         {item.icon}

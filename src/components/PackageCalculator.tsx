@@ -107,7 +107,7 @@ export default function PackageCalculator() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 md:p-8">
+    <div className="bg-white dark:bg-gray-800 radius-token-lg shadow-token-lg border border-gray-100 dark:border-gray-700 p-6 md:p-8">
       <h3 className="text-2xl font-black text-gray-900 dark:text-gray-100 mb-2 text-center flex items-center justify-center gap-2">
         <span aria-hidden="true">📦</span>
         Finde deine Paketgröße
@@ -142,7 +142,7 @@ export default function PackageCalculator() {
               placeholder="0"
               aria-invalid={hasError}
               aria-describedby={RESULT_ID}
-              className="w-full px-3 py-3 text-center bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[var(--theme-primary)] focus:border-[var(--theme-primary)] outline-none transition-all font-bold text-gray-900 dark:text-white placeholder:text-gray-600 dark:text-gray-400 dark:placeholder:text-gray-600 dark:text-gray-400"
+              className="w-full px-3 py-3 text-center bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 radius-token-md focus:ring-2 focus:ring-[var(--theme-primary)] focus:border-[var(--theme-primary)] outline-none transition-all font-bold text-gray-900 dark:text-white placeholder:text-gray-600 dark:text-gray-400 dark:placeholder:text-gray-600 dark:text-gray-400"
             />
           </div>
         ))}
@@ -151,13 +151,13 @@ export default function PackageCalculator() {
       <div className="flex gap-3 mb-6">
         <button
           onClick={calculatePackageSize}
-          className="flex-1 bg-[var(--theme-primary)] hover:bg-[var(--theme-accent)] md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-offset-2"
+          className="flex-1 bg-[var(--theme-primary)] hover:bg-[var(--theme-accent)] md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold py-3.5 px-4 radius-token-md transition-all shadow-token-md hover:shadow-token-lg transform hover:-translate-y-0.5 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-offset-2"
         >
           Jetzt prüfen
         </button>
         <button
           onClick={resetCalculator}
-          className="px-5 py-3.5 border-2 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
+          className="px-5 py-3.5 border-2 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 font-bold radius-token-md hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
           aria-label="Eingaben zurücksetzen"
         >
           <svg
@@ -185,12 +185,12 @@ export default function PackageCalculator() {
         className="min-h-[4rem] flex items-center justify-center"
       >
         {hasError && (
-          <div className="w-full bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200 px-4 py-3 rounded-xl font-semibold text-center border border-red-200 dark:border-red-800 transition-all duration-300 ease-out flex items-center justify-center gap-2">
+          <div className="w-full bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200 px-4 py-3 radius-token-md font-semibold text-center border border-red-200 dark:border-red-800 transition-all duration-300 ease-out flex items-center justify-center gap-2">
             <span aria-hidden="true">⚠️</span> {error}
           </div>
         )}
         {result && !hasError && (
-          <div className="w-full bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 px-4 py-3 rounded-xl font-bold text-center border border-green-200 dark:border-green-800 transition-all duration-300 ease-out flex items-center justify-center gap-2">
+          <div className="w-full bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 px-4 py-3 radius-token-md font-bold text-center border border-green-200 dark:border-green-800 transition-all duration-300 ease-out flex items-center justify-center gap-2">
             <span aria-hidden="true">✅</span> {result}
           </div>
         )}

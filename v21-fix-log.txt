@@ -1,0 +1,44 @@
+﻿**********************
+nStart der Windows PowerShell-Aufzeichnung
+Startzeit: 20260819115105
+Benutzername: DESKTOP-HBT5JIR\SyBa
+RunAs-Benutzer: DESKTOP-HBT5JIR\SyBa
+Konfigurationsname: 
+Computer: DESKTOP-HBT5JIR (Microsoft Windows NT 10.0.22631.0)
+Hostanwendung: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\SyBa\AppData\Local\Programs\Microsoft VS Code\a5b5009513\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+Prozess-ID: 9500
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+[0/5] Neuen Branch von main erstellen...
+
+
+
+
+[1/5] theme-presets.ts neu schreiben (Encoding + Font-Enum-konform)...
+   [OK] Presets: Encoding-sicher + Fonts Enum-konform
+
+[2/5] StyleEditor: normalizeThemePayload + Fehler-Details...
+   [OK] normalizeThemePayload eingefuegt
+   [OK] Save nutzt normalisierten Payload
+   [FAIL] Nur 2/3 Patches!
+
+[3/5] override.schema.ts: Fonts case-tolerant...
+   [FAIL] Font-Zeilen nicht gefunden!
+
+[4/5] Build + Tests...
+
+[5/5] Commit + Push...
+
+[ABBRUCH] Details in v21-fix-log.txt
+**********************
+Ende der Windows PowerShell-Aufzeichnung
+Endzeit: 20260819115107
+**********************

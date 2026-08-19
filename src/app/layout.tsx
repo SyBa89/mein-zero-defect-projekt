@@ -1,8 +1,8 @@
 // src/app/layout.tsx
-// ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
-// ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ LIVE-UPDATE: Server-Merge mit Redis-Override (ISR-Revalidierung bei Speichern)
-// ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
-// ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ SEO: Globale Metadaten aus Tenant-Config
+// ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
+// ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ LIVE-UPDATE: Server-Merge mit Redis-Override (ISR-Revalidierung bei Speichern)
+// ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
+// ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ SEO: Globale Metadaten aus Tenant-Config
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -77,10 +77,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     '--shadow-md': designSystem.shadows.md,
     '--shadow-lg': designSystem.shadows.lg,
     '--shadow-xl': designSystem.shadows.xl,
-    '--radius-sm': designSystem.borderRadius.sm,
-    '--radius-md': designSystem.borderRadius.md,
-    '--radius-lg': designSystem.borderRadius.lg,
-    '--radius-xl': designSystem.borderRadius.xl,
+    '--radius-sm': 'calc(var(--theme-radius) * 0.5)',
+    '--radius-md': 'var(--theme-radius)',
+    '--radius-lg': 'calc(var(--theme-radius) * 1.5)',
+    '--radius-xl': 'calc(var(--theme-radius) * 2)',
     '--duration-fast': designSystem.animations.duration.fast,
     '--duration-normal': designSystem.animations.duration.normal,
     '--duration-slow': designSystem.animations.duration.slow,
@@ -141,7 +141,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                       closes: times[1] ?? '23:59',
                     };
                   }),
-                priceRange: 'ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬',
+                priceRange: 'ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬',
                 image: config.url + '/images/logo.png',
               }),
             }}

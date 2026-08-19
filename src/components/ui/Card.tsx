@@ -8,7 +8,7 @@ const Card = forwardRef<ElementRef<'div'>, CardProps>(
     <div
       ref={ref}
       className={[
-        'bg-white dark:bg-gray-800 rounded-[var(--theme-radius)] shadow-md border border-gray-100 dark:border-gray-700',
+        'bg-white dark:bg-gray-800 rounded-[var(--theme-radius)] shadow-token-md border border-gray-100 dark:border-gray-700',
         paddingMap[padding],
         className,
       ]

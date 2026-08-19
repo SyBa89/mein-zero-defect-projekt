@@ -108,11 +108,11 @@ function LoadingSkeleton() {
     >
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-200 dark:bg-gray-700 mb-4 animate-pulse" />
+          <div className="inline-flex items-center justify-center w-16 h-16 radius-token-lg bg-gray-200 dark:bg-gray-700 mb-4 animate-pulse" />
           <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-64 mx-auto mb-3 animate-pulse" />
           <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-96 mx-auto animate-pulse" />
         </div>
-        <div className="glass-card rounded-3xl overflow-hidden shadow-2xl p-6 md:p-8">
+        <div className="glass-card radius-token-xl overflow-hidden shadow-token-xl p-6 md:p-8">
           <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 animate-pulse" />
           {[...Array(7)].map((_, i) => (
             <div
@@ -198,7 +198,7 @@ export default function OpeningHoursSection() {
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white shadow-lg shadow-pink-500/30 mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 radius-token-lg bg-gradient-to-br from-pink-500 to-purple-600 text-white shadow-token-lg shadow-pink-500/30 mb-4">
             <ClockIcon className="w-8 h-8" />
           </div>
           <h2
@@ -221,14 +221,14 @@ export default function OpeningHoursSection() {
         </div>
 
         {/* Card */}
-        <div className="glass-card rounded-3xl overflow-hidden shadow-2xl">
+        <div className="glass-card radius-token-xl overflow-hidden shadow-token-xl">
           {/* Status banner */}
           {shopStatus === 'open' && (
             <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-b border-green-200/50 dark:border-green-700/50 px-8 py-5 backdrop-blur-sm">
               <div className="flex items-center justify-center gap-3">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 shadow-lg shadow-green-500/50" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 shadow-token-lg shadow-green-500/50" />
                 </span>
                 <span className="text-green-800 dark:text-green-200 font-bold text-lg">
                   Heute geöffnet:
@@ -298,7 +298,7 @@ export default function OpeningHoursSection() {
                             {item.day}
                           </span>
                           {isToday && (
-                            <span className="inline-flex items-center gap-1 text-xs font-bold text-white bg-gradient-to-r from-pink-600 to-purple-600 px-3 py-1 rounded-full shadow-md shadow-pink-500/30">
+                            <span className="inline-flex items-center gap-1 text-xs font-bold text-white bg-gradient-to-r from-pink-600 to-purple-600 px-3 py-1 rounded-full shadow-token-md shadow-pink-500/30">
                               <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
@@ -343,7 +343,7 @@ export default function OpeningHoursSection() {
               <button
                 onClick={handleOpenInMaps}
                 type="button"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-semibold text-sm rounded-xl shadow-md shadow-pink-500/30 hover:shadow-lg hover:shadow-pink-500/40 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-semibold text-sm radius-token-md shadow-token-md shadow-pink-500/30 hover:shadow-token-lg hover:shadow-pink-500/40 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                 aria-label="Route in Google Maps öffnen"
               >
                 <MapPinIcon className="w-4 h-4" />

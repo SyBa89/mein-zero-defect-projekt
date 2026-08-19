@@ -20,8 +20,8 @@ export default function CTASection() {
           <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto mb-4 animate-pulse"></div>
           <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mx-auto mb-8 animate-pulse"></div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <div className="h-14 bg-gray-200 dark:bg-gray-700 rounded-2xl w-56 animate-pulse"></div>
-            <div className="h-14 bg-gray-200 dark:bg-gray-700 rounded-2xl w-56 animate-pulse"></div>
+            <div className="h-14 bg-gray-200 dark:bg-gray-700 radius-token-lg w-56 animate-pulse"></div>
+            <div className="h-14 bg-gray-200 dark:bg-gray-700 radius-token-lg w-56 animate-pulse"></div>
           </div>
         </div>
         <span className="sr-only">Inhalt wird geladen...</span>
@@ -72,7 +72,7 @@ export default function CTASection() {
                 href={contact.mapsUrl || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold text-lg rounded-2xl shadow-lg hover:shadow-xl transition-colors backdrop-blur-sm bg-opacity-90"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold text-lg radius-token-lg shadow-token-lg hover:shadow-token-xl transition-colors backdrop-blur-sm bg-opacity-90"
                 aria-label="Route in Google Maps öffnen"
               >
                 <svg
@@ -102,7 +102,7 @@ export default function CTASection() {
             <HoverLift liftAmount={-4}>
               <a
                 href={`tel:${contact.phone}`}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-bold text-lg rounded-2xl shadow-lg hover:shadow-xl transition-colors border-2 border-gray-200 dark:border-gray-700 backdrop-blur-sm bg-opacity-90"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-bold text-lg radius-token-lg shadow-token-lg hover:shadow-token-xl transition-colors border-2 border-gray-200 dark:border-gray-700 backdrop-blur-sm bg-opacity-90"
                 aria-label={`Jetzt anrufen: ${phoneFormatted}`}
               >
                 <svg

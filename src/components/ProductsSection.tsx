@@ -28,7 +28,7 @@ export default function ProductsSection() {
           {products.categories.map((category, index) => (
             <StaggerItem key={index}>
               <HoverLift liftAmount={-6}>
-                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow h-full">
+                <div className="bg-white dark:bg-gray-800 radius-token-lg shadow-token-lg p-6 border border-gray-100 dark:border-gray-700 hover:shadow-token-xl transition-shadow h-full">
                   <div className="text-5xl mb-4">{category.icon}</div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">
                     {category.title}

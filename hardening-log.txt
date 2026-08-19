@@ -1,0 +1,81 @@
+﻿**********************
+nStart der Windows PowerShell-Aufzeichnung
+Startzeit: 20260819100755
+Benutzername: DESKTOP-HBT5JIR\SyBa
+RunAs-Benutzer: DESKTOP-HBT5JIR\SyBa
+Konfigurationsname: 
+Computer: DESKTOP-HBT5JIR (Microsoft Windows NT 10.0.22631.0)
+Hostanwendung: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\SyBa\AppData\Local\Programs\Microsoft VS Code\a5b5009513\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+Prozess-ID: 9500
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+   [OK] 1: useRouter-Import
+   [OK] 2: router-Instanz
+   [OK] 3: Draft-Sync-Guard
+   [OK] 4: router.refresh() nach Save
+   [OK] 5: Preview --color-* Variablen
+   [OK] 6: Cleanup --color-* Variablen
+
+   Angewandt: 6/6 Patches
+node.exe : Failed to compile.
+In C:\Program Files\nodejs\npm.ps1:29 Zeichen:3
++   & $NODE_EXE $NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Failed to compile.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+./src/components/admin/StyleEditor.tsx:59:20
+Type error: Block-scoped variable 'hasChanges' used before its declaration.
+
+[0m [90m 57 |[39m   useEffect(() [33m=>[39m {
+ [90m 58 |[39m     [36mif[39m ([33m![39mhasChanges) setDraft(tenantTheme)[33m;[39m
+[31m[1m>[22m[39m[90m 59 |[39m   }[33m,[39m [tenantTheme[33m,[39m hasChanges])[33m;[39m
+ [90m    |[39m                    [31m[1m^[22m[39m
+ [90m 60 |[39m
+ [90m 61 |[39m   [90m// -- Toast-Auto-Dismiss --[39m
+ [90m 62 |[39m   useEffect(() [33m=>[39m {[0m
+Next.js build worker exited with code: 1 and signal: null
+[FAIL] Letzte 30 Zeilen:
+
+> mein-zero-defect-projekt@1.0.0 build
+> next build
+
+   Ôû▓ Next.js 15.5.23
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ Ô£ô Compiled successfully in 48s
+   Linting and checking validity of types ...
+node.exe : Failed to compile.
+In C:\Program Files\nodejs\npm.ps1:29 Zeichen:3
++   & $NODE_EXE $NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Failed to compile.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+./src/components/admin/StyleEditor.tsx:59:20
+Type error: Block-scoped variable 'hasChanges' used before its declaration.
+
+[0m [90m 57 |[39m   useEffect(() [33m=>[39m {
+ [90m 58 |[39m     [36mif[39m ([33m![39mhasChanges) setDraft(tenantTheme)[33m;[39m
+[31m[1m>[22m[39m[90m 59 |[39m   }[33m,[39m [tenantTheme[33m,[39m hasChanges])[33m;[39m
+ [90m    |[39m                    [31m[1m^[22m[39m
+ [90m 60 |[39m
+ [90m 61 |[39m   [90m// -- Toast-Auto-Dismiss --[39m
+ [90m 62 |[39m   useEffect(() [33m=>[39m {[0m
+Next.js build worker exited with code: 1 and signal: null
+
+
+[ABBRUCH] Details in hardening-log.txt
+**********************
+Ende der Windows PowerShell-Aufzeichnung
+Endzeit: 20260819100939
+**********************

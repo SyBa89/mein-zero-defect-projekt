@@ -98,7 +98,7 @@ export default function FAQ() {
             {[...Array(4)].map((_, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700"
+                className="bg-white dark:bg-gray-800 radius-token-lg border border-gray-200 dark:border-gray-700"
               >
                 <div className="w-full flex items-center justify-between p-6">
                   <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 animate-pulse"></div>
@@ -148,9 +148,9 @@ export default function FAQ() {
             return (
               <div
                 key={index}
-                className={`bg-white dark:bg-gray-800 rounded-2xl border transition-all duration-300 ${
+                className={`bg-white dark:bg-gray-800 radius-token-lg border transition-all duration-300 ${
                   isOpen
-                    ? 'border-pink-300 dark:border-pink-500 shadow-lg shadow-pink-100/50 dark:shadow-pink-900/30'
+                    ? 'border-pink-300 dark:border-pink-500 shadow-token-lg shadow-pink-100/50 dark:shadow-pink-900/30'
                     : 'border-gray-200 dark:border-gray-700 hover:border-pink-200 dark:hover:border-pink-700'
                 }`}
               >
@@ -158,7 +158,7 @@ export default function FAQ() {
                   id={buttonId}
                   data-faq-button={index}
                   onClick={() => toggleAccordion(index)}
-                  className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-offset-2 rounded-2xl"
+                  className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-offset-2 radius-token-lg"
                   aria-expanded={isOpen}
                   aria-controls={answerId}
                   aria-label={`${faq.question} ${isOpen ? 'einklappen' : 'ausklappen'}`}

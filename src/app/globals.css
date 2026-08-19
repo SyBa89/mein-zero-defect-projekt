@@ -245,3 +245,6 @@ code, pre { font-family: var(--font-mono); }
   .duration-token-normal { transition-duration: var(--duration-normal); }
   .duration-token-slow { transition-duration: var(--duration-slow); }
 }
+
+.hover-shadow-token-lg:hover { box-shadow: var(--shadow-lg); }
+.hover-shadow-token-xl:hover { box-shadow: var(--shadow-xl); }

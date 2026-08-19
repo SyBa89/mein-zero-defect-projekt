@@ -1,5 +1,5 @@
-import { getFontFamily } from '@/lib/config-loader';
 'use client';
+import { getFontFamily } from '@/lib/config-loader';
 
 import React, { createContext, useContext, useMemo, useEffect } from 'react';
 import { useConfig } from './ConfigContext';
@@ -16,7 +16,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const config = useConfig();
   const businessType = config.business.type;
 
-  // Ã¢Å“â€¦ HIERARCHICAL THEME: config.theme (3-Ebenen-Merge) + DesignSystem fÃƒÂ¼r reiche Details
+  // ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ HIERARCHICAL THEME: config.theme (3-Ebenen-Merge) + DesignSystem fÃƒÆ’Ã‚Â¼r reiche Details
   const theme = useMemo(() => {
     const designSystem = getDesignSystem(businessType);
     return {
@@ -76,10 +76,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.style.setProperty('--shadow-md', theme.shadows.md);
     root.style.setProperty('--shadow-lg', theme.shadows.lg);
     root.style.setProperty('--shadow-xl', theme.shadows.xl);
-    root.style.setProperty('--radius-sm', theme.borderRadius.sm);
-    root.style.setProperty('--radius-md', theme.borderRadius.md);
-    root.style.setProperty('--radius-lg', theme.borderRadius.lg);
-    root.style.setProperty('--radius-xl', theme.borderRadius.xl);
     root.style.setProperty('--duration-fast', theme.animations.duration.fast);
     root.style.setProperty('--duration-normal', theme.animations.duration.normal);
     root.style.setProperty('--duration-slow', theme.animations.duration.slow);
