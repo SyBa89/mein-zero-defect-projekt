@@ -21,7 +21,7 @@ describe('Design-Sprachen (Ebene 1.5)', () => {
   });
 
   it('ALL_DESIGN_SYSTEMS enthaelt 6 Eintraege', () => {
-    expect(Object.keys(ALL_DESIGN_SYSTEMS).length).toBe(6);
+    expect(Object.keys(ALL_DESIGN_SYSTEMS).length).toBe(7);
   });
 
   it('OverrideSchema akzeptiert valide designSystemId', () => {

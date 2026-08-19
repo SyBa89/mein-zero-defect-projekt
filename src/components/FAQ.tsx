@@ -90,7 +90,7 @@ export default function FAQ() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
             id="faq-heading-skeleton"
-            className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-10 text-center tracking-tight"
+            className="text-3xl md:text-4xl font-black text-[var(--color-text)] dark:text-gray-100 mb-10 text-center tracking-tight"
           >
             Häufig gestellte Fragen
           </h2>
@@ -98,7 +98,7 @@ export default function FAQ() {
             {[...Array(4)].map((_, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-gray-800 radius-token-lg border border-gray-200 dark:border-gray-700"
+                className="bg-[var(--color-surface)] dark:bg-gray-800 radius-token-lg border border-gray-200 dark:border-gray-700"
               >
                 <div className="w-full flex items-center justify-between p-6">
                   <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 animate-pulse"></div>
@@ -134,7 +134,7 @@ export default function FAQ() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
           id="faq-heading"
-          className="text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-100 mb-10 text-center tracking-tight"
+          className="text-3xl md:text-4xl font-black text-[var(--color-text)] dark:text-gray-100 mb-10 text-center tracking-tight"
         >
           Häufig gestellte Fragen
         </h2>
@@ -148,7 +148,7 @@ export default function FAQ() {
             return (
               <div
                 key={index}
-                className={`bg-white dark:bg-gray-800 radius-token-lg border transition-all duration-300 ${
+                className={`bg-[var(--color-surface)] dark:bg-gray-800 radius-token-lg border transition-all duration-300 ${
                   isOpen
                     ? 'border-pink-300 dark:border-pink-500 shadow-token-lg shadow-pink-100/50 dark:shadow-pink-900/30'
                     : 'border-gray-200 dark:border-gray-700 hover:border-pink-200 dark:hover:border-pink-700'
@@ -163,7 +163,7 @@ export default function FAQ() {
                   aria-controls={answerId}
                   aria-label={`${faq.question} ${isOpen ? 'einklappen' : 'ausklappen'}`}
                 >
-                  <span className="text-lg font-bold text-gray-900 dark:text-gray-100 pr-4">
+                  <span className="text-lg font-bold text-[var(--color-text)] dark:text-gray-100 pr-4">
                     {faq.question}
                   </span>
                   <span

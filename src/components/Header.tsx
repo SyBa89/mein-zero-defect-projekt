@@ -29,7 +29,7 @@ export default function Header() {
   const adminLabel = header.adminLabel || 'Admin Cockpit';
 
   return (
-    <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-30">
+    <header className="bg-[var(--color-surface)] dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo/Name */}
@@ -45,7 +45,7 @@ export default function Header() {
             />
             )}
             <div>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">{brand.name}</h1>
+              <h1 className="text-xl font-bold text-[var(--color-text)] dark:text-gray-100">{brand.name}</h1>
             </div>
           </Link>
 

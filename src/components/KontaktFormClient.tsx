@@ -103,7 +103,7 @@ export default function KontaktFormClient() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-black text-[var(--color-text)] mb-4 tracking-tight">
           Kontaktieren Sie uns
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -115,8 +115,8 @@ export default function KontaktFormClient() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Linke Spalte: Kontaktdaten */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-white p-6 radius-token-lg shadow-token-sm border border-gray-100">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Direkter Kontakt</h2>
+          <div className="bg-[var(--color-surface)] p-6 radius-token-lg shadow-token-sm border border-gray-100">
+            <h2 className="text-xl font-bold text-[var(--color-text)] mb-4">Direkter Kontakt</h2>
             <ul className="space-y-4">
               <li>
                 <a href="tel:+4922359291160" className="flex items-start gap-4 group">
@@ -137,7 +137,7 @@ export default function KontaktFormClient() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">Telefon</p>
-                    <p className="text-gray-900 font-semibold group-hover:text-[var(--theme-primary)] transition-colors">
+                    <p className="text-[var(--color-text)] font-semibold group-hover:text-[var(--theme-primary)] transition-colors">
                       02235 9291160
                     </p>
                   </div>
@@ -162,7 +162,7 @@ export default function KontaktFormClient() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">E-Mail</p>
-                    <p className="text-gray-900 font-semibold group-hover:text-[var(--theme-primary)] transition-colors break-all">
+                    <p className="text-[var(--color-text)] font-semibold group-hover:text-[var(--theme-primary)] transition-colors break-all">
                       info@kiosk-lollipop.de
                     </p>
                   </div>
@@ -198,7 +198,7 @@ export default function KontaktFormClient() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">Adresse</p>
-                    <p className="text-gray-900 font-semibold group-hover:text-[var(--theme-primary)] transition-colors">
+                    <p className="text-[var(--color-text)] font-semibold group-hover:text-[var(--theme-primary)] transition-colors">
                       Theodor-Heuss-Str. 35
                       <br />
                       50374 Erftstadt
@@ -212,7 +212,7 @@ export default function KontaktFormClient() {
             </ul>
           </div>
           <div className="bg-gradient-to-br from-pink-50 to-purple-50 p-6 radius-token-lg border border-pink-100">
-            <h3 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
+            <h3 className="font-bold text-[var(--color-text)] mb-2 flex items-center gap-2">
               <span aria-hidden="true">🕒</span> Öffnungszeiten
             </h3>
             <p className="text-sm text-gray-700 mb-1">Mo - Fr: 07:30 - 19:00 Uhr</p>
@@ -223,7 +223,7 @@ export default function KontaktFormClient() {
 
         {/* Rechte Spalte: Formular */}
         <div className="lg:col-span-2">
-          <div className="bg-white p-8 radius-token-xl shadow-token-lg border border-gray-100">
+          <div className="bg-[var(--color-surface)] p-8 radius-token-xl shadow-token-lg border border-gray-100">
             {isSuccess && (
               <div
                 ref={successRef}
@@ -301,7 +301,7 @@ export default function KontaktFormClient() {
               />
 
               <div>
-                <label htmlFor="name" className="block text-sm font-bold text-gray-900 mb-2">
+                <label htmlFor="name" className="block text-sm font-bold text-[var(--color-text)] mb-2">
                   Ihr Name <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -335,7 +335,7 @@ export default function KontaktFormClient() {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-bold text-gray-900 mb-2">
+                <label htmlFor="email" className="block text-sm font-bold text-[var(--color-text)] mb-2">
                   Ihre E-Mail-Adresse <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -369,7 +369,7 @@ export default function KontaktFormClient() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-bold text-gray-900 mb-2">
+                <label htmlFor="message" className="block text-sm font-bold text-[var(--color-text)] mb-2">
                   Ihre Nachricht <span className="text-red-500">*</span>
                 </label>
                 <textarea

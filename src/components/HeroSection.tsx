@@ -110,7 +110,7 @@ export default function HeroSection() {
 
           <a
             href={hero.secondaryCta.href}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white/95 hover:bg-white text-gray-900 font-bold text-lg radius-token-lg shadow-token-xl transition-all hover:scale-105 backdrop-blur-sm border-2 border-white/50 animate-fade-in-up animation-delay-1000"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white/95 hover:bg-[var(--color-surface)] text-[var(--color-text)] font-bold text-lg radius-token-lg shadow-token-xl transition-all hover:scale-105 backdrop-blur-sm border-2 border-white/50 animate-fade-in-up animation-delay-1000"
             aria-label={`${hero.secondaryCta.label} - ${addressString}`}
           >
             <svg

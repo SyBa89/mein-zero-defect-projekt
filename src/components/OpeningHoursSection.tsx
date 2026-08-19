@@ -203,7 +203,7 @@ export default function OpeningHoursSection() {
           </div>
           <h2
             id="opening-hours-heading"
-            className="text-4xl md:text-5xl font-black text-gray-900 dark:text-gray-100 mb-3 tracking-tight"
+            className="text-4xl md:text-5xl font-black text-[var(--color-text)] dark:text-gray-100 mb-3 tracking-tight"
           >
             {sectionTitle}
           </h2>
@@ -292,7 +292,7 @@ export default function OpeningHoursSection() {
                             className={`font-bold text-lg ${
                               isToday
                                 ? 'text-pink-700 dark:text-pink-300'
-                                : 'text-gray-900 dark:text-gray-100'
+                                : 'text-[var(--color-text)] dark:text-gray-100'
                             }`}
                           >
                             {item.day}
@@ -300,8 +300,8 @@ export default function OpeningHoursSection() {
                           {isToday && (
                             <span className="inline-flex items-center gap-1 text-xs font-bold text-white bg-gradient-to-r from-pink-600 to-purple-600 px-3 py-1 rounded-full shadow-token-md shadow-pink-500/30">
                               <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-surface)] opacity-75" />
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--color-surface)]" />
                               </span>
                               HEUTE
                             </span>
