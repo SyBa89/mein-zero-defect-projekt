@@ -21,7 +21,7 @@ export default function ServicesSection() {
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="text-center p-6 rounded-2xl bg-white dark:bg-gray-900 flex flex-col justify-center"
+                className="text-center p-6 radius-token-lg bg-white dark:bg-gray-900 flex flex-col justify-center"
               >
                 <div className="text-3xl mb-2 animate-pulse" aria-hidden="true">
                   ⏳
@@ -54,7 +54,7 @@ export default function ServicesSection() {
           <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6" staggerDelay={0.15}>
             {extraServices.map((service, i) => (
               <StaggerItem key={i}>
-                <div className="text-center p-6 rounded-2xl bg-white dark:bg-gray-900 hover:bg-pink-50 dark:hover:bg-gray-800 transition-colors duration-300 h-full flex flex-col justify-center">
+                <div className="text-center p-6 radius-token-lg bg-white dark:bg-gray-900 hover:bg-pink-50 dark:hover:bg-gray-800 transition-colors duration-300 h-full flex flex-col justify-center">
                   <div className="text-3xl mb-2" aria-hidden="true">
                     {service.icon}
                   </div>

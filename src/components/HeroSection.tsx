@@ -31,8 +31,8 @@ export default function HeroSection() {
           <div className="h-16 bg-white/20 rounded w-3/4 mx-auto mb-6 animate-pulse" />
           <div className="h-6 bg-white/20 rounded w-2/3 mx-auto mb-12 animate-pulse" />
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <div className="h-14 bg-white/20 rounded-2xl w-56 animate-pulse" />
-            <div className="h-14 bg-white/20 rounded-2xl w-56 animate-pulse" />
+            <div className="h-14 bg-white/20 radius-token-lg w-56 animate-pulse" />
+            <div className="h-14 bg-white/20 radius-token-lg w-56 animate-pulse" />
           </div>
         </div>
         <span className="sr-only">Inhalt wird geladen...</span>
@@ -69,26 +69,26 @@ export default function HeroSection() {
       </div>
 
       <div className="relative max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8 py-20 z-10">
-        <div className="mb-6 text-7xl md:text-8xl inline-block drop-shadow-2xl animate-bounce-in">
+        <div className="mb-6 text-7xl md:text-8xl inline-block drop-shadow-token-xl animate-bounce-in">
           {emoji}
         </div>
 
-        <p className="text-lg md:text-2xl text-white/90 mb-3 font-medium drop-shadow-lg animate-fade-in-up animation-delay-200">
+        <p className="text-lg md:text-2xl text-white/90 mb-3 font-medium drop-shadow-token-lg animate-fade-in-up animation-delay-200">
           Willkommen bei
         </p>
 
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-tight drop-shadow-2xl animate-fade-in-up animation-delay-400">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-tight drop-shadow-token-xl animate-fade-in-up animation-delay-400">
           {brand.name}
         </h1>
 
-        <p className="text-xl md:text-2xl text-white/95 mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-lg animate-fade-in-up animation-delay-600">
+        <p className="text-xl md:text-2xl text-white/95 mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-token-lg animate-fade-in-up animation-delay-600">
           {hero.subheadline}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a
             href={hero.primaryCta.href}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-[var(--theme-primary)] hover:brightness-110 text-white font-bold text-lg rounded-[var(--theme-radius)] shadow-2xl shadow-black/20 transition-all hover:scale-105 backdrop-blur-sm animate-fade-in-up animation-delay-800"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-[var(--theme-primary)] hover:brightness-110 text-white font-bold text-lg rounded-[var(--theme-radius)] shadow-token-xl shadow-black/20 transition-all hover:scale-105 backdrop-blur-sm animate-fade-in-up animation-delay-800"
             aria-label={`${hero.primaryCta.label} - ${hero.primaryCta.href.startsWith('tel:') ? 'Anrufen' : 'Öffnen'}`}
           >
             <svg
@@ -110,7 +110,7 @@ export default function HeroSection() {
 
           <a
             href={hero.secondaryCta.href}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white/95 hover:bg-white text-gray-900 font-bold text-lg rounded-2xl shadow-2xl transition-all hover:scale-105 backdrop-blur-sm border-2 border-white/50 animate-fade-in-up animation-delay-1000"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white/95 hover:bg-white text-gray-900 font-bold text-lg radius-token-lg shadow-token-xl transition-all hover:scale-105 backdrop-blur-sm border-2 border-white/50 animate-fade-in-up animation-delay-1000"
             aria-label={`${hero.secondaryCta.label} - ${addressString}`}
           >
             <svg

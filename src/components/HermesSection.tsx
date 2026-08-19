@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 import PackageCalculator from './PackageCalculator';
@@ -31,18 +31,18 @@ export default function HermesSection() {
             <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto animate-pulse"></div>
           </div>
 
-          <div className="glass-card rounded-3xl p-8 md:p-10">
+          <div className="glass-card radius-token-xl p-8 md:p-10">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded-2xl animate-pulse"></div>
+                <div className="h-64 bg-gray-200 dark:bg-gray-700 radius-token-lg animate-pulse"></div>
               </div>
               <div className="space-y-6">
-                <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 border border-white/40 dark:border-gray-700/40">
+                <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm radius-token-lg p-6 border border-white/40 dark:border-gray-700/40">
                   <div className="h-7 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4 animate-pulse"></div>
                   <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2 animate-pulse"></div>
                   <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
                 </div>
-                <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 border border-white/40 dark:border-gray-700/40">
+                <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm radius-token-lg p-6 border border-white/40 dark:border-gray-700/40">
                   <div className="h-7 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4 animate-pulse"></div>
                   <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2 animate-pulse"></div>
                   <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
@@ -88,7 +88,7 @@ export default function HermesSection() {
 
         <FadeInWhenVisible direction="up" delay={0.2} duration={0.8}>
           {/* ✅ ZERO-DEFECT: Glassmorphismus-Hauptcard */}
-          <div className="glass-card rounded-3xl p-8 md:p-10">
+          <div className="glass-card radius-token-xl p-8 md:p-10">
             <div className="grid md:grid-cols-2 gap-8">
               {/* Linke Spalte: Echte Paketgrößen-Rechner Komponente */}
               <div>
@@ -99,7 +99,7 @@ export default function HermesSection() {
               <StaggerContainer className="space-y-6" staggerDelay={0.15}>
                 <StaggerItem>
                   <HoverLift liftAmount={-4}>
-                    <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 border border-white/40 dark:border-gray-700/40 shadow-sm h-full">
+                    <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm radius-token-lg p-6 border border-white/40 dark:border-gray-700/40 shadow-token-sm h-full">
                       <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                         📮 Pakete abholen & versenden
                       </h3>
@@ -112,7 +112,7 @@ export default function HermesSection() {
 
                 <StaggerItem>
                   <HoverLift liftAmount={-4}>
-                    <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 border border-white/40 dark:border-gray-700/40 shadow-sm h-full">
+                    <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm radius-token-lg p-6 border border-white/40 dark:border-gray-700/40 shadow-token-sm h-full">
                       <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                         ↩️ Retouren & 🏷️ Etiketten
                       </h3>

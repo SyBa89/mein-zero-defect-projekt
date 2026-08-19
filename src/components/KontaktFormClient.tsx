@@ -115,7 +115,7 @@ export default function KontaktFormClient() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Linke Spalte: Kontaktdaten */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+          <div className="bg-white p-6 radius-token-lg shadow-token-sm border border-gray-100">
             <h2 className="text-xl font-bold text-gray-900 mb-4">Direkter Kontakt</h2>
             <ul className="space-y-4">
               <li>
@@ -211,7 +211,7 @@ export default function KontaktFormClient() {
               </li>
             </ul>
           </div>
-          <div className="bg-gradient-to-br from-pink-50 to-purple-50 p-6 rounded-2xl border border-pink-100">
+          <div className="bg-gradient-to-br from-pink-50 to-purple-50 p-6 radius-token-lg border border-pink-100">
             <h3 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
               <span aria-hidden="true">🕒</span> Öffnungszeiten
             </h3>
@@ -223,12 +223,12 @@ export default function KontaktFormClient() {
 
         {/* Rechte Spalte: Formular */}
         <div className="lg:col-span-2">
-          <div className="bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
+          <div className="bg-white p-8 radius-token-xl shadow-token-lg border border-gray-100">
             {isSuccess && (
               <div
                 ref={successRef}
                 tabIndex={-1}
-                className="mb-6 bg-green-50 text-green-800 p-5 rounded-xl border border-green-200 outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
+                className="mb-6 bg-green-50 text-green-800 p-5 radius-token-md border border-green-200 outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
                 aria-live="polite"
                 role="status"
               >
@@ -262,7 +262,7 @@ export default function KontaktFormClient() {
               <div
                 ref={successRef}
                 tabIndex={-1}
-                className="mb-6 bg-red-50 text-red-800 p-5 rounded-xl border border-red-200 outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300"
+                className="mb-6 bg-red-50 text-red-800 p-5 radius-token-md border border-red-200 outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300"
                 aria-live="assertive"
                 role="alert"
               >
@@ -405,7 +405,7 @@ export default function KontaktFormClient() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[var(--theme-primary)] hover:bg-[var(--theme-accent)] md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-pink-500/30 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
+                className="w-full bg-[var(--theme-primary)] hover:bg-[var(--theme-accent)] md:bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 radius-token-md transition-all shadow-token-lg hover:shadow-pink-500/30 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>

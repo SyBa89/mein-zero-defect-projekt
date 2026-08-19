@@ -1,9 +1,9 @@
 // src/lib/config-loader.ts
-// ✅ ZERO-DEFECT: Hybrid-Loader für Server- (SSR/SSG) und Client-Kontext
-// ✅ WHITE-LABEL: Mandanten-spezifische Configs via ENV oder Default
-// ✅ SECURITY: Keine sensiblen Daten im Client-Bundle
-// ✅ LIVE-SAVE: unstable_noStore() verhindert Data-Cache für Echtzeit-Updates
-// ✅ HIERARCHICAL THEME: 3-Ebenen-Merge (Business-Type → Tenant → Runtime)
+// âœ… ZERO-DEFECT: Hybrid-Loader fÃ¼r Server- (SSR/SSG) und Client-Kontext
+// âœ… WHITE-LABEL: Mandanten-spezifische Configs via ENV oder Default
+// âœ… SECURITY: Keine sensiblen Daten im Client-Bundle
+// âœ… LIVE-SAVE: unstable_noStore() verhindert Data-Cache fÃ¼r Echtzeit-Updates
+// âœ… HIERARCHICAL THEME: 3-Ebenen-Merge (Business-Type â†’ Tenant â†’ Runtime)
 
 import type { TenantConfig, ThemeConfig } from '@/types/config';
 import { unstable_noStore as noStore } from 'next/cache';
@@ -13,7 +13,7 @@ import { getConfigOverride } from './config-override';
 import { getDesignSystem } from './design-systems';
 
 /**
- * Server-seitige Config-Auflösung (App Router, RSC)
+ * Server-seitige Config-AuflÃ¶sung (App Router, RSC)
  * Nutzt NEXT_PUBLIC_TENANT_ID oder fallback auf default
  */
 export function getTenantConfig(tenantId?: string): TenantConfig {
@@ -25,27 +25,40 @@ export function getTenantConfig(tenantId?: string): TenantConfig {
 
   const config = tenantConfigs[resolvedId] ?? defaultTenantConfig;
 
-  // ✅ ZERO-DEFECT: Runtime-Validierung gegen inkonsistente Daten
+  // âœ… ZERO-DEFECT: Runtime-Validierung gegen inkonsistente Daten
   validateConfig(config);
 
   return config;
 }
 
 /**
- * Client-seitige Config (Wrapper für Kompatibilität)
- * Für Pages, die noch den alten API-Namen nutzen
+ * Client-seitige Config (Wrapper fÃ¼r KompatibilitÃ¤t)
+ * FÃ¼r Pages, die noch den alten API-Namen nutzen
  */
 export function getClientConfig(): TenantConfig {
   return getTenantConfig();
 }
 
 /**
- * ✅ HIERARCHICAL THEME ENGINE
- * 3-Ebenen-Merge für maximale White-Label-Souveränität:
- * 1. Business-Type Defaults (DesignSystem) — niedrigste Priorität
- * 2. Tenant Defaults (config.theme) — mittlere Priorität
- * 3. Runtime Overrides (Redis) — höchste Priorität
+ * âœ… HIERARCHICAL THEME ENGINE
+ * 3-Ebenen-Merge fÃ¼r maximale White-Label-SouverÃ¤nitÃ¤t:
+ * 1. Business-Type Defaults (DesignSystem) â€” niedrigste PrioritÃ¤t
+ * 2. Tenant Defaults (config.theme) â€” mittlere PrioritÃ¤t
+ * 3. Runtime Overrides (Redis) â€” hÃ¶chste PrioritÃ¤t
  */
+export const FONT_FAMILY_MAP: Record<string, string> = {
+  poppins: "'Poppins', sans-serif",
+  montserrat: "'Montserrat', sans-serif",
+  roboto: "'Roboto', sans-serif",
+  lora: "'Lora', serif",
+  inter: "'Inter', sans-serif",
+  'source-sans': "'Source Sans Pro', sans-serif",
+};
+
+export function getFontFamily(slug: string): string {
+  return FONT_FAMILY_MAP[(slug || '').toLowerCase()] || "'" + slug + "', sans-serif";
+}
+
 export function getEffectiveTheme(
   businessType: string,
   tenantTheme?: Partial<ThemeConfig> | null,
@@ -63,7 +76,7 @@ export function getEffectiveTheme(
     fontBody: designSystem.typography.body.split(',')[0].replace(/'/g, '').toLowerCase(),
   };
 
-  // Ebene 2: Tenant Defaults überschreiben (mittlere Priorität)
+  // Ebene 2: Tenant Defaults Ã¼berschreiben (mittlere PrioritÃ¤t)
   if (tenantTheme) {
     if (tenantTheme.primaryColor) baseTheme.primaryColor = tenantTheme.primaryColor;
     if (tenantTheme.secondaryColor) baseTheme.secondaryColor = tenantTheme.secondaryColor;
@@ -73,7 +86,7 @@ export function getEffectiveTheme(
     if (tenantTheme.fontBody) baseTheme.fontBody = tenantTheme.fontBody;
   }
 
-  // Ebene 3: Runtime Overrides überschreiben (höchste Priorität)
+  // Ebene 3: Runtime Overrides Ã¼berschreiben (hÃ¶chste PrioritÃ¤t)
   if (runtimeOverride) {
     if (runtimeOverride.primaryColor) baseTheme.primaryColor = runtimeOverride.primaryColor;
     if (runtimeOverride.secondaryColor) baseTheme.secondaryColor = runtimeOverride.secondaryColor;
@@ -87,7 +100,7 @@ export function getEffectiveTheme(
 }
 
 /**
- * Runtime-Validierung – verhindert White-Screen bei fehlerhafter Config
+ * Runtime-Validierung â€“ verhindert White-Screen bei fehlerhafter Config
  */
 function validateConfig(config: TenantConfig): asserts config is TenantConfig {
   const required: (keyof TenantConfig)[] = [
@@ -113,27 +126,27 @@ function validateConfig(config: TenantConfig): asserts config is TenantConfig {
 
   if (!config.url?.startsWith('http')) {
     throw new Error(
-      `[Zero-Defect Config] url muss eine gültige URL sein (aktuell: "${config.url}")`
+      `[Zero-Defect Config] url muss eine gÃ¼ltige URL sein (aktuell: "${config.url}")`
     );
   }
 }
 
 /**
  * ZERO-DEFECT: Merged Static-Config + Redis-Override
- * Single Source of Truth für Server-Komponenten
+ * Single Source of Truth fÃ¼r Server-Komponenten
  * 
- * ✅ LIVE-SAVE: unstable_noStore() verhindert Data-Cache
+ * âœ… LIVE-SAVE: unstable_noStore() verhindert Data-Cache
  * Damit revalidatePath('/') + revalidateTag('config') sofort wirken
  */
 export async function getEffectiveConfig() {
-  noStore(); // Verhindert Next.js Data Cache für Live-Save-Scenarios
+  noStore(); // Verhindert Next.js Data Cache fÃ¼r Live-Save-Scenarios
   
   const staticConfig = getClientConfig();
   const override = await getConfigOverride();
   
   if (!override) return staticConfig;
   
-  // ✅ HIERARCHICAL THEME: Merge theme from override
+  // âœ… HIERARCHICAL THEME: Merge theme from override
   const effectiveTheme = getEffectiveTheme(
     staticConfig.business.type,
     staticConfig.theme,
