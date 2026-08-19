@@ -1,6 +1,6 @@
-// ═══════════════════════════════════════════════════════════════
-// Industry-Specific Design Systems — Absolute Premium Quality
-// ═══════════════════════════════════════════════════════════════
+// =================================================================
+// Industry-Specific Design Systems - Absolute Premium Quality
+// =================================================================
 
 export interface DesignSystem {
   name: string;
@@ -31,7 +31,7 @@ export interface DesignSystem {
   googleFontsUrl: string;
 }
 
-// 🍭 KIOSK — Vibrant & Approachable
+// KIOSK - Vibrant & Approachable
 export const KIOSK_DESIGN_SYSTEM: DesignSystem = {
   name: 'Kiosk',
   colors: {
@@ -72,7 +72,7 @@ export const KIOSK_DESIGN_SYSTEM: DesignSystem = {
     'https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;900&family=Inter:wght@400;500;600&family=Fira+Code&display=swap',
 };
 
-// 🔧 HANDWERK — Professional & Trustworthy
+// HANDWERK - Professional & Trustworthy
 export const HANDWERK_DESIGN_SYSTEM: DesignSystem = {
   name: 'Handwerk',
   colors: {
@@ -113,7 +113,7 @@ export const HANDWERK_DESIGN_SYSTEM: DesignSystem = {
     'https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&family=Roboto+Mono&display=swap',
 };
 
-// 🏥 ARZT — Calm & Professional
+// ARZT - Calm & Professional
 export const ARZT_DESIGN_SYSTEM: DesignSystem = {
   name: 'Arzt',
   colors: {
@@ -154,20 +154,58 @@ export const ARZT_DESIGN_SYSTEM: DesignSystem = {
     'https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Source+Sans+Pro:wght@400;600;700&family=Source+Code+Pro&display=swap',
 };
 
-export function getDesignSystem(businessType: string): DesignSystem {
-  switch (businessType) {
-    case 'handwerk':
-      return HANDWERK_DESIGN_SYSTEM;
-    case 'arzt':
-      return ARZT_DESIGN_SYSTEM;
-    case 'kiosk':
-    default:
-      return KIOSK_DESIGN_SYSTEM;
-  }
-}
+// BOUTIQUE ELEGANCE - Pastell, Serif, luftig
+export const BOUTIQUE_ELEGANCE_DESIGN_SYSTEM: DesignSystem = {
+  name: 'Boutique Elegance',
+  colors: { primary: '#B76E79', secondary: '#D4A5A5', accent: '#8E7CC3', background: '#FFF8F6', surface: '#FFFFFF', text: '#4A3B3E', textSecondary: '#8A7A7D', border: '#EBDCDC' },
+  typography: { heading: "'Lora', serif", body: "'Source Sans Pro', sans-serif", mono: "'Fira Code', monospace", headingWeights: [500, 600, 700], bodyWeights: [400, 600] },
+  spacing: { unit: 8, scale: [0, 4, 8, 16, 24, 32, 48, 64, 96, 128] },
+  shadows: { sm: '0 1px 2px 0 rgba(183, 110, 121, 0.08)', md: '0 4px 10px -2px rgba(183, 110, 121, 0.12)', lg: '0 10px 24px -4px rgba(183, 110, 121, 0.16)', xl: '0 20px 40px -8px rgba(183, 110, 121, 0.2)' },
+  borderRadius: { sm: '0.25rem', md: '0.75rem', lg: '1.25rem', xl: '2rem', full: '9999px' },
+  animations: { duration: { fast: '200ms', normal: '400ms', slow: '700ms' }, easing: { default: 'cubic-bezier(0.4, 0, 0.2, 1)', in: 'cubic-bezier(0.4, 0, 1, 1)', out: 'cubic-bezier(0, 0, 0.2, 1)', inOut: 'cubic-bezier(0.4, 0, 0.2, 1)' } },
+  googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Source+Sans+Pro:wght@400;600&display=swap',
+};
 
-export const ALL_DESIGN_SYSTEMS = {
+// URBAN BOLD - kontraststark, kantig, plakativ
+export const URBAN_BOLD_DESIGN_SYSTEM: DesignSystem = {
+  name: 'Urban Bold',
+  colors: { primary: '#FF3D00', secondary: '#111417', accent: '#FFC400', background: '#FFFFFF', surface: '#F4F5F7', text: '#0B0D10', textSecondary: '#4A5158', border: '#D5D9DE' },
+  typography: { heading: "'Montserrat', sans-serif", body: "'Roboto', sans-serif", mono: "'Roboto Mono', monospace", headingWeights: [700, 800, 900], bodyWeights: [400, 500, 700] },
+  spacing: { unit: 8, scale: [0, 4, 8, 16, 24, 32, 48, 64, 96, 128] },
+  shadows: { sm: '0 2px 0 0 rgba(11, 13, 16, 0.9)', md: '0 4px 0 0 rgba(11, 13, 16, 0.85)', lg: '0 8px 0 0 rgba(11, 13, 16, 0.8)', xl: '0 12px 0 0 rgba(11, 13, 16, 0.75)' },
+  borderRadius: { sm: '0rem', md: '0.125rem', lg: '0.25rem', xl: '0.5rem', full: '9999px' },
+  animations: { duration: { fast: '120ms', normal: '250ms', slow: '400ms' }, easing: { default: 'cubic-bezier(0.4, 0, 0.2, 1)', in: 'cubic-bezier(0.4, 0, 1, 1)', out: 'cubic-bezier(0, 0, 0.2, 1)', inOut: 'cubic-bezier(0.4, 0, 0.2, 1)' } },
+  googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Roboto:wght@400;500;700&display=swap',
+};
+
+// NATURE CALM - Erdtoene, rund, ruhig
+export const NATURE_CALM_DESIGN_SYSTEM: DesignSystem = {
+  name: 'Nature Calm',
+  colors: { primary: '#557C55', secondary: '#A6C48A', accent: '#8D6E63', background: '#F7F5F0', surface: '#FFFFFF', text: '#3E4A3D', textSecondary: '#6B7A69', border: '#DDE5D8' },
+  typography: { heading: "'Lora', serif", body: "'Inter', sans-serif", mono: "'Fira Code', monospace", headingWeights: [500, 600, 700], bodyWeights: [400, 500] },
+  spacing: { unit: 8, scale: [0, 4, 8, 16, 24, 32, 48, 64, 96, 128] },
+  shadows: { sm: '0 1px 3px 0 rgba(85, 124, 85, 0.1)', md: '0 4px 12px -2px rgba(85, 124, 85, 0.14)', lg: '0 10px 24px -4px rgba(85, 124, 85, 0.18)', xl: '0 20px 40px -8px rgba(85, 124, 85, 0.22)' },
+  borderRadius: { sm: '0.5rem', md: '1rem', lg: '1.5rem', xl: '2.5rem', full: '9999px' },
+  animations: { duration: { fast: '250ms', normal: '450ms', slow: '800ms' }, easing: { default: 'cubic-bezier(0.4, 0, 0.2, 1)', in: 'cubic-bezier(0.4, 0, 1, 1)', out: 'cubic-bezier(0, 0, 0.2, 1)', inOut: 'cubic-bezier(0.4, 0, 0.2, 1)' } },
+  googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500&display=swap',
+};
+
+export const ALL_DESIGN_SYSTEMS: Record<string, DesignSystem> = {
   kiosk: KIOSK_DESIGN_SYSTEM,
   handwerk: HANDWERK_DESIGN_SYSTEM,
   arzt: ARZT_DESIGN_SYSTEM,
+  'boutique-elegance': BOUTIQUE_ELEGANCE_DESIGN_SYSTEM,
+  'urban-bold': URBAN_BOLD_DESIGN_SYSTEM,
+  'nature-calm': NATURE_CALM_DESIGN_SYSTEM,
 };
+
+export function getDesignSystem(id: string): DesignSystem {
+  return ALL_DESIGN_SYSTEMS[id] ?? KIOSK_DESIGN_SYSTEM;
+}
+
+export const DESIGN_LANGUAGE_OPTIONS = [
+  { value: '', label: 'Business-Standard (automatisch)' },
+  { value: 'boutique-elegance', label: 'Boutique Elegance - Pastell, Serif, luftig' },
+  { value: 'urban-bold', label: 'Urban Bold - kontraststark, kantig, plakativ' },
+  { value: 'nature-calm', label: 'Nature Calm - Erdtoene, rund, ruhig' },
+];

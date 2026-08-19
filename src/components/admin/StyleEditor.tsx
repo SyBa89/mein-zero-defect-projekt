@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useConfig } from '@/contexts/ConfigContext';
 import { THEME_PRESETS, getPresetById } from '@/lib/theme-presets';
+import { DESIGN_LANGUAGE_OPTIONS } from '@/lib/design-systems';
 import type { ThemeConfig } from '@/types/config';
 
 // =================================================================
@@ -70,6 +71,9 @@ export function StyleEditor() {
   const [isResetting, setIsResetting] = useState(false);
   const [toast, setToast] = useState<Toast>(null);
   const [selectedPresetId, setSelectedPresetId] = useState<string>('');
+  const initialDesignSystemId = ((config as { designSystemId?: string }).designSystemId) || '';
+  const [designSystemId, setDesignSystemId] = useState<string>(initialDesignSystemId);
+  const dsChanged = designSystemId !== initialDesignSystemId;
 
   // -- Toast-Auto-Dismiss --
   useEffect(() => {
@@ -130,7 +134,7 @@ export function StyleEditor() {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ theme: normalizeThemePayload(draft) }),
+        body: JSON.stringify({ theme: normalizeThemePayload(draft), designSystemId: designSystemId || null }),
       });
       const data = await res.json();
       if (!res.ok || !data.success) {
@@ -145,7 +149,7 @@ export function StyleEditor() {
     } finally {
       setIsSaving(false);
     }
-  }, [draft]);
+  }, [draft, designSystemId, router]);
 
   const handleReset = useCallback(async () => {
     if (!confirm('Theme auf Tenant-Defaults zuruecksetzen? Alle Runtime-Overrides werden geloescht.')) return;
@@ -155,12 +159,13 @@ export function StyleEditor() {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ theme: {} }),
+        body: JSON.stringify({ theme: {}, designSystemId: null }),
       });
       const data = await res.json();
       if (!res.ok || !data.success) throw new Error(data.error || 'Reset fehlgeschlagen');
       setToast({ type: 'success', message: 'Theme auf Defaults zurueckgesetzt' });
       setSelectedPresetId('');
+      setDesignSystemId('');
     } catch (err) {
       setToast({ type: 'error', message: err instanceof Error ? err.message : 'Fehler' });
     } finally {
@@ -187,7 +192,7 @@ export function StyleEditor() {
           </p>
         </div>
         <div className="flex gap-2">
-          {hasChanges && (
+          {(hasChanges || dsChanged) && (
             <button
               onClick={revertDraft}
               className="px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -204,7 +209,7 @@ export function StyleEditor() {
           </button>
           <button
             onClick={handleSave}
-            disabled={!hasChanges || isSaving}
+            disabled={(!hasChanges && !dsChanged) || isSaving}
             className="px-4 py-1.5 text-sm font-semibold text-white bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 rounded-lg shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSaving ? 'Speichern...' : 'Speichern'}
@@ -225,6 +230,25 @@ export function StyleEditor() {
           {toast.message}
         </div>
       )}
+
+      {/* Design Language Selector */}
+      <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-teal-50 dark:from-blue-900/20 dark:to-teal-900/20 radius-token-md border border-blue-200 dark:border-blue-800">
+        <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          Design-Sprache (ganze Webseite)
+        </label>
+        <select
+          value={designSystemId}
+          onChange={(e) => setDesignSystemId(e.target.value)}
+          className="w-full px-3 py-2 text-sm bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500"
+        >
+          {DESIGN_LANGUAGE_OPTIONS.map(o => (
+            <option key={o.value} value={o.value}>{o.label}</option>
+          ))}
+        </select>
+        <p className="mt-2 text-xs text-gray-600 dark:text-gray-400">
+          Bestimmt Farben, Typografie, Radien und Schatten der gesamten Seite.
+        </p>
+      </div>
 
       {/* Preset Selector */}
       <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800">

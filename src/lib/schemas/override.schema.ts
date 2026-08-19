@@ -20,7 +20,8 @@ export const OverrideSchema = z.object({
   sections: z.unknown().optional(),
   emergencyMessage: z.string().nullable().optional(),
   isClosed: z.boolean().nullable().optional(),
-  theme: ThemeOverrideSchema, // âœ… NEU: Runtime Theme Overrides (Ebene 3)
+  theme: ThemeOverrideSchema, // Ã¢Å“â€¦ NEU: Runtime Theme Overrides (Ebene 3)
+  designSystemId: z.enum(['kiosk', 'handwerk', 'arzt', 'boutique-elegance', 'urban-bold', 'nature-calm']).nullable().optional(),
   updatedAt: z.string().optional(),
 });
 
