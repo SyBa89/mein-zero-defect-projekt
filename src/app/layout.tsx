@@ -1,13 +1,14 @@
 // src/app/layout.tsx
-// Ã¢Å“â€¦ ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
-// Ã¢Å“â€¦ LIVE-UPDATE: Server-Merge mit Redis-Override (ISR-Revalidierung bei Speichern)
-// Ã¢Å“â€¦ WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
-// Ã¢Å“â€¦ SEO: Globale Metadaten aus Tenant-Config
+// ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ ZERO-DEFECT: Server-Komponente, Config wird serverseitig geladen
+// ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ LIVE-UPDATE: Server-Merge mit Redis-Override (ISR-Revalidierung bei Speichern)
+// ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ WHITE-LABEL: Dynamische CSS-Variablen aus Tenant-Theme
+// ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ SEO: Globale Metadaten aus Tenant-Config
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ConfigProvider } from '@/contexts/ConfigContext';
-import { getTenantConfig, getEffectiveConfig } from '@/lib/config-loader';
+import { getTenantConfig, getEffectiveConfig, getFontFamily } from '@/lib/config-loader';
+import { getDesignSystem } from '@/lib/design-systems';
 import { MobileActionBar } from '@/components/MobileActionBar';
 import type { BorderRadius } from '@/types/config';
 import './globals.css';
@@ -62,13 +63,27 @@ import CookieNotice from '@/components/CookieNotice';
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const config = await getEffectiveConfig();
 
+  const designSystem = getDesignSystem(config.business.type);
   const cssVars = {
     '--theme-primary': config.theme.primaryColor,
     '--theme-secondary': config.theme.secondaryColor,
     '--theme-accent': config.theme.accentColor,
+    '--theme-grad-mid': config.theme.secondaryColor + '40',
+    '--theme-grad-end': config.theme.accentColor + '40',
     '--theme-radius': radiusMap[config.theme.borderRadius],
-    '--font-heading': config.theme.fontHeading,
-    '--font-body': config.theme.fontBody,
+    '--font-heading': getFontFamily(config.theme.fontHeading),
+    '--font-body': getFontFamily(config.theme.fontBody),
+    '--shadow-sm': designSystem.shadows.sm,
+    '--shadow-md': designSystem.shadows.md,
+    '--shadow-lg': designSystem.shadows.lg,
+    '--shadow-xl': designSystem.shadows.xl,
+    '--radius-sm': designSystem.borderRadius.sm,
+    '--radius-md': designSystem.borderRadius.md,
+    '--radius-lg': designSystem.borderRadius.lg,
+    '--radius-xl': designSystem.borderRadius.xl,
+    '--duration-fast': designSystem.animations.duration.fast,
+    '--duration-normal': designSystem.animations.duration.normal,
+    '--duration-slow': designSystem.animations.duration.slow,
   } as React.CSSProperties;
 
   return (
@@ -126,7 +141,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                       closes: times[1] ?? '23:59',
                     };
                   }),
-                priceRange: 'Ã¢â€šÂ¬Ã¢â€šÂ¬',
+                priceRange: 'ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬',
                 image: config.url + '/images/logo.png',
               }),
             }}

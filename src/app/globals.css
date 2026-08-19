@@ -231,3 +231,17 @@ code, pre { font-family: var(--font-mono); }
     animation: none !important;
   }
 }
+
+@layer utilities {
+  .shadow-token-sm { box-shadow: var(--shadow-sm); }
+  .shadow-token-md { box-shadow: var(--shadow-md); }
+  .shadow-token-lg { box-shadow: var(--shadow-lg); }
+  .shadow-token-xl { box-shadow: var(--shadow-xl); }
+  .radius-token-sm { border-radius: var(--radius-sm); }
+  .radius-token-md { border-radius: var(--radius-md); }
+  .radius-token-lg { border-radius: var(--radius-lg); }
+  .radius-token-xl { border-radius: var(--radius-xl); }
+  .duration-token-fast { transition-duration: var(--duration-fast); }
+  .duration-token-normal { transition-duration: var(--duration-normal); }
+  .duration-token-slow { transition-duration: var(--duration-slow); }
+}

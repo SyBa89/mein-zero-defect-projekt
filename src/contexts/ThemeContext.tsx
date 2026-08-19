@@ -1,3 +1,4 @@
+import { getFontFamily } from '@/lib/config-loader';
 'use client';
 
 import React, { createContext, useContext, useMemo, useEffect } from 'react';
@@ -15,7 +16,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const config = useConfig();
   const businessType = config.business.type;
 
-  // âœ… HIERARCHICAL THEME: config.theme (3-Ebenen-Merge) + DesignSystem fÃ¼r reiche Details
+  // Ã¢Å“â€¦ HIERARCHICAL THEME: config.theme (3-Ebenen-Merge) + DesignSystem fÃƒÂ¼r reiche Details
   const theme = useMemo(() => {
     const designSystem = getDesignSystem(businessType);
     return {
@@ -31,8 +32,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         border: designSystem.colors.border,
       },
       typography: {
-        heading: config.theme.fontHeading ? `'${config.theme.fontHeading}', sans-serif` : designSystem.typography.heading,
-        body: config.theme.fontBody ? `'${config.theme.fontBody}', sans-serif` : designSystem.typography.body,
+        heading: config.theme.fontHeading ? getFontFamily(config.theme.fontHeading) : designSystem.typography.heading,
+        body: config.theme.fontBody ? getFontFamily(config.theme.fontBody) : designSystem.typography.body,
         mono: designSystem.typography.mono,
         headingWeights: designSystem.typography.headingWeights,
         bodyWeights: designSystem.typography.bodyWeights,
@@ -66,6 +67,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.style.setProperty('--theme-primary', theme.colors.primary);
     root.style.setProperty('--theme-secondary', theme.colors.secondary);
     root.style.setProperty('--theme-accent', theme.colors.accent);
+    root.style.setProperty('--theme-grad-mid', theme.colors.secondary + '40');
+    root.style.setProperty('--theme-grad-end', theme.colors.accent + '40');
     root.style.setProperty('--font-heading', theme.typography.heading);
     root.style.setProperty('--font-body', theme.typography.body);
     root.style.setProperty('--font-mono', theme.typography.mono);
