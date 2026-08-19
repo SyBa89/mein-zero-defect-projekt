@@ -239,7 +239,7 @@ export function StyleEditor() {
           >
             <option value="">-- Preset auswaehlen --</option>
             {THEME_PRESETS.map(p => (
-              <option key={p.id} value={p.id}>{p.name} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â {p.description}</option>
+              <option key={p.id} value={p.id}>{p.name} - {p.description}</option>
             ))}
           </select>
           <button

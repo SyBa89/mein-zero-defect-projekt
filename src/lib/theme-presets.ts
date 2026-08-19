@@ -1,5 +1,5 @@
 // src/lib/theme-presets.ts
-// âœ… ZERO-DEFECT: Premium Theme-Presets (Encoding-sicher, Font-Enum-konform)
+// ZERO-DEFECT: Premium Theme-Presets (ASCII-safe, Font-Enum-konform)
 import type { ThemeConfig } from '@/types/config';
 
 export interface ThemePreset {
