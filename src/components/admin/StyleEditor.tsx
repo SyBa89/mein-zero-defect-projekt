@@ -37,6 +37,24 @@ const FONT_BODY_OPTIONS = [
 type ColorKey = 'primaryColor' | 'secondaryColor' | 'accentColor';
 type Toast = { type: 'success' | 'error' | 'info'; message: string } | null;
 
+const FONT_SLUG_MAP: Record<string, string> = {
+  poppins: 'poppins', montserrat: 'montserrat', roboto: 'roboto',
+  lora: 'lora', inter: 'inter', 'source-sans': 'source-sans',
+  'source sans': 'source-sans', 'source sans pro': 'source-sans',
+};
+
+function normalizeThemePayload(t: ThemeConfig) {
+  const slug = (f?: string) => (f ? (FONT_SLUG_MAP[f.toLowerCase()] ?? f.toLowerCase()) : undefined);
+  return {
+    primaryColor: t.primaryColor,
+    secondaryColor: t.secondaryColor,
+    accentColor: t.accentColor,
+    borderRadius: t.borderRadius,
+    fontHeading: slug(t.fontHeading),
+    fontBody: slug(t.fontBody),
+  };
+}
+
 // =================================================================
 // KOMPONENTE: Premium StyleEditor
 // =================================================================
@@ -112,11 +130,12 @@ export function StyleEditor() {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ theme: draft }),
+        body: JSON.stringify({ theme: normalizeThemePayload(draft) }),
       });
       const data = await res.json();
       if (!res.ok || !data.success) {
-        throw new Error(data.error || 'Unbekannter Fehler');
+        const detail = Array.isArray(data.issues) && data.issues.length ? ': ' + data.issues.join(', ') : '';
+        throw new Error((data.error || 'Unbekannter Fehler') + detail);
       }
       setToast({ type: 'success', message: 'Theme gespeichert - wird sofort uebernommen.' });
       setSelectedPresetId('');
@@ -218,9 +237,9 @@ export function StyleEditor() {
             onChange={(e) => setSelectedPresetId(e.target.value)}
             className="flex-1 px-3 py-2 text-sm bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500"
           >
-            <option value="">â€” Preset auswaehlen â€”</option>
+            <option value="">Ã¢â‚¬â€ Preset auswaehlen Ã¢â‚¬â€</option>
             {THEME_PRESETS.map(p => (
-              <option key={p.id} value={p.id}>{p.name} â€” {p.description}</option>
+              <option key={p.id} value={p.id}>{p.name} Ã¢â‚¬â€ {p.description}</option>
             ))}
           </select>
           <button
