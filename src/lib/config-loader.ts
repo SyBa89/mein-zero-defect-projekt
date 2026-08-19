@@ -59,8 +59,8 @@ export function getEffectiveTheme(
     secondaryColor: designSystem.colors.secondary,
     accentColor: designSystem.colors.accent,
     borderRadius: 'md',
-    fontHeading: designSystem.typography.heading.split(',')[0].replace(/'/g, ''),
-    fontBody: designSystem.typography.body.split(',')[0].replace(/'/g, ''),
+    fontHeading: designSystem.typography.heading.split(',')[0].replace(/'/g, '').toLowerCase(),
+    fontBody: designSystem.typography.body.split(',')[0].replace(/'/g, '').toLowerCase(),
   };
 
   // Ebene 2: Tenant Defaults überschreiben (mittlere Priorität)

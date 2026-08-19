@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { useConfig } from '@/contexts/ConfigContext';
 import { THEME_PRESETS, getPresetById } from '@/lib/theme-presets';
 import type { ThemeConfig } from '@/types/config';
@@ -42,6 +43,7 @@ type Toast = { type: 'success' | 'error' | 'info'; message: string } | null;
 
 export function StyleEditor() {
   const config = useConfig();
+  const router = useRouter();
   const tenantTheme = config.theme;
 
   // -- State --
@@ -50,11 +52,6 @@ export function StyleEditor() {
   const [isResetting, setIsResetting] = useState(false);
   const [toast, setToast] = useState<Toast>(null);
   const [selectedPresetId, setSelectedPresetId] = useState<string>('');
-
-  // -- Sync: wenn config sich aendert, Draft aktualisieren --
-  useEffect(() => {
-    setDraft(tenantTheme);
-  }, [tenantTheme]);
 
   // -- Toast-Auto-Dismiss --
   useEffect(() => {
@@ -72,16 +69,23 @@ export function StyleEditor() {
     return keys.some(k => draft[k] !== tenantTheme[k]);
   }, [draft, tenantTheme]);
 
+
+  // -- Sync: Draft nur aktualisieren wenn keine ungespeicherten Aenderungen (Hardening) --
+  useEffect(() => {
+    if (!hasChanges) setDraft(tenantTheme);
+  }, [tenantTheme, hasChanges]);
+
+
   // -- Live-Preview: CSS-Variablen im DOM setzen --
   useEffect(() => {
     const root = document.documentElement;
-    if (draft.primaryColor) root.style.setProperty('--theme-primary', draft.primaryColor);
-    if (draft.secondaryColor) root.style.setProperty('--theme-secondary', draft.secondaryColor);
-    if (draft.accentColor) root.style.setProperty('--theme-accent', draft.accentColor);
+    if (draft.primaryColor) { root.style.setProperty('--theme-primary', draft.primaryColor); root.style.setProperty('--color-primary', draft.primaryColor); }
+    if (draft.secondaryColor) { root.style.setProperty('--theme-secondary', draft.secondaryColor); root.style.setProperty('--color-secondary', draft.secondaryColor); }
+    if (draft.accentColor) { root.style.setProperty('--theme-accent', draft.accentColor); root.style.setProperty('--color-accent', draft.accentColor); }
     return () => {
-      if (tenantTheme.primaryColor) root.style.setProperty('--theme-primary', tenantTheme.primaryColor);
-      if (tenantTheme.secondaryColor) root.style.setProperty('--theme-secondary', tenantTheme.secondaryColor);
-      if (tenantTheme.accentColor) root.style.setProperty('--theme-accent', tenantTheme.accentColor);
+      if (tenantTheme.primaryColor) { root.style.setProperty('--theme-primary', tenantTheme.primaryColor); root.style.setProperty('--color-primary', tenantTheme.primaryColor); }
+      if (tenantTheme.secondaryColor) { root.style.setProperty('--theme-secondary', tenantTheme.secondaryColor); root.style.setProperty('--color-secondary', tenantTheme.secondaryColor); }
+      if (tenantTheme.accentColor) { root.style.setProperty('--theme-accent', tenantTheme.accentColor); root.style.setProperty('--color-accent', tenantTheme.accentColor); }
     };
   }, [draft, tenantTheme]);
 
@@ -114,8 +118,9 @@ export function StyleEditor() {
       if (!res.ok || !data.success) {
         throw new Error(data.error || 'Unbekannter Fehler');
       }
-      setToast({ type: 'success', message: 'Theme erfolgreich gespeichert (Redis)' });
+      setToast({ type: 'success', message: 'Theme gespeichert - wird sofort uebernommen.' });
       setSelectedPresetId('');
+      router.refresh();
     } catch (err) {
       setToast({ type: 'error', message: err instanceof Error ? err.message : 'Fehler' });
     } finally {
@@ -213,9 +218,9 @@ export function StyleEditor() {
             onChange={(e) => setSelectedPresetId(e.target.value)}
             className="flex-1 px-3 py-2 text-sm bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500"
           >
-            <option value="">— Preset auswaehlen —</option>
+            <option value="">â€” Preset auswaehlen â€”</option>
             {THEME_PRESETS.map(p => (
-              <option key={p.id} value={p.id}>{p.name} — {p.description}</option>
+              <option key={p.id} value={p.id}>{p.name} â€” {p.description}</option>
             ))}
           </select>
           <button

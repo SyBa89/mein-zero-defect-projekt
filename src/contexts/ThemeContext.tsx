@@ -15,15 +15,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const config = useConfig();
   const businessType = config.business.type;
 
-  // ✅ HIERARCHICAL THEME: config.theme (3-Ebenen-Merge) + DesignSystem für reiche Details
+  // âœ… HIERARCHICAL THEME: config.theme (3-Ebenen-Merge) + DesignSystem fÃ¼r reiche Details
   const theme = useMemo(() => {
     const designSystem = getDesignSystem(businessType);
     return {
       name: designSystem.name,
       colors: {
-        primary: config.theme.primaryColor || designSystem.colors.primary,
-        secondary: config.theme.secondaryColor || designSystem.colors.secondary,
-        accent: config.theme.accentColor || designSystem.colors.accent,
+        primary: config.theme.primaryColor,
+        secondary: config.theme.secondaryColor,
+        accent: config.theme.accentColor,
         background: designSystem.colors.background,
         surface: designSystem.colors.surface,
         text: designSystem.colors.text,
