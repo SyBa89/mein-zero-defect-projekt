@@ -2,6 +2,7 @@ import type { ThemeConfig } from '@/types/config';
 import { Redis } from '@upstash/redis';
 
 export interface ConfigOverride {
+  designSystemId?: string | null;
   theme?: Partial<ThemeConfig> | null;
   openingHours?: unknown;
   banners?: unknown;
