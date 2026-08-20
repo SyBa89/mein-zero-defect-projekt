@@ -43,13 +43,13 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json().catch(() => null);
   if (!body || typeof body !== 'object')
-    return NextResponse.json({ error: 'UngÃ¼ltiger Body' }, { status: 400 });
+    return NextResponse.json({ error: 'Ungültiger Body' }, { status: 400 });
 
   const parsed = OverrideSchema.safeParse(body);
   if (!parsed.success)
     return NextResponse.json(
       {
-        error: 'UngÃ¼ltige Felder',
+        error: 'Ungültige Felder',
         count: parsed.error.issues.length,
         issues: parsed.error.issues.map((i) => i.path.join('.') || '(root)'),
       },
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
   const ok = await setConfigOverride(override);
   if (!ok)
     return NextResponse.json(
-      { success: false, error: 'Redis nicht verfÃ¼gbar â€“ Live-Speichern deaktiviert.' },
+      { success: false, error: 'Redis nicht verfügbar – Live-Speichern deaktiviert.' },
       { status: 503 }
     );
 

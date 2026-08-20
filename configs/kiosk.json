@@ -3,7 +3,7 @@
   "brand": {
     "name": "Kiosk Lollipop",
     "slogan": "Ihr Kiosk und Hermes Paketshop am Bürgerplatz",
-    "legalName": "Kiosk Lollipop (Inhaber: Max Mustermann)",
+    "legalName": "Kiosk Lollipop",
     "primaryColor": "pink"
   },
   "contact": {
@@ -17,7 +17,7 @@
     "phoneDisplay": "02235 9291160",
     "email": "info@kiosk-lollipop.de",
     "googlePlaceId": "ChIJeWG_xdsXv0cRInW4W6rog_0",
-    "mapsUrl": "https://maps.google.com/?cid=123456789"
+    "mapsUrl": "https://www.google.com/maps/place/?q=place_id:ChIJeWG_xdsXv0cRInW4W6rog_0"
   },
   "business": {
     "type": "kiosk",
