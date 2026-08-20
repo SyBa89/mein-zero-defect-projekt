@@ -254,3 +254,24 @@ code, pre { font-family: var(--font-mono); }
 @media (min-width: 768px) {
   section.py-20 { padding-top: 6rem; padding-bottom: 6rem; }
 }
+
+/* PREMIUM POLISH (D2) - CSS-only, kein JSX-Risiko */
+/* Serif-Headlines: elegante, enge Spur */
+h1, h2, h3 { letter-spacing: -0.02em; }
+#hero h1 { line-height: 1.05; }
+
+/* Karten-Haptik: sanfte Elevation beim Hover */
+.glass-card {
+  transition: transform .3s cubic-bezier(.25,.1,.25,1), box-shadow .3s ease;
+}
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Premium-Fokus-Ring (Accessibility + Eleganz) */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
