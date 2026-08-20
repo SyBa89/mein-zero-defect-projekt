@@ -111,3 +111,5 @@
 77 [UX] Multi-Step-Stepper "Step x of y" fuer Tenant-Setup
 78 [UX] "How it works"-3-Step als oeffentliches Erklaer-Pattern (Gate B)
 79 [UX] Welcome-Modal rollenbasiert + "Don't show again"
+## B24 SERP/Local-Pack/AI-Parsing
+139 Local-Pack-Schema(A/B/C-Ranking,NAP,reviews) | 140 LLM-gestuetztes-Parsing(BERT-Fallback-bei-DOM-Breaks) | 141 SERP-Features(Knowledge-Graph,PAA,AI-Overviews-Citation)
