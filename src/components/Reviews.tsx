@@ -5,7 +5,7 @@ import { TENANT_REVIEWS } from '@/lib/reviews-data';
 export default function Reviews() {
   const config = useConfig();
   const { isLoading } = useConfigState();
-  if (isLoading) return <div className="py-20 text-center">Lädt...</div>;
+  if (isLoading) return <div className="py-20 text-center">LÃ¤dt...</div>;
   const { contact } = config;
   const businessType = config.business?.type || 'kiosk';
   const reviews = TENANT_REVIEWS[businessType] || TENANT_REVIEWS.kiosk;
@@ -23,13 +23,12 @@ export default function Reviews() {
         </p>
         <div className="bg-[var(--color-surface)] dark:bg-gray-800 radius-token-xl p-8 shadow-token-xl">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="text-3xl">⭐</span>
-            <span className="text-2xl font-bold">5.0 Google</span>
+            <span className="text-2xl font-bold">Ihre Meinung zählt – bald hier sichtbar</span>
           </div>
           <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
             <p className="text-sm text-amber-800 dark:text-amber-200">
-              ⚠️ <strong>Demo-Beispiele:</strong> Diese Bewertungen zeigen, wie Kundenstimmen
-              aussehen könnten. Für den Live-Betrieb werden echte Google-Bewertungen eingebunden.
+              âš ï¸ <strong>Demo-Beispiele:</strong> Diese Bewertungen zeigen, wie Kundenstimmen
+              aussehen kÃ¶nnten. FÃ¼r den Live-Betrieb werden echte Google-Bewertungen eingebunden.
             </p>
           </div>
           <div className="space-y-4 mb-8">
@@ -56,11 +55,11 @@ export default function Reviews() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--theme-primary)] hover:brightness-110 text-white font-bold rounded-[var(--theme-radius)]"
           >
-            ✍️ Bewertung auf Google schreiben
+            âœï¸ Bewertung auf Google schreiben
           </a>
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400 mt-6">
-          📌 <strong>Transparent:</strong> Demo-Beispiele für White-Label-Plattform.
+          ðŸ“Œ <strong>Transparent:</strong> Demo-Beispiele fÃ¼r White-Label-Plattform.
         </p>
       </div>
     </section>
