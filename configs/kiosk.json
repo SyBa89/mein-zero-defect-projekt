@@ -289,7 +289,7 @@
     "primaryColor": "#db2777",
     "accentColor": "#9333ea",
     "borderRadius": "full",
-    "fontHeading": "poppins",
+    "fontHeading": "lora",
     "fontBody": "inter"
   }
 }
