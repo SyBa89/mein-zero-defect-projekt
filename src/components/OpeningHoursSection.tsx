@@ -3,19 +3,19 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useConfig, useConfigState } from '@/contexts/ConfigContext';
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// OpeningHoursSection â€” White-Label-fÃ¤hig, strukturierte Daten
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ═══════════════════════════════════════════════════════════════
+// OpeningHoursSection — White-Label-fähig, strukturierte Daten
+// ═══════════════════════════════════════════════════════════════
 // Architektur:
 // - useConfig() statt legacy getSiteConfigClient()
 // - Strukturierte Daten aus JSON (kein Regex-Parsing mehr!)
 // - Dynamic address aus config.contact.address
 // - Hydration-safe todayIndex (client-only via useEffect)
-// - âœ… ZERO-DEFECT: ALLE Hooks VOR Early-Returns (Rules of Hooks!)
+// - ✅ ZERO-DEFECT: ALLE Hooks VOR Early-Returns (Rules of Hooks!)
 
 type ShopStatus = 'open' | 'closed-regular' | 'closed-emergency' | 'loading';
 
-// â”€â”€â”€ Icons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Icons ───────────────────────────────────────────────────
 function ClockIcon({ className = 'w-5 h-5' }: { className?: string }) {
   return (
     <svg
@@ -98,7 +98,7 @@ function MapPinIcon({ className = 'w-5 h-5' }: { className?: string }) {
   );
 }
 
-// â”€â”€â”€ Loading Skeleton â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Loading Skeleton ────────────────────────────────────────
 function LoadingSkeleton() {
   return (
     <section
@@ -125,85 +125,56 @@ function LoadingSkeleton() {
           ))}
         </div>
       </div>
-      <span className="sr-only">Ã–ffnungszeiten werden geladen...</span>
+      <span className="sr-only">Öffnungszeiten werden geladen...</span>
     </section>
   );
 }
 
-// â”€â”€â”€ Main Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Main Component ──────────────────────────────────────────
 export default function OpeningHoursSection() {
-  // âœ… ZERO-DEFECT: ALLE Hooks ZUERST (Rules of Hooks!)
+  // ✅ ZERO-DEFECT: ALLE Hooks ZUERST (Rules of Hooks!)
   const config = useConfig();
   const { isLoading } = useConfigState();
   const [todayIndex, setTodayIndex] = useState<number>(-1);
 
-  // âœ… Hydration-safe: todayIndex nur client-side setzen
+  // ✅ Hydration-safe: todayIndex nur client-side setzen
   useEffect(() => {
     setTodayIndex(new Date().getDay());
   }, []);
 
-  // âœ… ZERO-DEFECT: Daten extrahieren mit Safe Defaults (VOR Early-Returns)
+  // ✅ ZERO-DEFECT: Daten extrahieren mit Safe Defaults (VOR Early-Returns)
   const openingHours = config.openingHours;
   const contact = config.contact;
   const showSection = openingHours?.showSection !== false;
   const items = openingHours?.items || [];
-  const sectionTitle = openingHours?.sectionTitle || 'Ã–ffnungszeiten';
+  const sectionTitle = openingHours?.sectionTitle || 'Öffnungszeiten';
   const sectionSubtitle = openingHours?.sectionSubtitle || 'Wir freuen uns auf Ihren Besuch!';
   const tipMessage = openingHours?.tipMessage;
   const emergencyMessage = openingHours?.emergencyMessage;
 
-  // âœ… JS getDay() (0=Sun) â†’ Schema-Index (0=Mon) konvertieren
+  // ✅ JS getDay() (0=Sun) → Schema-Index (0=Mon) konvertieren
   const schemaIndex = todayIndex === -1 ? -1 : todayIndex === 0 ? 6 : todayIndex - 1;
   const todayItem = schemaIndex >= 0 && schemaIndex < items.length ? items[schemaIndex] : null;
 
-  // âœ… ZERO-DEFECT: useMemo VOR Early-Returns (Rules of Hooks!)
+  // ✅ ZERO-DEFECT: useMemo VOR Early-Returns (Rules of Hooks!)
   const shopStatus: ShopStatus = useMemo(() => {
     if (!showSection) return 'loading';
-  // P1 FIX: Timeout-Fallback nach 3 Sekunden
-  const [showFallback, setShowFallback] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => setShowFallback(true), 3000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if ((isLoading || todayIndex === -1) && !showFallback) {
-    return <LoadingSkeleton />;
-  }
-
-  // Fallback: Zeige zumindest die Adresse wenn Config nicht laedt
-  if (showFallback && !contact?.openingHours) {
-    return (
-      <section className='py-20 px-4 bg-gray-50 dark:bg-gray-900'>
-        <div className='max-w-4xl mx-auto text-center'>
-          <h2 className='text-3xl font-bold mb-4'>öffnungszeiten</h2>
-          <p className='text-gray-600 dark:text-gray-400'>
-            {contact?.address?.street}, {contact?.address?.zip} {contact?.address?.city}
-          </p>
-          <button
-            onClick={handleOpenInMaps}
-            className='mt-4 px-6 py-3 bg-[var(--theme-primary)] text-white rounded-lg'
-          >
-            Route planen
-          </button>
-        </div>
-      </section>
-    );
-  }
+    if (isLoading || todayIndex === -1) return 'loading';
     if (emergencyMessage) return 'closed-emergency';
     if (todayItem?.isOpen) return 'open';
     return 'closed-regular';
   }, [showSection, isLoading, todayIndex, emergencyMessage, todayItem]);
 
-  // âœ… Dynamic address aus config
+  // ✅ Dynamic address aus config
   const addressString = `${contact.address.street}, ${contact.address.zip} ${contact.address.city}`;
 
-  // âœ… ZERO-DEFECT: useCallback VOR Early-Returns (Rules of Hooks!)
+  // ✅ ZERO-DEFECT: useCallback VOR Early-Returns (Rules of Hooks!)
   const handleOpenInMaps = useCallback(() => {
     const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressString)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   }, [addressString]);
 
-  // âœ… JETZT kommen die Early-Returns (NACH allen Hooks!)
+  // ✅ JETZT kommen die Early-Returns (NACH allen Hooks!)
   if (!showSection) {
     return null;
   }
@@ -243,10 +214,10 @@ export default function OpeningHoursSection() {
 
         {/* Screen reader announcement */}
         <div aria-live="polite" className="sr-only">
-          {shopStatus === 'open' && `Heute geÃ¶ffnet: ${todayItem?.hours}`}
+          {shopStatus === 'open' && `Heute geöffnet: ${todayItem?.hours}`}
           {shopStatus === 'closed-regular' && 'Heute geschlossen'}
           {shopStatus === 'closed-emergency' &&
-            `Heute auÃŸerplanmÃ¤ÃŸig geschlossen: ${emergencyMessage || 'Betriebsurlaub'}`}
+            `Heute außerplanmäßig geschlossen: ${emergencyMessage || 'Betriebsurlaub'}`}
         </div>
 
         {/* Card */}
@@ -260,7 +231,7 @@ export default function OpeningHoursSection() {
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 shadow-token-lg shadow-green-500/50" />
                 </span>
                 <span className="text-green-800 dark:text-green-200 font-bold text-lg">
-                  Heute geÃ¶ffnet:
+                  Heute geöffnet:
                 </span>
                 <span className="text-green-700 dark:text-green-300 font-black text-xl">
                   {todayItem?.hours}
@@ -274,7 +245,7 @@ export default function OpeningHoursSection() {
               <div className="flex items-center justify-center gap-3">
                 <AlertIcon className="w-6 h-6 text-red-600 dark:text-red-400 flex-shrink-0" />
                 <span className="text-red-800 dark:text-red-200 font-bold text-lg text-center">
-                  ðŸš¨ Heute geschlossen â€“ {emergencyMessage || 'Betriebsurlaub'}
+                  🚨 Heute geschlossen – {emergencyMessage || 'Betriebsurlaub'}
                 </span>
               </div>
             </div>
@@ -285,7 +256,7 @@ export default function OpeningHoursSection() {
               <div className="flex items-center justify-center gap-3">
                 <CalendarIcon className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                 <span className="text-amber-800 dark:text-amber-200 font-bold text-lg">
-                  ðŸ“… Heute geschlossen â€“ morgen sind wir wieder fÃ¼r Sie da!
+                  📅 Heute geschlossen – morgen sind wir wieder für Sie da!
                 </span>
               </div>
             </div>
@@ -293,14 +264,14 @@ export default function OpeningHoursSection() {
 
           {/* Hours table */}
           <div className="backdrop-blur-sm p-4 sm:p-6 md:p-8">
-            <table className="w-full" role="table" aria-label="WÃ¶chentliche Ã–ffnungszeiten">
+            <table className="w-full" role="table" aria-label="Wöchentliche Öffnungszeiten">
               <caption className="sr-only">
-                Ã–ffnungszeiten fÃ¼r jede Woche. Der heutige Tag ist hervorgehoben.
+                Öffnungszeiten für jede Woche. Der heutige Tag ist hervorgehoben.
               </caption>
               <thead className="sr-only">
                 <tr>
                   <th scope="col">Wochentag</th>
-                  <th scope="col">Ã–ffnungszeiten</th>
+                  <th scope="col">Öffnungszeiten</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200/30 dark:divide-gray-700/30">
@@ -373,7 +344,7 @@ export default function OpeningHoursSection() {
                 onClick={handleOpenInMaps}
                 type="button"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-semibold text-sm radius-token-md shadow-token-md shadow-pink-500/30 hover:shadow-token-lg hover:shadow-pink-500/40 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
-                aria-label="Route in Google Maps Ã¶ffnen"
+                aria-label="Route in Google Maps öffnen"
               >
                 <MapPinIcon className="w-4 h-4" />
                 Route planen
@@ -385,7 +356,7 @@ export default function OpeningHoursSection() {
         {/* Tip message */}
         {tipMessage && (
           <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6 max-w-2xl mx-auto">
-            ðŸ’¡ <strong className="font-semibold">Tipp:</strong> {tipMessage}
+            💡 <strong className="font-semibold">Tipp:</strong> {tipMessage}
           </p>
         )}
       </div>
