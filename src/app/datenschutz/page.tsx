@@ -7,8 +7,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const { brand } = config;
 
   return {
-    title: `Datenschutz �?" ${brand.name}`,
-    description: 'Datenschutzerklärung gemä�Y DSGVO',
+    title: `Datenschutz → ${brand.name}`,
+    description: 'Datenschutzerklärung gemäß DSGVO',
   };
 }
 
@@ -31,7 +31,7 @@ export default function DatenschutzPage() {
               Allgemeine Hinweise
             </h3>
             <p className="text-gray-700 dark:text-gray-300">
-              Die folgenden Hinweise geben einen einfachen �oberblick darüber, was mit Ihren
+              Die folgenden Hinweise geben einen einfachen �überblick darüber, was mit Ihren
               personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene
               Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
             </p>
@@ -122,7 +122,7 @@ export default function DatenschutzPage() {
             <p className="text-gray-700 dark:text-gray-300">
               Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO,
               sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur
-              Durchführung vorvertraglicher Ma�Ynahmen erforderlich ist. In allen übrigen Fällen
+              Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen
               beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven
               Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO).
             </p>
@@ -149,7 +149,7 @@ export default function DatenschutzPage() {
           <div className="prose prose-gray dark:prose-invert max-w-none">
             <p className="text-gray-700 dark:text-gray-300">
               Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Herkunft, Empfänger
-              und Zweck Ihrer gespeicherten personenbezogenen Daten. Sie haben au�Yerdem ein Recht,
+              und Zweck Ihrer gespeicherten personenbezogenen Daten. Sie haben außerdem ein Recht,
               die Berichtigung oder Löschung dieser Daten zu verlangen.
             </p>
           </div>
